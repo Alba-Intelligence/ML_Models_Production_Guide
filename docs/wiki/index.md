@@ -27,22 +27,23 @@ sources:
 
 ## Fast routing
 
-| If you need to…                                                      | Read these pages                                                                                                                                                                                                                             |
-| -------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Understand what this repository currently is                         | [overview.md](overview.md), [current-state.md](current-state.md)                                                                                                                                                                             |
-| Understand the intended end-state architecture and stack             | [architecture/target-system.md](architecture/target-system.md), [decisions/project-scope-and-constraints.md](decisions/project-scope-and-constraints.md)                                                                                     |
-| Plan the project top-down without losing separation of concerns      | [architecture/top-down-planning.md](architecture/top-down-planning.md), [architecture/reference-architecture-skeleton.md](architecture/reference-architecture-skeleton.md)                                                                   |
-| Review the proposed architecture skeleton                            | [architecture/reference-architecture-skeleton.md](architecture/reference-architecture-skeleton.md), [architecture/target-system.md](architecture/target-system.md)                                                                           |
-| Review the proposed documentation structure                          | [architecture/documentation-toc.md](architecture/documentation-toc.md), [architecture/reference-architecture-skeleton.md](architecture/reference-architecture-skeleton.md)                                                                   |
-| Review assistant/MCP and docs-delivery proposals                     | [architecture/assistant-integration-and-docs-delivery.md](architecture/assistant-integration-and-docs-delivery.md), [architecture/target-system.md](architecture/target-system.md)                                                           |
-| Review the cross-cutting contracts                                   | [contracts/index.md](contracts/index.md), [architecture/reference-architecture-skeleton.md](architecture/reference-architecture-skeleton.md)                                                                                                  |
-| Check whether implementation is allowed yet                          | [decisions/project-scope-and-constraints.md](decisions/project-scope-and-constraints.md), [current-state.md](current-state.md)                                                                                                               |
-| Modify the Nix dev shell or toolchain                                | [architecture/dev-environment.md](architecture/dev-environment.md), [sources/flake.nix.md](sources/flake.nix.md)                                                                                                                             |
-| Understand pinned upstream dependencies                              | [sources/flake.lock.md](sources/flake.lock.md)                                                                                                                                                                                               |
-| Understand repository licensing posture                              | [sources/LICENSE.md](sources/LICENSE.md), [overview.md](overview.md)                                                                                                                                                                        |
-| Run or debug Jupyter / kernel setup                                  | [runbooks/jupyter-and-shell.md](runbooks/jupyter-and-shell.md), [sources/flake.nix.md](sources/flake.nix.md)                                                                                                                                 |
-| Understand git tracking, ignored files, or private-doc conventions   | [sources/gitignore.md](sources/gitignore.md), [current-state.md](current-state.md)                                                                                                                                                           |
-| Understand durable repo conventions and why the repo is still sparse | [decisions/repository-shape.md](decisions/repository-shape.md), [current-state.md](current-state.md)                                                                                                                                         |
+| If you need to…                                                      | Read these pages                                                                                                                                                                                                       |
+| -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Understand what this repository currently is                         | [overview.md](overview.md), [current-state.md](current-state.md)                                                                                                                                                       |
+| Understand the intended end-state architecture and stack             | [architecture/target-system.md](architecture/target-system.md), [decisions/project-scope-and-constraints.md](decisions/project-scope-and-constraints.md)                                                               |
+| Plan the project top-down without losing separation of concerns      | [architecture/top-down-planning.md](architecture/top-down-planning.md), [architecture/reference-architecture-skeleton.md](architecture/reference-architecture-skeleton.md)                                             |
+| Review the proposed architecture skeleton                            | [architecture/reference-architecture-skeleton.md](architecture/reference-architecture-skeleton.md), [architecture/target-system.md](architecture/target-system.md)                                                     |
+| Review the proposed documentation structure                          | [architecture/documentation-toc.md](architecture/documentation-toc.md), [architecture/reference-architecture-skeleton.md](architecture/reference-architecture-skeleton.md)                                             |
+| Review assistant/MCP and docs-delivery proposals                     | [architecture/assistant-integration-and-docs-delivery.md](architecture/assistant-integration-and-docs-delivery.md), [architecture/target-system.md](architecture/target-system.md)                                     |
+| Review the cross-cutting contracts                                   | [contracts/index.md](contracts/index.md), [architecture/reference-architecture-skeleton.md](architecture/reference-architecture-skeleton.md)                                                                           |
+| Decide how much weight to give decision records                      | [queries/decision-records-and-project-restart.md](queries/decision-records-and-project-restart.md), [architecture/top-down-planning.md](architecture/top-down-planning.md)                                           |
+| Check whether implementation is allowed yet                          | [decisions/project-scope-and-constraints.md](decisions/project-scope-and-constraints.md), [current-state.md](current-state.md)                                                                                         |
+| Modify the Nix dev shell or toolchain                                | [architecture/dev-environment.md](architecture/dev-environment.md), [sources/flake.nix.md](sources/flake.nix.md)                                                                                                       |
+| Understand pinned upstream dependencies                              | [sources/flake.lock.md](sources/flake.lock.md)                                                                                                                                                                         |
+| Understand repository licensing posture                              | [sources/LICENSE.md](sources/LICENSE.md), [overview.md](overview.md)                                                                                                                                                   |
+| Run or debug Jupyter / kernel setup                                  | [runbooks/jupyter-and-shell.md](runbooks/jupyter-and-shell.md), [sources/flake.nix.md](sources/flake.nix.md)                                                                                                           |
+| Understand git tracking, ignored files, or private-doc conventions   | [sources/gitignore.md](sources/gitignore.md), [current-state.md](current-state.md)                                                                                                                                     |
+| Understand durable repo conventions and why the repo is still sparse | [decisions/repository-shape.md](decisions/repository-shape.md), [current-state.md](current-state.md)                                                                                                                   |
 | See what changed in the wiki recently                                | [log.md](log.md), [revisions/2026-05-09-contract-baselines.md](revisions/2026-05-09-contract-baselines.md), [revisions/2026-05-09-assistant-and-docs-delivery.md](revisions/2026-05-09-assistant-and-docs-delivery.md) |
 
 ## Core pages
@@ -72,6 +73,10 @@ sources:
 - [contracts/prediction-logging-baseline.md](contracts/prediction-logging-baseline.md) — minimum inference logging requirements.
 - [contracts/cost-attribution-baseline.md](contracts/cost-attribution-baseline.md) — required spend attribution metadata.
 
+## Queries
+
+- [queries/decision-records-and-project-restart.md](queries/decision-records-and-project-restart.md) — why decision records matter and why they are not enough alone.
+
 ## Runbooks
 
 - [runbooks/jupyter-and-shell.md](runbooks/jupyter-and-shell.md) — common entry commands and operational notes.
@@ -90,6 +95,7 @@ sources:
 
 ## Revision artifacts
 
+- [revisions/2026-05-09-decision-records-role.md](revisions/2026-05-09-decision-records-role.md) — captures how decision records should complement the top-down architecture.
 - [revisions/2026-05-09-origin-rebase-and-push.md](revisions/2026-05-09-origin-rebase-and-push.md) — captures rebasing onto origin and incorporating the remote license file.
 - [revisions/2026-05-09-contract-baselines.md](revisions/2026-05-09-contract-baselines.md) — captures the first cross-cutting contract pages.
 - [revisions/2026-05-09-assistant-and-docs-delivery.md](revisions/2026-05-09-assistant-and-docs-delivery.md) — captures the MCP assistant and FastAPI docs-delivery proposals.

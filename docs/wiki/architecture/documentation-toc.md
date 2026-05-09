@@ -274,6 +274,7 @@ Candidate pages:
 Purpose:
 
 - preserve durable architectural decisions and tradeoffs
+- make the project restartable after long pauses by preserving rationale, rejected options, and revisit triggers
 
 Candidate pages:
 
@@ -284,6 +285,10 @@ Candidate pages:
 - documentation delivery decision
 - artifact packaging decision
 - deployment pattern decision
+
+Important note:
+
+- decision records are a **checkpoint layer**, not a substitute for the architecture skeleton, TOC, or contracts
 
 ## Recommended page template
 
@@ -327,6 +332,7 @@ Each code example should declare:
 8. `16`
 
 This order forces contracts and architecture to exist before examples and detailed procedures.
+Decision records remain valuable throughout, but they should document accepted choices within the structure rather than replacing the structure.
 
 ## Placement rules
 

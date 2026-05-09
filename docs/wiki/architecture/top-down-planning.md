@@ -160,6 +160,25 @@ For each example, specify:
 - reproducibility guarantees
 - related docs pages
 
+### Layer 9 — Decision records as checkpoint memory
+
+Decision records are valuable, but they are **not** the primary architectural backbone.
+
+Use them to record:
+
+- why a major choice was made
+- what alternatives were rejected
+- what assumptions were in force
+- what would trigger revisiting the decision
+
+They are best understood as the project's **checkpoint memory layer**.
+They improve restartability, but they do not replace:
+
+- the architecture skeleton
+- the documentation TOC
+- the cross-cutting contracts
+- the current-state and index pages
+
 ## Anti-patterns to avoid
 
 - Starting with repository folders before defining domain boundaries
@@ -175,8 +194,9 @@ For each example, specify:
 2. Freeze the **documentation table of contents**.
 3. Freeze the **cross-cutting contracts** for security, lineage, traceability, and reproducibility.
 4. Freeze the **reference topologies** for distributed training, batch inference, and online inference.
-5. Only then define the **code-example inventory**.
-6. Only after that begin implementation.
+5. Record major accepted choices as **decision records**.
+6. Only then define the **code-example inventory**.
+7. Only after that begin implementation.
 
 ## Recommendation
 
@@ -187,3 +207,14 @@ The best way to stay top-down is to treat the project as three things at once, b
 3. a **catalog of reference topologies**
 
 That ordering is what keeps details from leaking across concerns.
+
+## Rule of thumb
+
+If you want the project to be restartable at any time, the ideal stack is:
+
+- architecture for structure
+- contracts for invariants
+- decision records for rationale
+- current-state/log for recency
+
+Decision records are therefore **essential**, but **not sufficient by themselves**.
