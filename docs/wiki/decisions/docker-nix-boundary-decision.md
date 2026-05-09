@@ -38,10 +38,12 @@ At the same time, it preserves the option of using Nix productively for develope
 ### Nix as a first-class canonical internal build tool
 
 Pros:
+
 - very strong reproducibility
 - powerful developer tooling
 
 Why not default:
+
 - increases cognitive load for a broader audience
 - creates risk of having two competing primary paths
 - weakens the clarity of Docker as the standard reference artifact

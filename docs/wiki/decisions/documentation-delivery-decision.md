@@ -37,10 +37,12 @@ Treating docs delivery as optional keeps the core reference simpler while still 
 ### Make FastAPI docs delivery part of the default mandatory architecture
 
 Pros:
+
 - unified stack story
 - powerful dynamic docs surface
 
 Why not default:
+
 - increases complexity in the core reference
 - risks conflating documentation delivery with model-serving concerns
 - not required to preserve restartability or documentation quality

@@ -41,19 +41,23 @@ It also aligns well with the project's requirement that Lambda.ai and AWS both r
 ### Fully custom unified Python reporting from day one
 
 Pros:
+
 - strongest single reporting model
 - flexible and portable
 
 Why not default:
+
 - too much bespoke work as the primary baseline
 - weaker governance story than starting from AWS-native controls for AWS resources
 
 ### Prometheus/Grafana-centered cost collection
 
 Pros:
+
 - operationally unified dashboards
 
 Why not default:
+
 - billing data cadence differs from runtime telemetry
 - still requires additional collection/integration layers
 - weaker baseline governance framing than CUR/Athena/Budgets

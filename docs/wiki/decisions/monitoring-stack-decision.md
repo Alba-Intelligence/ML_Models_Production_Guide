@@ -43,20 +43,24 @@ This choice best matches the project's goals:
 ### WhyLogs / WhyLabs-oriented path
 
 Pros:
+
 - Python-friendly
 - easier managed experience
 
 Why not default:
+
 - introduces more vendor coupling
 - weaker fit for a self-hostable reference baseline
 
 ### Fully managed model-monitoring vendor path
 
 Pros:
+
 - less integration work
 - rich enterprise features
 
 Why not default:
+
 - weaker fit for a general reusable reference
 - less transparent as a teaching/documentation baseline
 - higher vendor dependence
