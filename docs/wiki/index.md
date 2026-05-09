@@ -13,10 +13,12 @@ sources:
   - architecture/reference-architecture-skeleton.md
   - architecture/documentation-toc.md
   - architecture/assistant-integration-and-docs-delivery.md
+  - architecture/example-matrix.md
   - contracts/index.md
   - domains/index.md
   - topologies/index.md
   - runbooks/jupyter-and-shell.md
+  - decisions/index.md
   - decisions/repository-shape.md
   - decisions/project-scope-and-constraints.md
   - decisions/monitoring-stack-decision.md
@@ -46,6 +48,7 @@ sources:
 | Review the bounded domain pages                                      | [domains/index.md](domains/index.md), [architecture/reference-architecture-skeleton.md](architecture/reference-architecture-skeleton.md)                                                                               |
 | Review the reference topologies                                      | [topologies/index.md](topologies/index.md), [architecture/reference-architecture-skeleton.md](architecture/reference-architecture-skeleton.md)                                                                         |
 | Review accepted default stack decisions                              | [decisions/monitoring-stack-decision.md](decisions/monitoring-stack-decision.md), [decisions/cost-monitoring-stack-decision.md](decisions/cost-monitoring-stack-decision.md), [decisions/docker-nix-boundary-decision.md](decisions/docker-nix-boundary-decision.md) |
+| Review the planned example inventory                                 | [architecture/example-matrix.md](architecture/example-matrix.md), [topologies/index.md](topologies/index.md)                                                                                                          |
 | Decide how much weight to give decision records                      | [queries/decision-records-and-project-restart.md](queries/decision-records-and-project-restart.md), [architecture/top-down-planning.md](architecture/top-down-planning.md)                                             |
 | Check whether implementation is allowed yet                          | [decisions/project-scope-and-constraints.md](decisions/project-scope-and-constraints.md), [current-state.md](current-state.md)                                                                                         |
 | Modify the Nix dev shell or toolchain                                | [architecture/dev-environment.md](architecture/dev-environment.md), [sources/flake.nix.md](sources/flake.nix.md)                                                                                                       |
@@ -69,7 +72,8 @@ sources:
 - [architecture/top-down-planning.md](architecture/top-down-planning.md) — recommended planning method and separation-of-concerns structure.
 - [architecture/reference-architecture-skeleton.md](architecture/reference-architecture-skeleton.md) — proposed architectural spine for lifecycle, domains, contracts, and topologies.
 - [architecture/documentation-toc.md](architecture/documentation-toc.md) — proposed table of contents for the documentation set.
-- [architecture/assistant-integration-and-docs-delivery.md](architecture/assistant-integration-and-docs-delivery.md) — proposed MCP assistant surfaces and FastAPI-based docs delivery model.
+- [architecture/assistant-integration-and-docs-delivery.md](architecture/assistant-integration-and-docs-delivery.md) — accepted MCP defaults plus docs delivery guidance.
+- [architecture/example-matrix.md](architecture/example-matrix.md) — proposed example inventory mapped to lifecycle, domains, contracts, and topologies.
 - [architecture/dev-environment.md](architecture/dev-environment.md) — current Nix shell, Python, Jupyter, and bundled tooling.
 
 ## Contracts
@@ -113,6 +117,7 @@ sources:
 
 ## Decisions
 
+- [decisions/index.md](decisions/index.md) — router for durable architectural and stack decisions.
 - [decisions/project-scope-and-constraints.md](decisions/project-scope-and-constraints.md) — current purpose, hard constraints, and no-code planning rule.
 - [decisions/repository-shape.md](decisions/repository-shape.md) — why this repo is currently implementation-light and what that implies.
 - [decisions/monitoring-stack-decision.md](decisions/monitoring-stack-decision.md) — accepted default monitoring stack.
@@ -130,6 +135,7 @@ sources:
 
 ## Revision artifacts
 
+- [revisions/2026-05-09-example-matrix.md](revisions/2026-05-09-example-matrix.md) — captures the first architecture-aligned example inventory.
 - [revisions/2026-05-09-default-stack-decisions.md](revisions/2026-05-09-default-stack-decisions.md) — captures the accepted default stack and boundary decisions.
 - [revisions/2026-05-09-topology-pages.md](revisions/2026-05-09-topology-pages.md) — captures the first pass of reference topology pages.
 - [revisions/2026-05-09-domain-pages.md](revisions/2026-05-09-domain-pages.md) — captures the first pass of bounded domain pages.
@@ -145,7 +151,7 @@ sources:
 ## Known gaps
 
 - No application code, notebooks, Docker workflow, or `pyproject.toml` exist yet.
-- First-pass topology pages now exist, but they still need formal acceptance and later concrete example mappings.
+- The example matrix now exists, but concrete example implementations do not.
 - The architecture skeleton, documentation TOC, contracts, domain pages, and topology pages are still draft planning artifacts awaiting acceptance.
 - The accepted default stack decisions now exist, but they still need to be reflected consistently in later implementation docs and examples.
 - `archive/` is intentionally empty until useful material accumulates.

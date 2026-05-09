@@ -13,6 +13,7 @@ sources:
   - architecture/reference-architecture-skeleton.md
   - architecture/documentation-toc.md
   - architecture/assistant-integration-and-docs-delivery.md
+  - architecture/example-matrix.md
   - contracts/index.md
   - domains/index.md
   - topologies/index.md
@@ -46,6 +47,7 @@ As of 2026-05-09, the repository contains:
 - The first pass of cross-cutting contract pages now exists in the wiki.
 - The first pass of bounded domain pages now exists in the wiki.
 - The first pass of reference topology pages now exists in the wiki.
+- The first architecture-aligned example matrix now exists in the wiki.
 
 ## Current limitations
 
@@ -66,7 +68,7 @@ The repo is currently best understood as a **specification-first and documentati
 
 - Docker-based development definition
 - `pyproject.toml`
-- example code inventory mapped to contracts, domains, and topologies
+- concrete examples derived from the example matrix
 - implementation only after remaining architectural approvals
 
 ## If you are modifying the repo

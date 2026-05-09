@@ -13,6 +13,7 @@ sources:
   - architecture/reference-architecture-skeleton.md
   - architecture/documentation-toc.md
   - architecture/assistant-integration-and-docs-delivery.md
+  - architecture/example-matrix.md
   - contracts/index.md
   - domains/index.md
   - topologies/index.md
@@ -50,7 +51,7 @@ This repository is becoming a **documentation-first, Python-heavy ML deployment 
 - The technical direction is Python-first, Linux-only, PyTorch-only with GPU support, with FastAPI, MLflow, python-terraform, Lambda.ai, and AWS in scope.
 - Security, data lineage, traceability, and reproducibility are permanent architectural requirements.
 - Reproducible development is expected to use Docker, while Nix may remain as a helper layer.
-- The project now has draft planning layers for the architecture skeleton, documentation TOC, contracts, domains, and topologies, plus accepted decision records for the default monitoring, cost, Docker/Nix, MCP, and docs-delivery postures.
+- The project now has draft planning layers for the architecture skeleton, documentation TOC, contracts, domains, topologies, and example matrix, plus accepted decision records for the default monitoring, cost, Docker/Nix, MCP, and docs-delivery postures.
 - The shell is prepared for Python and Jupyter work, but Python environment auto-creation only activates once a `pyproject.toml` appears.
 - Jupyter support is present and opinionated, including a fixed kernel name: `ml_ops`.
 - Git tracking is intentionally minimal; notably, `flake.lock` is present locally but ignored by the current `.gitignore`.
@@ -62,7 +63,8 @@ This repository is becoming a **documentation-first, Python-heavy ML deployment 
 - [architecture/target-system.md](architecture/target-system.md) — intended end-state scope and stack.
 - [architecture/reference-architecture-skeleton.md](architecture/reference-architecture-skeleton.md) — proposed architectural spine.
 - [architecture/documentation-toc.md](architecture/documentation-toc.md) — proposed documentation structure.
-- [architecture/assistant-integration-and-docs-delivery.md](architecture/assistant-integration-and-docs-delivery.md) — proposed MCP assistant surfaces and docs delivery model.
+- [architecture/assistant-integration-and-docs-delivery.md](architecture/assistant-integration-and-docs-delivery.md) — accepted MCP defaults plus docs delivery guidance.
+- [architecture/example-matrix.md](architecture/example-matrix.md) — proposed implementation/example sequence.
 - [contracts/index.md](contracts/index.md) — router for the cross-cutting contracts.
 - [domains/index.md](domains/index.md) — router for the bounded domains.
 - [topologies/index.md](topologies/index.md) — router for the reference topologies.
