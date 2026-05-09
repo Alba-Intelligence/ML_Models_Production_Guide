@@ -14,6 +14,7 @@ sources:
   - architecture/documentation-toc.md
   - architecture/assistant-integration-and-docs-delivery.md
   - contracts/index.md
+  - domains/index.md
   - decisions/project-scope-and-constraints.md
 ---
 
@@ -42,6 +43,7 @@ As of 2026-05-09, the repository contains:
 - The first draft of the reference architecture skeleton and documentation TOC now exists in the wiki.
 - The project now also has a draft proposal for MCP-enabled assistant integrations and FastAPI-based documentation delivery.
 - The first pass of cross-cutting contract pages now exists in the wiki.
+- The first pass of bounded domain pages now exists in the wiki.
 
 ## Current limitations
 
@@ -50,7 +52,7 @@ As of 2026-05-09, the repository contains:
 - CUDA support is explicitly commented out in `flake.nix`.
 - There is no actual ML code, data pipeline, or deployment implementation yet.
 - Docker-based reproducible development is now a requirement, but the repository does not yet implement that workflow.
-- The reference now has draft versions of the architecture skeleton, documentation TOC, assistant/MCP posture, docs-delivery posture, and cross-cutting contracts, but they are not yet formally approved as a complete set.
+- The reference now has draft versions of the architecture skeleton, documentation TOC, assistant/MCP posture, docs-delivery posture, cross-cutting contracts, and bounded domain pages, but they are not yet formally approved as a complete set.
 - The default monitoring and cost-monitoring choices are not yet agreed.
 - `flake.lock` is not tracked by git under the current ignore rules, so lockfile drift may be local-only unless that policy changes.
 - The origin currently contributes a `LICENSE` file, while the expected remote `README.md` was not present during synchronization.
@@ -61,9 +63,7 @@ The repo is currently best understood as a **specification-first and documentati
 
 ## Most likely next additions
 
-- domain pages for data, training, serving, infrastructure, observability, governance, and cost
 - topology pages for distributed training, batch inference, and online inference
-- architecture pages for assistant integration surfaces and documentation delivery
 - decision records for monitoring, cost, Docker/Nix, MCPs, and docs delivery
 - Docker-based development definition
 - `pyproject.toml`
