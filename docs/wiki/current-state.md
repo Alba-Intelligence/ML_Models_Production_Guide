@@ -12,6 +12,7 @@ sources:
   - architecture/reference-architecture-skeleton.md
   - architecture/documentation-toc.md
   - architecture/assistant-integration-and-docs-delivery.md
+  - contracts/index.md
   - decisions/project-scope-and-constraints.md
 ---
 
@@ -34,10 +35,11 @@ As of 2026-05-09, the repository contains:
 - The shell includes Python 3.13, `uv`, `pyright`, `sphinx`, Typst tools, and multiple AI coding-agent CLIs.
 - Helper commands exist for Jupyter kernel installation and launching JupyterLab.
 - The shell is prepared to activate a local `.venv` when a `pyproject.toml` is added.
-- A git repository exists and is currently at `main` with no commits yet.
+- A git repository exists and is currently at `main` with an initial planning commit.
 - The project now has a much clearer target specification captured in the wiki.
 - The first draft of the reference architecture skeleton and documentation TOC now exists in the wiki.
 - The project now also has a draft proposal for MCP-enabled assistant integrations and FastAPI-based documentation delivery.
+- The first pass of cross-cutting contract pages now exists in the wiki.
 
 ## Current limitations
 
@@ -46,7 +48,7 @@ As of 2026-05-09, the repository contains:
 - CUDA support is explicitly commented out in `flake.nix`.
 - There is no actual ML code, data pipeline, or deployment implementation yet.
 - Docker-based reproducible development is now a requirement, but the repository does not yet implement that workflow.
-- The reference now has draft versions of the architecture skeleton, documentation TOC, assistant/MCP posture, and docs-delivery posture, but they are not yet formally approved.
+- The reference now has draft versions of the architecture skeleton, documentation TOC, assistant/MCP posture, docs-delivery posture, and cross-cutting contracts, but they are not yet formally approved as a complete set.
 - The default monitoring and cost-monitoring choices are not yet agreed.
 - `flake.lock` is not tracked by git under the current ignore rules, so lockfile drift may be local-only unless that policy changes.
 
@@ -56,10 +58,10 @@ The repo is currently best understood as a **specification-first and documentati
 
 ## Most likely next additions
 
-- contract pages for security, lineage, traceability, artifacts, deployments, and prediction logging
 - domain pages for data, training, serving, infrastructure, observability, governance, and cost
 - topology pages for distributed training, batch inference, and online inference
 - architecture pages for assistant integration surfaces and documentation delivery
+- decision records for monitoring, cost, Docker/Nix, MCPs, and docs delivery
 - Docker-based development definition
 - `pyproject.toml`
 - example code only after specification alignment

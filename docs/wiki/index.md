@@ -13,6 +13,7 @@ sources:
   - architecture/reference-architecture-skeleton.md
   - architecture/documentation-toc.md
   - architecture/assistant-integration-and-docs-delivery.md
+  - contracts/index.md
   - runbooks/jupyter-and-shell.md
   - decisions/repository-shape.md
   - decisions/project-scope-and-constraints.md
@@ -33,13 +34,14 @@ sources:
 | Review the proposed architecture skeleton                            | [architecture/reference-architecture-skeleton.md](architecture/reference-architecture-skeleton.md), [architecture/target-system.md](architecture/target-system.md)                                                                           |
 | Review the proposed documentation structure                          | [architecture/documentation-toc.md](architecture/documentation-toc.md), [architecture/reference-architecture-skeleton.md](architecture/reference-architecture-skeleton.md)                                                                   |
 | Review assistant/MCP and docs-delivery proposals                     | [architecture/assistant-integration-and-docs-delivery.md](architecture/assistant-integration-and-docs-delivery.md), [architecture/target-system.md](architecture/target-system.md)                                                           |
+| Review the cross-cutting contracts                                   | [contracts/index.md](contracts/index.md), [architecture/reference-architecture-skeleton.md](architecture/reference-architecture-skeleton.md)                                                                                                  |
 | Check whether implementation is allowed yet                          | [decisions/project-scope-and-constraints.md](decisions/project-scope-and-constraints.md), [current-state.md](current-state.md)                                                                                                               |
 | Modify the Nix dev shell or toolchain                                | [architecture/dev-environment.md](architecture/dev-environment.md), [sources/flake.nix.md](sources/flake.nix.md)                                                                                                                             |
 | Understand pinned upstream dependencies                              | [sources/flake.lock.md](sources/flake.lock.md)                                                                                                                                                                                               |
 | Run or debug Jupyter / kernel setup                                  | [runbooks/jupyter-and-shell.md](runbooks/jupyter-and-shell.md), [sources/flake.nix.md](sources/flake.nix.md)                                                                                                                                 |
 | Understand git tracking, ignored files, or private-doc conventions   | [sources/gitignore.md](sources/gitignore.md), [current-state.md](current-state.md)                                                                                                                                                           |
 | Understand durable repo conventions and why the repo is still sparse | [decisions/repository-shape.md](decisions/repository-shape.md), [current-state.md](current-state.md)                                                                                                                                         |
-| See what changed in the wiki recently                                | [log.md](log.md), [revisions/2026-05-09-assistant-and-docs-delivery.md](revisions/2026-05-09-assistant-and-docs-delivery.md), [revisions/2026-05-09-architecture-skeleton-and-toc.md](revisions/2026-05-09-architecture-skeleton-and-toc.md) |
+| See what changed in the wiki recently                                | [log.md](log.md), [revisions/2026-05-09-contract-baselines.md](revisions/2026-05-09-contract-baselines.md), [revisions/2026-05-09-assistant-and-docs-delivery.md](revisions/2026-05-09-assistant-and-docs-delivery.md) |
 
 ## Core pages
 
@@ -56,6 +58,17 @@ sources:
 - [architecture/documentation-toc.md](architecture/documentation-toc.md) — proposed table of contents for the documentation set.
 - [architecture/assistant-integration-and-docs-delivery.md](architecture/assistant-integration-and-docs-delivery.md) — proposed MCP assistant surfaces and FastAPI-based docs delivery model.
 - [architecture/dev-environment.md](architecture/dev-environment.md) — current Nix shell, Python, Jupyter, and bundled tooling.
+
+## Contracts
+
+- [contracts/index.md](contracts/index.md) — router for all cross-cutting contracts.
+- [contracts/security-baseline.md](contracts/security-baseline.md) — identity, secrets, network, access, and audit minimums.
+- [contracts/data-lineage-baseline.md](contracts/data-lineage-baseline.md) — dataset and transformation provenance requirements.
+- [contracts/experiment-traceability-baseline.md](contracts/experiment-traceability-baseline.md) — required experiment and training metadata.
+- [contracts/model-artifact-baseline.md](contracts/model-artifact-baseline.md) — minimum artifact and model-version metadata.
+- [contracts/deployment-baseline.md](contracts/deployment-baseline.md) — required deployment metadata and rollback context.
+- [contracts/prediction-logging-baseline.md](contracts/prediction-logging-baseline.md) — minimum inference logging requirements.
+- [contracts/cost-attribution-baseline.md](contracts/cost-attribution-baseline.md) — required spend attribution metadata.
 
 ## Runbooks
 
@@ -74,6 +87,7 @@ sources:
 
 ## Revision artifacts
 
+- [revisions/2026-05-09-contract-baselines.md](revisions/2026-05-09-contract-baselines.md) — captures the first cross-cutting contract pages.
 - [revisions/2026-05-09-assistant-and-docs-delivery.md](revisions/2026-05-09-assistant-and-docs-delivery.md) — captures the MCP assistant and FastAPI docs-delivery proposals.
 - [revisions/2026-05-09-architecture-skeleton-and-toc.md](revisions/2026-05-09-architecture-skeleton-and-toc.md) — captures the first proposed architecture skeleton and documentation TOC.
 - [revisions/2026-05-09-planning-direction.md](revisions/2026-05-09-planning-direction.md) — captures the agreed audience, production scope, and top-down planning guidance.
@@ -83,6 +97,7 @@ sources:
 ## Known gaps
 
 - No application code, notebooks, Docker workflow, or `pyproject.toml` exist yet.
-- Drafts now exist for the architecture skeleton, documentation TOC, assistant/MCP posture, and docs-delivery posture, but they are not yet frozen final decisions.
+- First-pass cross-cutting contracts now exist, but domain pages and topology pages still need to consume them explicitly.
+- The architecture skeleton, documentation TOC, assistant/MCP posture, and docs-delivery posture are still draft decisions.
 - The default monitoring and cost-monitoring choices are still not formally settled.
 - `queries/` and `archive/` are intentionally empty until useful material accumulates.
