@@ -15,6 +15,7 @@ sources:
   - architecture/assistant-integration-and-docs-delivery.md
   - contracts/index.md
   - domains/index.md
+  - topologies/index.md
   - decisions/project-scope-and-constraints.md
 ---
 
@@ -49,7 +50,7 @@ This repository is becoming a **documentation-first, Python-heavy ML deployment 
 - The technical direction is Python-first, Linux-only, PyTorch-only with GPU support, with FastAPI, MLflow, python-terraform, Lambda.ai, and AWS in scope.
 - Security, data lineage, traceability, and reproducibility are permanent architectural requirements.
 - Reproducible development is expected to use Docker, while Nix may remain as a helper layer.
-- The project now has draft versions of the reference architecture skeleton, the documentation TOC, the assistant/MCP plus docs-delivery posture, the first pass of cross-cutting contracts, and the first pass of bounded domain pages.
+- The project now has draft versions of the reference architecture skeleton, the documentation TOC, the assistant/MCP plus docs-delivery posture, the first pass of cross-cutting contracts, the first pass of bounded domain pages, and the first pass of reference topology pages.
 - The shell is prepared for Python and Jupyter work, but Python environment auto-creation only activates once a `pyproject.toml` appears.
 - Jupyter support is present and opinionated, including a fixed kernel name: `ml_ops`.
 - Git tracking is intentionally minimal; notably, `flake.lock` is present locally but ignored by the current `.gitignore`.
@@ -64,6 +65,7 @@ This repository is becoming a **documentation-first, Python-heavy ML deployment 
 - [architecture/assistant-integration-and-docs-delivery.md](architecture/assistant-integration-and-docs-delivery.md) — proposed MCP assistant surfaces and docs delivery model.
 - [contracts/index.md](contracts/index.md) — router for the cross-cutting contracts.
 - [domains/index.md](domains/index.md) — router for the bounded domains.
+- [topologies/index.md](topologies/index.md) — router for the reference topologies.
 - [decisions/project-scope-and-constraints.md](decisions/project-scope-and-constraints.md) — current hard constraints and no-code planning rule.
 - [architecture/dev-environment.md](architecture/dev-environment.md) — the current technical substance of the repo.
 
@@ -73,6 +75,7 @@ This repository is becoming a **documentation-first, Python-heavy ML deployment 
 - Should the proposed documentation TOC be accepted as-is or revised?
 - Should the first-pass cross-cutting contracts be accepted as-is or revised?
 - Should the first-pass bounded domain pages be accepted as-is or revised?
+- Should the first-pass topology pages be accepted as-is or revised?
 - Which model-monitoring and cost-monitoring stacks should be the default recommended path?
 - Which MCP integrations should be default vs optional?
 - Should FastAPI docs delivery be part of the default architecture or an optional companion pattern?

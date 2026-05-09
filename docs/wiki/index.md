@@ -15,6 +15,7 @@ sources:
   - architecture/assistant-integration-and-docs-delivery.md
   - contracts/index.md
   - domains/index.md
+  - topologies/index.md
   - runbooks/jupyter-and-shell.md
   - decisions/repository-shape.md
   - decisions/project-scope-and-constraints.md
@@ -38,6 +39,7 @@ sources:
 | Review assistant/MCP and docs-delivery proposals                     | [architecture/assistant-integration-and-docs-delivery.md](architecture/assistant-integration-and-docs-delivery.md), [architecture/target-system.md](architecture/target-system.md)                                     |
 | Review the cross-cutting contracts                                   | [contracts/index.md](contracts/index.md), [architecture/reference-architecture-skeleton.md](architecture/reference-architecture-skeleton.md)                                                                           |
 | Review the bounded domain pages                                      | [domains/index.md](domains/index.md), [architecture/reference-architecture-skeleton.md](architecture/reference-architecture-skeleton.md)                                                                              |
+| Review the reference topologies                                      | [topologies/index.md](topologies/index.md), [architecture/reference-architecture-skeleton.md](architecture/reference-architecture-skeleton.md)                                                                         |
 | Decide how much weight to give decision records                      | [queries/decision-records-and-project-restart.md](queries/decision-records-and-project-restart.md), [architecture/top-down-planning.md](architecture/top-down-planning.md)                                           |
 | Check whether implementation is allowed yet                          | [decisions/project-scope-and-constraints.md](decisions/project-scope-and-constraints.md), [current-state.md](current-state.md)                                                                                         |
 | Modify the Nix dev shell or toolchain                                | [architecture/dev-environment.md](architecture/dev-environment.md), [sources/flake.nix.md](sources/flake.nix.md)                                                                                                       |
@@ -87,6 +89,14 @@ sources:
 - [domains/governance-domain.md](domains/governance-domain.md) — approvals, IAM, auditability, and policy boundaries.
 - [domains/cost-domain.md](domains/cost-domain.md) — spend attribution, reporting, budgets, and unit economics.
 
+## Topologies
+
+- [topologies/index.md](topologies/index.md) — router for all reference topologies.
+- [topologies/local-development-and-single-node-training.md](topologies/local-development-and-single-node-training.md) — local Docker-based iteration and single-node training.
+- [topologies/distributed-training-on-lambda-ai.md](topologies/distributed-training-on-lambda-ai.md) — remote distributed training on Lambda.ai.
+- [topologies/batch-inference-on-aws-integrated-infrastructure.md](topologies/batch-inference-on-aws-integrated-infrastructure.md) — offline inference with lineage and cost controls.
+- [topologies/online-inference-under-production-controls.md](topologies/online-inference-under-production-controls.md) — production online serving with rollout, monitoring, and rollback controls.
+
 ## Queries
 
 - [queries/decision-records-and-project-restart.md](queries/decision-records-and-project-restart.md) — why decision records matter and why they are not enough alone.
@@ -109,6 +119,7 @@ sources:
 
 ## Revision artifacts
 
+- [revisions/2026-05-09-topology-pages.md](revisions/2026-05-09-topology-pages.md) — captures the first pass of reference topology pages.
 - [revisions/2026-05-09-domain-pages.md](revisions/2026-05-09-domain-pages.md) — captures the first pass of bounded domain pages.
 - [revisions/2026-05-09-decision-records-role.md](revisions/2026-05-09-decision-records-role.md) — captures how decision records should complement the top-down architecture.
 - [revisions/2026-05-09-origin-rebase-and-push.md](revisions/2026-05-09-origin-rebase-and-push.md) — captures rebasing onto origin and incorporating the remote license file.
@@ -122,7 +133,7 @@ sources:
 ## Known gaps
 
 - No application code, notebooks, Docker workflow, or `pyproject.toml` exist yet.
-- First-pass domain pages now exist, but topology pages still need to map the domains into concrete deployment shapes.
-- The architecture skeleton, documentation TOC, assistant/MCP posture, docs-delivery posture, and domain pages are still draft planning artifacts.
+- First-pass topology pages now exist, but they still need formal acceptance and later concrete example mappings.
+- The architecture skeleton, documentation TOC, assistant/MCP posture, docs-delivery posture, domain pages, and topology pages are still draft planning artifacts.
 - The default monitoring and cost-monitoring choices are still not formally settled.
 - `archive/` is intentionally empty until useful material accumulates.

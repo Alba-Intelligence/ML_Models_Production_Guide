@@ -71,6 +71,7 @@ Any eventual implementation should be judged against these questions:
 - approval or revision of the proposed documentation TOC
 - approval or revision of the first-pass cross-cutting contracts
 - approval or revision of the first-pass bounded domain pages
+- approval or revision of the first-pass topology pages
 - default production monitoring stack
 - default cost monitoring stack
 - which MCP integrations are default vs optional
