@@ -7,6 +7,7 @@ read_when:
 sources:
   - sources/flake.nix.md
   - sources/flake.lock.md
+  - sources/LICENSE.md
   - current-state.md
   - architecture/target-system.md
   - architecture/reference-architecture-skeleton.md
@@ -24,6 +25,7 @@ This repository is becoming a **documentation-first, Python-heavy ML deployment 
 
 ## What exists
 
+- A root `LICENSE` file from the GitHub origin, currently GPL-3.0.
 - A `flake.nix` that defines the development shell.
 - A local `flake.lock` that pins upstream inputs.
 - A root `.gitignore` with a minimal ignore policy.
@@ -50,6 +52,7 @@ This repository is becoming a **documentation-first, Python-heavy ML deployment 
 - The shell is prepared for Python and Jupyter work, but Python environment auto-creation only activates once a `pyproject.toml` appears.
 - Jupyter support is present and opinionated, including a fixed kernel name: `ml_ops`.
 - Git tracking is intentionally minimal; notably, `flake.lock` is present locally but ignored by the current `.gitignore`.
+- The local branch history has now been rebased onto the configured GitHub origin.
 
 ## High-value pages
 
@@ -72,3 +75,4 @@ This repository is becoming a **documentation-first, Python-heavy ML deployment 
 - Should FastAPI docs delivery be part of the default architecture or an optional companion pattern?
 - What exact boundary should exist between Docker as the standard path and Nix as a helper layer?
 - Will Python packaging be managed through `uv` + `pyproject.toml`, Docker, or both?
+- Does the origin repository also need a README added later, given that only `LICENSE` was present during synchronization?

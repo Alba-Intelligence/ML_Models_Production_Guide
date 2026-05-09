@@ -8,6 +8,7 @@ sources:
   - sources/flake.nix.md
   - sources/flake.lock.md
   - sources/gitignore.md
+  - sources/LICENSE.md
   - architecture/target-system.md
   - architecture/reference-architecture-skeleton.md
   - architecture/documentation-toc.md
@@ -22,12 +23,13 @@ sources:
 
 As of 2026-05-09, the repository contains:
 
+- `LICENSE`
 - `flake.nix`
 - `flake.lock` (local, but currently gitignored)
 - `.gitignore`
 - `AGENTS.md`
 - `docs/wiki/` (the living memory layer added in this task)
-- git metadata for a newly initialized repository
+- git metadata for a repository now rebased onto `origin/main`
 
 ## What is working
 
@@ -35,7 +37,7 @@ As of 2026-05-09, the repository contains:
 - The shell includes Python 3.13, `uv`, `pyright`, `sphinx`, Typst tools, and multiple AI coding-agent CLIs.
 - Helper commands exist for Jupyter kernel installation and launching JupyterLab.
 - The shell is prepared to activate a local `.venv` when a `pyproject.toml` is added.
-- A git repository exists and is currently at `main` with an initial planning commit.
+- A git repository exists and is currently at `main`, with the local planning commits rebased onto the GitHub origin history.
 - The project now has a much clearer target specification captured in the wiki.
 - The first draft of the reference architecture skeleton and documentation TOC now exists in the wiki.
 - The project now also has a draft proposal for MCP-enabled assistant integrations and FastAPI-based documentation delivery.
@@ -51,6 +53,7 @@ As of 2026-05-09, the repository contains:
 - The reference now has draft versions of the architecture skeleton, documentation TOC, assistant/MCP posture, docs-delivery posture, and cross-cutting contracts, but they are not yet formally approved as a complete set.
 - The default monitoring and cost-monitoring choices are not yet agreed.
 - `flake.lock` is not tracked by git under the current ignore rules, so lockfile drift may be local-only unless that policy changes.
+- The origin currently contributes a `LICENSE` file, while the expected remote `README.md` was not present during synchronization.
 
 ## Repo posture
 
