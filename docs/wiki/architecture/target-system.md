@@ -85,36 +85,49 @@ These are not optional features; they are architectural requirements:
 
 ## Assistant integration direction
 
-The project should consider **MCP-enabled assistant integrations** where they help ML engineers with monitoring and ongoing improvement tasks.
-
-Priority integration surfaces to consider:
+The project uses the following **default MCP/assistant-support scope**:
 
 - MLflow
 - observability systems such as Prometheus/Grafana and/or CloudWatch
 - AWS cost visibility systems
 - Lambda.ai job/usage visibility
-- deployment/service metadata
 - documentation and decision retrieval
 
 Design posture:
 
-- assistant integrations should be read-first and least-privilege by default
+- assistant integrations are read-first and least-privilege by default
 - write capabilities, if any, should be explicit and auditable
 - assistants should consume canonical platform facts through controlled interfaces, not create parallel sources of truth
 
 ## Documentation delivery direction
 
-The project should consider a **FastAPI-based documentation delivery layer**.
+A **FastAPI-based documentation delivery layer** is accepted as an **optional companion pattern**, not a mandatory default architecture element.
 
-Recommended stance:
+Accepted stance:
 
 - markdown in git remains the canonical source of documentation
-- FastAPI serves/render docs, indexes, metadata, and example navigation
+- FastAPI may serve/render docs, indexes, metadata, and example navigation
 - optional editing helpers can be layered on later, but should not replace file-based source control
 
-## Monitoring options to evaluate
+## Default monitoring stack
 
-These are options, not final decisions.
+Accepted default:
+
+- **Evidently** for model/data quality and drift-oriented reporting
+- **Prometheus** for metrics collection
+- **Grafana** for dashboards and operational visibility
+- **MLflow** for experiment/model metadata context
+
+Alternatives may still be documented, but this is the canonical reference path.
+
+## Default cost-monitoring stack
+
+Accepted default:
+
+- **AWS Cost Explorer / CUR / Athena / Budgets** for AWS-native governance and visibility
+- a **Python attribution layer** to integrate **Lambda.ai** usage/cost data into the broader reporting view
+
+Alternatives may still be documented, but this is the canonical reference path.
 
 ### Production model monitoring
 
@@ -253,9 +266,5 @@ Lineage and traceability should cover all of the following:
 ## Outstanding design questions
 
 - What should the exact top-level table of contents be?
-- Which monitoring stack should be the default documented path versus optional alternatives?
-- Which cost-monitoring stack should be the default documented path versus optional alternatives?
-- Which MCP integrations should be part of the default assistant-support story versus optional extensions?
-- Should FastAPI documentation delivery be part of the default reference architecture or an optional companion pattern?
 - How should the reference divide material between reusable platform patterns and hedge-fund-specific operating constraints?
-- How should Nix participate in Docker generation without becoming a second competing primary development path?
+- How should Nix participate in Docker generation without becoming a second competing primary development path while remaining a helper layer only?

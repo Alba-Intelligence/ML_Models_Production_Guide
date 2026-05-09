@@ -50,7 +50,7 @@ This repository is becoming a **documentation-first, Python-heavy ML deployment 
 - The technical direction is Python-first, Linux-only, PyTorch-only with GPU support, with FastAPI, MLflow, python-terraform, Lambda.ai, and AWS in scope.
 - Security, data lineage, traceability, and reproducibility are permanent architectural requirements.
 - Reproducible development is expected to use Docker, while Nix may remain as a helper layer.
-- The project now has draft versions of the reference architecture skeleton, the documentation TOC, the assistant/MCP plus docs-delivery posture, the first pass of cross-cutting contracts, the first pass of bounded domain pages, and the first pass of reference topology pages.
+- The project now has draft planning layers for the architecture skeleton, documentation TOC, contracts, domains, and topologies, plus accepted decision records for the default monitoring, cost, Docker/Nix, MCP, and docs-delivery postures.
 - The shell is prepared for Python and Jupyter work, but Python environment auto-creation only activates once a `pyproject.toml` appears.
 - Jupyter support is present and opinionated, including a fixed kernel name: `ml_ops`.
 - Git tracking is intentionally minimal; notably, `flake.lock` is present locally but ignored by the current `.gitignore`.
@@ -76,9 +76,6 @@ This repository is becoming a **documentation-first, Python-heavy ML deployment 
 - Should the first-pass cross-cutting contracts be accepted as-is or revised?
 - Should the first-pass bounded domain pages be accepted as-is or revised?
 - Should the first-pass topology pages be accepted as-is or revised?
-- Which model-monitoring and cost-monitoring stacks should be the default recommended path?
-- Which MCP integrations should be default vs optional?
-- Should FastAPI docs delivery be part of the default architecture or an optional companion pattern?
-- What exact boundary should exist between Docker as the standard path and Nix as a helper layer?
+- What exact boundary should exist between Docker as the standard path and Nix as a helper layer in real workflows?
 - Will Python packaging be managed through `uv` + `pyproject.toml`, Docker, or both?
 - Does the origin repository also need a README added later, given that only `LICENSE` was present during synchronization?

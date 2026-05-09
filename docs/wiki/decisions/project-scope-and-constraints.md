@@ -40,8 +40,10 @@ The project is intended to become an **extensive reference documentation set wit
 - AWS coverage should use **full production patterns**.
 - Lineage scope should cover **datasets, features/transformations, experiments, model artifacts, model versions, deployments, and operational runs where relevant**.
 - Nix may assist with Docker generation, but Docker remains the primary reproducible development artifact.
-- MCP-enabled assistant integrations should be considered where they help with monitoring and ongoing improvement tasks.
-- FastAPI may also be used as a documentation delivery layer if markdown-in-git remains canonical.
+- The default MCP scope includes MLflow, observability, AWS cost visibility, Lambda.ai usage visibility, and documentation/decision retrieval.
+- FastAPI documentation delivery is accepted as an optional companion pattern if markdown-in-git remains canonical.
+- Default monitoring stack: Evidently + Prometheus + Grafana + MLflow.
+- Default cost stack: AWS Cost Explorer / CUR / Athena / Budgets + Python attribution layer for Lambda.ai.
 
 ## Working mode decision
 
@@ -72,9 +74,5 @@ Any eventual implementation should be judged against these questions:
 - approval or revision of the first-pass cross-cutting contracts
 - approval or revision of the first-pass bounded domain pages
 - approval or revision of the first-pass topology pages
-- default production monitoring stack
-- default cost monitoring stack
-- which MCP integrations are default vs optional
-- whether FastAPI docs delivery is part of the default architecture or an optional companion pattern
-- exact boundary between Nix-assisted generation and hand-authored Docker workflow
+- exact boundary between Nix-assisted generation and hand-authored Docker workflow in practice
 - how to separate reusable platform guidance from hedge-fund-specific operating guidance

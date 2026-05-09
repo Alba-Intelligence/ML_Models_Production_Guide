@@ -42,7 +42,7 @@ As of 2026-05-09, the repository contains:
 - A git repository exists and is currently at `main`, with the local planning commits rebased onto the GitHub origin history.
 - The project now has a much clearer target specification captured in the wiki.
 - The first draft of the reference architecture skeleton and documentation TOC now exists in the wiki.
-- The project now also has a draft proposal for MCP-enabled assistant integrations and FastAPI-based documentation delivery.
+- The project now also has accepted defaults for MCP scope, monitoring stack, cost stack, Docker/Nix posture, and docs-delivery posture captured in decision records.
 - The first pass of cross-cutting contract pages now exists in the wiki.
 - The first pass of bounded domain pages now exists in the wiki.
 - The first pass of reference topology pages now exists in the wiki.
@@ -54,8 +54,7 @@ As of 2026-05-09, the repository contains:
 - CUDA support is explicitly commented out in `flake.nix`.
 - There is no actual ML code, data pipeline, or deployment implementation yet.
 - Docker-based reproducible development is now a requirement, but the repository does not yet implement that workflow.
-- The reference now has draft versions of the architecture skeleton, documentation TOC, assistant/MCP posture, docs-delivery posture, cross-cutting contracts, bounded domain pages, and topology pages, but they are not yet formally approved as a complete set.
-- The default monitoring and cost-monitoring choices are not yet agreed.
+- The reference now has draft versions of the architecture skeleton, documentation TOC, cross-cutting contracts, bounded domain pages, and topology pages, while the default monitoring/cost/MCP/docs-delivery decisions are now recorded.
 - `flake.lock` is not tracked by git under the current ignore rules, so lockfile drift may be local-only unless that policy changes.
 - The origin currently contributes a `LICENSE` file, while the expected remote `README.md` was not present during synchronization.
 
@@ -65,10 +64,10 @@ The repo is currently best understood as a **specification-first and documentati
 
 ## Most likely next additions
 
-- decision records for monitoring, cost, Docker/Nix, MCPs, and docs delivery
 - Docker-based development definition
 - `pyproject.toml`
-- example code only after specification alignment
+- example code inventory mapped to contracts, domains, and topologies
+- implementation only after remaining architectural approvals
 
 ## If you are modifying the repo
 

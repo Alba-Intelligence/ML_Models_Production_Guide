@@ -19,6 +19,11 @@ sources:
   - runbooks/jupyter-and-shell.md
   - decisions/repository-shape.md
   - decisions/project-scope-and-constraints.md
+  - decisions/monitoring-stack-decision.md
+  - decisions/cost-monitoring-stack-decision.md
+  - decisions/docker-nix-boundary-decision.md
+  - decisions/mcp-default-scope-decision.md
+  - decisions/documentation-delivery-decision.md
   - sources/flake.nix.md
   - sources/flake.lock.md
   - sources/gitignore.md
@@ -38,9 +43,10 @@ sources:
 | Review the proposed documentation structure                          | [architecture/documentation-toc.md](architecture/documentation-toc.md), [architecture/reference-architecture-skeleton.md](architecture/reference-architecture-skeleton.md)                                             |
 | Review assistant/MCP and docs-delivery proposals                     | [architecture/assistant-integration-and-docs-delivery.md](architecture/assistant-integration-and-docs-delivery.md), [architecture/target-system.md](architecture/target-system.md)                                     |
 | Review the cross-cutting contracts                                   | [contracts/index.md](contracts/index.md), [architecture/reference-architecture-skeleton.md](architecture/reference-architecture-skeleton.md)                                                                           |
-| Review the bounded domain pages                                      | [domains/index.md](domains/index.md), [architecture/reference-architecture-skeleton.md](architecture/reference-architecture-skeleton.md)                                                                              |
+| Review the bounded domain pages                                      | [domains/index.md](domains/index.md), [architecture/reference-architecture-skeleton.md](architecture/reference-architecture-skeleton.md)                                                                               |
 | Review the reference topologies                                      | [topologies/index.md](topologies/index.md), [architecture/reference-architecture-skeleton.md](architecture/reference-architecture-skeleton.md)                                                                         |
-| Decide how much weight to give decision records                      | [queries/decision-records-and-project-restart.md](queries/decision-records-and-project-restart.md), [architecture/top-down-planning.md](architecture/top-down-planning.md)                                           |
+| Review accepted default stack decisions                              | [decisions/monitoring-stack-decision.md](decisions/monitoring-stack-decision.md), [decisions/cost-monitoring-stack-decision.md](decisions/cost-monitoring-stack-decision.md), [decisions/docker-nix-boundary-decision.md](decisions/docker-nix-boundary-decision.md) |
+| Decide how much weight to give decision records                      | [queries/decision-records-and-project-restart.md](queries/decision-records-and-project-restart.md), [architecture/top-down-planning.md](architecture/top-down-planning.md)                                             |
 | Check whether implementation is allowed yet                          | [decisions/project-scope-and-constraints.md](decisions/project-scope-and-constraints.md), [current-state.md](current-state.md)                                                                                         |
 | Modify the Nix dev shell or toolchain                                | [architecture/dev-environment.md](architecture/dev-environment.md), [sources/flake.nix.md](sources/flake.nix.md)                                                                                                       |
 | Understand pinned upstream dependencies                              | [sources/flake.lock.md](sources/flake.lock.md)                                                                                                                                                                         |
@@ -48,7 +54,7 @@ sources:
 | Run or debug Jupyter / kernel setup                                  | [runbooks/jupyter-and-shell.md](runbooks/jupyter-and-shell.md), [sources/flake.nix.md](sources/flake.nix.md)                                                                                                           |
 | Understand git tracking, ignored files, or private-doc conventions   | [sources/gitignore.md](sources/gitignore.md), [current-state.md](current-state.md)                                                                                                                                     |
 | Understand durable repo conventions and why the repo is still sparse | [decisions/repository-shape.md](decisions/repository-shape.md), [current-state.md](current-state.md)                                                                                                                   |
-| See what changed in the wiki recently                                | [log.md](log.md), [revisions/2026-05-09-contract-baselines.md](revisions/2026-05-09-contract-baselines.md), [revisions/2026-05-09-assistant-and-docs-delivery.md](revisions/2026-05-09-assistant-and-docs-delivery.md) |
+| See what changed in the wiki recently                                | [log.md](log.md), [revisions/2026-05-09-default-stack-decisions.md](revisions/2026-05-09-default-stack-decisions.md), [revisions/2026-05-09-topology-pages.md](revisions/2026-05-09-topology-pages.md) |
 
 ## Core pages
 
@@ -109,6 +115,11 @@ sources:
 
 - [decisions/project-scope-and-constraints.md](decisions/project-scope-and-constraints.md) — current purpose, hard constraints, and no-code planning rule.
 - [decisions/repository-shape.md](decisions/repository-shape.md) — why this repo is currently implementation-light and what that implies.
+- [decisions/monitoring-stack-decision.md](decisions/monitoring-stack-decision.md) — accepted default monitoring stack.
+- [decisions/cost-monitoring-stack-decision.md](decisions/cost-monitoring-stack-decision.md) — accepted default cost stack.
+- [decisions/docker-nix-boundary-decision.md](decisions/docker-nix-boundary-decision.md) — accepted Docker/Nix boundary.
+- [decisions/mcp-default-scope-decision.md](decisions/mcp-default-scope-decision.md) — accepted default MCP scope.
+- [decisions/documentation-delivery-decision.md](decisions/documentation-delivery-decision.md) — accepted docs-delivery posture.
 
 ## Source summaries
 
@@ -119,6 +130,7 @@ sources:
 
 ## Revision artifacts
 
+- [revisions/2026-05-09-default-stack-decisions.md](revisions/2026-05-09-default-stack-decisions.md) — captures the accepted default stack and boundary decisions.
 - [revisions/2026-05-09-topology-pages.md](revisions/2026-05-09-topology-pages.md) — captures the first pass of reference topology pages.
 - [revisions/2026-05-09-domain-pages.md](revisions/2026-05-09-domain-pages.md) — captures the first pass of bounded domain pages.
 - [revisions/2026-05-09-decision-records-role.md](revisions/2026-05-09-decision-records-role.md) — captures how decision records should complement the top-down architecture.
@@ -134,6 +146,6 @@ sources:
 
 - No application code, notebooks, Docker workflow, or `pyproject.toml` exist yet.
 - First-pass topology pages now exist, but they still need formal acceptance and later concrete example mappings.
-- The architecture skeleton, documentation TOC, assistant/MCP posture, docs-delivery posture, domain pages, and topology pages are still draft planning artifacts.
-- The default monitoring and cost-monitoring choices are still not formally settled.
+- The architecture skeleton, documentation TOC, contracts, domain pages, and topology pages are still draft planning artifacts awaiting acceptance.
+- The accepted default stack decisions now exist, but they still need to be reflected consistently in later implementation docs and examples.
 - `archive/` is intentionally empty until useful material accumulates.

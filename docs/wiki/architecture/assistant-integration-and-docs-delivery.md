@@ -15,11 +15,10 @@ sources:
 
 ## Status
 
-This is a **proposed architecture note** during the specification-first phase.
-It introduces two additional directions:
+This note now mixes:
 
-1. MCP-enabled assistant integrations for monitoring and ongoing improvement
-2. FastAPI as a possible writing/serving layer for the documentation itself
+- **accepted defaults** for MCP scope and docs-delivery posture
+- supporting rationale and design guidance for those choices
 
 ## Part 1 — MCP-enabled assistant integrations
 
@@ -170,9 +169,9 @@ High-value assistant tasks:
 5. **No silent actions.** If mutation is ever allowed, it should require explicit confirmation boundaries.
 6. **Monitoring and improvement, not autonomous governance.** The assistant may recommend; governance remains policy-driven.
 
-## Recommended first MCP targets
+## Accepted default MCP scope
 
-If we prioritize for impact, the first MCP surfaces should likely be:
+The default assistant-support scope includes all of these as core surfaces:
 
 1. **MLflow**
 2. **Prometheus/Grafana and/or CloudWatch**
@@ -180,7 +179,7 @@ If we prioritize for impact, the first MCP surfaces should likely be:
 4. **Lambda.ai usage/job visibility**
 5. **Documentation/decision retrieval**
 
-That ordering gives the assistant the most immediate value for monitoring and ongoing improvement work.
+That set is the accepted default because it gives the assistant useful coverage across experimentation, operations, cost, and project memory.
 
 ## Part 2 — FastAPI for writing and serving documentation
 
@@ -192,9 +191,9 @@ That ordering gives the assistant the most immediate value for monitoring and on
 - FastAPI becomes the serving/composition/search/workflow layer
 - optional authoring conveniences can be built on top later
 
-## Recommended stance
+## Accepted stance
 
-Use FastAPI for documentation in a **hybrid** way, not as the primary source of truth.
+Use FastAPI for documentation in a **hybrid optional-companion** way, not as the primary source of truth and not as a mandatory default architecture element.
 
 ### Canonical source of truth
 
@@ -274,7 +273,7 @@ That means:
 
 ### MCP recommendation
 
-Yes — the project should explicitly plan for a small set of MCP integrations that help an assistant with:
+Accepted default scope:
 
 - monitoring
 - cost review
@@ -285,10 +284,12 @@ Yes — the project should explicitly plan for a small set of MCP integrations t
 
 ### FastAPI docs recommendation
 
-Yes — FastAPI is a good fit to **serve** the documentation and related structured metadata, provided that:
+Accepted posture:
 
+- FastAPI is a good fit to **serve** documentation and structured metadata
 - markdown in git remains canonical
 - dynamic serving does not replace versioned source files
+- docs delivery remains an optional companion pattern, not a mandatory core default
 - any authoring workflow is added later and remains auditable
 
 ## What this implies for the doc set

@@ -467,9 +467,7 @@ If FastAPI is used to serve the documentation, the design should assume:
 7. **Documentation delivery must remain separate from model-serving delivery.** Shared framework is fine; shared operational concern boundaries are not.
 8. **Examples must point back to domains and contracts.** No example should stand alone as an unexplained demo.
 
-## Provisional default stack posture
-
-These are draft defaults for documentation unless later revised.
+## Accepted default stack posture
 
 - Training: PyTorch + GPU
 - Experiment tracking: MLflow
@@ -479,10 +477,10 @@ These are draft defaults for documentation unless later revised.
 - Production platform patterns: AWS
 - Reproducible development: Docker
 - Optional environment assistance: Nix
-- Candidate monitoring default: `evidently` + Prometheus/Grafana + MLflow
-- Candidate cost default: AWS CUR/Athena/Budgets + Python attribution layer for Lambda.ai
-- Candidate assistant integration posture: MLflow + observability + cost + deployment/docs retrieval through MCP-style interfaces
-- Candidate docs delivery posture: markdown-in-git served/rendered through FastAPI
+- Default monitoring stack: `evidently` + Prometheus/Grafana + MLflow
+- Default cost stack: AWS CUR/Athena/Budgets + Python attribution layer for Lambda.ai
+- Default assistant integration scope: MLflow + observability + cost + Lambda.ai usage + documentation/decision retrieval through MCP-style interfaces
+- Docs delivery posture: markdown-in-git is canonical; FastAPI docs delivery is optional companion infrastructure
 
 ## What this skeleton should enable next
 
