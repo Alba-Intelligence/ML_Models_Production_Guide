@@ -1,0 +1,22 @@
+---
+updated: 2026-05-09
+summary: Append-only log of meaningful wiki maintenance events.
+read_when:
+  - You want a quick history of what the wiki captured
+sources:
+  - revisions/2026-05-09-bootstrap.md
+  - revisions/2026-05-09-project-purpose.md
+  - revisions/2026-05-09-planning-direction.md
+  - revisions/2026-05-09-architecture-skeleton-and-toc.md
+  - revisions/2026-05-09-assistant-and-docs-delivery.md
+---
+
+# Wiki log
+
+| Date       | Type         | Summary                                                                                                                 | Touched                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| ---------- | ------------ | ----------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 2026-05-09 | assistant    | Added proposals for MCP-enabled assistant integration surfaces and a FastAPI-based documentation delivery layer.        | `docs/wiki/architecture/assistant-integration-and-docs-delivery.md`, `docs/wiki/architecture/target-system.md`, `docs/wiki/architecture/reference-architecture-skeleton.md`, `docs/wiki/architecture/documentation-toc.md`, `docs/wiki/current-state.md`, `docs/wiki/overview.md`, `docs/wiki/decisions/project-scope-and-constraints.md`, `docs/wiki/index.md`, `docs/wiki/revisions/2026-05-09-assistant-and-docs-delivery.md`, `docs/wiki/log.md` |
+| 2026-05-09 | architecture | Drafted the proposed reference architecture skeleton and documentation TOC for top-down planning.                       | `docs/wiki/architecture/reference-architecture-skeleton.md`, `docs/wiki/architecture/documentation-toc.md`, `docs/wiki/current-state.md`, `docs/wiki/decisions/project-scope-and-constraints.md`, `docs/wiki/index.md`, `docs/wiki/revisions/2026-05-09-architecture-skeleton-and-toc.md`, `docs/wiki/log.md`                                                                                                                                        |
+| 2026-05-09 | planning     | Captured the target audience, full production scope, lineage scope, Docker/Nix posture, and top-down planning guidance. | `docs/wiki/architecture/target-system.md`, `docs/wiki/architecture/top-down-planning.md`, `docs/wiki/decisions/project-scope-and-constraints.md`, `docs/wiki/index.md`, `docs/wiki/revisions/2026-05-09-planning-direction.md`, `docs/wiki/log.md`                                                                                                                                                                                                   |
+| 2026-05-09 | purpose      | Captured the clarified project mission, hard constraints, no-code planning rule, and initial monitoring options.        | `AGENTS.md`, `docs/wiki/index.md`, `docs/wiki/overview.md`, `docs/wiki/current-state.md`, `docs/wiki/architecture/target-system.md`, `docs/wiki/decisions/project-scope-and-constraints.md`, `docs/wiki/decisions/repository-shape.md`, `docs/wiki/revisions/2026-05-09-project-purpose.md`, `docs/wiki/log.md`                                                                                                                                      |
+| 2026-05-09 | bootstrap    | Created the living wiki and summarized the repository's existing root source files, including git tracking policy.      | `AGENTS.md`, `docs/wiki/index.md`, `docs/wiki/overview.md`, `docs/wiki/current-state.md`, `docs/wiki/architecture/dev-environment.md`, `docs/wiki/runbooks/jupyter-and-shell.md`, `docs/wiki/decisions/repository-shape.md`, `docs/wiki/sources/flake.nix.md`, `docs/wiki/sources/flake.lock.md`, `docs/wiki/sources/gitignore.md`, `docs/wiki/revisions/2026-05-09-bootstrap.md`                                                                    |
