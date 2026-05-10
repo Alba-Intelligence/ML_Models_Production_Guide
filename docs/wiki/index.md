@@ -69,6 +69,7 @@ sources:
   - revisions/2026-05-11-end-of-task-docs-finalization.md
   - revisions/2026-05-11-readme-newcomer-onboarding.md
   - revisions/2026-05-11-quarto-shell-packages.md
+  - revisions/2026-05-11-spec-quality-reset-and-elicitation.md
 ---
 
 # Wiki index
@@ -164,6 +165,7 @@ sources:
 ## Queries
 
 - [queries/decision-records-and-project-restart.md](queries/decision-records-and-project-restart.md) — why decision records matter and why they are not enough alone.
+- [queries/spec-quality-elicitation-session-01.md](queries/spec-quality-elicitation-session-01.md) — prioritized clarification questions to improve specification quality before more implementation.
 
 ## Runbooks
 
@@ -224,6 +226,7 @@ sources:
 - [revisions/2026-05-11-end-of-task-docs-finalization.md](revisions/2026-05-11-end-of-task-docs-finalization.md) — captures the standard publishable-docs finalization workflow addition.
 - [revisions/2026-05-11-readme-newcomer-onboarding.md](revisions/2026-05-11-readme-newcomer-onboarding.md) — captures improvements to explicit newcomer onboarding in root README.
 - [revisions/2026-05-11-quarto-shell-packages.md](revisions/2026-05-11-quarto-shell-packages.md) — captures explicit Quarto packaging in flake/devenv shells and synchronized wiki coverage.
+- [revisions/2026-05-11-spec-quality-reset-and-elicitation.md](revisions/2026-05-11-spec-quality-reset-and-elicitation.md) — captures spec-quality-first reset, clarified open questions, and tightened implementation gating in the distilled spec.
 - [revisions/2026-05-09-example-matrix.md](revisions/2026-05-09-example-matrix.md) — captures the first architecture-aligned example inventory.
 - [revisions/2026-05-09-default-stack-decisions.md](revisions/2026-05-09-default-stack-decisions.md) — captures the accepted default stack and boundary decisions.
 - [revisions/2026-05-09-topology-pages.md](revisions/2026-05-09-topology-pages.md) — captures the first pass of reference topology pages.

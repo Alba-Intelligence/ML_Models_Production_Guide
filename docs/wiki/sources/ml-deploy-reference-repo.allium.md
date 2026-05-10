@@ -1,6 +1,6 @@
 ---
-updated: 2026-05-10
-summary: Synthesized summary of the distilled repository-level Allium specification.
+updated: 2026-05-11
+summary: Synthesized summary of the distilled repository-level Allium specification with explicit spec-quality implementation gating.
 read_when:
   - You need the repo behavior expressed as a formal spec
   - You are planning spec-first changes and need the current baseline
@@ -32,10 +32,12 @@ It converts the repository's implemented shell behavior and governance decisions
 ## Main behavior captured
 
 - Repository default posture initialization.
+- Spec-quality readiness state modeled on the repository (`spec_quality_gate_passed`).
 - Shell entry behavior with and without `pyproject.toml`.
 - Jupyter kernel ensure + JupyterLab launch behavior.
 - Mandatory wiki update workflow after durable changes.
 - Specification-first gate that blocks implementation without explicit approval.
+- Additional implementation readiness gate requiring passed spec quality unless explicitly overridden.
 
 ## Practical implication
 

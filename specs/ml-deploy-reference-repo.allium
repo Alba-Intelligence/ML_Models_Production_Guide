@@ -28,6 +28,7 @@ entity Repository {
     pytorch_only: Boolean
     gpu_required: Boolean
     fastapi_in_scope: Boolean
+    spec_quality_gate_passed: Boolean
     mlflow_in_scope: Boolean
     python_terraform_in_scope: Boolean
     lambda_ai_in_scope: Boolean
@@ -100,7 +101,8 @@ rule InitializeRepositoryDefaults {
     ensures: repository.linux_only = true
     ensures: repository.pytorch_only = true
     ensures: repository.gpu_required = true
-    ensures: repository.fastapi_in_scope = true
+    ensures: repository.fastapi_in_scope = false
+    ensures: repository.spec_quality_gate_passed = false
     ensures: repository.mlflow_in_scope = true
     ensures: repository.python_terraform_in_scope = true
     ensures: repository.lambda_ai_in_scope = true
@@ -190,6 +192,7 @@ rule AllowImplementationAfterGate {
     when: ImplementationCodeRequested(repository, explicit_user_confirmation)
 
     requires: repository.phase = implementation_enabled or explicit_user_confirmation
+    requires: repository.spec_quality_gate_passed or explicit_user_confirmation
 
     ensures: OperationRecord.created(kind: implementation_allowed, tool: policy)
 }

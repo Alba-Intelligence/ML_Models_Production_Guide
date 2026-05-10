@@ -40,6 +40,7 @@ sources:
   - sources/nbs.05_webui_contracts.ipynb.md
   - sources/tests.test_webui_contracts.py.md
   - sources/scripts.finalize-task.sh.md
+  - queries/spec-quality-elicitation-session-01.md
 ---
 
 # Current state
@@ -109,6 +110,7 @@ As of 2026-05-11, the repository contains:
 - New architecture requirements now specify MLflow PostgreSQL/S3 storage, Lambda.ai Slurm coordination/redundancy, AWS Kubernetes for non-Lambda.ai services, and Python-managed Terraform-first infrastructure workflows.
 - Slurm/Kubernetes mappings exist, but direct submission clients and runtime orchestration integration are still minimal scaffolding.
 - The distilled Allium spec currently models repository posture, shell behavior, and governance constraints; it does not yet cover any real ML implementation logic because that code still does not exist.
+- The distilled Allium spec now also models a spec-quality readiness gate required for default implementation allowance.
 - `flake.lock` is not tracked by git under the current ignore rules, so lockfile drift may be local-only unless that policy changes.
 - The origin currently contributes a `LICENSE` file, while the expected remote `README.md` was not present during synchronization.
 
@@ -126,6 +128,7 @@ The repo is currently best understood as a **specification-first and documentati
 - concrete Slurm/Kubernetes submission clients and orchestration runners on top of current mapping helpers
 - validation hooks for contract compliance checks
 - implementation only after user-directed transition from spec-first write-up to build-out
+- implementation only after spec-quality clarifications close key open questions or the user explicitly overrides
 
 ## If you are modifying the repo
 

@@ -1,5 +1,5 @@
 ---
-updated: 2026-05-10
+updated: 2026-05-11
 summary: Current agreed purpose, constraints, and planning-phase rules for the project.
 read_when:
   - You are deciding whether proposed work fits scope
@@ -51,12 +51,13 @@ The project is intended to become an **extensive reference documentation set wit
 
 ## Working mode decision
 
-Default posture remains **specification-first** for architecture and documentation quality, but implementation is allowed when the user explicitly requests build-out for specific slices.
+Default posture remains **specification-first** for architecture and documentation quality, and implementation should proceed only when spec quality gates are explicitly passed or the user explicitly authorizes a specific build slice.
 
 Current active posture:
 
-- implementation is enabled for concrete slices and supporting contracts
-- specification and wiki updates remain mandatory with each substantive change
+- specification and documentation quality improvement is the active priority
+- implementation should remain gated behind explicit scope confirmation plus spec-quality readiness
+- wiki synchronization remains mandatory with each substantive change
 
 ## Implications for future implementation
 
@@ -72,10 +73,8 @@ Any eventual implementation should be judged against these questions:
 
 ## Open items still requiring explicit agreement
 
-- approval or revision of the proposed reference architecture skeleton
-- approval or revision of the proposed documentation TOC
-- approval or revision of the first-pass cross-cutting contracts
-- approval or revision of the first-pass bounded domain pages
-- approval or revision of the first-pass topology pages
+- explicit spec-quality gate definition (pass criteria, approvers, and required pages/spec sections)
+- exact notebook-promotion approval workflow from local validation to Lambda.ai/AWS execution
+- normalized run-state contract across local, Slurm, and Kubernetes backends
 - exact boundary between Nix-assisted generation and hand-authored Docker workflow in practice
 - how to separate reusable platform guidance from hedge-fund-specific operating guidance
