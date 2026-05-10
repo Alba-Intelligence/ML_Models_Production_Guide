@@ -36,6 +36,14 @@ Provide a centralized interface for ML engineers to interact with versioned note
 - Duplicating MLflow tracking functionality (links to existing MLflow UI)
 - Long-term notebook storage (uses Git as source of truth)
 
+## Notebook intake baseline
+
+Accepted default:
+
+- the Web UI references notebooks from Git-managed sources
+- uploaded/selected notebooks are persisted as Git-traceable artifacts before execution
+- execution always targets immutable notebook revisions (commit/tag/approved ref), not mutable in-UI notebook state
+
 ## Upstream Dependencies
 
 - Git repository containing nbdev notebooks (source of truth)
@@ -100,7 +108,7 @@ The initial monitoring UX should be MLflow-first:
 
 1. **Execution Configuration Contract**: exact required schema for runtime parameters and environment overrides.
 2. **Approval Workflows**: exact gate model for promoting local-validated runs to Lambda.ai/AWS environments.
-3. **Notebook Intake Controls**: supported upload sources (direct upload vs Git-only) and mandatory validation pipeline.
+3. **Notebook Intake Controls**: mandatory validation pipeline and approval gates for Git-traceable notebook revisions.
 4. **Slurm/Kubernetes Mapping**: exact translation layer from notebook execution request into Slurm jobs and Kubernetes workloads.
 5. **UI Technology Stack**: what framework/library should implement the web interface (Streamlit, Gradio, custom React/Vue).
 
