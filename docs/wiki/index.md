@@ -51,6 +51,7 @@ sources:
   - sources/nbs.09_notebook_intake.ipynb.md
   - sources/nbs.10_terraform_bootstrap.ipynb.md
   - sources/nbs.11_infrastructure_overview.ipynb.md
+  - sources/nbs.index.ipynb.md
   - sources/nbs.05_webui_contracts.ipynb.md
   - sources/tests.test_vertical_slice.py.md
   - sources/tests.test_webui_contracts.py.md
@@ -73,6 +74,7 @@ sources:
   - revisions/2026-05-11-spec-quality-reset-and-elicitation.md
   - revisions/2026-05-11-technology-bound-question-rewrite.md
   - revisions/2026-05-11-infrastructure-overview-notebook.md
+  - revisions/2026-05-11-docs-index-overview-homepage.md
 ---
 
 # Wiki index
@@ -209,6 +211,7 @@ sources:
 - [sources/nbs.09_notebook_intake.ipynb.md](sources/nbs.09_notebook_intake.ipynb.md) — synthesized summary of nbdev source-of-truth for notebook intake gates.
 - [sources/nbs.10_terraform_bootstrap.ipynb.md](sources/nbs.10_terraform_bootstrap.ipynb.md) — synthesized summary of nbdev source-of-truth for Terraform bootstrap helpers.
 - [sources/nbs.11_infrastructure_overview.ipynb.md](sources/nbs.11_infrastructure_overview.ipynb.md) — synthesized summary of audience-facing infrastructure architecture overview notebook.
+- [sources/nbs.index.ipynb.md](sources/nbs.index.ipynb.md) — synthesized summary of the rendered docs homepage notebook.
 - [sources/nbs.05_webui_contracts.ipynb.md](sources/nbs.05_webui_contracts.ipynb.md) — synthesized summary of nbdev notebook source-of-truth for Web UI contracts.
 - [sources/tests.test_vertical_slice.py.md](sources/tests.test_vertical_slice.py.md) — synthesized summary of vertical-slice behavior tests.
 - [sources/tests.test_webui_contracts.py.md](sources/tests.test_webui_contracts.py.md) — synthesized summary of Web UI contract behavior tests.
@@ -234,6 +237,7 @@ sources:
 - [revisions/2026-05-11-spec-quality-reset-and-elicitation.md](revisions/2026-05-11-spec-quality-reset-and-elicitation.md) — captures spec-quality-first reset, clarified open questions, and tightened implementation gating in the distilled spec.
 - [revisions/2026-05-11-technology-bound-question-rewrite.md](revisions/2026-05-11-technology-bound-question-rewrite.md) — captures rewriting clarification questions to directly reflect required technology constraints.
 - [revisions/2026-05-11-infrastructure-overview-notebook.md](revisions/2026-05-11-infrastructure-overview-notebook.md) — captures creation of the high-level Mermaid-based architecture overview notebook.
+- [revisions/2026-05-11-docs-index-overview-homepage.md](revisions/2026-05-11-docs-index-overview-homepage.md) — captures replacement of redirect index with an overview homepage covering infra, notebook-first flow, and traceability.
 - [revisions/2026-05-09-example-matrix.md](revisions/2026-05-09-example-matrix.md) — captures the first architecture-aligned example inventory.
 - [revisions/2026-05-09-default-stack-decisions.md](revisions/2026-05-09-default-stack-decisions.md) — captures the accepted default stack and boundary decisions.
 - [revisions/2026-05-09-topology-pages.md](revisions/2026-05-09-topology-pages.md) — captures the first pass of reference topology pages.

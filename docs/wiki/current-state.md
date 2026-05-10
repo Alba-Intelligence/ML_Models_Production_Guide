@@ -38,6 +38,7 @@ sources:
   - sources/nbs.09_notebook_intake.ipynb.md
   - sources/nbs.10_terraform_bootstrap.ipynb.md
   - sources/nbs.11_infrastructure_overview.ipynb.md
+  - sources/nbs.index.ipynb.md
   - sources/nbs.05_webui_contracts.ipynb.md
   - sources/tests.test_webui_contracts.py.md
   - sources/scripts.finalize-task.sh.md
@@ -101,6 +102,7 @@ As of 2026-05-11, the repository contains:
 - Notebooks can be successfully exported to Python packages using `nbdev-export --path nbs/`.
 - A single end-of-task command now exists to export notebooks, render docs, and run tests: `./scripts/finalize-task.sh`.
 - A presentation-friendly infrastructure overview notebook now exists to communicate the full architecture to mixed audiences.
+- The rendered docs homepage is now notebook-driven (`nbs/index.ipynb`) and presents infrastructure, notebook-first approach, and traceability as the first view.
 
 ## Current limitations
 
