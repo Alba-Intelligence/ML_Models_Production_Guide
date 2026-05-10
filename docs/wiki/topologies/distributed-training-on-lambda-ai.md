@@ -1,5 +1,5 @@
 ---
-updated: 2026-05-09
+updated: 2026-05-10
 summary: Reference topology for distributed training on Lambda.ai with strong experiment traceability and artifact recovery.
 read_when:
   - You are defining remote or multi-node training patterns
@@ -63,6 +63,26 @@ Provide the reference topology for:
 - remote nodes must not rely on ambiguous or broad credentials
 - training cost must remain attributable by run/job/topology
 - remote failures must still preserve enough state for recovery and analysis
+
+## Reference flow specification
+
+### Control flow
+
+1. Prepare distributed training package and immutable run config.
+2. Submit Lambda.ai job with explicit identity, resource, and cost tags.
+3. Stream run telemetry and metadata into MLflow-linked traceability surfaces.
+4. Recover model artifacts and logs back into canonical storage/registry.
+5. Run promotion-readiness checks against artifact and traceability contracts.
+
+### Data and artifact flow
+
+- versioned dataset + transformation spec -> remote distributed run -> MLflow run record + checkpoints -> model artifact bundle -> registry candidate
+
+### Contract checkpoints
+
+- security and cost attribution validated at job submission
+- experiment traceability validated at run completion
+- model artifact baseline validated before registration/promotion
 
 ## Assistant implications
 

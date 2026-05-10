@@ -1,5 +1,5 @@
 ---
-updated: 2026-05-09
+updated: 2026-05-10
 summary: Honest snapshot of the repository's present state, notable constraints, and likely next steps.
 read_when:
   - You need a current repo snapshot
@@ -14,49 +14,63 @@ sources:
   - architecture/documentation-toc.md
   - architecture/assistant-integration-and-docs-delivery.md
   - architecture/example-matrix.md
+  - architecture/first-vertical-slice.md
+  - architecture/distilled-allium-spec.md
   - contracts/index.md
   - domains/index.md
   - topologies/index.md
   - decisions/project-scope-and-constraints.md
+  - sources/ml-deploy-reference-repo.allium.md
 ---
 
 # Current state
 
 ## Snapshot
 
-As of 2026-05-09, the repository contains:
+As of 2026-05-10, the repository contains:
 
 - `LICENSE`
 - `flake.nix`
 - `flake.lock` (local, but currently gitignored)
 - `.gitignore`
 - `AGENTS.md`
-- `docs/wiki/` (the living memory layer added in this task)
+- `devenv.nix`, `devenv.yaml`, and `devenv.lock`
+- `docs/wiki/` (the living memory layer, now including architecture decision for notebook repository web UI)
+- `specs/ml-deploy-reference-repo.allium` (distilled repository-level Allium specification)
+- nbdev 3 project structure with `pyproject.toml`, `nbs/` directory for notebooks, and `ml_deploy/` package
 - git metadata for a repository now rebased onto `origin/main`
 
 ## What is working
 
 - A Nix dev shell can provision a curated toolchain.
 - The shell includes Python 3.13, `uv`, `pyright`, `sphinx`, Typst tools, and multiple AI coding-agent CLIs.
-- Helper commands exist for Jupyter kernel installation and launching JupyterLab.
-- The shell is prepared to activate a local `.venv` when a `pyproject.toml` is added.
+- The shell now exposes `allium` as a `naersk`-built Nix package (`allium-cli` 3.2.3).
+- A single helper command (`start-jupyter`) handles kernel setup and JupyterLab launch.
+- The auxiliary devenv config now mirrors the same `allium` (naersk build) and Python-backed `start-jupyter` behavior.
+- The shell can create/sync and activate a local `.venv` via `uv` using the current `pyproject.toml`.
+- `nix develop` no longer depends on building the editable workspace package through uv2nix during shell entry.
 - A git repository exists and is currently at `main`, with the local planning commits rebased onto the GitHub origin history.
 - The project now has a much clearer target specification captured in the wiki.
-- The first draft of the reference architecture skeleton and documentation TOC now exists in the wiki.
+- The reference architecture skeleton and documentation TOC are now ratified in the wiki.
 - The project now also has accepted defaults for MCP scope, monitoring stack, cost stack, Docker/Nix posture, and docs-delivery posture captured in decision records.
 - The first pass of cross-cutting contract pages now exists in the wiki.
 - The first pass of bounded domain pages now exists in the wiki.
-- The first pass of reference topology pages now exists in the wiki.
+- The topology pages now include explicit control/data/artifact flow specifications and contract checkpoints.
 - The first architecture-aligned example matrix now exists in the wiki.
+- The first implementation-aligned architecture slice is now defined in `architecture/first-vertical-slice.md`.
+- A distilled repository-wide Allium specification now exists and is indexed in the wiki.
+- An nbdev 3 project structure has been initialized with pyproject.toml, nbs/ directory, and ml_deploy/ package placeholder.
+- Notebooks can be successfully exported to Python packages using `nbdev-export --path nbs/`.
 
 ## Current limitations
 
-- There is no Python project definition yet, so the `uv` auto-venv path is configured but currently dormant.
-- Jupyter kernel installation depends on `ipykernel` being installed in the active Python environment.
+- Docker-based reproducible development is a hard requirement, but Docker workflows are still not implemented in-repo.
+- `ipykernel` is included in the flake-provided toolchain for Jupyter kernel setup.
+- Building `allium` may require network access for Rust crate dependency fetches during Nix builds.
 - CUDA support is explicitly commented out in `flake.nix`.
 - There is no actual ML code, data pipeline, or deployment implementation yet.
-- Docker-based reproducible development is now a requirement, but the repository does not yet implement that workflow.
-- The reference now has draft versions of the architecture skeleton, documentation TOC, cross-cutting contracts, bounded domain pages, and topology pages, while the default monitoring/cost/MCP/docs-delivery decisions are now recorded.
+- Contract baselines are documentation-level and not yet enforced by automated checks.
+- The distilled Allium spec currently models repository posture, shell behavior, and governance constraints; it does not yet cover any real ML implementation logic because that code still does not exist.
 - `flake.lock` is not tracked by git under the current ignore rules, so lockfile drift may be local-only unless that policy changes.
 - The origin currently contributes a `LICENSE` file, while the expected remote `README.md` was not present during synchronization.
 
@@ -67,9 +81,9 @@ The repo is currently best understood as a **specification-first and documentati
 ## Most likely next additions
 
 - Docker-based development definition
-- `pyproject.toml`
-- concrete examples derived from the example matrix
-- implementation only after remaining architectural approvals
+- concrete examples derived from the first vertical slice (`EX-01`/`EX-02`/`EX-03`)
+- validation hooks for contract compliance checks
+- implementation only after user-directed transition from spec-first write-up to build-out
 
 ## If you are modifying the repo
 

@@ -28,6 +28,7 @@ These pages preserve durable choices that should not be rediscovered from scratc
 - [docker-nix-boundary-decision.md](docker-nix-boundary-decision.md) — accepted Docker/Nix boundary.
 - [mcp-default-scope-decision.md](mcp-default-scope-decision.md) — accepted default MCP scope.
 - [documentation-delivery-decision.md](documentation-delivery-decision.md) — accepted docs-delivery posture.
+- [nbdev-framework-decision.md](nbdev-framework-decision.md) — accepted nbdev 3 framework for notebook-first development
 
 ## Rule
 

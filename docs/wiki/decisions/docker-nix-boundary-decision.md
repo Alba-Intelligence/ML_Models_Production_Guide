@@ -1,5 +1,5 @@
 ---
-updated: 2026-05-09
+updated: 2026-05-10
 summary: Accepted boundary between Docker as the canonical reproducible environment and Nix as a helper layer.
 read_when:
   - You are deciding whether Docker or Nix is canonical
@@ -53,6 +53,19 @@ Why not default:
 - local-development docs should present Docker first
 - Nix-specific guidance should be clearly labeled as helper/contributor workflow material
 - future implementation should avoid making Nix a hidden required dependency for understanding the default path
+
+## Responsibility split by stage
+
+| Stage | Docker responsibility (canonical) | Nix responsibility (helper) |
+| --- | --- | --- |
+| Local development | Primary reproducible runtime, dependency surface, and service composition used in examples | Optional bootstrap shell/tooling convenience for contributors |
+| CI validation | Build and run checks in Dockerized environments that mirror documented workflows | Optional helper to prepare deterministic contributor tooling; not required for CI correctness |
+| Release/deployment prep | Source of truth for container image behavior and reproducibility evidence | Optional generation/templating assistance; must not replace explicit Docker artifacts |
+| Production operations | Runtime behavior governed by production platform and deployment controls using container artifacts | No runtime dependency; may support offline authoring workflows only |
+
+## Enforcement rule
+
+- Any workflow that is required for readers to reproduce the reference must have a Docker-first path documented and runnable without requiring Nix installation.
 
 ## Revisit if
 

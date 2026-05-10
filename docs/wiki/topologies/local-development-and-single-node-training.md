@@ -1,5 +1,5 @@
 ---
-updated: 2026-05-09
+updated: 2026-05-10
 summary: Reference topology for Docker-based local development, local FastAPI serving, and single-node GPU training.
 read_when:
   - You are defining the local developer loop
@@ -63,6 +63,27 @@ Provide the lowest-friction reference topology for:
 - local convenience must not erase required metadata or security assumptions
 - local serving must not be confused with production serving
 - local docs delivery must remain logically separate from model-serving behavior even if both use FastAPI
+
+## Reference flow specification
+
+### Control flow
+
+1. Start Docker-based local stack and required services.
+2. Run notebook-driven experiment and emit MLflow run metadata.
+3. Package a model artifact with required schema/traceability metadata.
+4. Launch local FastAPI serving against the packaged artifact.
+5. Execute smoke predictions and verify prediction logging links to model version.
+
+### Data and artifact flow
+
+- versioned local dataset -> transformation output -> training run -> model artifact -> local serving endpoint -> prediction logs
+
+### Contract checkpoints
+
+- data lineage validated at dataset/transformation handoff
+- experiment traceability validated at MLflow run completion
+- model artifact baseline validated before local serving
+- prediction logging baseline validated during smoke prediction path
 
 ## Assistant implications
 

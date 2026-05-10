@@ -1,5 +1,5 @@
 ---
-updated: 2026-05-09
+updated: 2026-05-10
 summary: Operational commands and caveats for entering the shell and using Jupyter helpers.
 read_when:
   - You want to run the repo
@@ -23,7 +23,7 @@ What this gives you:
 - shell environment variables such as `PROJECT_ROOT`, `JUPYTER_PATH`, and `UV_PROJECT_ENVIRONMENT`
 - optional `.env` loading if a root `.env` file exists
 
-## If you later add a `pyproject.toml`
+## With the current `pyproject.toml`
 
 On shell entry, the shell hook will:
 
@@ -31,18 +31,17 @@ On shell entry, the shell hook will:
 2. run `uv sync`
 3. activate `.venv`
 
-Today this does **not** happen because the repo does not yet contain a `pyproject.toml`.
+This should happen automatically in normal `nix develop` entry for this repository.
 
 ## Install or refresh the Jupyter kernel
 
 ```bash
-nix develop -c ensure-jupyter-kernel
+nix develop -c start-jupyter --ensure-only
 ```
 
 Important caveat:
 
-- this only succeeds if `python -c 'import ipykernel'` works in the active environment
-- if it fails, the flake itself suggests running `uv sync` after adding notebook dependencies
+- `start-jupyter` uses a flake-provided Python runtime with `ipykernel` bundled, independent of project `.venv` contents
 
 ## Start JupyterLab
 
@@ -61,9 +60,7 @@ Behavior:
 
 - project Jupyter path: `jupyter/`
 - kernel location under project: `jupyter/kernels/ml_ops`
-- config also written to:
-  - `~/.jupyter`
-  - `~/.config/Cursor/User/globalStorage/ms-toolsai.jupyter/version-2025.9.1`
+- config written to: `~/.jupyter`
 
 ## Quick diagnostics
 
@@ -74,11 +71,10 @@ python --version
 git --version
 which uv
 which start-jupyter
-which ensure-jupyter-kernel
 ```
 
 ## Known sharp edges
 
-- No `pyproject.toml` means no project-local Python packages are installed yet.
+- If `uv sync` has not been run yet in the current workspace, project-local Python dependencies may be missing.
 - If `ipykernel` is missing, Jupyter helper commands will not complete successfully.
 - Jupyter is configured for convenience over security; the defaults are suitable for a trusted local/dev environment, not an exposed production service.

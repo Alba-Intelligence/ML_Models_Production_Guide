@@ -1,6 +1,6 @@
 ---
-updated: 2026-05-09
-summary: Proposed example inventory mapped to lifecycle stages, domains, topologies, and contracts.
+updated: 2026-05-10
+summary: Example inventory mapped to lifecycle stages, domains, topologies, and contracts, with a defined first vertical slice.
 read_when:
   - You are deciding what examples should exist before implementation
   - You want to avoid random tool demos and keep examples architecture-aligned
@@ -142,6 +142,11 @@ Every example should map to:
 8. EX-08
 9. EX-09
 10. EX-10
+
+## First vertical slice definition
+
+The first implementation-aligned slice is the composition **EX-01 -> EX-02 -> EX-03**.
+See [first-vertical-slice.md](first-vertical-slice.md) for exact inputs, outputs, contract obligations, and success criteria.
 
 ## Rule
 

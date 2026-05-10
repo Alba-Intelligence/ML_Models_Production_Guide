@@ -47,13 +47,18 @@ The project is not just about serving a model. It should document and demonstrat
 - Nix may be used to help generate or support Docker definitions, but Docker artifacts must exist directly.
 - The current working assumption is: Docker is the standard path, Nix is an optional convenience/helper layer.
 
-### ML and serving stack
+### ML and notebook stack
 
-- **PyTorch only** for model definition and training
+- **nbdev 3 (Quarto-based)** for notebook-first development, Python package generation, and documentation
+- **PyTorch** for model definition and training
 - **GPU support is required**
-- **FastAPI** for local development and local serving examples
-- **FastAPI** is also a candidate delivery layer for serving the documentation itself
 - **MLflow** for experiment tracking, model metadata, and reproducibility support
+
+### Documentation
+
+- **Quarto** (via nbdev 3) for rendered documentation with Mermaid diagrams, cross-references, and automatic indexing
+- Documentation source lives in notebooks (`nbs/`) and is rendered to `docs/`
+- The living wiki in `docs/wiki/` remains separate as project memory per AGENTS.md
 
 ### Infrastructure and compute
 
@@ -101,13 +106,15 @@ Design posture:
 
 ## Documentation delivery direction
 
-A **FastAPI-based documentation delivery layer** is accepted as an **optional companion pattern**, not a mandatory default architecture element.
+**nbdev 3 with Quarto** is the accepted documentation framework.
 
 Accepted stance:
 
-- markdown in git remains the canonical source of documentation
-- FastAPI may serve/render docs, indexes, metadata, and example navigation
-- optional editing helpers can be layered on later, but should not replace file-based source control
+- notebooks in `nbs/` are the source of truth for code and narrative docs
+- `nbdev_export` generates the Python package from notebooks
+- `nbdev_preview` / Quarto renders documentation to `docs/`
+- The living wiki in `docs/wiki/` remains separate as project memory per AGENTS.md
+- Serving patterns will be explored once actual model code exists
 
 ## Default monitoring stack
 
@@ -233,8 +240,7 @@ Tradeoffs:
 - local development environment
 - PyTorch training on GPU
 - experiment tracking with MLflow
-- artifact/model packaging
-- FastAPI local serving
+- artifact/model packaging via nbdev
 - infrastructure with python-terraform
 - distributed compute on Lambda.ai
 - AWS tooling and production integration

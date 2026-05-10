@@ -1,0 +1,195 @@
+-- allium: 3
+-- ml-deploy-reference-repo.allium
+
+-- Scope: Entire repository (all files) as requested.
+-- Includes: flake-defined shell behavior, Jupyter helper behavior,
+--   wiki maintenance workflow, and accepted architecture/default-stack constraints.
+-- Excludes:
+--   - runtime internals of external systems (AWS, Lambda.ai, MLflow, Prometheus, Grafana)
+--   - implementation code that does not yet exist in this repository
+
+enum MonitoringTool { evidently | prometheus | grafana | mlflow }
+enum CostTool { aws_cost_explorer | aws_cur | aws_athena | aws_budgets | python_lambda_ai_attribution }
+enum McpSurface { mlflow | observability | aws_cost_visibility | lambda_ai_usage_visibility | docs_and_decisions }
+enum CrossCuttingContract { security | data_lineage | experiment_traceability | model_traceability | reproducibility }
+
+entity Repository {
+    name: String
+    phase: specification_first | implementation_enabled
+    audience: hedge_fund_ml_engineers | other
+
+    current_dev_shell: nix | docker
+    required_reproducible_dev: docker | nix
+    has_docker_artifacts: Boolean
+    canonical_docs_source: markdown_in_git | other
+
+    prefers_python: Boolean
+    linux_only: Boolean
+    pytorch_only: Boolean
+    gpu_required: Boolean
+    fastapi_in_scope: Boolean
+    mlflow_in_scope: Boolean
+    python_terraform_in_scope: Boolean
+    lambda_ai_in_scope: Boolean
+    aws_in_scope: Boolean
+
+    required_contracts: Set<CrossCuttingContract>
+    default_monitoring_stack: Set<MonitoringTool>
+    default_cost_stack: Set<CostTool>
+    default_mcp_scope: Set<McpSurface>
+
+    implementation_permitted: phase = implementation_enabled
+}
+
+entity Wiki {
+    index_exists: Boolean
+    current_state_exists: Boolean
+    log_exists: Boolean
+    requires_source_summaries: Boolean
+    requires_revision_for_non_trivial_changes: Boolean
+}
+
+entity ShellSession {
+    has_pyproject: Boolean
+    venv_exists: Boolean
+    venv_active: Boolean
+    ipykernel_available: Boolean
+    kernel_installed: Boolean
+    kernel_name: String
+    jupyter_path: String
+    jupyter_lab_running: Boolean
+    token_auth_disabled: Boolean
+    password_auth_disabled: Boolean
+    xsrf_checks_disabled: Boolean
+}
+
+entity OperationRecord {
+    kind: shell_entered | venv_created | dependencies_synced | kernel_ensured | jupyter_started | implementation_blocked | implementation_allowed
+    tool: nix | uv | ipykernel | jupyter_lab | policy
+}
+
+entity WikiArtifact {
+    kind: source_summary | architecture_page | current_state_update | index_update | revision_entry | log_entry
+}
+
+entity WorkBlocked {
+    reason: explicit_spec_confirmation_required
+}
+
+config {
+    kernel_name: String = "ml_ops"
+    project_jupyter_dir: String = "jupyter"
+    project_kernel_dir: String = "jupyter/kernels/ml_ops"
+    default_project_phase: specification_first | implementation_enabled = specification_first
+    require_revision_for_non_trivial_wiki_changes: Boolean = true
+
+    default_monitoring_stack: Set<MonitoringTool> = {evidently, prometheus, grafana, mlflow}
+    default_cost_stack: Set<CostTool> = {aws_cost_explorer, aws_cur, aws_athena, aws_budgets, python_lambda_ai_attribution}
+    default_mcp_scope: Set<McpSurface> = {mlflow, observability, aws_cost_visibility, lambda_ai_usage_visibility, docs_and_decisions}
+    required_contracts: Set<CrossCuttingContract> = {security, data_lineage, experiment_traceability, model_traceability, reproducibility}
+}
+
+rule InitializeRepositoryDefaults {
+    when: RepositoryInitialized(repository)
+
+    ensures: repository.phase = config.default_project_phase
+    ensures: repository.required_reproducible_dev = docker
+    ensures: repository.canonical_docs_source = markdown_in_git
+
+    ensures: repository.prefers_python = true
+    ensures: repository.linux_only = true
+    ensures: repository.pytorch_only = true
+    ensures: repository.gpu_required = true
+    ensures: repository.fastapi_in_scope = true
+    ensures: repository.mlflow_in_scope = true
+    ensures: repository.python_terraform_in_scope = true
+    ensures: repository.lambda_ai_in_scope = true
+    ensures: repository.aws_in_scope = true
+
+    ensures: repository.required_contracts = config.required_contracts
+    ensures: repository.default_monitoring_stack = config.default_monitoring_stack
+    ensures: repository.default_cost_stack = config.default_cost_stack
+    ensures: repository.default_mcp_scope = config.default_mcp_scope
+}
+
+rule EnterShellWithProjectDefinition {
+    when: DeveloperEntersShell(repository, session)
+
+    requires: repository.current_dev_shell = nix
+    requires: session.has_pyproject
+
+    ensures: OperationRecord.created(kind: shell_entered, tool: nix)
+    ensures: session.venv_exists = true
+    ensures: session.venv_active = true
+    ensures: OperationRecord.created(kind: venv_created, tool: uv)
+    ensures: OperationRecord.created(kind: dependencies_synced, tool: uv)
+}
+
+rule EnterShellWithoutProjectDefinition {
+    when: DeveloperEntersShell(repository, session)
+
+    requires: repository.current_dev_shell = nix
+    requires: not session.has_pyproject
+
+    ensures: OperationRecord.created(kind: shell_entered, tool: nix)
+    ensures: session.venv_active = false
+}
+
+rule EnsureJupyterKernel {
+    when: EnsureJupyterKernel(session)
+
+    requires: session.ipykernel_available
+
+    ensures: session.kernel_installed = true
+    ensures: session.kernel_name = config.kernel_name
+    ensures: session.jupyter_path = config.project_jupyter_dir
+    ensures: session.xsrf_checks_disabled = true
+    ensures: OperationRecord.created(kind: kernel_ensured, tool: ipykernel)
+}
+
+rule StartJupyterLab {
+    when: StartJupyter(session)
+
+    requires: session.kernel_installed
+
+    ensures: session.jupyter_lab_running = true
+    ensures: session.token_auth_disabled = true
+    ensures: session.password_auth_disabled = true
+    ensures: session.xsrf_checks_disabled = true
+    ensures: OperationRecord.created(kind: jupyter_started, tool: jupyter_lab)
+}
+
+rule MaintainWikiAfterDurableChange {
+    when: DurableRepositoryChangeObserved(wiki, change_is_non_trivial)
+
+    requires: wiki.index_exists
+    requires: wiki.current_state_exists
+    requires: wiki.log_exists
+
+    ensures: WikiArtifact.created(kind: source_summary)
+    ensures: WikiArtifact.created(kind: architecture_page)
+    ensures: WikiArtifact.created(kind: current_state_update)
+    ensures: WikiArtifact.created(kind: index_update)
+    ensures: WikiArtifact.created(kind: log_entry)
+    ensures:
+        if change_is_non_trivial:
+            WikiArtifact.created(kind: revision_entry)
+}
+
+rule BlockImplementationWithoutExplicitConfirmation {
+    when: ImplementationCodeRequested(repository, explicit_user_confirmation)
+
+    requires: repository.phase = specification_first
+    requires: not explicit_user_confirmation
+
+    ensures: WorkBlocked.created(reason: explicit_spec_confirmation_required)
+    ensures: OperationRecord.created(kind: implementation_blocked, tool: policy)
+}
+
+rule AllowImplementationAfterGate {
+    when: ImplementationCodeRequested(repository, explicit_user_confirmation)
+
+    requires: repository.phase = implementation_enabled or explicit_user_confirmation
+
+    ensures: OperationRecord.created(kind: implementation_allowed, tool: policy)
+}

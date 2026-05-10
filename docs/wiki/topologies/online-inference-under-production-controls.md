@@ -1,5 +1,5 @@
 ---
-updated: 2026-05-09
+updated: 2026-05-10
 summary: Reference topology for FastAPI-based online inference under production deployment, security, observability, and rollback controls.
 read_when:
   - You are defining production request/response serving
@@ -66,6 +66,27 @@ Provide the reference topology for:
 - every rollout must be tied to a model version and monitoring configuration
 - prediction logging must balance investigability with security/privacy constraints
 - cost visibility must support online unit-economics analysis
+
+## Reference flow specification
+
+### Control flow
+
+1. Approve deployment for a model version with explicit rollout and rollback targets.
+2. Deploy service revision and bind monitoring/alerting configuration.
+3. Route controlled traffic and monitor latency/error/model signals.
+4. Emit prediction logs with deployment and model-version linkage.
+5. Trigger rollback or promotion continuation based on policy and signals.
+
+### Data and artifact flow
+
+- promoted model version -> deployment record -> live request/response stream -> prediction logs + metrics/traces -> incident/review artifacts
+
+### Contract checkpoints
+
+- deployment baseline validated before traffic shift
+- prediction logging baseline validated in pre-release checklist and runtime sampling
+- security baseline validated in release approval path
+- cost attribution hooks validated for service-level unit economics
 
 ## Assistant implications
 

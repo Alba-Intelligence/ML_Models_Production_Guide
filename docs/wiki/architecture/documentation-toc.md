@@ -1,6 +1,6 @@
 ---
-updated: 2026-05-09
-summary: Proposed table of contents for the documentation set, derived from the reference architecture skeleton.
+updated: 2026-05-10
+summary: Ratified table of contents for the documentation set, derived from the reference architecture skeleton.
 read_when:
   - You are deciding how to organize the documentation
   - You are deciding where a new page or example belongs
@@ -14,8 +14,8 @@ sources:
 
 ## Status
 
-This is a **proposed TOC** for agreement during the specification-first phase.
-It should become the canonical organization for documentation and code examples.
+This is the **ratified TOC** for the specification-first phase.
+Treat it as canonical for documentation and architecture-aligned example placement.
 
 ## TOC design rules
 
@@ -116,20 +116,30 @@ Candidate pages:
 - promotion gates
 - compatibility rules for serving and batch use
 
-### 06. Local development and local serving
+### 06. Local development and replica architecture
 
 Purpose:
 
-- support local iteration without mixing it with production topology
+- support local iteration with a structurally identical replica of production architecture
+- enable seamless transition from local development to production deployment
+- validate data lineage, traceability, and reproducibility in environment matching production
 
 Candidate pages:
 
 - Docker dev environment
 - Nix helper posture
+- nbdev project structure and workflow
 - local MLflow workflow
-- FastAPI local serving contract
-- local documentation preview/serving workflow
+- local documentation preview with Quarto
 - local smoke testing patterns
+- local Slurm-like workload scheduler (using Docker-compose, Nomad, or similar)
+- local Kubernetes cluster (using kind/minikube/k3s)
+- local S3-compatible storage (MinIO/Ceph)
+- local PostgreSQL for MLflow tracking and model registry
+- local artifact storage (MinIO for models, datasets, and outputs)
+- environment parity validation (checking Slurm/K8s resource specs match)
+- configuration parity validation (identical Terraform modules with different backends)
+- notebook repository web UI (Git-backed with DB storage for traceability)
 
 ### 07. Distributed training
 
@@ -344,7 +354,7 @@ When deciding where a new page belongs:
 - If it is purely operational policy, it belongs in **11**, **12**, **13**, or **14**.
 - If it is primarily demonstrative code, it belongs in **15** with backlinks to the governing docs.
 
-## Immediate follow-on pages to create after TOC approval
+## Immediate follow-on pages to maintain from the ratified TOC
 
 1. architecture overview
 2. lifecycle map

@@ -1,6 +1,6 @@
 ---
-updated: 2026-05-09
-summary: Proposed top-down reference architecture skeleton for the project, organized by lifecycle, domains, contracts, and topologies.
+updated: 2026-05-10
+summary: Ratified top-down reference architecture skeleton for the project, organized by lifecycle, domains, contracts, and topologies.
 read_when:
   - You are aligning on the project architecture before implementation
   - You need the canonical separation of concerns
@@ -14,8 +14,8 @@ sources:
 
 ## Status
 
-This is a **proposed skeleton** for agreement during the specification-first phase.
-It is intended to become the stable spine for the documentation set and all future examples.
+This is the **ratified architecture skeleton** for the specification-first phase.
+Use it as the stable spine for documentation, contracts, topology pages, and example design.
 
 ## Mission
 

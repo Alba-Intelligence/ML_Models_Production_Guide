@@ -1,6 +1,6 @@
 ---
-updated: 2026-05-09
-summary: Router for the reference topologies that map domains and contracts into concrete deployment shapes.
+updated: 2026-05-10
+summary: Router for the reference topologies that map domains/contracts into concrete deployment shapes with explicit flow specs.
 read_when:
   - You are deciding how a lifecycle/domain design becomes a runnable topology
   - You are comparing local, distributed training, batch, and online patterns
@@ -34,3 +34,4 @@ They are where the project answers:
 
 Topology pages should **implement** the architecture and contracts.
 They should not redefine domain ownership or cross-cutting rules from scratch.
+Each topology page should include explicit control/data/artifact flows and contract checkpoints.

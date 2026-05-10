@@ -1,5 +1,5 @@
 ---
-updated: 2026-05-09
+updated: 2026-05-10
 summary: Primary router for the living wiki. Read this first, then load only the pages relevant to the task.
 read_when:
   - Starting any task in this repository
@@ -14,6 +14,8 @@ sources:
   - architecture/documentation-toc.md
   - architecture/assistant-integration-and-docs-delivery.md
   - architecture/example-matrix.md
+  - architecture/first-vertical-slice.md
+  - architecture/distilled-allium-spec.md
   - contracts/index.md
   - domains/index.md
   - topologies/index.md
@@ -30,6 +32,12 @@ sources:
   - sources/flake.lock.md
   - sources/gitignore.md
   - sources/LICENSE.md
+  - sources/ml-deploy-reference-repo.allium.md
+  - revisions/2026-05-10-distilled-allium-spec.md
+  - revisions/2026-05-10-allium-cli-build-fix.md
+  - revisions/2026-05-10-allium-cli-latest-version.md
+  - revisions/2026-05-10-uv2nix-dev-shell-fix.md
+  - revisions/2026-05-10-architecture-writeup-ratification.md
 ---
 
 # Wiki index
@@ -41,23 +49,25 @@ sources:
 | Understand what this repository currently is                         | [overview.md](overview.md), [current-state.md](current-state.md)                                                                                                                                                                                                     |
 | Understand the intended end-state architecture and stack             | [architecture/target-system.md](architecture/target-system.md), [decisions/project-scope-and-constraints.md](decisions/project-scope-and-constraints.md)                                                                                                             |
 | Plan the project top-down without losing separation of concerns      | [architecture/top-down-planning.md](architecture/top-down-planning.md), [architecture/reference-architecture-skeleton.md](architecture/reference-architecture-skeleton.md)                                                                                           |
-| Review the proposed architecture skeleton                            | [architecture/reference-architecture-skeleton.md](architecture/reference-architecture-skeleton.md), [architecture/target-system.md](architecture/target-system.md)                                                                                                   |
-| Review the proposed documentation structure                          | [architecture/documentation-toc.md](architecture/documentation-toc.md), [architecture/reference-architecture-skeleton.md](architecture/reference-architecture-skeleton.md)                                                                                           |
+| Review the ratified architecture skeleton                            | [architecture/reference-architecture-skeleton.md](architecture/reference-architecture-skeleton.md), [architecture/target-system.md](architecture/target-system.md)                                                                                                   |
+| Review the ratified documentation structure                          | [architecture/documentation-toc.md](architecture/documentation-toc.md), [architecture/reference-architecture-skeleton.md](architecture/reference-architecture-skeleton.md)                                                                                           |
 | Review assistant/MCP and docs-delivery proposals                     | [architecture/assistant-integration-and-docs-delivery.md](architecture/assistant-integration-and-docs-delivery.md), [architecture/target-system.md](architecture/target-system.md)                                                                                   |
 | Review the cross-cutting contracts                                   | [contracts/index.md](contracts/index.md), [architecture/reference-architecture-skeleton.md](architecture/reference-architecture-skeleton.md)                                                                                                                         |
 | Review the bounded domain pages                                      | [domains/index.md](domains/index.md), [architecture/reference-architecture-skeleton.md](architecture/reference-architecture-skeleton.md)                                                                                                                             |
 | Review the reference topologies                                      | [topologies/index.md](topologies/index.md), [architecture/reference-architecture-skeleton.md](architecture/reference-architecture-skeleton.md)                                                                                                                       |
 | Review accepted default stack decisions                              | [decisions/monitoring-stack-decision.md](decisions/monitoring-stack-decision.md), [decisions/cost-monitoring-stack-decision.md](decisions/cost-monitoring-stack-decision.md), [decisions/docker-nix-boundary-decision.md](decisions/docker-nix-boundary-decision.md) |
 | Review the planned example inventory                                 | [architecture/example-matrix.md](architecture/example-matrix.md), [topologies/index.md](topologies/index.md)                                                                                                                                                         |
+| Start the first implementation-aligned architecture slice            | [architecture/first-vertical-slice.md](architecture/first-vertical-slice.md), [architecture/example-matrix.md](architecture/example-matrix.md), [contracts/index.md](contracts/index.md)                                                                            |
 | Decide how much weight to give decision records                      | [queries/decision-records-and-project-restart.md](queries/decision-records-and-project-restart.md), [architecture/top-down-planning.md](architecture/top-down-planning.md)                                                                                           |
 | Check whether implementation is allowed yet                          | [decisions/project-scope-and-constraints.md](decisions/project-scope-and-constraints.md), [current-state.md](current-state.md)                                                                                                                                       |
 | Modify the Nix dev shell or toolchain                                | [architecture/dev-environment.md](architecture/dev-environment.md), [sources/flake.nix.md](sources/flake.nix.md)                                                                                                                                                     |
 | Understand pinned upstream dependencies                              | [sources/flake.lock.md](sources/flake.lock.md)                                                                                                                                                                                                                       |
 | Understand repository licensing posture                              | [sources/LICENSE.md](sources/LICENSE.md), [overview.md](overview.md)                                                                                                                                                                                                 |
+| Understand the distilled repository behavior spec                    | [architecture/distilled-allium-spec.md](architecture/distilled-allium-spec.md), [sources/ml-deploy-reference-repo.allium.md](sources/ml-deploy-reference-repo.allium.md)                                                                                             |
 | Run or debug Jupyter / kernel setup                                  | [runbooks/jupyter-and-shell.md](runbooks/jupyter-and-shell.md), [sources/flake.nix.md](sources/flake.nix.md)                                                                                                                                                         |
 | Understand git tracking, ignored files, or private-doc conventions   | [sources/gitignore.md](sources/gitignore.md), [current-state.md](current-state.md)                                                                                                                                                                                   |
 | Understand durable repo conventions and why the repo is still sparse | [decisions/repository-shape.md](decisions/repository-shape.md), [current-state.md](current-state.md)                                                                                                                                                                 |
-| See what changed in the wiki recently                                | [log.md](log.md), [revisions/2026-05-09-default-stack-decisions.md](revisions/2026-05-09-default-stack-decisions.md), [revisions/2026-05-09-topology-pages.md](revisions/2026-05-09-topology-pages.md)                                                               |
+| See what changed in the wiki recently                                | [log.md](log.md), [revisions/2026-05-10-allium-cli-latest-version.md](revisions/2026-05-10-allium-cli-latest-version.md), [revisions/2026-05-10-uv2nix-dev-shell-fix.md](revisions/2026-05-10-uv2nix-dev-shell-fix.md)                                                 |
 
 ## Core pages
 
@@ -70,11 +80,14 @@ sources:
 
 - [architecture/target-system.md](architecture/target-system.md) — intended end-state scope, audience, stack, and monitoring options.
 - [architecture/top-down-planning.md](architecture/top-down-planning.md) — recommended planning method and separation-of-concerns structure.
-- [architecture/reference-architecture-skeleton.md](architecture/reference-architecture-skeleton.md) — proposed architectural spine for lifecycle, domains, contracts, and topologies.
-- [architecture/documentation-toc.md](architecture/documentation-toc.md) — proposed table of contents for the documentation set.
+- [architecture/reference-architecture-skeleton.md](architecture/reference-architecture-skeleton.md) — ratified architectural spine for lifecycle, domains, contracts, and topologies.
+- [architecture/documentation-toc.md](architecture/documentation-toc.md) — ratified table of contents for the documentation set.
 - [architecture/assistant-integration-and-docs-delivery.md](architecture/assistant-integration-and-docs-delivery.md) — accepted MCP defaults plus docs delivery guidance.
+- [architecture/notebook-repository-web-ui.md] — centralized interface for triggering notebook executions across environments while keeping notebooks immutable.
 - [architecture/example-matrix.md](architecture/example-matrix.md) — proposed example inventory mapped to lifecycle, domains, contracts, and topologies.
+- [architecture/first-vertical-slice.md](architecture/first-vertical-slice.md) — concrete first end-to-end architecture slice with explicit I/O and success criteria.
 - [architecture/dev-environment.md](architecture/dev-environment.md) — current Nix shell, Python, Jupyter, and bundled tooling.
+- [architecture/distilled-allium-spec.md](architecture/distilled-allium-spec.md) — repository-wide distilled Allium behavior baseline.
 
 ## Contracts
 
@@ -132,9 +145,15 @@ sources:
 - [sources/flake.lock.md](sources/flake.lock.md) — synthesized summary of flake input pins.
 - [sources/gitignore.md](sources/gitignore.md) — synthesized summary of ignored paths and tracking implications.
 - [sources/LICENSE.md](sources/LICENSE.md) — synthesized summary of the repository license and its provenance from origin.
+- [sources/ml-deploy-reference-repo.allium.md](sources/ml-deploy-reference-repo.allium.md) — synthesized summary of the distilled repository-level Allium spec.
 
 ## Revision artifacts
 
+- [revisions/2026-05-10-distilled-allium-spec.md](revisions/2026-05-10-distilled-allium-spec.md) — captures the first repository-wide Allium distillation baseline.
+- [revisions/2026-05-10-allium-cli-build-fix.md](revisions/2026-05-10-allium-cli-build-fix.md) — captures the flake fix for allium-cli build reliability.
+- [revisions/2026-05-10-allium-cli-latest-version.md](revisions/2026-05-10-allium-cli-latest-version.md) — captures the move from pinned allium-cli packaging to latest-version runtime resolution.
+- [revisions/2026-05-10-uv2nix-dev-shell-fix.md](revisions/2026-05-10-uv2nix-dev-shell-fix.md) — captures the uv2nix/dev-shell change that unblocks `nix develop`.
+- [revisions/2026-05-10-architecture-writeup-ratification.md](revisions/2026-05-10-architecture-writeup-ratification.md) — captures ratification of architecture/TOC, topology flow specs, and first vertical-slice definition.
 - [revisions/2026-05-09-example-matrix.md](revisions/2026-05-09-example-matrix.md) — captures the first architecture-aligned example inventory.
 - [revisions/2026-05-09-default-stack-decisions.md](revisions/2026-05-09-default-stack-decisions.md) — captures the accepted default stack and boundary decisions.
 - [revisions/2026-05-09-topology-pages.md](revisions/2026-05-09-topology-pages.md) — captures the first pass of reference topology pages.
@@ -150,8 +169,8 @@ sources:
 
 ## Known gaps
 
-- No application code, notebooks, Docker workflow, or `pyproject.toml` exist yet.
-- The example matrix now exists, but concrete example implementations do not.
-- The architecture skeleton, documentation TOC, contracts, domain pages, and topology pages are still draft planning artifacts awaiting acceptance.
-- The accepted default stack decisions now exist, but they still need to be reflected consistently in later implementation docs and examples.
+- Docker-based reproducible workflow is a hard requirement but is not yet implemented in-repo.
+- A distilled `.allium` baseline exists, but it still reflects repository posture more than implemented ML runtime behavior.
+- The first architecture write-up ratification is complete, but concrete end-to-end examples are still pending implementation.
+- Contract pages define required fields/baselines, but automated validation hooks are not implemented yet.
 - `archive/` is intentionally empty until useful material accumulates.

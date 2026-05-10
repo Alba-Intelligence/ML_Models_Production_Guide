@@ -1,5 +1,5 @@
 ---
-updated: 2026-05-09
+updated: 2026-05-10
 summary: Router for the cross-cutting contracts that every domain, topology, and example must satisfy.
 read_when:
   - You are defining or reviewing invariants used across the whole system
@@ -40,6 +40,20 @@ They exist to prevent:
 - Domain pages should **consume** these contracts rather than redefining them.
 - Topology pages should state how they **implement** these contracts.
 - Code examples should state which contracts they satisfy and where they intentionally simplify.
+
+## Enforcement matrix
+
+Each contract must be treated as an interface with explicit ownership and validation points.
+
+| Contract | Primary owner domain | Validation point(s) |
+| --- | --- | --- |
+| security baseline | governance | design review, deployment approval, incident review |
+| data lineage baseline | data | dataset publish, transformation publish, training-job submission |
+| experiment traceability baseline | training | training start/end, MLflow run checks, promotion gate |
+| model artifact baseline | artifact | artifact packaging, model registration, serving compatibility checks |
+| deployment baseline | serving + governance | rollout approval, deployment record creation, rollback readiness check |
+| prediction logging baseline | serving + observability | pre-release checklist, runtime log schema checks, incident triage |
+| cost attribution baseline | cost + infrastructure | infra provisioning, scheduled cost reports, budget alerting reviews |
 
 ## Rule
 

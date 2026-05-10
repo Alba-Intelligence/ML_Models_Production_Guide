@@ -1,0 +1,42 @@
+inputs:
+  llmpkgs:
+    url: github:numtide/llm-agents.nix
+
+  nixpkgs:
+    url: github:cachix/devenv-nixpkgs/rolling
+
+  rust-overlay:
+    url: github:oxalica/rust-overlay
+    inputs:
+      nixpkgs:
+        follows: nixpkgs
+
+  naersk:
+    url: github:nix-community/naersk
+    inputs:
+      nixpkgs:
+        follows: nixpkgs
+
+  pyproject-nix:
+    url: github:pyproject-nix/pyproject.nix
+    inputs:
+      nixpkgs:
+        follows: nixpkgs
+
+  uv2nix:
+    url: github:pyproject-nix/uv2nix
+    inputs:
+      nixpkgs:
+        follows: nixpkgs
+      pyproject-nix:
+        follows: pyproject-nix
+
+  pyproject-build-systems:
+    url: github:pyproject-nix/build-system-pkgs
+    inputs:
+      nixpkgs:
+        follows: nixpkgs
+      pyproject-nix:
+        follows: pyproject-nix
+
+allow_unfree: true

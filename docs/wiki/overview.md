@@ -1,5 +1,5 @@
 ---
-updated: 2026-05-09
+updated: 2026-05-10
 summary: High-level summary of the repository as it exists today and the intended project direction.
 read_when:
   - You need orientation
@@ -14,10 +14,13 @@ sources:
   - architecture/documentation-toc.md
   - architecture/assistant-integration-and-docs-delivery.md
   - architecture/example-matrix.md
+  - architecture/first-vertical-slice.md
+  - architecture/distilled-allium-spec.md
   - contracts/index.md
   - domains/index.md
   - topologies/index.md
   - decisions/project-scope-and-constraints.md
+  - sources/ml-deploy-reference-repo.allium.md
 ---
 
 # Overview
@@ -34,26 +37,30 @@ This repository is becoming a **documentation-first, Python-heavy ML deployment 
 - A root `.gitignore` with a minimal ignore policy.
 - A root `AGENTS.md` that requires future agents to maintain the wiki.
 - A living wiki in `docs/wiki` that now serves as the repository memory layer.
+- A repository-level distilled Allium specification at `specs/ml-deploy-reference-repo.allium`.
+- An nbdev 3 scaffold with `pyproject.toml`, notebooks under `nbs/`, package exports under `ml_deploy/`, and baseline tests.
+- Ratified architecture write-up pages for the reference skeleton, documentation TOC, and first vertical slice.
 
 ## What does not exist yet
 
-- No application code.
-- No notebooks.
-- No `pyproject.toml`.
-- No test suite.
-- No deployment scripts or infrastructure definitions.
+- No production-ready ML pipeline implementation.
+- No Docker-based reproducible workflow artifacts yet.
+- No deployment scripts or infrastructure definitions for the target topologies yet.
 
 ## Important implications
 
 - The repo is still more of a **tooling scaffold plus specification memory layer** than an implemented ML deployment project.
-- The intended end state is now clearer: extensive reference documentation and code examples for the full lifecycle from development to distributed production.
+- The intended end state is now clearer: extensive reference documentation and code examples for the full lifecycle from development to distributed production, using nbdev 3 as the core framework.
 - The primary audience is now defined as **ML engineers in hedge funds**.
-- The technical direction is Python-first, Linux-only, PyTorch-only with GPU support, with FastAPI, MLflow, python-terraform, Lambda.ai, and AWS in scope.
+- The technical direction is Python-first, Linux-only, PyTorch-only with GPU support, with nbdev 3 (Quarto-based), MLflow, python-terraform, Lambda.ai, and AWS in scope.
 - Security, data lineage, traceability, and reproducibility are permanent architectural requirements.
 - Reproducible development is expected to use Docker, while Nix may remain as a helper layer.
-- The project now has draft planning layers for the architecture skeleton, documentation TOC, contracts, domains, topologies, and example matrix, plus accepted decision records for the default monitoring, cost, Docker/Nix, MCP, and docs-delivery postures.
+- The project now has ratified architecture write-up layers (skeleton + TOC), enforceability guidance for contracts, and flow-oriented topology pages.
+- The first implementation-aligned vertical slice is explicitly defined to prevent scope drift.
+- The repo now also has a formal distilled spec that captures current shell behavior and specification-first governance constraints.
 - The shell is prepared for Python and Jupyter work, but Python environment auto-creation only activates once a `pyproject.toml` appears.
 - Jupyter support is present and opinionated, including a fixed kernel name: `ml_ops`.
+- The shell now provides `allium` as a reproducible `naersk`-built package for `.allium` parsing/checking workflows.
 - Git tracking is intentionally minimal; notably, `flake.lock` is present locally but ignored by the current `.gitignore`.
 - The local branch history has now been rebased onto the configured GitHub origin.
 
@@ -61,23 +68,23 @@ This repository is becoming a **documentation-first, Python-heavy ML deployment 
 
 - [current-state.md](current-state.md) — what is true right now.
 - [architecture/target-system.md](architecture/target-system.md) — intended end-state scope and stack.
-- [architecture/reference-architecture-skeleton.md](architecture/reference-architecture-skeleton.md) — proposed architectural spine.
-- [architecture/documentation-toc.md](architecture/documentation-toc.md) — proposed documentation structure.
+- [architecture/reference-architecture-skeleton.md](architecture/reference-architecture-skeleton.md) — ratified architectural spine.
+- [architecture/documentation-toc.md](architecture/documentation-toc.md) — ratified documentation structure.
 - [architecture/assistant-integration-and-docs-delivery.md](architecture/assistant-integration-and-docs-delivery.md) — accepted MCP defaults plus docs delivery guidance.
 - [architecture/example-matrix.md](architecture/example-matrix.md) — proposed implementation/example sequence.
+- [architecture/distilled-allium-spec.md](architecture/distilled-allium-spec.md) — formal distilled behavior baseline for the current repository.
 - [contracts/index.md](contracts/index.md) — router for the cross-cutting contracts.
 - [domains/index.md](domains/index.md) — router for the bounded domains.
 - [topologies/index.md](topologies/index.md) — router for the reference topologies.
 - [decisions/project-scope-and-constraints.md](decisions/project-scope-and-constraints.md) — current hard constraints and no-code planning rule.
 - [architecture/dev-environment.md](architecture/dev-environment.md) — the current technical substance of the repo.
+- [sources/ml-deploy-reference-repo.allium.md](sources/ml-deploy-reference-repo.allium.md) — synthesized summary of the repository-level `.allium` source file.
 
 ## Open questions
 
-- Should the proposed reference architecture skeleton be accepted as-is or revised?
-- Should the proposed documentation TOC be accepted as-is or revised?
 - Should the first-pass cross-cutting contracts be accepted as-is or revised?
 - Should the first-pass bounded domain pages be accepted as-is or revised?
 - Should the first-pass topology pages be accepted as-is or revised?
-- What exact boundary should exist between Docker as the standard path and Nix as a helper layer in real workflows?
+- How should contract validation become automated as implementation starts?
 - Will Python packaging be managed through `uv` + `pyproject.toml`, Docker, or both?
 - Does the origin repository also need a README added later, given that only `LICENSE` was present during synchronization?
