@@ -25,7 +25,7 @@ Provide a centralized interface for ML engineers to interact with versioned note
 - Executing notebooks with environment-specific configuration injection
 - Triggering runs against local replica architecture for development/testing
 - Promoting successful runs to production environments (Lambda.ai Slurm, AWS Kubernetes)
-- Viewing execution results linked to MLflow tracking
+- Viewing and monitoring execution results linked to MLflow tracking
 - Launching MCP-powered monitoring and analysis tools from execution results
 - Role-based access control for notebook access and execution triggering
 
@@ -65,6 +65,14 @@ Provide a centralized interface for ML engineers to interact with versioned note
 - **Result Links**: References to MLflow runs, artifacts, and model versions
 - **MCP Invocations**: Context for launching assistant-assisted monitoring workflows
 
+## Run visibility baseline
+
+The initial monitoring UX should be MLflow-first:
+
+- Web UI exposes run status/metadata summaries
+- each run provides a direct link to the corresponding MLflow run page
+- deeper diagnosis flows begin by pivoting engineers to MLflow, then to observability/cost tools as needed
+
 ## Topology Relevance
 
 - **Local Development**: Primary interface for triggering runs against local replica
@@ -102,7 +110,8 @@ Provide a centralized interface for ML engineers to interact with versioned note
 2. Add environment selection (local replica vs. production targets)
 3. Implement configuration injection mechanism (external YAML/JSON files)
 4. Link execution results to MLflow runs
-5. Add role-based access control
-6. Integrate MCP tool launching from execution results
-7. Implement approval workflows for production promotions
-8. Add advanced features like notebook diffing, version comparison, and branching
+5. Add direct MLflow run links and run-status views in the Web UI
+6. Add role-based access control
+7. Integrate MCP tool launching from execution results
+8. Implement approval workflows for production promotions
+9. Add advanced features like notebook diffing, version comparison, and branching
