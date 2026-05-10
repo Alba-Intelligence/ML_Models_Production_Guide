@@ -13,6 +13,8 @@ sources:
   - architecture/reference-architecture-skeleton.md
   - architecture/documentation-toc.md
   - architecture/assistant-integration-and-docs-delivery.md
+  - architecture/notebook-repository-web-ui.md
+  - architecture/webui-backend-contract.md
   - architecture/example-matrix.md
   - architecture/first-vertical-slice.md
   - architecture/distilled-allium-spec.md
@@ -20,6 +22,7 @@ sources:
   - domains/index.md
   - topologies/index.md
   - runbooks/jupyter-and-shell.md
+  - runbooks/mlflow-tracking-postgres-s3-parity.md
   - decisions/index.md
   - decisions/repository-shape.md
   - decisions/project-scope-and-constraints.md
@@ -28,13 +31,16 @@ sources:
   - decisions/docker-nix-boundary-decision.md
   - decisions/mcp-default-scope-decision.md
   - decisions/documentation-delivery-decision.md
+  - decisions/notebook-intake-validation-and-approval.md
   - sources/flake.nix.md
   - sources/flake.lock.md
   - sources/gitignore.md
   - sources/LICENSE.md
   - sources/ml-deploy-reference-repo.allium.md
   - sources/ml_deploy.vertical_slice.py.md
+  - sources/ml_deploy.webui_contracts.py.md
   - sources/tests.test_vertical_slice.py.md
+  - sources/tests.test_webui_contracts.py.md
   - revisions/2026-05-10-distilled-allium-spec.md
   - revisions/2026-05-10-allium-cli-build-fix.md
   - revisions/2026-05-10-allium-cli-latest-version.md
@@ -42,6 +48,7 @@ sources:
   - revisions/2026-05-10-architecture-writeup-ratification.md
   - revisions/2026-05-10-first-vertical-slice-implementation.md
   - revisions/2026-05-10-platform-requirements-alignment.md
+  - revisions/2026-05-10-webui-contract-and-mlflow-parity.md
 ---
 
 # Wiki index
@@ -61,6 +68,7 @@ sources:
 | Review the reference topologies                                      | [topologies/index.md](topologies/index.md), [architecture/reference-architecture-skeleton.md](architecture/reference-architecture-skeleton.md)                                                                                                                       |
 | Review accepted default stack decisions                              | [decisions/monitoring-stack-decision.md](decisions/monitoring-stack-decision.md), [decisions/cost-monitoring-stack-decision.md](decisions/cost-monitoring-stack-decision.md), [decisions/docker-nix-boundary-decision.md](decisions/docker-nix-boundary-decision.md) |
 | Review latest platform requirements alignment                        | [decisions/project-scope-and-constraints.md](decisions/project-scope-and-constraints.md), [architecture/target-system.md](architecture/target-system.md), [revisions/2026-05-10-platform-requirements-alignment.md](revisions/2026-05-10-platform-requirements-alignment.md) |
+| Review executable Web UI backend contracts                           | [architecture/webui-backend-contract.md](architecture/webui-backend-contract.md), [sources/ml_deploy.webui_contracts.py.md](sources/ml_deploy.webui_contracts.py.md), [sources/tests.test_webui_contracts.py.md](sources/tests.test_webui_contracts.py.md) |
 | Review the planned example inventory                                 | [architecture/example-matrix.md](architecture/example-matrix.md), [topologies/index.md](topologies/index.md)                                                                                                                                                         |
 | Start the first implementation-aligned architecture slice            | [architecture/first-vertical-slice.md](architecture/first-vertical-slice.md), [architecture/example-matrix.md](architecture/example-matrix.md), [contracts/index.md](contracts/index.md)                                                                            |
 | Inspect concrete local slice implementation details                   | [sources/ml_deploy.vertical_slice.py.md](sources/ml_deploy.vertical_slice.py.md), [sources/tests.test_vertical_slice.py.md](sources/tests.test_vertical_slice.py.md)                                                                                                  |
@@ -89,7 +97,8 @@ sources:
 - [architecture/reference-architecture-skeleton.md](architecture/reference-architecture-skeleton.md) — ratified architectural spine for lifecycle, domains, contracts, and topologies.
 - [architecture/documentation-toc.md](architecture/documentation-toc.md) — ratified table of contents for the documentation set.
 - [architecture/assistant-integration-and-docs-delivery.md](architecture/assistant-integration-and-docs-delivery.md) — accepted MCP defaults plus docs delivery guidance.
-- [architecture/notebook-repository-web-ui.md] — centralized interface for triggering notebook executions across environments while keeping notebooks immutable.
+- [architecture/notebook-repository-web-ui.md](architecture/notebook-repository-web-ui.md) — centralized interface for triggering notebook executions across environments while keeping notebooks immutable.
+- [architecture/webui-backend-contract.md](architecture/webui-backend-contract.md) — executable request/response contract for Web UI backend run triggering and MLflow-linked status.
 - [architecture/example-matrix.md](architecture/example-matrix.md) — proposed example inventory mapped to lifecycle, domains, contracts, and topologies.
 - [architecture/first-vertical-slice.md](architecture/first-vertical-slice.md) — concrete first end-to-end architecture slice with explicit I/O and success criteria.
 - [architecture/dev-environment.md](architecture/dev-environment.md) — current Nix shell, Python, Jupyter, and bundled tooling.
@@ -133,17 +142,19 @@ sources:
 ## Runbooks
 
 - [runbooks/jupyter-and-shell.md](runbooks/jupyter-and-shell.md) — common entry commands and operational notes.
+- [runbooks/mlflow-tracking-postgres-s3-parity.md](runbooks/mlflow-tracking-postgres-s3-parity.md) — local/production MLflow storage parity posture.
 
 ## Decisions
 
 - [decisions/index.md](decisions/index.md) — router for durable architectural and stack decisions.
-- [decisions/project-scope-and-constraints.md](decisions/project-scope-and-constraints.md) — current purpose, hard constraints, and no-code planning rule.
+- [decisions/project-scope-and-constraints.md](decisions/project-scope-and-constraints.md) — current purpose, hard constraints, and working-mode expectations.
 - [decisions/repository-shape.md](decisions/repository-shape.md) — why this repo is currently implementation-light and what that implies.
 - [decisions/monitoring-stack-decision.md](decisions/monitoring-stack-decision.md) — accepted default monitoring stack.
 - [decisions/cost-monitoring-stack-decision.md](decisions/cost-monitoring-stack-decision.md) — accepted default cost stack.
 - [decisions/docker-nix-boundary-decision.md](decisions/docker-nix-boundary-decision.md) — accepted Docker/Nix boundary.
 - [decisions/mcp-default-scope-decision.md](decisions/mcp-default-scope-decision.md) — accepted default MCP scope.
 - [decisions/documentation-delivery-decision.md](decisions/documentation-delivery-decision.md) — accepted docs-delivery posture.
+- [decisions/notebook-intake-validation-and-approval.md](decisions/notebook-intake-validation-and-approval.md) — accepted intake gates for immutable executable notebook revisions.
 
 ## Source summaries
 
@@ -153,7 +164,9 @@ sources:
 - [sources/LICENSE.md](sources/LICENSE.md) — synthesized summary of the repository license and its provenance from origin.
 - [sources/ml-deploy-reference-repo.allium.md](sources/ml-deploy-reference-repo.allium.md) — synthesized summary of the distilled repository-level Allium spec.
 - [sources/ml_deploy.vertical_slice.py.md](sources/ml_deploy.vertical_slice.py.md) — synthesized summary of the implemented local vertical-slice module.
+- [sources/ml_deploy.webui_contracts.py.md](sources/ml_deploy.webui_contracts.py.md) — synthesized summary of Web UI execution/run-visibility contract helpers.
 - [sources/tests.test_vertical_slice.py.md](sources/tests.test_vertical_slice.py.md) — synthesized summary of vertical-slice behavior tests.
+- [sources/tests.test_webui_contracts.py.md](sources/tests.test_webui_contracts.py.md) — synthesized summary of Web UI contract behavior tests.
 
 ## Revision artifacts
 
@@ -164,6 +177,7 @@ sources:
 - [revisions/2026-05-10-architecture-writeup-ratification.md](revisions/2026-05-10-architecture-writeup-ratification.md) — captures ratification of architecture/TOC, topology flow specs, and first vertical-slice definition.
 - [revisions/2026-05-10-first-vertical-slice-implementation.md](revisions/2026-05-10-first-vertical-slice-implementation.md) — captures code implementation of the first local vertical slice and test coverage.
 - [revisions/2026-05-10-platform-requirements-alignment.md](revisions/2026-05-10-platform-requirements-alignment.md) — captures alignment to MLflow PostgreSQL/S3, Lambda.ai Slurm, AWS Kubernetes, notebook Web UI, and Python-managed Terraform requirements.
+- [revisions/2026-05-10-webui-contract-and-mlflow-parity.md](revisions/2026-05-10-webui-contract-and-mlflow-parity.md) — captures executable Web UI backend contracts plus intake/MLflow parity artifacts.
 - [revisions/2026-05-09-example-matrix.md](revisions/2026-05-09-example-matrix.md) — captures the first architecture-aligned example inventory.
 - [revisions/2026-05-09-default-stack-decisions.md](revisions/2026-05-09-default-stack-decisions.md) — captures the accepted default stack and boundary decisions.
 - [revisions/2026-05-09-topology-pages.md](revisions/2026-05-09-topology-pages.md) — captures the first pass of reference topology pages.

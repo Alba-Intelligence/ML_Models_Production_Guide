@@ -1,5 +1,5 @@
 ---
-updated: 2026-05-09
+updated: 2026-05-10
 summary: Router for durable architectural and stack decisions.
 read_when:
   - You need the accepted defaults quickly
@@ -11,6 +11,7 @@ sources:
   - docker-nix-boundary-decision.md
   - mcp-default-scope-decision.md
   - documentation-delivery-decision.md
+  - notebook-intake-validation-and-approval.md
 ---
 
 # Decisions
@@ -29,6 +30,7 @@ These pages preserve durable choices that should not be rediscovered from scratc
 - [mcp-default-scope-decision.md](mcp-default-scope-decision.md) — accepted default MCP scope.
 - [documentation-delivery-decision.md](documentation-delivery-decision.md) — accepted docs-delivery posture.
 - [nbdev-framework-decision.md](nbdev-framework-decision.md) — accepted nbdev 3 framework for notebook-first development
+- [notebook-intake-validation-and-approval.md](notebook-intake-validation-and-approval.md) — accepted validation and approval gates for executable notebook intake
 
 ## Rule
 

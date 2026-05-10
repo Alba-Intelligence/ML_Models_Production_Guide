@@ -1,0 +1,32 @@
+---
+updated: 2026-05-10
+summary: Synthesized summary of Web UI backend contract helpers for immutable notebook execution and MLflow-linked run visibility.
+read_when:
+  - You are implementing Web UI backend request handling
+  - You need exact contract helpers before adding environment adapters
+source_file: ../../ml_deploy/webui_contracts.py
+---
+
+# Source summary: ml_deploy/webui_contracts.py
+
+## Role
+
+Defines thin Python contracts for the Web UI backend:
+
+- immutable notebook execution request shape
+- normalized job-spec output for execution adapters
+- MLflow-first run summary model with deep links
+
+## Main functions and models
+
+- `build_mlflow_run_url` — stable MLflow run deep-link constructor.
+- `NotebookRevision` — immutable source reference (`commit`, `tag`, `approved-ref`).
+- `NotebookExecutionRequest` — validated execution request + normalized `as_job_spec()` output.
+- `RunVisibility` — Web UI run summary view model.
+- `summarize_run_for_webui` — metadata-to-summary mapper with status normalization.
+
+## Contract-relevant behavior
+
+- Commit references are validated as git-style SHA strings.
+- Job-spec generation refuses requests that do not have request identity/timestamp defaults.
+- Run summaries always include an MLflow deep link for operator pivoting.

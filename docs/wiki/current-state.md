@@ -17,12 +17,16 @@ sources:
   - architecture/assistant-integration-and-docs-delivery.md
   - architecture/example-matrix.md
   - architecture/first-vertical-slice.md
+  - architecture/webui-backend-contract.md
   - architecture/distilled-allium-spec.md
   - contracts/index.md
   - domains/index.md
   - topologies/index.md
   - decisions/project-scope-and-constraints.md
+  - decisions/notebook-intake-validation-and-approval.md
   - sources/ml-deploy-reference-repo.allium.md
+  - sources/ml_deploy.webui_contracts.py.md
+  - sources/tests.test_webui_contracts.py.md
 ---
 
 # Current state
@@ -61,6 +65,7 @@ As of 2026-05-10, the repository contains:
 - The first architecture-aligned example matrix now exists in the wiki.
 - The first implementation-aligned architecture slice is now defined in `architecture/first-vertical-slice.md`.
 - The first local vertical slice is now implemented in `ml_deploy/vertical_slice.py` with tests in `tests/test_vertical_slice.py`.
+- A thin Web UI backend contract module now exists in `ml_deploy/webui_contracts.py` with tests in `tests/test_webui_contracts.py`.
 - A distilled repository-wide Allium specification now exists and is indexed in the wiki.
 - An nbdev 3 project structure has been initialized with pyproject.toml, nbs/ directory, and ml_deploy/ package placeholder.
 - Notebooks can be successfully exported to Python packages using `nbdev-export --path nbs/`.
@@ -74,6 +79,7 @@ As of 2026-05-10, the repository contains:
 - There is no production-ready ML data pipeline or deployment implementation yet.
 - Contract validation is currently test-level for the local vertical slice, not yet generalized across all topologies.
 - New architecture requirements now specify MLflow PostgreSQL/S3 storage, Lambda.ai Slurm coordination/redundancy, AWS Kubernetes for non-Lambda.ai services, and Python-managed Terraform-first infrastructure workflows.
+- Adapter-specific translation from notebook execution requests into concrete Slurm and Kubernetes job specs remains unimplemented.
 - The distilled Allium spec currently models repository posture, shell behavior, and governance constraints; it does not yet cover any real ML implementation logic because that code still does not exist.
 - `flake.lock` is not tracked by git under the current ignore rules, so lockfile drift may be local-only unless that policy changes.
 - The origin currently contributes a `LICENSE` file, while the expected remote `README.md` was not present during synchronization.
@@ -89,12 +95,13 @@ The repo is currently best understood as a **specification-first and documentati
 - promotion of the implemented local slice into Docker-first execution flow
 - expansion into distributed, batch, and online production topologies
 - notebook Web UI execution flow with immutable notebook source semantics
+- notebook Web UI adapter implementations for Slurm and Kubernetes based on the new backend contract
 - validation hooks for contract compliance checks
 - implementation only after user-directed transition from spec-first write-up to build-out
 
 ## If you are modifying the repo
 
-- Do not implement project code until the user explicitly says the specification is understood well enough to proceed.
+- Keep architecture/spec quality first; implement concrete slices only when user-directed and keep wiki in lockstep.
 - Scope and stack decisions should update [architecture/target-system.md](architecture/target-system.md) and [decisions/project-scope-and-constraints.md](decisions/project-scope-and-constraints.md).
 - Changes to shell packages or startup behavior should update [architecture/dev-environment.md](architecture/dev-environment.md).
 - Changes to commands or Jupyter behavior should update [runbooks/jupyter-and-shell.md](runbooks/jupyter-and-shell.md).

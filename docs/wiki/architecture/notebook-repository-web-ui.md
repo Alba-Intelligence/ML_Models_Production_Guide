@@ -9,6 +9,8 @@ sources:
   - AGENTS.md
   - documentation-toc.md
   - nbdev-framework-decision.md
+  - webui-backend-contract.md
+  - ../decisions/notebook-intake-validation-and-approval.md
 ---
 
 # Notebook Repository Web UI
@@ -73,6 +75,11 @@ Accepted default:
 - **Result Links**: References to MLflow runs, artifacts, and model versions
 - **MCP Invocations**: Context for launching assistant-assisted monitoring workflows
 
+Implemented baseline:
+
+- `ml_deploy/webui_contracts.py` provides `NotebookExecutionRequest`, immutable `NotebookRevision`, and `RunVisibility`.
+- `tests/test_webui_contracts.py` validates request/job-spec behavior and MLflow deep-link generation.
+
 ## Run visibility baseline
 
 The initial monitoring UX should be MLflow-first:
@@ -106,11 +113,9 @@ The initial monitoring UX should be MLflow-first:
 
 ## Open Questions and Deferred Decisions
 
-1. **Execution Configuration Contract**: exact required schema for runtime parameters and environment overrides.
-2. **Approval Workflows**: exact gate model for promoting local-validated runs to Lambda.ai/AWS environments.
-3. **Notebook Intake Controls**: mandatory validation pipeline and approval gates for Git-traceable notebook revisions.
-4. **Slurm/Kubernetes Mapping**: exact translation layer from notebook execution request into Slurm jobs and Kubernetes workloads.
-5. **UI Technology Stack**: what framework/library should implement the web interface (Streamlit, Gradio, custom React/Vue).
+1. **Approval Workflows**: exact gate model for promoting local-validated runs to Lambda.ai/AWS environments.
+2. **Slurm/Kubernetes Mapping**: exact translation layer from notebook execution request into Slurm jobs and Kubernetes workloads.
+3. **UI Technology Stack**: what framework/library should implement the web interface (Streamlit, Gradio, custom React/Vue).
 
 ## Recommended Implementation Approach
 

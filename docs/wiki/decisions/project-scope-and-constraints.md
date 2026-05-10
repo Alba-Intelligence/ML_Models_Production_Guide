@@ -51,13 +51,12 @@ The project is intended to become an **extensive reference documentation set wit
 
 ## Working mode decision
 
-The project is currently in a **specification-first phase**.
+Default posture remains **specification-first** for architecture and documentation quality, but implementation is allowed when the user explicitly requests build-out for specific slices.
 
-Until the user explicitly says otherwise:
+Current active posture:
 
-- do **not** write implementation code
-- prefer specification, structure, tradeoff analysis, and documentation planning
-- identify ambiguities before selecting concrete implementations
+- implementation is enabled for concrete slices and supporting contracts
+- specification and wiki updates remain mandatory with each substantive change
 
 ## Implications for future implementation
 

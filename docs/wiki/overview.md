@@ -42,12 +42,14 @@ This repository is becoming a **documentation-first, Python-heavy ML deployment 
 - An nbdev 3 scaffold with `pyproject.toml`, notebooks under `nbs/`, package exports under `ml_deploy/`, and baseline tests.
 - Ratified architecture write-up pages for the reference skeleton, documentation TOC, and first vertical slice.
 - A concrete local vertical-slice implementation module (`ml_deploy/vertical_slice.py`) plus end-to-end tests (`tests/test_vertical_slice.py`).
+- A thin Web UI backend contract module (`ml_deploy/webui_contracts.py`) with tests (`tests/test_webui_contracts.py`) for immutable notebook execution requests and MLflow-linked run summaries.
 
 ## What does not exist yet
 
 - No production-ready multi-topology ML pipeline implementation.
 - No Docker-based reproducible workflow artifacts yet.
 - No deployment scripts or infrastructure definitions for the target topologies yet.
+- No concrete Slurm/Kubernetes execution adapters yet for the Web UI execution contract.
 
 ## Important implications
 
@@ -79,11 +81,13 @@ This repository is becoming a **documentation-first, Python-heavy ML deployment 
 - [architecture/assistant-integration-and-docs-delivery.md](architecture/assistant-integration-and-docs-delivery.md) — accepted MCP defaults plus docs delivery guidance.
 - [architecture/example-matrix.md](architecture/example-matrix.md) — proposed implementation/example sequence.
 - [architecture/first-vertical-slice.md](architecture/first-vertical-slice.md) — first slice definition plus implementation status.
+- [architecture/webui-backend-contract.md](architecture/webui-backend-contract.md) — executable Web UI request/response contract baseline.
 - [architecture/distilled-allium-spec.md](architecture/distilled-allium-spec.md) — formal distilled behavior baseline for the current repository.
 - [contracts/index.md](contracts/index.md) — router for the cross-cutting contracts.
 - [domains/index.md](domains/index.md) — router for the bounded domains.
 - [topologies/index.md](topologies/index.md) — router for the reference topologies.
-- [decisions/project-scope-and-constraints.md](decisions/project-scope-and-constraints.md) — current hard constraints and no-code planning rule.
+- [decisions/project-scope-and-constraints.md](decisions/project-scope-and-constraints.md) — current hard constraints and working-mode expectations.
+- [decisions/notebook-intake-validation-and-approval.md](decisions/notebook-intake-validation-and-approval.md) — notebook intake validation/approval gate model.
 - [architecture/dev-environment.md](architecture/dev-environment.md) — the current technical substance of the repo.
 - [sources/ml-deploy-reference-repo.allium.md](sources/ml-deploy-reference-repo.allium.md) — synthesized summary of the repository-level `.allium` source file.
 - [sources/ml_deploy.vertical_slice.py.md](sources/ml_deploy.vertical_slice.py.md) — synthesized summary of the implemented local vertical-slice module.
