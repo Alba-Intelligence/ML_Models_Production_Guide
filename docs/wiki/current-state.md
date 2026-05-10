@@ -10,6 +10,7 @@ sources:
   - sources/gitignore.md
   - sources/LICENSE.md
   - sources/ml_deploy.vertical_slice.py.md
+  - sources/nbs.06_vertical_slice.ipynb.md
   - sources/tests.test_vertical_slice.py.md
   - architecture/target-system.md
   - architecture/reference-architecture-skeleton.md
@@ -46,6 +47,7 @@ As of 2026-05-10, the repository contains:
 - `specs/ml-deploy-reference-repo.allium` (distilled repository-level Allium specification)
 - nbdev 3 project structure with `pyproject.toml`, `nbs/` directory for notebooks, and `ml_deploy/` package
 - `nbs/05_webui_contracts.ipynb` as nbdev source for Web UI backend contracts
+- `nbs/06_vertical_slice.ipynb` as nbdev source for first-vertical-slice implementation
 - git metadata for a repository now rebased onto `origin/main`
 
 ## What is working
@@ -67,6 +69,7 @@ As of 2026-05-10, the repository contains:
 - The first architecture-aligned example matrix now exists in the wiki.
 - The first implementation-aligned architecture slice is now defined in `architecture/first-vertical-slice.md`.
 - The first local vertical slice is now implemented in `ml_deploy/vertical_slice.py` with tests in `tests/test_vertical_slice.py`.
+- The vertical-slice module is now notebook-owned and exported from `nbs/06_vertical_slice.ipynb`.
 - A thin Web UI backend contract module now exists in `ml_deploy/webui_contracts.py` with tests in `tests/test_webui_contracts.py`.
 - The Web UI contract module is now notebook-owned and exported from `nbs/05_webui_contracts.ipynb`.
 - A distilled repository-wide Allium specification now exists and is indexed in the wiki.

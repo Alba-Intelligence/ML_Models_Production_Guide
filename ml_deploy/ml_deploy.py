@@ -5,7 +5,7 @@
 # %% auto #0
 __all__ = ['say_hello', 'add_numbers']
 
-# %% ../nbs/00_core.ipynb #e3cbb07b
+# %% ../nbs/00_core.ipynb #e069316e
 """Top-level package for ml_deploy."""
 
 __author__ = """ML Engineer"""

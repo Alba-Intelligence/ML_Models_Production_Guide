@@ -42,6 +42,7 @@ This repository is becoming a **documentation-first, Python-heavy ML deployment 
 - An nbdev 3 scaffold with `pyproject.toml`, notebooks under `nbs/`, package exports under `ml_deploy/`, and baseline tests.
 - Ratified architecture write-up pages for the reference skeleton, documentation TOC, and first vertical slice.
 - A concrete local vertical-slice implementation module (`ml_deploy/vertical_slice.py`) plus end-to-end tests (`tests/test_vertical_slice.py`).
+- The vertical-slice module is now generated from `nbs/06_vertical_slice.ipynb` through nbdev export.
 - A thin Web UI backend contract module (`ml_deploy/webui_contracts.py`) with tests (`tests/test_webui_contracts.py`) for immutable notebook execution requests and MLflow-linked run summaries.
 - The Web UI contract module is now generated from `nbs/05_webui_contracts.ipynb` through nbdev export.
 
