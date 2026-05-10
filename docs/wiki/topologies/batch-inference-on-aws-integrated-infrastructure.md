@@ -44,7 +44,7 @@ Provide the reference topology for:
 - artifacts are retrieved from the canonical artifact/model flow
 - inputs and outputs are versioned or otherwise attributable
 - runtime behavior is observable enough to debug failures and attribute cost
-- AWS-integrated infrastructure provides the production-adjacent execution environment
+- AWS Kubernetes-integrated infrastructure provides the production-adjacent execution environment for non-Lambda.ai services
 
 ## What this topology is for
 

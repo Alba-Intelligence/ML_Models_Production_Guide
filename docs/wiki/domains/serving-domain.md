@@ -1,6 +1,6 @@
 ---
-updated: 2026-05-09
-summary: Serving domain responsibilities for FastAPI local serving, batch/online contracts, rollout behavior, and inference runtime concerns.
+updated: 2026-05-10
+summary: Serving domain responsibilities for notebook-driven local inference, batch/online contracts, rollout behavior, and inference runtime concerns.
 read_when:
   - You are defining inference behavior or service contracts
   - You are deciding where serving concerns stop and infrastructure concerns begin
@@ -17,7 +17,7 @@ sources:
 
 ## Owns
 
-- FastAPI local serving reference
+- notebook-driven local inference reference interfaces
 - inference request/response contracts
 - online prediction path behavior
 - batch prediction orchestration contract
@@ -48,7 +48,7 @@ Primary coverage:
 
 ## Topology relevance
 
-- Topology A: local FastAPI serving
+- Topology A: local nbdev/Python inference serving
 - Topology C: batch inference
 - Topology D: online inference under production controls
 

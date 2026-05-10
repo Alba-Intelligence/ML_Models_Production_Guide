@@ -39,8 +39,8 @@ Provide the reference topology for:
 
 ## Core assumptions
 
-- training compute runs on Lambda.ai
-- experiment metadata still flows into MLflow or an equivalent connected metadata surface
+- training compute runs on Lambda.ai under Slurm coordination/redundancy patterns
+- experiment metadata flows into MLflow with PostgreSQL backend and S3 artifact storage posture
 - artifacts are recovered into the canonical artifact flow
 - remote execution must remain attributable and auditable
 
@@ -96,5 +96,6 @@ High-value assistant tasks here include:
 ## Open decisions
 
 - exact Lambda.ai job model to standardize in the reference
+- exact Slurm redundancy/failure-handling model to standardize in the reference
 - exact artifact sync/recovery pattern
 - exact remote secret/config distribution pattern

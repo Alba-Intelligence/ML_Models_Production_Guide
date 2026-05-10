@@ -28,7 +28,7 @@ They are where the project answers:
 - [local-development-and-single-node-training.md](local-development-and-single-node-training.md) — Docker-based local iteration, local serving, and single-node GPU training.
 - [distributed-training-on-lambda-ai.md](distributed-training-on-lambda-ai.md) — multi-GPU or multi-node remote training on Lambda.ai.
 - [batch-inference-on-aws-integrated-infrastructure.md](batch-inference-on-aws-integrated-infrastructure.md) — scheduled or event-driven offline inference with strong lineage and cost controls.
-- [online-inference-under-production-controls.md](online-inference-under-production-controls.md) — FastAPI-based request/response serving under production deployment and observability controls.
+- [online-inference-under-production-controls.md](online-inference-under-production-controls.md) — Kubernetes-based request/response serving under production deployment and observability controls.
 
 ## Rule
 

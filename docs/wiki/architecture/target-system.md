@@ -1,5 +1,5 @@
 ---
-updated: 2026-05-09
+updated: 2026-05-10
 summary: Target system and documentation scope for the planned ML deployment reference.
 read_when:
   - You need the intended end-state architecture
@@ -22,7 +22,7 @@ The project is not just about serving a model. It should document and demonstrat
 1. model development
 2. experiment tracking
 3. reproducible training
-4. packaging and local API serving
+4. packaging and local inference orchestration
 5. infrastructure provisioning
 6. distributed compute workflows
 7. deployment patterns
@@ -53,6 +53,7 @@ The project is not just about serving a model. It should document and demonstrat
 - **PyTorch** for model definition and training
 - **GPU support is required**
 - **MLflow** for experiment tracking, model metadata, and reproducibility support
+- **PostgreSQL backend store + S3 artifact store** as the default MLflow production storage posture
 
 ### Documentation
 
@@ -63,8 +64,8 @@ The project is not just about serving a model. It should document and demonstrat
 ### Infrastructure and compute
 
 - **python-terraform** for Python-driven infrastructure workflows
-- **Lambda.ai / Lambda Labs** for distributed compute
-- **AWS** for tooling and production-adjacent infrastructure concerns
+- **Lambda.ai / Lambda Labs** for distributed compute coordinated with Slurm redundancy/failure-handling patterns
+- **AWS Kubernetes** for non-Lambda.ai platform services and production-adjacent infrastructure concerns
 
 ## Cross-cutting permanent requirements
 
@@ -114,7 +115,7 @@ Accepted stance:
 - `nbdev_export` generates the Python package from notebooks
 - `nbdev_preview` / Quarto renders documentation to `docs/`
 - The living wiki in `docs/wiki/` remains separate as project memory per AGENTS.md
-- Serving patterns will be explored once actual model code exists
+- Notebook-triggered execution should happen without modifying notebook source code (runtime configuration injected externally).
 
 ## Default monitoring stack
 
@@ -240,10 +241,13 @@ Tradeoffs:
 - local development environment
 - PyTorch training on GPU
 - experiment tracking with MLflow
+- MLflow PostgreSQL/S3 storage pattern
 - artifact/model packaging via nbdev
 - infrastructure with python-terraform
-- distributed compute on Lambda.ai
-- AWS tooling and production integration
+- distributed compute on Lambda.ai (Slurm coordination/redundancy)
+- AWS Kubernetes tooling and production integration
+- local architecture replication of production control/storage layers
+- notebook upload/trigger Web UI for ML engineers
 - security controls
 - lineage and traceability
 - model monitoring

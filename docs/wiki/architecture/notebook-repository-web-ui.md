@@ -90,11 +90,11 @@ Provide a centralized interface for ML engineers to interact with versioned note
 
 ## Open Questions and Deferred Decisions
 
-1. **Repository Implementation**: Git-based (with webhook triggers) vs. object storage + metadata DB for notebook storage?
-2. **Execution Configuration**: Should we use dedicated config files (YAML/JSON) or environment variables for parameter injection?
-3. **Approval Workflows**: Should production executions require approval gates, and if so, how implemented?
-4. **Notebook Versioning**: Should we support branching/merging workflows for experimental notebook changes?
-5. **UI Technology Stack**: What framework/library should we use for the web interface (Streamlit, Gradio, custom React/Vue)?
+1. **Execution Configuration Contract**: exact required schema for runtime parameters and environment overrides.
+2. **Approval Workflows**: exact gate model for promoting local-validated runs to Lambda.ai/AWS environments.
+3. **Notebook Intake Controls**: supported upload sources (direct upload vs Git-only) and mandatory validation pipeline.
+4. **Slurm/Kubernetes Mapping**: exact translation layer from notebook execution request into Slurm jobs and Kubernetes workloads.
+5. **UI Technology Stack**: what framework/library should implement the web interface (Streamlit, Gradio, custom React/Vue).
 
 ## Recommended Implementation Approach
 

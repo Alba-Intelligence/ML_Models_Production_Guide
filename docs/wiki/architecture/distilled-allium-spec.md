@@ -22,7 +22,7 @@ The spec is intended as a compact, formal baseline for current repository behavi
 
 ## What the spec currently models
 
-1. **Repository posture and constraints** (Python/Linux/PyTorch/GPU/FastAPI/MLflow/python-terraform/Lambda.ai/AWS direction plus accepted default monitoring/cost/MCP sets).
+1. **Repository posture and constraints** (Python/Linux/PyTorch/GPU/MLflow/python-terraform/Lambda.ai/AWS direction plus accepted default monitoring/cost/MCP sets).
 2. **Implemented shell behavior** from `flake.nix` (shell entry, `uv` bootstrap when `pyproject.toml` exists, Jupyter helper expectations).
 3. **Wiki maintenance obligations** from `AGENTS.md` and the current wiki process.
 4. **Implementation gating** (specification-first block unless explicit confirmation is present).

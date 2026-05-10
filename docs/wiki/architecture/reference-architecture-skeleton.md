@@ -44,17 +44,19 @@ Provide a Python-first reference for ML engineers in hedge funds that covers the
 - distributed training on Lambda.ai
 - model evaluation and validation
 - model packaging and registration
-- local serving with FastAPI
+- local serving via nbdev-exported Python inference interfaces
 - batch inference patterns
 - online inference patterns
 - infrastructure workflows with `python-terraform`
-- AWS production patterns
+- AWS Kubernetes production patterns for non-Lambda.ai services
+- MLflow persistence with PostgreSQL backend + S3 artifact storage
+- Slurm coordination/redundancy patterns on Lambda.ai for distributed runs
 - monitoring and alerting
 - cost governance and attribution
 - security controls and auditability
 - rollback / incident response patterns
 - MCP-enabled assistant integration surfaces for monitoring and ongoing improvement
-- documentation delivery via FastAPI if kept separate from model-serving concerns
+- documentation delivery via nbdev/Quarto with optional companion dynamic services kept separate from model-serving concerns
 
 ### Out of scope
 
@@ -175,7 +177,7 @@ These are the major object types the reference should treat as first-class.
 
 **Owns**
 
-- FastAPI local serving reference
+- local inference interfaces from nbdev-exported Python modules
 - inference request/response contracts
 - online prediction path
 - batch prediction orchestration contract
@@ -200,7 +202,9 @@ These are the major object types the reference should treat as first-class.
 
 - `python-terraform` workflows
 - AWS resource patterns
+- AWS Kubernetes patterns for platform services
 - Lambda.ai compute patterns
+- Slurm job orchestration/redundancy patterns on Lambda.ai
 - networking
 - storage topology
 - environment separation
@@ -379,7 +383,7 @@ Purpose:
 
 - developer productivity
 - reproducible local iteration
-- FastAPI local serving
+- notebook-driven local inference orchestration
 - local MLflow-connected experimentation
 
 Primary planes:
@@ -429,8 +433,9 @@ Purpose:
 
 Primary planes:
 
-- FastAPI-based service contract
+- Python inference contract and service adapter
 - AWS-integrated production controls
+- Kubernetes-based orchestration and operations
 - observability and alerting
 - deployment policy and rollback path
 
@@ -449,7 +454,7 @@ These surfaces should prefer MCP/tool interfaces over direct ad hoc scraping.
 
 ## Documentation delivery posture
 
-If FastAPI is used to serve the documentation, the design should assume:
+If a dynamic documentation service is used, the design should assume:
 
 - markdown files in git remain canonical
 - docs delivery is logically separate from model-serving delivery
@@ -471,16 +476,17 @@ If FastAPI is used to serve the documentation, the design should assume:
 
 - Training: PyTorch + GPU
 - Experiment tracking: MLflow
-- Local serving: FastAPI
+- MLflow storage: PostgreSQL backend + S3 artifact store
+- Local serving: nbdev-exported Python inference interfaces
 - Infra workflows: `python-terraform`
-- Distributed training: Lambda.ai
-- Production platform patterns: AWS
+- Distributed training: Lambda.ai + Slurm coordination/redundancy
+- Production platform patterns: AWS Kubernetes for non-Lambda.ai services
 - Reproducible development: Docker
 - Optional environment assistance: Nix
 - Default monitoring stack: `evidently` + Prometheus/Grafana + MLflow
 - Default cost stack: AWS CUR/Athena/Budgets + Python attribution layer for Lambda.ai
 - Default assistant integration scope: MLflow + observability + cost + Lambda.ai usage + documentation/decision retrieval through MCP-style interfaces
-- Docs delivery posture: markdown-in-git is canonical; FastAPI docs delivery is optional companion infrastructure
+- Docs delivery posture: markdown-in-git is canonical; optional dynamic docs services must remain separate from inference serving
 
 ## What this skeleton should enable next
 

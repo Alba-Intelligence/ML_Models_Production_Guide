@@ -71,7 +71,7 @@ Recommended domains:
 - **Data domain** — datasets, schemas, lineage, retention, provenance
 - **Training domain** — PyTorch training, GPU execution, distributed training, experiment config
 - **Artifact domain** — model artifacts, metadata, registries, versioning, promotion
-- **Serving domain** — FastAPI local serving, online inference contracts, batch jobs
+- **Serving domain** — local inference interfaces, online inference contracts, batch jobs
 - **Infrastructure domain** — python-terraform, Lambda.ai compute, AWS resources, networking
 - **Observability domain** — metrics, logs, traces, drift, data quality, SLOs
 - **Governance domain** — security, secrets, IAM, approvals, compliance posture, auditability
@@ -117,7 +117,7 @@ Recommended topologies:
 - **Topology A:** local development and single-node GPU training
 - **Topology B:** distributed training on Lambda.ai
 - **Topology C:** batch inference on AWS-integrated infrastructure
-- **Topology D:** online inference with FastAPI-based serving behind production controls
+- **Topology D:** online inference with Kubernetes-based serving behind production controls
 
 Each topology should reuse the same domain contracts.
 

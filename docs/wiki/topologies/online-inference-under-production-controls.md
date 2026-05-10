@@ -1,6 +1,6 @@
 ---
 updated: 2026-05-10
-summary: Reference topology for FastAPI-based online inference under production deployment, security, observability, and rollback controls.
+summary: Reference topology for Kubernetes-based online inference under production deployment, security, observability, and rollback controls.
 read_when:
   - You are defining production request/response serving
   - You want the online serving topology distinct from local serving and batch inference
@@ -42,7 +42,7 @@ Provide the reference topology for:
 
 ## Core assumptions
 
-- FastAPI is the service framework family in scope
+- online inference services run under AWS Kubernetes controls for non-Lambda.ai services
 - production deployment controls are separate from local serving convenience
 - monitoring and alerting are attached to every production release
 - rollback target and ownership are always explicit
@@ -62,7 +62,7 @@ Provide the reference topology for:
 
 ## Key risks and boundaries
 
-- shared use of FastAPI for docs and model serving must not collapse operational boundaries
+- docs tooling and model-serving operations must not collapse operational boundaries
 - every rollout must be tied to a model version and monitoring configuration
 - prediction logging must balance investigability with security/privacy constraints
 - cost visibility must support online unit-economics analysis

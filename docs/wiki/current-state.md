@@ -73,6 +73,7 @@ As of 2026-05-10, the repository contains:
 - CUDA support is explicitly commented out in `flake.nix`.
 - There is no production-ready ML data pipeline or deployment implementation yet.
 - Contract validation is currently test-level for the local vertical slice, not yet generalized across all topologies.
+- New architecture requirements now specify MLflow PostgreSQL/S3 storage, Lambda.ai Slurm coordination/redundancy, AWS Kubernetes for non-Lambda.ai services, and Python-managed Terraform-first infrastructure workflows.
 - The distilled Allium spec currently models repository posture, shell behavior, and governance constraints; it does not yet cover any real ML implementation logic because that code still does not exist.
 - `flake.lock` is not tracked by git under the current ignore rules, so lockfile drift may be local-only unless that policy changes.
 - The origin currently contributes a `LICENSE` file, while the expected remote `README.md` was not present during synchronization.
@@ -84,8 +85,10 @@ The repo is currently best understood as a **specification-first and documentati
 ## Most likely next additions
 
 - Docker-based development definition
+- local replica topology that mirrors production control planes (Kubernetes/Slurm/storage) where feasible
 - promotion of the implemented local slice into Docker-first execution flow
 - expansion into distributed, batch, and online production topologies
+- notebook Web UI execution flow with immutable notebook source semantics
 - validation hooks for contract compliance checks
 - implementation only after user-directed transition from spec-first write-up to build-out
 

@@ -70,7 +70,7 @@ ml_deploy/
 
 ### Serving
 
-Local serving patterns will be explored once actual model code exists (potentially wrapping nbdev-exported packages with FastAPI or other frameworks).
+Local serving patterns should be built from nbdev-exported Python modules and infrastructure-specific adapters selected by topology requirements.
 
 ## Related decisions
 

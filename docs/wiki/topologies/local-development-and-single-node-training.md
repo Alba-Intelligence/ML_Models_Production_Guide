@@ -1,6 +1,6 @@
 ---
 updated: 2026-05-10
-summary: Reference topology for Docker-based local development, local FastAPI serving, and single-node GPU training.
+summary: Reference topology for Docker-based local development, notebook-driven local inference, and single-node GPU training.
 read_when:
   - You are defining the local developer loop
   - You want the least operationally heavy reference topology
@@ -20,7 +20,7 @@ Provide the lowest-friction reference topology for:
 
 - local development
 - single-node GPU experimentation
-- local FastAPI serving
+- local inference via nbdev-exported Python modules
 - local documentation preview/serving
 
 ## Primary domains involved
@@ -42,7 +42,8 @@ Provide the lowest-friction reference topology for:
 
 - Docker is the canonical reproducible environment
 - Nix may help developers locally, but Docker is the standard reference artifact
-- MLflow is reachable for experiment tracking
+- MLflow is reachable with PostgreSQL backend and S3-compatible artifact storage (MinIO accepted for local parity)
+- local replica should include Slurm-like coordination and Kubernetes control-plane approximations where practical
 - the developer may have access to a local GPU or attached single-node GPU environment
 
 ## What this topology is for
@@ -50,7 +51,7 @@ Provide the lowest-friction reference topology for:
 - fast local iteration
 - validating experiment metadata shape
 - validating packaging and local serving behavior
-- validating docs-delivery and example-navigation behavior if FastAPI is used for docs
+- validating notebook Web UI trigger flow where notebook source remains immutable
 
 ## What this topology is not for
 
@@ -62,7 +63,7 @@ Provide the lowest-friction reference topology for:
 
 - local convenience must not erase required metadata or security assumptions
 - local serving must not be confused with production serving
-- local docs delivery must remain logically separate from model-serving behavior even if both use FastAPI
+- local docs/tooling delivery must remain logically separate from model inference behavior
 
 ## Reference flow specification
 
@@ -71,12 +72,12 @@ Provide the lowest-friction reference topology for:
 1. Start Docker-based local stack and required services.
 2. Run notebook-driven experiment and emit MLflow run metadata.
 3. Package a model artifact with required schema/traceability metadata.
-4. Launch local FastAPI serving against the packaged artifact.
+4. Execute local inference through nbdev-exported package interfaces without notebook mutation.
 5. Execute smoke predictions and verify prediction logging links to model version.
 
 ### Data and artifact flow
 
-- versioned local dataset -> transformation output -> training run -> model artifact -> local serving endpoint -> prediction logs
+- versioned local dataset -> transformation output -> training run -> model artifact -> local inference interface -> prediction logs
 
 ### Contract checkpoints
 

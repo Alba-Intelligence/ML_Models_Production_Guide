@@ -50,7 +50,7 @@ Every example should map to:
 - purpose: show how a trained model becomes a traceable artifact and model version
 - priority: **high**
 
-### EX-03 — Local FastAPI serving of a registered model artifact
+### EX-03 — Local notebook-driven inference of a registered model artifact
 
 - lifecycle: local serving
 - primary domain: serving
@@ -120,14 +120,14 @@ Every example should map to:
 - purpose: show how assistant tooling helps inspect metrics, deployments, and docs without becoming a shadow control plane
 - priority: **medium**
 
-### EX-10 — Optional FastAPI documentation delivery service
+### EX-10 — Notebook Web UI execution orchestration
 
-- lifecycle: documentation delivery
-- primary domain: serving/documentation delivery
-- supporting domains: governance, assistant integration
-- topology: optional companion pattern
-- contracts: security baseline where relevant
-- purpose: show how markdown-in-git can be served with metadata/search/navigation while remaining non-canonical
+- lifecycle: execution orchestration, promotion control
+- primary domain: serving/platform orchestration
+- supporting domains: governance, infrastructure, observability
+- topology: local replica + production promotion path
+- contracts: security, deployment, prediction logging, cost attribution
+- purpose: show notebook upload/selection and environment-triggered execution without notebook code modification
 - priority: **medium**
 
 ## Recommended implementation order

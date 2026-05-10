@@ -1,6 +1,6 @@
 ---
-updated: 2026-05-09
-summary: Accepted position for FastAPI-based documentation delivery in the reference architecture.
+updated: 2026-05-10
+summary: Accepted position for nbdev/Quarto-first documentation delivery in the reference architecture.
 read_when:
   - You are deciding whether docs delivery is core or optional
   - You are designing the documentation-serving model
@@ -19,8 +19,8 @@ sources:
 ## Decision
 
 - **Markdown in git remains the canonical documentation source.**
-- **FastAPI-based documentation delivery is an optional companion pattern, not a required core architecture element.**
-- When used, FastAPI may serve rendered docs, indexes, metadata, navigation, and machine-readable documentation endpoints.
+- **nbdev/Quarto remains the default documentation delivery path.**
+- Dynamic docs-serving layers are optional companion patterns, not required core architecture elements.
 
 ## Why
 
@@ -34,7 +34,7 @@ Treating docs delivery as optional keeps the core reference simpler while still 
 
 ## Alternatives considered
 
-### Make FastAPI docs delivery part of the default mandatory architecture
+### Make a dynamic docs API/service part of the default mandatory architecture
 
 Pros:
 
@@ -50,7 +50,7 @@ Why not default:
 ## Consequences
 
 - docs should be authored as markdown first
-- any FastAPI docs-serving implementation should be clearly labeled as optional/companion
+- any dynamic docs-serving implementation should be clearly labeled as optional/companion
 - documentation-serving routes and deployment concerns should stay separate from model-serving routes and controls
 
 ## Revisit if

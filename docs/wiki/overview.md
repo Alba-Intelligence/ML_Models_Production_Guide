@@ -55,6 +55,10 @@ This repository is becoming a **documentation-first, Python-heavy ML deployment 
 - The intended end state is now clearer: extensive reference documentation and code examples for the full lifecycle from development to distributed production, using nbdev 3 as the core framework.
 - The primary audience is now defined as **ML engineers in hedge funds**.
 - The technical direction is Python-first, Linux-only, PyTorch-only with GPU support, with nbdev 3 (Quarto-based), MLflow, python-terraform, Lambda.ai, and AWS in scope.
+- MLflow storage direction is PostgreSQL backend + S3 artifact store, with local parity via PostgreSQL + S3-compatible storage.
+- Lambda.ai paths are expected to model Slurm coordination/redundancy for distributed workloads.
+- AWS platform direction is Kubernetes-first for non-Lambda.ai services.
+- Notebook execution should be triggered from a Web UI without requiring notebook source modifications.
 - Security, data lineage, traceability, and reproducibility are permanent architectural requirements.
 - Reproducible development is expected to use Docker, while Nix may remain as a helper layer.
 - The project now has ratified architecture write-up layers (skeleton + TOC), enforceability guidance for contracts, and flow-oriented topology pages.
