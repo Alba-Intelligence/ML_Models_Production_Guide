@@ -24,8 +24,8 @@ A Python-first, Linux-only reference platform for ML engineering with:
 ``` mermaid
 flowchart TB
     ENG[ML Engineer] --> NB[Notebook revision in Git (immutable source)]
-    NB --> UI[Notebook Web UI trigger + visibility]
-    UI --> ORCH[Execution orchestration policy + contract checks]
+    NB --> UI["Notebook Web UI: trigger + visibility"]
+    UI --> ORCH["Execution orchestration: policy + contract checks"]
 
     ORCH --> LOCAL[Local parity execution]
     ORCH --> SLRM[Lambda.ai Slurm execution]
@@ -36,9 +36,9 @@ flowchart TB
     K8S --> MLFLOW
 
     MLFLOW --> PG[(PostgreSQL backend)]
-    MLFLOW --> S3[(S3 / MinIO artifacts)]
+    MLFLOW --> S3["S3 / MinIO artifacts"]
 
-    MLFLOW --> OBS[Observability + cost (Evidently, Prometheus, Grafana, AWS/Lambda attribution)]
+    MLFLOW --> OBS["Observability + cost traces"]
     OBS --> ENG
 ```
 
