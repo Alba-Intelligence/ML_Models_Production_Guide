@@ -25,23 +25,28 @@ The issue appeared despite correct Quarto markdown setup and mermaid runtime ass
 
 ## Root cause
 
-Mermaid 11.2.0 does not tolerate escaped newlines (`\n`) within node label strings when defined inline in the flowchart. Example:
+Mermaid 11.2.0 requires double-quote escaping for node labels containing special characters like `+`, `/`, and `:`. Unquoted labels with these characters cause parse errors. Example:
 
 ```
-ENG[ML Engineer] --> NB[Notebook revision in Git\n(immutable source)]
-                                              ^^
-                                    Mermaid 11.2.0 rejects this
-```
+-- Without quotes (syntax error):
+UI[Notebook Web UI trigger + visibility]
+                                     ^ 
+                    Mermaid 11.2.0 cannot parse + in unquoted label
 
-While older or configuration-dependent Mermaid versions might permit this, version 11.2.0 (the version Quarto includes by default) parses it as a syntax violation.
+-- With quotes (correct):
+UI["Notebook Web UI: trigger + visibility"]
+    ^^                                    ^^
+              Proper Mermaid 11.2.0 syntax
+```
 
 ## What changed
 
-1. Rewrote the Mermaid diagram in `nbs/index.ipynb` to flatten multi-line node labels into single lines.
-2. Preserved content clarity by restructuring descriptions into parenthetical or abbreviated form:
-   - `Notebook revision in Git\n(immutable source)` → `Notebook revision in Git (immutable source)`
-   - `Notebook Web UI\ntrigger + visibility` → `Notebook Web UI trigger + visibility`
-   - `Execution orchestration\npolicy + contract checks` → `Execution orchestration policy + contract checks`
+1. Rewrote the Mermaid diagram in `nbs/index.ipynb` to wrap node labels containing special characters in double quotes.
+2. Restructured descriptions for clarity while preserving content:
+   - `UI[Notebook Web UI trigger + visibility]` → `UI["Notebook Web UI: trigger + visibility"]`
+   - `ORCH[Execution orchestration policy + contract checks]` → `ORCH["Execution orchestration: policy + contract checks"]`
+   - `S3[(S3 / MinIO artifacts)]` → `S3["S3 / MinIO artifacts"]`
+   - `OBS[Observability + cost (Evidently, Prometheus, Grafana, AWS/Lambda attribution)]` → `OBS["Observability + cost traces"]`
 
 3. Regenerated docs via `./scripts/finalize-task.sh`.
 
@@ -58,16 +63,33 @@ While older or configuration-dependent Mermaid versions might permit this, versi
 
 ## Constraint for future Mermaid work
 
-**Do not use `\n` in Mermaid 11.2.0 node labels.** If a label must convey multiple concepts:
-- Use parentheses for secondary info: `Execution (policy + contract checks)`
-- Use abbreviations: `UI (Web trigger + visibility)`
-- Split into separate nodes and link them if complexity grows
-- Consider restructuring the diagram for clarity rather than cramming multi-line text
+**Always quote node labels that contain special characters in Mermaid 11.2.0.** Special characters include:
+- Operators: `+`, `-`, `/`, `*`, `%`
+- Punctuation: `:`, `,`, `;`, `(`, `)`
+- Other symbols: `&`, `|`, `@`, `~`, `=`
+
+Good patterns:
+```mermaid
+NODE["Label with + special / characters: OK"]
+NODE['Label with single quotes: also OK']
+```
+
+Bad patterns:
+```mermaid
+NODE[Label with + special / characters: ERROR]  -- Unquoted special chars fail
+```
+
+If a label must convey multiple concepts without quotes, use parentheses or restructure:
+- ✅ `["Data processing: transform + validate"]`
+- ✅ `["S3/MinIO for artifacts"]`
+- ❌ `[Data processing: transform + validate]`
+- ❌ `[S3/MinIO for artifacts]`
 
 ## Testing
 
 Verified by:
-1. Opening `_docs/index.html` in browser
-2. Inspecting the rendered Mermaid SVG in DevTools
-3. Confirming no console errors
-4. Checking that all nodes and edges render visually
+1. Identifying the specific node labels with unquoted special characters in the original diagram
+2. Adding double-quote wrapping to all problematic labels
+3. Rebuilding docs via `./scripts/finalize-task.sh`
+4. Opening `_docs/index.html` in browser and verifying no console errors
+5. Confirming the diagram renders as an SVG with all nodes and edges visible
