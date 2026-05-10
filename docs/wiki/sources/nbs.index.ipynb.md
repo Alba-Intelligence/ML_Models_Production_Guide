@@ -19,6 +19,7 @@ Primary rendered documentation homepage (`_docs/index.html`) for high-level orie
 - Notebook-first development model (`nbs/` source of truth, exported package artifacts)
 - Traceability spine from immutable notebook revisions to MLflow and operational visibility
 - Fast navigation to the most important architecture notebooks
+- Uses Quarto Mermaid block syntax (` ```{mermaid} `) to ensure diagram assets are loaded in rendered HTML
 
 ## Practical implication
 

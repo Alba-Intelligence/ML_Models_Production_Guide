@@ -75,6 +75,7 @@ sources:
   - revisions/2026-05-11-technology-bound-question-rewrite.md
   - revisions/2026-05-11-infrastructure-overview-notebook.md
   - revisions/2026-05-11-docs-index-overview-homepage.md
+  - revisions/2026-05-11-index-mermaid-render-fix.md
 ---
 
 # Wiki index
@@ -238,6 +239,7 @@ sources:
 - [revisions/2026-05-11-technology-bound-question-rewrite.md](revisions/2026-05-11-technology-bound-question-rewrite.md) — captures rewriting clarification questions to directly reflect required technology constraints.
 - [revisions/2026-05-11-infrastructure-overview-notebook.md](revisions/2026-05-11-infrastructure-overview-notebook.md) — captures creation of the high-level Mermaid-based architecture overview notebook.
 - [revisions/2026-05-11-docs-index-overview-homepage.md](revisions/2026-05-11-docs-index-overview-homepage.md) — captures replacement of redirect index with an overview homepage covering infra, notebook-first flow, and traceability.
+- [revisions/2026-05-11-index-mermaid-render-fix.md](revisions/2026-05-11-index-mermaid-render-fix.md) — captures the homepage Mermaid rendering fix using Quarto Mermaid block syntax.
 - [revisions/2026-05-09-example-matrix.md](revisions/2026-05-09-example-matrix.md) — captures the first architecture-aligned example inventory.
 - [revisions/2026-05-09-default-stack-decisions.md](revisions/2026-05-09-default-stack-decisions.md) — captures the accepted default stack and boundary decisions.
 - [revisions/2026-05-09-topology-pages.md](revisions/2026-05-09-topology-pages.md) — captures the first pass of reference topology pages.
