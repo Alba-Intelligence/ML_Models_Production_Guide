@@ -50,6 +50,7 @@ sources:
   - sources/nbs.08_execution_backends.ipynb.md
   - sources/nbs.09_notebook_intake.ipynb.md
   - sources/nbs.10_terraform_bootstrap.ipynb.md
+  - sources/nbs.11_infrastructure_overview.ipynb.md
   - sources/nbs.05_webui_contracts.ipynb.md
   - sources/tests.test_vertical_slice.py.md
   - sources/tests.test_webui_contracts.py.md
@@ -71,6 +72,7 @@ sources:
   - revisions/2026-05-11-quarto-shell-packages.md
   - revisions/2026-05-11-spec-quality-reset-and-elicitation.md
   - revisions/2026-05-11-technology-bound-question-rewrite.md
+  - revisions/2026-05-11-infrastructure-overview-notebook.md
 ---
 
 # Wiki index
@@ -94,6 +96,7 @@ sources:
 | Review executable Web UI backend contracts                           | [architecture/webui-backend-contract.md](architecture/webui-backend-contract.md), [sources/ml_deploy.webui_contracts.py.md](sources/ml_deploy.webui_contracts.py.md), [sources/tests.test_webui_contracts.py.md](sources/tests.test_webui_contracts.py.md) |
 | Review runtime adapter scaffolding                                    | [sources/ml_deploy.execution_backends.py.md](sources/ml_deploy.execution_backends.py.md), [sources/ml_deploy.notebook_intake.py.md](sources/ml_deploy.notebook_intake.py.md), [sources/ml_deploy.mlflow_parity.py.md](sources/ml_deploy.mlflow_parity.py.md) |
 | Edit runtime helpers in nbdev workflow                                | [sources/nbs.07_mlflow_parity.ipynb.md](sources/nbs.07_mlflow_parity.ipynb.md), [sources/nbs.08_execution_backends.ipynb.md](sources/nbs.08_execution_backends.ipynb.md), [sources/nbs.09_notebook_intake.ipynb.md](sources/nbs.09_notebook_intake.ipynb.md), [sources/nbs.10_terraform_bootstrap.ipynb.md](sources/nbs.10_terraform_bootstrap.ipynb.md) |
+| Present the full platform architecture visually                       | [sources/nbs.11_infrastructure_overview.ipynb.md](sources/nbs.11_infrastructure_overview.ipynb.md), [architecture/target-system.md](architecture/target-system.md), [topologies/index.md](topologies/index.md) |
 | Edit Web UI contracts in nbdev workflow                              | [sources/nbs.05_webui_contracts.ipynb.md](sources/nbs.05_webui_contracts.ipynb.md), [sources/ml_deploy.webui_contracts.py.md](sources/ml_deploy.webui_contracts.py.md) |
 | Review the planned example inventory                                 | [architecture/example-matrix.md](architecture/example-matrix.md), [topologies/index.md](topologies/index.md)                                                                                                                                                         |
 | Start the first implementation-aligned architecture slice            | [architecture/first-vertical-slice.md](architecture/first-vertical-slice.md), [architecture/example-matrix.md](architecture/example-matrix.md), [contracts/index.md](contracts/index.md)                                                                            |
@@ -205,6 +208,7 @@ sources:
 - [sources/nbs.08_execution_backends.ipynb.md](sources/nbs.08_execution_backends.ipynb.md) — synthesized summary of nbdev source-of-truth for execution adapters.
 - [sources/nbs.09_notebook_intake.ipynb.md](sources/nbs.09_notebook_intake.ipynb.md) — synthesized summary of nbdev source-of-truth for notebook intake gates.
 - [sources/nbs.10_terraform_bootstrap.ipynb.md](sources/nbs.10_terraform_bootstrap.ipynb.md) — synthesized summary of nbdev source-of-truth for Terraform bootstrap helpers.
+- [sources/nbs.11_infrastructure_overview.ipynb.md](sources/nbs.11_infrastructure_overview.ipynb.md) — synthesized summary of audience-facing infrastructure architecture overview notebook.
 - [sources/nbs.05_webui_contracts.ipynb.md](sources/nbs.05_webui_contracts.ipynb.md) — synthesized summary of nbdev notebook source-of-truth for Web UI contracts.
 - [sources/tests.test_vertical_slice.py.md](sources/tests.test_vertical_slice.py.md) — synthesized summary of vertical-slice behavior tests.
 - [sources/tests.test_webui_contracts.py.md](sources/tests.test_webui_contracts.py.md) — synthesized summary of Web UI contract behavior tests.
@@ -229,6 +233,7 @@ sources:
 - [revisions/2026-05-11-quarto-shell-packages.md](revisions/2026-05-11-quarto-shell-packages.md) — captures explicit Quarto packaging in flake/devenv shells and synchronized wiki coverage.
 - [revisions/2026-05-11-spec-quality-reset-and-elicitation.md](revisions/2026-05-11-spec-quality-reset-and-elicitation.md) — captures spec-quality-first reset, clarified open questions, and tightened implementation gating in the distilled spec.
 - [revisions/2026-05-11-technology-bound-question-rewrite.md](revisions/2026-05-11-technology-bound-question-rewrite.md) — captures rewriting clarification questions to directly reflect required technology constraints.
+- [revisions/2026-05-11-infrastructure-overview-notebook.md](revisions/2026-05-11-infrastructure-overview-notebook.md) — captures creation of the high-level Mermaid-based architecture overview notebook.
 - [revisions/2026-05-09-example-matrix.md](revisions/2026-05-09-example-matrix.md) — captures the first architecture-aligned example inventory.
 - [revisions/2026-05-09-default-stack-decisions.md](revisions/2026-05-09-default-stack-decisions.md) — captures the accepted default stack and boundary decisions.
 - [revisions/2026-05-09-topology-pages.md](revisions/2026-05-09-topology-pages.md) — captures the first pass of reference topology pages.
