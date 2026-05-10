@@ -94,23 +94,29 @@
           gh
           git
 
+          quarto
+
           # Python
           basePython
           alliumCli
           startJupyter
 
-          typst
-          typst-live
-          typstyle
-          poppler-utils
-
           # awscli
         ];
-        typstPkgs = with pkgs.typstPackages; [
-          ori
-          ilm
-          tbl
-        ];
+
+        typstPkgs =
+          (with pkgs; [
+            typst
+            typst-live
+            typstyle
+            poppler-utils
+          ])
+          ++ (with pkgs.typstPackages; [
+            ori
+            ilm
+            tbl
+          ]);
+
         llmPkgs = with llms; [
           claude-code
           copilot-cli

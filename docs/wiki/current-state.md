@@ -6,6 +6,7 @@ read_when:
   - You are deciding what to change next
 sources:
   - sources/flake.nix.md
+  - sources/devenv.nix.md
   - sources/flake.lock.md
   - sources/gitignore.md
   - sources/LICENSE.md
@@ -69,6 +70,7 @@ As of 2026-05-11, the repository contains:
 
 - A Nix dev shell can provision a curated toolchain.
 - The shell includes Python 3.13, `uv`, `pyright`, `sphinx`, Typst tools, and multiple AI coding-agent CLIs.
+- Quarto is now explicitly packaged in both `flake.nix` and `devenv.nix` shells for nbdev docs rendering.
 - The shell now exposes `allium` as a `naersk`-built Nix package (`allium-cli` 3.2.3).
 - A single helper command (`start-jupyter`) handles kernel setup and JupyterLab launch.
 - The auxiliary devenv config now mirrors the same `allium` (naersk build) and Python-backed `start-jupyter` behavior.

@@ -76,6 +76,7 @@ Key facts:
 
 ### Document tooling
 
+- `quarto`
 - `typst`
 - `typst-live`
 - `typstyle`
@@ -108,4 +109,4 @@ Key facts:
 
 ## Practical reading of the repo
 
-The flake is currently the repository's real center of gravity. Until more project files exist, understanding `flake.nix` is equivalent to understanding most of the implemented system.
+The flake is currently the repository's real center of gravity. `devenv.nix` mirrors the same core workflow with `start-jupyter`, `allium-cli`, and now explicit `quarto` for nbdev docs rendering.

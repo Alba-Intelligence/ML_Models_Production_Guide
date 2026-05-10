@@ -5,7 +5,7 @@
 # %% auto #0
 __all__ = ['data', 'df', 'X', 'y', 'X_train', 'X_test', 'y_train', 'y_test', 'scaler', 'X_train_scaled', 'X_test_scaled']
 
-# %% ../../nbs/03_model_training.ipynb #58163f28
+# %% ../../nbs/03_model_training.ipynb #25c662ac
 import pandas as pd
 import numpy as np
 from sklearn.linear_model import LogisticRegression
@@ -14,7 +14,7 @@ import mlflow
 import mlflow.sklearn
 
 
-# %% ../../nbs/03_model_training.ipynb #590c869f
+# %% ../../nbs/03_model_training.ipynb #dd0ff998
 # Regenerate the same data split for consistency
 import numpy as np
 import pandas as pd
@@ -53,7 +53,7 @@ print(f"Training set shape: {X_train_scaled.shape}")
 print(f"Test set shape: {X_test_scaled.shape}")
 
 
-# %% ../../nbs/03_model_training.ipynb #0b24709f
+# %% ../../nbs/03_model_training.ipynb #20c1da85
 #| eval: false
 # Set MLflow tracking URI (optional, for local tracking)
 mlflow.set_tracking_uri("file://./mlruns")
@@ -93,7 +93,7 @@ with mlflow.start_run(run_name="logistic_regression_baseline") as run:
     print(confusion_matrix(y_test, y_pred))
 
 
-# %% ../../nbs/03_model_training.ipynb #e9b8506f
+# %% ../../nbs/03_model_training.ipynb #64365956
 #| eval: false
 import joblib
 import os

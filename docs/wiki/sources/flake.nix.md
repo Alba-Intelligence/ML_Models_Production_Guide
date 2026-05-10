@@ -1,5 +1,5 @@
 ---
-updated: 2026-05-10
+updated: 2026-05-11
 summary: Synthesized summary of the repository's main flake definition.
 read_when:
   - You are editing the flake
@@ -52,7 +52,7 @@ Behavior:
 
 ### Standard tools
 
-`bash`, `bun`, `curl`, `gawk`, `gh`, `git`
+`bash`, `bun`, `curl`, `gawk`, `gh`, `git`, `quarto`
 
 ### Rust build tools
 

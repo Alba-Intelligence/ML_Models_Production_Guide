@@ -33,6 +33,7 @@ sources:
   - decisions/documentation-delivery-decision.md
   - decisions/notebook-intake-validation-and-approval.md
   - sources/flake.nix.md
+  - sources/devenv.nix.md
   - sources/flake.lock.md
   - sources/gitignore.md
   - sources/LICENSE.md
@@ -67,6 +68,7 @@ sources:
   - revisions/2026-05-11-nbdev-runtime-modules-translation.md
   - revisions/2026-05-11-end-of-task-docs-finalization.md
   - revisions/2026-05-11-readme-newcomer-onboarding.md
+  - revisions/2026-05-11-quarto-shell-packages.md
 ---
 
 # Wiki index
@@ -183,6 +185,7 @@ sources:
 ## Source summaries
 
 - [sources/flake.nix.md](sources/flake.nix.md) — synthesized summary of the flake definition.
+- [sources/devenv.nix.md](sources/devenv.nix.md) — synthesized summary of the auxiliary devenv shell definition.
 - [sources/flake.lock.md](sources/flake.lock.md) — synthesized summary of flake input pins.
 - [sources/gitignore.md](sources/gitignore.md) — synthesized summary of ignored paths and tracking implications.
 - [sources/LICENSE.md](sources/LICENSE.md) — synthesized summary of the repository license and its provenance from origin.
@@ -220,6 +223,7 @@ sources:
 - [revisions/2026-05-11-nbdev-runtime-modules-translation.md](revisions/2026-05-11-nbdev-runtime-modules-translation.md) — captures migration of runtime helper modules into nbdev notebook source-of-truth.
 - [revisions/2026-05-11-end-of-task-docs-finalization.md](revisions/2026-05-11-end-of-task-docs-finalization.md) — captures the standard publishable-docs finalization workflow addition.
 - [revisions/2026-05-11-readme-newcomer-onboarding.md](revisions/2026-05-11-readme-newcomer-onboarding.md) — captures improvements to explicit newcomer onboarding in root README.
+- [revisions/2026-05-11-quarto-shell-packages.md](revisions/2026-05-11-quarto-shell-packages.md) — captures explicit Quarto packaging in flake/devenv shells and synchronized wiki coverage.
 - [revisions/2026-05-09-example-matrix.md](revisions/2026-05-09-example-matrix.md) — captures the first architecture-aligned example inventory.
 - [revisions/2026-05-09-default-stack-decisions.md](revisions/2026-05-09-default-stack-decisions.md) — captures the accepted default stack and boundary decisions.
 - [revisions/2026-05-09-topology-pages.md](revisions/2026-05-09-topology-pages.md) — captures the first pass of reference topology pages.

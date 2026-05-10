@@ -100,7 +100,10 @@ in
 
   # https://devenv.sh/packages/
   packages =
-    (with pkgs; [ git ])
+    (with pkgs; [
+      git
+      quarto
+    ])
     ++ (with pkgs.python313Packages; [ nbdev ])
     ++ [
       alliumCli
