@@ -9,6 +9,8 @@ sources:
   - sources/flake.lock.md
   - sources/gitignore.md
   - sources/LICENSE.md
+  - sources/ml_deploy.vertical_slice.py.md
+  - sources/tests.test_vertical_slice.py.md
   - architecture/target-system.md
   - architecture/reference-architecture-skeleton.md
   - architecture/documentation-toc.md
@@ -58,6 +60,7 @@ As of 2026-05-10, the repository contains:
 - The topology pages now include explicit control/data/artifact flow specifications and contract checkpoints.
 - The first architecture-aligned example matrix now exists in the wiki.
 - The first implementation-aligned architecture slice is now defined in `architecture/first-vertical-slice.md`.
+- The first local vertical slice is now implemented in `ml_deploy/vertical_slice.py` with tests in `tests/test_vertical_slice.py`.
 - A distilled repository-wide Allium specification now exists and is indexed in the wiki.
 - An nbdev 3 project structure has been initialized with pyproject.toml, nbs/ directory, and ml_deploy/ package placeholder.
 - Notebooks can be successfully exported to Python packages using `nbdev-export --path nbs/`.
@@ -68,8 +71,8 @@ As of 2026-05-10, the repository contains:
 - `ipykernel` is included in the flake-provided toolchain for Jupyter kernel setup.
 - Building `allium` may require network access for Rust crate dependency fetches during Nix builds.
 - CUDA support is explicitly commented out in `flake.nix`.
-- There is no actual ML code, data pipeline, or deployment implementation yet.
-- Contract baselines are documentation-level and not yet enforced by automated checks.
+- There is no production-ready ML data pipeline or deployment implementation yet.
+- Contract validation is currently test-level for the local vertical slice, not yet generalized across all topologies.
 - The distilled Allium spec currently models repository posture, shell behavior, and governance constraints; it does not yet cover any real ML implementation logic because that code still does not exist.
 - `flake.lock` is not tracked by git under the current ignore rules, so lockfile drift may be local-only unless that policy changes.
 - The origin currently contributes a `LICENSE` file, while the expected remote `README.md` was not present during synchronization.
@@ -81,7 +84,8 @@ The repo is currently best understood as a **specification-first and documentati
 ## Most likely next additions
 
 - Docker-based development definition
-- concrete examples derived from the first vertical slice (`EX-01`/`EX-02`/`EX-03`)
+- promotion of the implemented local slice into Docker-first execution flow
+- expansion into distributed, batch, and online production topologies
 - validation hooks for contract compliance checks
 - implementation only after user-directed transition from spec-first write-up to build-out
 

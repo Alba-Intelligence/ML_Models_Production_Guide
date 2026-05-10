@@ -33,11 +33,14 @@ sources:
   - sources/gitignore.md
   - sources/LICENSE.md
   - sources/ml-deploy-reference-repo.allium.md
+  - sources/ml_deploy.vertical_slice.py.md
+  - sources/tests.test_vertical_slice.py.md
   - revisions/2026-05-10-distilled-allium-spec.md
   - revisions/2026-05-10-allium-cli-build-fix.md
   - revisions/2026-05-10-allium-cli-latest-version.md
   - revisions/2026-05-10-uv2nix-dev-shell-fix.md
   - revisions/2026-05-10-architecture-writeup-ratification.md
+  - revisions/2026-05-10-first-vertical-slice-implementation.md
 ---
 
 # Wiki index
@@ -58,6 +61,7 @@ sources:
 | Review accepted default stack decisions                              | [decisions/monitoring-stack-decision.md](decisions/monitoring-stack-decision.md), [decisions/cost-monitoring-stack-decision.md](decisions/cost-monitoring-stack-decision.md), [decisions/docker-nix-boundary-decision.md](decisions/docker-nix-boundary-decision.md) |
 | Review the planned example inventory                                 | [architecture/example-matrix.md](architecture/example-matrix.md), [topologies/index.md](topologies/index.md)                                                                                                                                                         |
 | Start the first implementation-aligned architecture slice            | [architecture/first-vertical-slice.md](architecture/first-vertical-slice.md), [architecture/example-matrix.md](architecture/example-matrix.md), [contracts/index.md](contracts/index.md)                                                                            |
+| Inspect concrete local slice implementation details                   | [sources/ml_deploy.vertical_slice.py.md](sources/ml_deploy.vertical_slice.py.md), [sources/tests.test_vertical_slice.py.md](sources/tests.test_vertical_slice.py.md)                                                                                                  |
 | Decide how much weight to give decision records                      | [queries/decision-records-and-project-restart.md](queries/decision-records-and-project-restart.md), [architecture/top-down-planning.md](architecture/top-down-planning.md)                                                                                           |
 | Check whether implementation is allowed yet                          | [decisions/project-scope-and-constraints.md](decisions/project-scope-and-constraints.md), [current-state.md](current-state.md)                                                                                                                                       |
 | Modify the Nix dev shell or toolchain                                | [architecture/dev-environment.md](architecture/dev-environment.md), [sources/flake.nix.md](sources/flake.nix.md)                                                                                                                                                     |
@@ -146,6 +150,8 @@ sources:
 - [sources/gitignore.md](sources/gitignore.md) — synthesized summary of ignored paths and tracking implications.
 - [sources/LICENSE.md](sources/LICENSE.md) — synthesized summary of the repository license and its provenance from origin.
 - [sources/ml-deploy-reference-repo.allium.md](sources/ml-deploy-reference-repo.allium.md) — synthesized summary of the distilled repository-level Allium spec.
+- [sources/ml_deploy.vertical_slice.py.md](sources/ml_deploy.vertical_slice.py.md) — synthesized summary of the implemented local vertical-slice module.
+- [sources/tests.test_vertical_slice.py.md](sources/tests.test_vertical_slice.py.md) — synthesized summary of vertical-slice behavior tests.
 
 ## Revision artifacts
 
@@ -154,6 +160,7 @@ sources:
 - [revisions/2026-05-10-allium-cli-latest-version.md](revisions/2026-05-10-allium-cli-latest-version.md) — captures the move from pinned allium-cli packaging to latest-version runtime resolution.
 - [revisions/2026-05-10-uv2nix-dev-shell-fix.md](revisions/2026-05-10-uv2nix-dev-shell-fix.md) — captures the uv2nix/dev-shell change that unblocks `nix develop`.
 - [revisions/2026-05-10-architecture-writeup-ratification.md](revisions/2026-05-10-architecture-writeup-ratification.md) — captures ratification of architecture/TOC, topology flow specs, and first vertical-slice definition.
+- [revisions/2026-05-10-first-vertical-slice-implementation.md](revisions/2026-05-10-first-vertical-slice-implementation.md) — captures code implementation of the first local vertical slice and test coverage.
 - [revisions/2026-05-09-example-matrix.md](revisions/2026-05-09-example-matrix.md) — captures the first architecture-aligned example inventory.
 - [revisions/2026-05-09-default-stack-decisions.md](revisions/2026-05-09-default-stack-decisions.md) — captures the accepted default stack and boundary decisions.
 - [revisions/2026-05-09-topology-pages.md](revisions/2026-05-09-topology-pages.md) — captures the first pass of reference topology pages.
@@ -171,6 +178,6 @@ sources:
 
 - Docker-based reproducible workflow is a hard requirement but is not yet implemented in-repo.
 - A distilled `.allium` baseline exists, but it still reflects repository posture more than implemented ML runtime behavior.
-- The first architecture write-up ratification is complete, but concrete end-to-end examples are still pending implementation.
-- Contract pages define required fields/baselines, but automated validation hooks are not implemented yet.
+- The first local vertical slice is implemented, but Docker-first execution and multi-topology expansion remain pending.
+- Contract checks exist for the local slice, but generalized validation hooks are not implemented yet.
 - `archive/` is intentionally empty until useful material accumulates.

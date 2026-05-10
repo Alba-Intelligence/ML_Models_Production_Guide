@@ -7,6 +7,7 @@ read_when:
 sources:
   - ../sources/flake.nix.md
   - ../architecture/dev-environment.md
+  - ../sources/ml_deploy.vertical_slice.py.md
 ---
 
 # Jupyter and shell runbook
@@ -72,6 +73,15 @@ git --version
 which uv
 which start-jupyter
 ```
+
+## Run the implemented first vertical slice tests
+
+```bash
+uv sync
+uv run python -m unittest discover -s tests -q
+```
+
+This validates the local implementation of EX-01 -> EX-03 in `ml_deploy/vertical_slice.py`.
 
 ## Known sharp edges
 

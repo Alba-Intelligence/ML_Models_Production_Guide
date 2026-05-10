@@ -1,6 +1,6 @@
 ---
 updated: 2026-05-10
-summary: Definition of the first architecture-conforming vertical slice from notebook training to local serving.
+summary: Definition and concrete local implementation of the first architecture-conforming vertical slice.
 read_when:
   - You are starting the first end-to-end implementation-aligned write-up
   - You need concrete input/output and success criteria for initial architecture proof
@@ -9,6 +9,8 @@ sources:
   - reference-architecture-skeleton.md
   - ../contracts/index.md
   - ../topologies/local-development-and-single-node-training.md
+  - ../sources/ml_deploy.vertical_slice.py.md
+  - ../sources/tests.test_vertical_slice.py.md
 ---
 
 # First vertical slice
@@ -62,6 +64,25 @@ The slice is considered complete when all of the following are true:
 3. Local serving can be started from packaged artifact metadata rather than hidden notebook state.
 4. Logs contain enough context to diagnose request-level issues in local testing.
 5. The workflow is repeatable with changed hyperparameters while preserving full traceability.
+
+## Current implementation status
+
+Implemented for local development in:
+
+- `ml_deploy/vertical_slice.py` (orchestration + metadata emission + FastAPI prediction endpoint)
+- `tests/test_vertical_slice.py` (end-to-end local slice checks)
+
+Current scope of implementation:
+
+- file-backed MLflow tracking for local execution
+- artifact bundle and model-version JSON records
+- local deployment record generation
+- prediction JSONL logging with model/deployment linkage
+
+Not yet implemented:
+
+- Docker-first execution path for this slice
+- remote/distributed or AWS-integrated flows
 
 ## Explicit non-goals
 
