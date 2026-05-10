@@ -31,6 +31,10 @@ sources:
   - sources/ml_deploy.mlflow_parity.py.md
   - sources/ml_deploy.notebook_intake.py.md
   - sources/ml_deploy.terraform_bootstrap.py.md
+  - sources/nbs.07_mlflow_parity.ipynb.md
+  - sources/nbs.08_execution_backends.ipynb.md
+  - sources/nbs.09_notebook_intake.ipynb.md
+  - sources/nbs.10_terraform_bootstrap.ipynb.md
   - sources/nbs.05_webui_contracts.ipynb.md
   - sources/tests.test_webui_contracts.py.md
 ---
@@ -52,6 +56,10 @@ As of 2026-05-11, the repository contains:
 - nbdev 3 project structure with `pyproject.toml`, `nbs/` directory for notebooks, and `ml_deploy/` package
 - `nbs/05_webui_contracts.ipynb` as nbdev source for Web UI backend contracts
 - `nbs/06_vertical_slice.ipynb` as nbdev source for first-vertical-slice implementation
+- `nbs/07_mlflow_parity.ipynb` as nbdev source for MLflow parity helpers
+- `nbs/08_execution_backends.ipynb` as nbdev source for backend execution adapters
+- `nbs/09_notebook_intake.ipynb` as nbdev source for notebook intake validation
+- `nbs/10_terraform_bootstrap.ipynb` as nbdev source for Terraform bootstrap helpers
 - runtime helper modules for MLflow parity, execution adapters, intake validation, and Terraform bootstrap
 - git metadata for a repository now rebased onto `origin/main`
 
@@ -80,6 +88,7 @@ As of 2026-05-11, the repository contains:
 - Execution adapter mappings now exist for local, Slurm, and Kubernetes payloads.
 - Notebook intake validation gates now exist for immutable refs, notebook structure, and optional nbdev export checks.
 - Python-driven Terraform bootstrap helpers now generate Terraform JSON stack files and expose init/plan/apply runners.
+- Runtime helper modules are now notebook-owned and exported through nbdev, not maintained as hand-edited Python sources.
 - A distilled repository-wide Allium specification now exists and is indexed in the wiki.
 - An nbdev 3 project structure has been initialized with pyproject.toml, nbs/ directory, and ml_deploy/ package placeholder.
 - Notebooks can be successfully exported to Python packages using `nbdev-export --path nbs/`.

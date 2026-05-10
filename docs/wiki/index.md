@@ -44,6 +44,10 @@ sources:
   - sources/ml_deploy.mlflow_parity.py.md
   - sources/ml_deploy.notebook_intake.py.md
   - sources/ml_deploy.terraform_bootstrap.py.md
+  - sources/nbs.07_mlflow_parity.ipynb.md
+  - sources/nbs.08_execution_backends.ipynb.md
+  - sources/nbs.09_notebook_intake.ipynb.md
+  - sources/nbs.10_terraform_bootstrap.ipynb.md
   - sources/nbs.05_webui_contracts.ipynb.md
   - sources/tests.test_vertical_slice.py.md
   - sources/tests.test_webui_contracts.py.md
@@ -58,6 +62,7 @@ sources:
   - revisions/2026-05-10-nbdev-webui-contract-translation.md
   - revisions/2026-05-10-nbdev-vertical-slice-translation.md
   - revisions/2026-05-11-runtime-adapters-and-bootstrap.md
+  - revisions/2026-05-11-nbdev-runtime-modules-translation.md
 ---
 
 # Wiki index
@@ -79,6 +84,7 @@ sources:
 | Review latest platform requirements alignment                        | [decisions/project-scope-and-constraints.md](decisions/project-scope-and-constraints.md), [architecture/target-system.md](architecture/target-system.md), [revisions/2026-05-10-platform-requirements-alignment.md](revisions/2026-05-10-platform-requirements-alignment.md) |
 | Review executable Web UI backend contracts                           | [architecture/webui-backend-contract.md](architecture/webui-backend-contract.md), [sources/ml_deploy.webui_contracts.py.md](sources/ml_deploy.webui_contracts.py.md), [sources/tests.test_webui_contracts.py.md](sources/tests.test_webui_contracts.py.md) |
 | Review runtime adapter scaffolding                                    | [sources/ml_deploy.execution_backends.py.md](sources/ml_deploy.execution_backends.py.md), [sources/ml_deploy.notebook_intake.py.md](sources/ml_deploy.notebook_intake.py.md), [sources/ml_deploy.mlflow_parity.py.md](sources/ml_deploy.mlflow_parity.py.md) |
+| Edit runtime helpers in nbdev workflow                                | [sources/nbs.07_mlflow_parity.ipynb.md](sources/nbs.07_mlflow_parity.ipynb.md), [sources/nbs.08_execution_backends.ipynb.md](sources/nbs.08_execution_backends.ipynb.md), [sources/nbs.09_notebook_intake.ipynb.md](sources/nbs.09_notebook_intake.ipynb.md), [sources/nbs.10_terraform_bootstrap.ipynb.md](sources/nbs.10_terraform_bootstrap.ipynb.md) |
 | Edit Web UI contracts in nbdev workflow                              | [sources/nbs.05_webui_contracts.ipynb.md](sources/nbs.05_webui_contracts.ipynb.md), [sources/ml_deploy.webui_contracts.py.md](sources/ml_deploy.webui_contracts.py.md) |
 | Review the planned example inventory                                 | [architecture/example-matrix.md](architecture/example-matrix.md), [topologies/index.md](topologies/index.md)                                                                                                                                                         |
 | Start the first implementation-aligned architecture slice            | [architecture/first-vertical-slice.md](architecture/first-vertical-slice.md), [architecture/example-matrix.md](architecture/example-matrix.md), [contracts/index.md](contracts/index.md)                                                                            |
@@ -182,6 +188,10 @@ sources:
 - [sources/ml_deploy.mlflow_parity.py.md](sources/ml_deploy.mlflow_parity.py.md) — synthesized summary of local MLflow parity stack helpers.
 - [sources/ml_deploy.notebook_intake.py.md](sources/ml_deploy.notebook_intake.py.md) — synthesized summary of notebook intake validation gates.
 - [sources/ml_deploy.terraform_bootstrap.py.md](sources/ml_deploy.terraform_bootstrap.py.md) — synthesized summary of Python-first Terraform bootstrap helpers.
+- [sources/nbs.07_mlflow_parity.ipynb.md](sources/nbs.07_mlflow_parity.ipynb.md) — synthesized summary of nbdev source-of-truth for MLflow parity helpers.
+- [sources/nbs.08_execution_backends.ipynb.md](sources/nbs.08_execution_backends.ipynb.md) — synthesized summary of nbdev source-of-truth for execution adapters.
+- [sources/nbs.09_notebook_intake.ipynb.md](sources/nbs.09_notebook_intake.ipynb.md) — synthesized summary of nbdev source-of-truth for notebook intake gates.
+- [sources/nbs.10_terraform_bootstrap.ipynb.md](sources/nbs.10_terraform_bootstrap.ipynb.md) — synthesized summary of nbdev source-of-truth for Terraform bootstrap helpers.
 - [sources/nbs.05_webui_contracts.ipynb.md](sources/nbs.05_webui_contracts.ipynb.md) — synthesized summary of nbdev notebook source-of-truth for Web UI contracts.
 - [sources/tests.test_vertical_slice.py.md](sources/tests.test_vertical_slice.py.md) — synthesized summary of vertical-slice behavior tests.
 - [sources/tests.test_webui_contracts.py.md](sources/tests.test_webui_contracts.py.md) — synthesized summary of Web UI contract behavior tests.
@@ -199,6 +209,7 @@ sources:
 - [revisions/2026-05-10-nbdev-webui-contract-translation.md](revisions/2026-05-10-nbdev-webui-contract-translation.md) — captures migration of Web UI contract code into nbdev notebook source-of-truth.
 - [revisions/2026-05-10-nbdev-vertical-slice-translation.md](revisions/2026-05-10-nbdev-vertical-slice-translation.md) — captures migration of vertical-slice implementation into nbdev notebook source-of-truth.
 - [revisions/2026-05-11-runtime-adapters-and-bootstrap.md](revisions/2026-05-11-runtime-adapters-and-bootstrap.md) — captures runtime adapter, intake gate, parity helper, and Terraform bootstrap implementation pass.
+- [revisions/2026-05-11-nbdev-runtime-modules-translation.md](revisions/2026-05-11-nbdev-runtime-modules-translation.md) — captures migration of runtime helper modules into nbdev notebook source-of-truth.
 - [revisions/2026-05-09-example-matrix.md](revisions/2026-05-09-example-matrix.md) — captures the first architecture-aligned example inventory.
 - [revisions/2026-05-09-default-stack-decisions.md](revisions/2026-05-09-default-stack-decisions.md) — captures the accepted default stack and boundary decisions.
 - [revisions/2026-05-09-topology-pages.md](revisions/2026-05-09-topology-pages.md) — captures the first pass of reference topology pages.

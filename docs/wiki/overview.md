@@ -46,6 +46,7 @@ This repository is becoming a **documentation-first, Python-heavy ML deployment 
 - A thin Web UI backend contract module (`ml_deploy/webui_contracts.py`) with tests (`tests/test_webui_contracts.py`) for immutable notebook execution requests and MLflow-linked run summaries.
 - The Web UI contract module is now generated from `nbs/05_webui_contracts.ipynb` through nbdev export.
 - Runtime scaffolding now exists for MLflow parity config, execution adapters, notebook intake validation, and Python-managed Terraform bootstrap.
+- These runtime helpers are now sourced from nbdev notebooks (`nbs/07` through `nbs/10`) and exported into package modules.
 
 ## What does not exist yet
 
