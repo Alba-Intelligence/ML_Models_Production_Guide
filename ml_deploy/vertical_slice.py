@@ -10,13 +10,11 @@ import time
 from typing import Any
 from uuid import uuid4
 
-from fastapi import FastAPI
 import joblib
 import mlflow
 import mlflow.sklearn
 import numpy as np
 import pandas as pd
-from pydantic import BaseModel, Field
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
@@ -39,11 +37,6 @@ class TrainingOutcome:
     code_revision: str
     container_revision: str
     compute_context: str
-
-
-class PredictionRequest(BaseModel):
-    request_id: str | None = None
-    features: dict[str, float] = Field(default_factory=dict)
 
 
 def _utc_now() -> str:
@@ -241,10 +234,15 @@ def create_local_deployment_record(
     return {"deployment_record_path": path, "deployment_record": record}
 
 
-def create_prediction_app(
-    bundle_dir: Path, deployment_record_path: Path, prediction_log_path: Path
-) -> FastAPI:
-    """Build a FastAPI app that serves predictions and writes contract-aligned logs."""
+def predict_and_log(
+    bundle_dir: Path,
+    deployment_record_path: Path,
+    prediction_log_path: Path,
+    *,
+    features: dict[str, float],
+    request_id: str | None = None,
+) -> dict[str, Any]:
+    """Run a local prediction and emit contract-aligned prediction logs."""
     artifact_metadata = json.loads((bundle_dir / "artifact_metadata.json").read_text())
     model_version_record = json.loads((bundle_dir / "model_version.json").read_text())
     deployment_record = json.loads(deployment_record_path.read_text())
@@ -252,51 +250,41 @@ def create_prediction_app(
     scaler = joblib.load(bundle_dir / "scaler.joblib")
     feature_names = artifact_metadata["feature_names"]
 
-    app = FastAPI(title="ML Deploy Vertical Slice", version="0.1.0")
+    start = time.perf_counter()
+    resolved_request_id = request_id or f"req-{uuid4().hex[:12]}"
+    row = pd.DataFrame([features], columns=feature_names)
+    transformed = scaler.transform(row)
+    prediction = int(model.predict(transformed)[0])
+    latency_ms = (time.perf_counter() - start) * 1000
 
-    @app.get("/healthz")
-    def healthz() -> dict[str, str]:
-        return {"status": "ok"}
+    log_entry = {
+        "timestamp": _utc_now(),
+        "model_version_used": model_version_record["model_version_identifier"],
+        "deployment_identifier": deployment_record["deployment_identifier"],
+        "request_identifier": resolved_request_id,
+        "input_schema_version_reference": artifact_metadata[
+            "expected_input_schema_version"
+        ],
+        "output_capture_policy": "prediction-only",
+        "runtime_metadata": {
+            "latency_ms": latency_ms,
+            "environment": deployment_record["target_environment"],
+            "service_identity": "local-nbdev-vertical-slice",
+        },
+        "traceability_link": {
+            "training_run_id": artifact_metadata[
+                "originating_training_run_identifier"
+            ]
+        },
+    }
+    _append_jsonl(prediction_log_path, log_entry)
 
-    @app.post("/predict")
-    def predict(request: PredictionRequest) -> dict[str, Any]:
-        start = time.perf_counter()
-        request_id = request.request_id or f"req-{uuid4().hex[:12]}"
-        row = pd.DataFrame([request.features], columns=feature_names)
-        transformed = scaler.transform(row)
-        prediction = int(model.predict(transformed)[0])
-        latency_ms = (time.perf_counter() - start) * 1000
-
-        log_entry = {
-            "timestamp": _utc_now(),
-            "model_version_used": model_version_record["model_version_identifier"],
-            "deployment_identifier": deployment_record["deployment_identifier"],
-            "request_identifier": request_id,
-            "input_schema_version_reference": artifact_metadata[
-                "expected_input_schema_version"
-            ],
-            "output_capture_policy": "prediction-only",
-            "runtime_metadata": {
-                "latency_ms": latency_ms,
-                "environment": deployment_record["target_environment"],
-                "service_identity": "local-fastapi-vertical-slice",
-            },
-            "traceability_link": {
-                "training_run_id": artifact_metadata[
-                    "originating_training_run_identifier"
-                ]
-            },
-        }
-        _append_jsonl(prediction_log_path, log_entry)
-
-        return {
-            "request_id": request_id,
-            "prediction": prediction,
-            "model_version": model_version_record["model_version_identifier"],
-            "deployment_id": deployment_record["deployment_identifier"],
-        }
-
-    return app
+    return {
+        "request_id": resolved_request_id,
+        "prediction": prediction,
+        "model_version": model_version_record["model_version_identifier"],
+        "deployment_id": deployment_record["deployment_identifier"],
+    }
 
 
 def execute_first_vertical_slice(work_dir: Path, *, tracking_uri: str) -> dict[str, Any]:

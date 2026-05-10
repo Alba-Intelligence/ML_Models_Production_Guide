@@ -25,7 +25,7 @@ This slice composes:
 
 1. EX-01 (local training + MLflow traceability)
 2. EX-02 (artifact packaging + version registration)
-3. EX-03 (local FastAPI serving + prediction logging)
+3. EX-03 (local nbdev/Python inference path + prediction logging)
 
 It stays entirely inside the local-development topology and does not include distributed training or production AWS rollout.
 
@@ -61,7 +61,7 @@ The slice is considered complete when all of the following are true:
 
 1. A reviewer can trace a prediction back to model version, training run, and dataset/transformation versions.
 2. Artifact metadata is sufficient to decide serving compatibility without code spelunking.
-3. Local serving can be started from packaged artifact metadata rather than hidden notebook state.
+3. Local inference can be started from packaged artifact metadata rather than hidden notebook state.
 4. Logs contain enough context to diagnose request-level issues in local testing.
 5. The workflow is repeatable with changed hyperparameters while preserving full traceability.
 
@@ -69,7 +69,7 @@ The slice is considered complete when all of the following are true:
 
 Implemented for local development in:
 
-- `ml_deploy/vertical_slice.py` (orchestration + metadata emission + FastAPI prediction endpoint)
+- `ml_deploy/vertical_slice.py` (orchestration + metadata emission + local prediction logging path)
 - `tests/test_vertical_slice.py` (end-to-end local slice checks)
 
 Current scope of implementation:

@@ -7,11 +7,9 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from fastapi.testclient import TestClient
-
 from ml_deploy.vertical_slice import (
-    create_prediction_app,
     execute_first_vertical_slice,
+    predict_and_log,
 )
 
 
@@ -45,24 +43,19 @@ class TestVerticalSlice(unittest.TestCase):
             self.assertGreater(result["training_outcome"].accuracy, 0.5)
             self.assertTrue(result["training_outcome"].mlflow_run_id)
 
-    def test_prediction_endpoint_logs_model_and_deployment_linkage(self) -> None:
+    def test_prediction_logging_links_model_and_deployment(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
             root = Path(tmp_dir)
             tracking_uri = f"file://{(root / 'mlruns').resolve()}"
             result = execute_first_vertical_slice(root, tracking_uri=tracking_uri)
-            app = create_prediction_app(
+            payload = predict_and_log(
                 result["packaged"]["bundle_dir"],
                 result["deployment"]["deployment_record_path"],
                 result["prediction_log_path"],
+                request_id="req-test-001",
+                features=result["sample_features"],
             )
 
-            client = TestClient(app)
-            response = client.post(
-                "/predict",
-                json={"request_id": "req-test-001", "features": result["sample_features"]},
-            )
-            self.assertEqual(response.status_code, 200)
-            payload = response.json()
             self.assertEqual(payload["request_id"], "req-test-001")
 
             logs = result["prediction_log_path"].read_text().strip().splitlines()

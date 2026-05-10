@@ -15,7 +15,7 @@ source_file: ../../ml_deploy/vertical_slice.py
 
 - EX-01 local training + MLflow traceability
 - EX-02 artifact packaging + model-version record
-- EX-03 local FastAPI prediction path + prediction logging
+- EX-03 local nbdev/Python prediction path + prediction logging
 
 ## Main functions
 
@@ -24,7 +24,7 @@ source_file: ../../ml_deploy/vertical_slice.py
 - `train_with_traceability` — MLflow-tracked training with required lineage/traceability params.
 - `package_and_register_model` — writes model/scaler bundle and artifact/model-version metadata.
 - `create_local_deployment_record` — writes deployment record JSON for local serving.
-- `create_prediction_app` — FastAPI app exposing `/healthz` and `/predict`, writing JSONL prediction logs.
+- `predict_and_log` — local prediction helper that writes JSONL prediction logs with deployment/model linkage.
 - `execute_first_vertical_slice` — orchestration helper that runs the whole local flow.
 
 ## Records emitted

@@ -20,7 +20,7 @@ source_file: ../../tests/test_vertical_slice.py
    - model-version record
    - deployment record
 2. Artifact and deployment records include contract-critical linkage fields.
-3. FastAPI `/predict` writes JSONL logs linking:
+3. Local prediction helper writes JSONL logs linking:
    - request identifier
    - model version
    - deployment identifier
