@@ -42,4 +42,10 @@ This project follows a notebook-first approach:
 3. Use `nbdev_test` to run tests
 4. Use `nbdev_preview` to view documentation
 
+For end-of-task publishable output, run:
+
+```bash
+./scripts/finalize-task.sh
+```
+
 See [docs/wiki/architecture/target-system.md](docs/wiki/architecture/target-system.md) for the full architectural vision.

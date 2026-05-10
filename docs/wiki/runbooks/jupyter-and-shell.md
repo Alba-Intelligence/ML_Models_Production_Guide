@@ -1,5 +1,5 @@
 ---
-updated: 2026-05-10
+updated: 2026-05-11
 summary: Operational commands and caveats for entering the shell and using Jupyter helpers.
 read_when:
   - You want to run the repo
@@ -82,6 +82,20 @@ uv run python -m unittest discover -s tests -q
 ```
 
 This validates the local implementation of EX-01 -> EX-03 in `ml_deploy/vertical_slice.py`.
+
+## End-of-task publishable notebook workflow
+
+Use the standardized finalize command:
+
+```bash
+./scripts/finalize-task.sh
+```
+
+This runs:
+
+1. `nbdev-export --path nbs/`
+2. `nbdev-docs --path nbs/`
+3. `python -m unittest discover -s tests -q`
 
 ## Known sharp edges
 

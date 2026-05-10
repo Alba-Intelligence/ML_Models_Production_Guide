@@ -37,6 +37,7 @@ sources:
   - sources/nbs.10_terraform_bootstrap.ipynb.md
   - sources/nbs.05_webui_contracts.ipynb.md
   - sources/tests.test_webui_contracts.py.md
+  - sources/scripts.finalize-task.sh.md
 ---
 
 # Current state
@@ -92,6 +93,7 @@ As of 2026-05-11, the repository contains:
 - A distilled repository-wide Allium specification now exists and is indexed in the wiki.
 - An nbdev 3 project structure has been initialized with pyproject.toml, nbs/ directory, and ml_deploy/ package placeholder.
 - Notebooks can be successfully exported to Python packages using `nbdev-export --path nbs/`.
+- A single end-of-task command now exists to export notebooks, render docs, and run tests: `./scripts/finalize-task.sh`.
 
 ## Current limitations
 

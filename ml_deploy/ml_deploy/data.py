@@ -6,12 +6,12 @@
 __all__ = ['data', 'df', 'missing_values', 'target_counts', 'X', 'y', 'X_train', 'X_test', 'y_train', 'y_test', 'scaler',
            'X_train_scaled', 'X_test_scaled']
 
-# %% ../../nbs/02_data.ipynb #d7f1f385
+# %% ../../nbs/02_data.ipynb #241d14a3
 import pandas as pd
 import numpy as np
 
 
-# %% ../../nbs/02_data.ipynb #37520281
+# %% ../../nbs/02_data.ipynb #c0b14ec3
 # Create sample data
 data = {
     'feature_1': np.random.randn(100),
@@ -25,24 +25,24 @@ print(f"Dataset shape: {df.shape}")
 print(df.head())
 
 
-# %% ../../nbs/02_data.ipynb #7542d823
+# %% ../../nbs/02_data.ipynb #5ffdb309
 df.describe()
 
-# %% ../../nbs/02_data.ipynb #785afbe7
+# %% ../../nbs/02_data.ipynb #589ca2e9
 missing_values = df.isnull().sum()
 print("Missing values per column:")
 print(missing_values)
 print(f"Total missing values: {missing_values.sum()}")
 
 
-# %% ../../nbs/02_data.ipynb #2d71c82d
+# %% ../../nbs/02_data.ipynb #e83b0e5b
 target_counts = df['target'].value_counts()
 print("Target distribution:")
 print(target_counts)
 print(f"\nClass balance: {target_counts[0]/len(df):.2%} negative, {target_counts[1]/len(df):.2%} positive")
 
 
-# %% ../../nbs/02_data.ipynb #090b59fd
+# %% ../../nbs/02_data.ipynb #f9b8bf26
 # Separate features and target
 X = df.drop('target', axis=1)
 y = df['target']
@@ -57,7 +57,7 @@ print("Training set size: " + str(X_train.shape))
 print("Test set size: " + str(X_test.shape))
 
 
-# %% ../../nbs/02_data.ipynb #2ec5b564
+# %% ../../nbs/02_data.ipynb #bb86ba4d
 # Initialize scaler
 from sklearn.preprocessing import StandardScaler
 scaler = StandardScaler()
