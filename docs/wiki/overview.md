@@ -5,6 +5,7 @@ read_when:
   - You need orientation
   - You need to explain the project quickly
 sources:
+  - sources/README.md
   - sources/flake.nix.md
   - sources/flake.lock.md
   - sources/LICENSE.md
@@ -48,6 +49,7 @@ This repository is becoming a **documentation-first, Python-heavy ML deployment 
 - Runtime scaffolding now exists for MLflow parity config, execution adapters, notebook intake validation, and Python-managed Terraform bootstrap.
 - These runtime helpers are now sourced from nbdev notebooks (`nbs/07` through `nbs/10`) and exported into package modules.
 - A standard end-of-task workflow now exists via `./scripts/finalize-task.sh` to export notebooks, render docs, and run tests.
+- Root README onboarding is now explicit about project status and where newcomers should start.
 
 ## What does not exist yet
 

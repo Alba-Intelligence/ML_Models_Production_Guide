@@ -9,6 +9,7 @@ sources:
   - sources/flake.lock.md
   - sources/gitignore.md
   - sources/LICENSE.md
+  - sources/README.md
   - sources/ml_deploy.vertical_slice.py.md
   - sources/nbs.06_vertical_slice.ipynb.md
   - sources/tests.test_vertical_slice.py.md

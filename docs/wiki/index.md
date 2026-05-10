@@ -36,6 +36,7 @@ sources:
   - sources/flake.lock.md
   - sources/gitignore.md
   - sources/LICENSE.md
+  - sources/README.md
   - sources/ml-deploy-reference-repo.allium.md
   - sources/ml_deploy.vertical_slice.py.md
   - sources/nbs.06_vertical_slice.ipynb.md
@@ -65,6 +66,7 @@ sources:
   - revisions/2026-05-11-runtime-adapters-and-bootstrap.md
   - revisions/2026-05-11-nbdev-runtime-modules-translation.md
   - revisions/2026-05-11-end-of-task-docs-finalization.md
+  - revisions/2026-05-11-readme-newcomer-onboarding.md
 ---
 
 # Wiki index
@@ -74,6 +76,7 @@ sources:
 | If you need to…                                                      | Read these pages                                                                                                                                                                                                                                                     |
 | -------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Understand what this repository currently is                         | [overview.md](overview.md), [current-state.md](current-state.md)                                                                                                                                                                                                     |
+| Onboard quickly as a newcomer                                        | [../../README.md](../../README.md), [current-state.md](current-state.md), [architecture/target-system.md](architecture/target-system.md) |
 | Understand the intended end-state architecture and stack             | [architecture/target-system.md](architecture/target-system.md), [decisions/project-scope-and-constraints.md](decisions/project-scope-and-constraints.md)                                                                                                             |
 | Plan the project top-down without losing separation of concerns      | [architecture/top-down-planning.md](architecture/top-down-planning.md), [architecture/reference-architecture-skeleton.md](architecture/reference-architecture-skeleton.md)                                                                                           |
 | Review the ratified architecture skeleton                            | [architecture/reference-architecture-skeleton.md](architecture/reference-architecture-skeleton.md), [architecture/target-system.md](architecture/target-system.md)                                                                                                   |
@@ -183,6 +186,7 @@ sources:
 - [sources/flake.lock.md](sources/flake.lock.md) — synthesized summary of flake input pins.
 - [sources/gitignore.md](sources/gitignore.md) — synthesized summary of ignored paths and tracking implications.
 - [sources/LICENSE.md](sources/LICENSE.md) — synthesized summary of the repository license and its provenance from origin.
+- [sources/README.md](sources/README.md) — synthesized summary of root newcomer-onboarding guidance.
 - [sources/ml-deploy-reference-repo.allium.md](sources/ml-deploy-reference-repo.allium.md) — synthesized summary of the distilled repository-level Allium spec.
 - [sources/ml_deploy.vertical_slice.py.md](sources/ml_deploy.vertical_slice.py.md) — synthesized summary of the implemented local vertical-slice module.
 - [sources/nbs.06_vertical_slice.ipynb.md](sources/nbs.06_vertical_slice.ipynb.md) — synthesized summary of nbdev notebook source-of-truth for vertical-slice implementation.
@@ -215,6 +219,7 @@ sources:
 - [revisions/2026-05-11-runtime-adapters-and-bootstrap.md](revisions/2026-05-11-runtime-adapters-and-bootstrap.md) — captures runtime adapter, intake gate, parity helper, and Terraform bootstrap implementation pass.
 - [revisions/2026-05-11-nbdev-runtime-modules-translation.md](revisions/2026-05-11-nbdev-runtime-modules-translation.md) — captures migration of runtime helper modules into nbdev notebook source-of-truth.
 - [revisions/2026-05-11-end-of-task-docs-finalization.md](revisions/2026-05-11-end-of-task-docs-finalization.md) — captures the standard publishable-docs finalization workflow addition.
+- [revisions/2026-05-11-readme-newcomer-onboarding.md](revisions/2026-05-11-readme-newcomer-onboarding.md) — captures improvements to explicit newcomer onboarding in root README.
 - [revisions/2026-05-09-example-matrix.md](revisions/2026-05-09-example-matrix.md) — captures the first architecture-aligned example inventory.
 - [revisions/2026-05-09-default-stack-decisions.md](revisions/2026-05-09-default-stack-decisions.md) — captures the accepted default stack and boundary decisions.
 - [revisions/2026-05-09-topology-pages.md](revisions/2026-05-09-topology-pages.md) — captures the first pass of reference topology pages.
