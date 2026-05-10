@@ -1,6 +1,6 @@
 ---
 updated: 2026-05-11
-summary: Prioritized elicitation questions to raise specification quality before additional implementation work.
+summary: Concrete, technology-bound clarification questions aligned to required stack decisions.
 read_when:
   - You need to run a structured clarification session
   - You are deciding if specs are complete enough to permit implementation
@@ -11,49 +11,52 @@ sources:
   - ../../specs/ml-deploy-reference-repo.allium
 ---
 
-# Spec quality elicitation — session 01
+# Spec quality elicitation — session 01 (technology-bound)
 
 ## Why this exists
 
-Current specs contain useful structure, but there are unresolved ambiguities and acceptance gaps that will cause implementation drift.
-This page defines the exact questions to close first.
+These questions are intentionally tied to the mandated stack:
+MLflow (PostgreSQL + S3), Lambda.ai + Slurm, AWS + Kubernetes, python-terraform, Docker-first reproducibility, and immutable notebook execution through Web UI.
 
-## Session boundary
+## Questions to close first
 
-- **In scope:** architecture contracts, topology handoff semantics, notebook execution governance, and implementation gating criteria.
-- **Out of scope:** UI framework/library selection details, infra vendor internals, and low-level code design.
+1. **MLflow + PostgreSQL + S3 contract**
+   - What exact schema fields are mandatory on every run for lineage (`dataset_version`, `feature_revision`, `model_version`, `notebook_revision`, `execution_backend`)?
+   - Is S3 path layout standardized (`s3://bucket/project/env/run_id/...`) or per-team configurable?
+   - What is the required fallback behavior if PostgreSQL is reachable but S3 artifact upload fails?
 
-## Priority questions (answer in order)
+2. **Lambda.ai Slurm redundancy contract**
+   - Which Slurm failure modes must be represented explicitly in the spec (`PENDING timeout`, `NODE_FAIL`, `PREEMPTED`, `CANCELLED`)?
+   - What retry/escalation policy is required per failure mode?
+   - Which metadata from Slurm (`job_id`, `partition`, `node_list`, `exit_code`) must always flow back into MLflow/Web UI?
 
-1. **Spec quality gate**
-   - What concrete evidence marks `spec_quality_gate_passed = true`?
-   - Which pages/spec sections are mandatory for gate evaluation?
-   - Who is the approver role for passing the gate?
+3. **AWS Kubernetes contract (non-Lambda services)**
+   - Which workloads are mandatory Kubernetes-managed vs explicitly not on Kubernetes?
+   - What deployment states must be modeled for batch and online flows (`submitted`, `scheduled`, `running`, `succeeded`, `failed`, `rolled_back`)?
+   - What minimum observability payload is required from K8s runs (pod/job IDs, namespace, image digest, resource requests/limits)?
 
-2. **Notebook intake + promotion control**
-   - What exact approval states are required before a notebook revision can run on Lambda.ai/AWS targets?
-   - What is the rejection/remediation path when intake checks fail?
-   - Which metadata fields are mandatory for promotion requests?
+4. **python-terraform ownership boundary**
+   - Which infrastructure components must be generated/controlled only via `python-terraform` wrappers?
+   - Are hand-written Terraform files ever allowed, and if yes, for which exceptions?
+   - What spec artifact proves parity between generated Terraform JSON and deployed resources?
 
-3. **Execution-contract obligations across topologies**
-   - Which request fields are invariant across local, Slurm, and Kubernetes execution?
-   - Which fields are topology-specific and must be transformed?
-   - What failure states must be normalized into a shared run-status model?
+5. **Docker-first reproducibility vs Nix helper boundary**
+   - Which workflows must be reproducible from Docker alone with no Nix dependency?
+   - Which Nix outputs are allowed as helper-only artifacts without becoming the canonical runtime path?
+   - What acceptance test demonstrates local Docker parity with production storage/control planes?
 
-4. **Run visibility and auditability**
-   - Which run-state transitions are mandatory to expose in the Web UI?
-   - What minimum audit trail is required for "who triggered what, when, from which immutable revision"?
-   - Which links are required on every run summary (MLflow run, artifact, model version, deployment)?
+6. **Immutable notebook Web UI execution contract**
+   - What is the required immutable notebook reference format (`git SHA only` vs `SHA/tag/approved ref`)?
+   - Which execution parameters are allowed to vary at run time, and which are locked by notebook revision?
+   - Which exact run status timeline must be shown in Web UI for all backends?
 
-5. **Contract enforcement model**
-   - Which checks are hard failures vs warnings for each topology?
-   - Where do checks execute (pre-submit, post-submit, post-run)?
-   - What is the escalation path for repeated contract violations?
+7. **Cross-topology security + lineage minimums**
+   - Which secrets are required to be runtime-injected only (never persisted in notebooks, logs, or MLflow params)?
+   - What identity/audit fields are mandatory on every trigger action (`actor`, `role`, `time`, `ticket/approval ref`)?
+   - Which lineage break conditions are treated as hard-stop failures?
 
-## Minimum acceptance criteria for this session
+## Done criteria for this question set
 
-- A written and approved spec-quality gate checklist exists.
-- Notebook execution state model is explicitly defined and topology-normalized.
-- Promotion gates from local -> Lambda.ai/AWS are unambiguous.
-- Required audit fields and run links are specified for every run.
-- Open questions are either resolved or explicitly deferred with owner + next review point.
+- Each question is answered in a normative page (decision, contract, or topology spec), not only in notes.
+- Each answer includes at least one acceptance criterion that can be tested.
+- Open items are explicitly deferred with owner and revisit trigger.
