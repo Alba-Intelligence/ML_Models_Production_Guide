@@ -1,5 +1,5 @@
 ---
-updated: 2026-05-10
+updated: 2026-05-11
 summary: Honest snapshot of the repository's present state, notable constraints, and likely next steps.
 read_when:
   - You need a current repo snapshot
@@ -27,6 +27,10 @@ sources:
   - decisions/notebook-intake-validation-and-approval.md
   - sources/ml-deploy-reference-repo.allium.md
   - sources/ml_deploy.webui_contracts.py.md
+  - sources/ml_deploy.execution_backends.py.md
+  - sources/ml_deploy.mlflow_parity.py.md
+  - sources/ml_deploy.notebook_intake.py.md
+  - sources/ml_deploy.terraform_bootstrap.py.md
   - sources/nbs.05_webui_contracts.ipynb.md
   - sources/tests.test_webui_contracts.py.md
 ---
@@ -35,7 +39,7 @@ sources:
 
 ## Snapshot
 
-As of 2026-05-10, the repository contains:
+As of 2026-05-11, the repository contains:
 
 - `LICENSE`
 - `flake.nix`
@@ -48,6 +52,7 @@ As of 2026-05-10, the repository contains:
 - nbdev 3 project structure with `pyproject.toml`, `nbs/` directory for notebooks, and `ml_deploy/` package
 - `nbs/05_webui_contracts.ipynb` as nbdev source for Web UI backend contracts
 - `nbs/06_vertical_slice.ipynb` as nbdev source for first-vertical-slice implementation
+- runtime helper modules for MLflow parity, execution adapters, intake validation, and Terraform bootstrap
 - git metadata for a repository now rebased onto `origin/main`
 
 ## What is working
@@ -72,6 +77,9 @@ As of 2026-05-10, the repository contains:
 - The vertical-slice module is now notebook-owned and exported from `nbs/06_vertical_slice.ipynb`.
 - A thin Web UI backend contract module now exists in `ml_deploy/webui_contracts.py` with tests in `tests/test_webui_contracts.py`.
 - The Web UI contract module is now notebook-owned and exported from `nbs/05_webui_contracts.ipynb`.
+- Execution adapter mappings now exist for local, Slurm, and Kubernetes payloads.
+- Notebook intake validation gates now exist for immutable refs, notebook structure, and optional nbdev export checks.
+- Python-driven Terraform bootstrap helpers now generate Terraform JSON stack files and expose init/plan/apply runners.
 - A distilled repository-wide Allium specification now exists and is indexed in the wiki.
 - An nbdev 3 project structure has been initialized with pyproject.toml, nbs/ directory, and ml_deploy/ package placeholder.
 - Notebooks can be successfully exported to Python packages using `nbdev-export --path nbs/`.
@@ -85,7 +93,7 @@ As of 2026-05-10, the repository contains:
 - There is no production-ready ML data pipeline or deployment implementation yet.
 - Contract validation is currently test-level for the local vertical slice, not yet generalized across all topologies.
 - New architecture requirements now specify MLflow PostgreSQL/S3 storage, Lambda.ai Slurm coordination/redundancy, AWS Kubernetes for non-Lambda.ai services, and Python-managed Terraform-first infrastructure workflows.
-- Adapter-specific translation from notebook execution requests into concrete Slurm and Kubernetes job specs remains unimplemented.
+- Slurm/Kubernetes mappings exist, but direct submission clients and runtime orchestration integration are still minimal scaffolding.
 - The distilled Allium spec currently models repository posture, shell behavior, and governance constraints; it does not yet cover any real ML implementation logic because that code still does not exist.
 - `flake.lock` is not tracked by git under the current ignore rules, so lockfile drift may be local-only unless that policy changes.
 - The origin currently contributes a `LICENSE` file, while the expected remote `README.md` was not present during synchronization.
@@ -101,7 +109,7 @@ The repo is currently best understood as a **specification-first and documentati
 - promotion of the implemented local slice into Docker-first execution flow
 - expansion into distributed, batch, and online production topologies
 - notebook Web UI execution flow with immutable notebook source semantics
-- notebook Web UI adapter implementations for Slurm and Kubernetes based on the new backend contract
+- concrete Slurm/Kubernetes submission clients and orchestration runners on top of current mapping helpers
 - validation hooks for contract compliance checks
 - implementation only after user-directed transition from spec-first write-up to build-out
 

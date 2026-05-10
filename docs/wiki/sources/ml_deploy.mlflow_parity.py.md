@@ -1,0 +1,29 @@
+---
+updated: 2026-05-11
+summary: Synthesized summary of helpers for local MLflow parity stack (PostgreSQL backend + S3-compatible artifacts).
+read_when:
+  - You are wiring local MLflow infrastructure parity
+  - You need compose/runtime configuration for PostgreSQL + MinIO + MLflow
+source_file: ../../ml_deploy/mlflow_parity.py
+---
+
+# Source summary: ml_deploy/mlflow_parity.py
+
+## Role
+
+Provides Python helpers to define and bootstrap local MLflow parity posture:
+
+- backend metadata in PostgreSQL
+- artifacts in S3-compatible object storage (MinIO locally)
+- MLflow server runtime wiring
+
+## Main components
+
+- `LocalMlflowParityConfig` — typed configuration for ports, credentials, and URIs.
+- `render_local_compose_config` — compose config renderer for postgres/minio/mlflow services.
+- `write_local_compose_file` — writes JSON-serialized compose config.
+- `build_mlflow_server_command` / `build_mlflow_runtime_env` — runtime command/env helpers.
+
+## Practical implication
+
+Local stack setup and runtime environment can be produced consistently from code, reducing drift from production posture.

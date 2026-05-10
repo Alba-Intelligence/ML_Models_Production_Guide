@@ -1,5 +1,5 @@
 ---
-updated: 2026-05-10
+updated: 2026-05-11
 summary: High-level summary of the repository as it exists today and the intended project direction.
 read_when:
   - You need orientation
@@ -45,6 +45,7 @@ This repository is becoming a **documentation-first, Python-heavy ML deployment 
 - The vertical-slice module is now generated from `nbs/06_vertical_slice.ipynb` through nbdev export.
 - A thin Web UI backend contract module (`ml_deploy/webui_contracts.py`) with tests (`tests/test_webui_contracts.py`) for immutable notebook execution requests and MLflow-linked run summaries.
 - The Web UI contract module is now generated from `nbs/05_webui_contracts.ipynb` through nbdev export.
+- Runtime scaffolding now exists for MLflow parity config, execution adapters, notebook intake validation, and Python-managed Terraform bootstrap.
 
 ## What does not exist yet
 
@@ -52,6 +53,7 @@ This repository is becoming a **documentation-first, Python-heavy ML deployment 
 - No Docker-based reproducible workflow artifacts yet.
 - No deployment scripts or infrastructure definitions for the target topologies yet.
 - No concrete Slurm/Kubernetes execution adapters yet for the Web UI execution contract.
+- Slurm/Kubernetes payload mappings now exist, but direct submission clients and orchestration loops are still thin scaffolding.
 
 ## Important implications
 

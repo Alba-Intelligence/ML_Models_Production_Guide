@@ -1,5 +1,5 @@
 ---
-updated: 2026-05-10
+updated: 2026-05-11
 summary: Runbook for MLflow tracking parity between local replica and production posture (PostgreSQL backend + S3-compatible artifacts).
 read_when:
   - You need local/production parity for MLflow storage
@@ -7,6 +7,7 @@ read_when:
 sources:
   - ../architecture/target-system.md
   - ../decisions/project-scope-and-constraints.md
+  - ../sources/ml_deploy.mlflow_parity.py.md
 ---
 
 # MLflow tracking parity runbook (PostgreSQL + S3)
@@ -20,14 +21,17 @@ Provide a single storage posture for both local replica and production-style flo
 
 ## Local replica baseline
 
-1. Start local PostgreSQL and MinIO endpoints.
-2. Configure MLflow server:
+1. Generate stack configuration via `ml_deploy/mlflow_parity.py`:
+   - `render_local_compose_config(...)`
+   - `write_local_compose_file(...)`
+2. Start local PostgreSQL and MinIO endpoints.
+3. Configure MLflow server:
    - `--backend-store-uri postgresql://...`
    - `--artifacts-destination s3://...`
-3. Export runtime environment for artifact access:
+4. Export runtime environment for artifact access:
    - `MLFLOW_S3_ENDPOINT_URL` (local MinIO endpoint)
    - AWS-style credentials for MinIO or S3
-4. Point local notebook execution and vertical-slice code at the MLflow server URI.
+5. Point local notebook execution and vertical-slice code at the MLflow server URI.
 
 ## Production baseline
 

@@ -1,5 +1,5 @@
 ---
-updated: 2026-05-10
+updated: 2026-05-11
 summary: Primary router for the living wiki. Read this first, then load only the pages relevant to the task.
 read_when:
   - Starting any task in this repository
@@ -40,6 +40,10 @@ sources:
   - sources/ml_deploy.vertical_slice.py.md
   - sources/nbs.06_vertical_slice.ipynb.md
   - sources/ml_deploy.webui_contracts.py.md
+  - sources/ml_deploy.execution_backends.py.md
+  - sources/ml_deploy.mlflow_parity.py.md
+  - sources/ml_deploy.notebook_intake.py.md
+  - sources/ml_deploy.terraform_bootstrap.py.md
   - sources/nbs.05_webui_contracts.ipynb.md
   - sources/tests.test_vertical_slice.py.md
   - sources/tests.test_webui_contracts.py.md
@@ -53,6 +57,7 @@ sources:
   - revisions/2026-05-10-webui-contract-and-mlflow-parity.md
   - revisions/2026-05-10-nbdev-webui-contract-translation.md
   - revisions/2026-05-10-nbdev-vertical-slice-translation.md
+  - revisions/2026-05-11-runtime-adapters-and-bootstrap.md
 ---
 
 # Wiki index
@@ -73,6 +78,7 @@ sources:
 | Review accepted default stack decisions                              | [decisions/monitoring-stack-decision.md](decisions/monitoring-stack-decision.md), [decisions/cost-monitoring-stack-decision.md](decisions/cost-monitoring-stack-decision.md), [decisions/docker-nix-boundary-decision.md](decisions/docker-nix-boundary-decision.md) |
 | Review latest platform requirements alignment                        | [decisions/project-scope-and-constraints.md](decisions/project-scope-and-constraints.md), [architecture/target-system.md](architecture/target-system.md), [revisions/2026-05-10-platform-requirements-alignment.md](revisions/2026-05-10-platform-requirements-alignment.md) |
 | Review executable Web UI backend contracts                           | [architecture/webui-backend-contract.md](architecture/webui-backend-contract.md), [sources/ml_deploy.webui_contracts.py.md](sources/ml_deploy.webui_contracts.py.md), [sources/tests.test_webui_contracts.py.md](sources/tests.test_webui_contracts.py.md) |
+| Review runtime adapter scaffolding                                    | [sources/ml_deploy.execution_backends.py.md](sources/ml_deploy.execution_backends.py.md), [sources/ml_deploy.notebook_intake.py.md](sources/ml_deploy.notebook_intake.py.md), [sources/ml_deploy.mlflow_parity.py.md](sources/ml_deploy.mlflow_parity.py.md) |
 | Edit Web UI contracts in nbdev workflow                              | [sources/nbs.05_webui_contracts.ipynb.md](sources/nbs.05_webui_contracts.ipynb.md), [sources/ml_deploy.webui_contracts.py.md](sources/ml_deploy.webui_contracts.py.md) |
 | Review the planned example inventory                                 | [architecture/example-matrix.md](architecture/example-matrix.md), [topologies/index.md](topologies/index.md)                                                                                                                                                         |
 | Start the first implementation-aligned architecture slice            | [architecture/first-vertical-slice.md](architecture/first-vertical-slice.md), [architecture/example-matrix.md](architecture/example-matrix.md), [contracts/index.md](contracts/index.md)                                                                            |
@@ -172,6 +178,10 @@ sources:
 - [sources/ml_deploy.vertical_slice.py.md](sources/ml_deploy.vertical_slice.py.md) — synthesized summary of the implemented local vertical-slice module.
 - [sources/nbs.06_vertical_slice.ipynb.md](sources/nbs.06_vertical_slice.ipynb.md) — synthesized summary of nbdev notebook source-of-truth for vertical-slice implementation.
 - [sources/ml_deploy.webui_contracts.py.md](sources/ml_deploy.webui_contracts.py.md) — synthesized summary of Web UI execution/run-visibility contract helpers.
+- [sources/ml_deploy.execution_backends.py.md](sources/ml_deploy.execution_backends.py.md) — synthesized summary of local/slurm/k8s execution adapter mappings.
+- [sources/ml_deploy.mlflow_parity.py.md](sources/ml_deploy.mlflow_parity.py.md) — synthesized summary of local MLflow parity stack helpers.
+- [sources/ml_deploy.notebook_intake.py.md](sources/ml_deploy.notebook_intake.py.md) — synthesized summary of notebook intake validation gates.
+- [sources/ml_deploy.terraform_bootstrap.py.md](sources/ml_deploy.terraform_bootstrap.py.md) — synthesized summary of Python-first Terraform bootstrap helpers.
 - [sources/nbs.05_webui_contracts.ipynb.md](sources/nbs.05_webui_contracts.ipynb.md) — synthesized summary of nbdev notebook source-of-truth for Web UI contracts.
 - [sources/tests.test_vertical_slice.py.md](sources/tests.test_vertical_slice.py.md) — synthesized summary of vertical-slice behavior tests.
 - [sources/tests.test_webui_contracts.py.md](sources/tests.test_webui_contracts.py.md) — synthesized summary of Web UI contract behavior tests.
@@ -188,6 +198,7 @@ sources:
 - [revisions/2026-05-10-webui-contract-and-mlflow-parity.md](revisions/2026-05-10-webui-contract-and-mlflow-parity.md) — captures executable Web UI backend contracts plus intake/MLflow parity artifacts.
 - [revisions/2026-05-10-nbdev-webui-contract-translation.md](revisions/2026-05-10-nbdev-webui-contract-translation.md) — captures migration of Web UI contract code into nbdev notebook source-of-truth.
 - [revisions/2026-05-10-nbdev-vertical-slice-translation.md](revisions/2026-05-10-nbdev-vertical-slice-translation.md) — captures migration of vertical-slice implementation into nbdev notebook source-of-truth.
+- [revisions/2026-05-11-runtime-adapters-and-bootstrap.md](revisions/2026-05-11-runtime-adapters-and-bootstrap.md) — captures runtime adapter, intake gate, parity helper, and Terraform bootstrap implementation pass.
 - [revisions/2026-05-09-example-matrix.md](revisions/2026-05-09-example-matrix.md) — captures the first architecture-aligned example inventory.
 - [revisions/2026-05-09-default-stack-decisions.md](revisions/2026-05-09-default-stack-decisions.md) — captures the accepted default stack and boundary decisions.
 - [revisions/2026-05-09-topology-pages.md](revisions/2026-05-09-topology-pages.md) — captures the first pass of reference topology pages.

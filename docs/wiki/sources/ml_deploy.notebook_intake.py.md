@@ -1,0 +1,29 @@
+---
+updated: 2026-05-11
+summary: Synthesized summary of notebook intake validation gates for immutable execution references and nbdev compatibility checks.
+read_when:
+  - You are validating notebook revisions before execution
+  - You need immutable-ref + structural + export gate behavior
+source_file: ../../ml_deploy/notebook_intake.py
+---
+
+# Source summary: ml_deploy/notebook_intake.py
+
+## Role
+
+Implements intake guardrails for executable notebooks:
+
+- immutable revision validation
+- notebook structural validation
+- optional nbdev export compatibility check
+
+## Main components
+
+- `validate_immutable_revision(...)`
+- `validate_notebook_structure(...)`
+- `run_nbdev_export_check(...)`
+- `validate_notebook_for_execution(...)` returning `IntakeValidationReport`
+
+## Practical implication
+
+Web UI intake can enforce approved immutable references and basic notebook validity before job submission.

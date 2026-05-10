@@ -1,5 +1,5 @@
 ---
-updated: 2026-05-10
+updated: 2026-05-11
 summary: Thin backend contract for notebook execution requests and MLflow-first run visibility in the Web UI.
 read_when:
   - You are implementing Web UI backend APIs for notebook runs
@@ -8,6 +8,8 @@ sources:
   - notebook-repository-web-ui.md
   - ../decisions/notebook-intake-validation-and-approval.md
   - ../sources/ml_deploy.webui_contracts.py.md
+  - ../sources/ml_deploy.execution_backends.py.md
+  - ../sources/ml_deploy.notebook_intake.py.md
 ---
 
 # Web UI backend contract
@@ -63,4 +65,8 @@ This payload is the adapter input for local runner, Slurm submission, and Kubern
 ## Implementation anchor
 
 - Runtime contract module: `ml_deploy/webui_contracts.py`
+- Backend adapter module: `ml_deploy/execution_backends.py`
+- Intake gate module: `ml_deploy/notebook_intake.py`
 - Behavior tests: `tests/test_webui_contracts.py`
+- Adapter tests: `tests/test_execution_backends.py`
+- Intake tests: `tests/test_notebook_intake.py`
