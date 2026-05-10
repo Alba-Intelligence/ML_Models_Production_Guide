@@ -39,6 +39,7 @@ sources:
   - sources/ml-deploy-reference-repo.allium.md
   - sources/ml_deploy.vertical_slice.py.md
   - sources/ml_deploy.webui_contracts.py.md
+  - sources/nbs.05_webui_contracts.ipynb.md
   - sources/tests.test_vertical_slice.py.md
   - sources/tests.test_webui_contracts.py.md
   - revisions/2026-05-10-distilled-allium-spec.md
@@ -49,6 +50,7 @@ sources:
   - revisions/2026-05-10-first-vertical-slice-implementation.md
   - revisions/2026-05-10-platform-requirements-alignment.md
   - revisions/2026-05-10-webui-contract-and-mlflow-parity.md
+  - revisions/2026-05-10-nbdev-webui-contract-translation.md
 ---
 
 # Wiki index
@@ -69,6 +71,7 @@ sources:
 | Review accepted default stack decisions                              | [decisions/monitoring-stack-decision.md](decisions/monitoring-stack-decision.md), [decisions/cost-monitoring-stack-decision.md](decisions/cost-monitoring-stack-decision.md), [decisions/docker-nix-boundary-decision.md](decisions/docker-nix-boundary-decision.md) |
 | Review latest platform requirements alignment                        | [decisions/project-scope-and-constraints.md](decisions/project-scope-and-constraints.md), [architecture/target-system.md](architecture/target-system.md), [revisions/2026-05-10-platform-requirements-alignment.md](revisions/2026-05-10-platform-requirements-alignment.md) |
 | Review executable Web UI backend contracts                           | [architecture/webui-backend-contract.md](architecture/webui-backend-contract.md), [sources/ml_deploy.webui_contracts.py.md](sources/ml_deploy.webui_contracts.py.md), [sources/tests.test_webui_contracts.py.md](sources/tests.test_webui_contracts.py.md) |
+| Edit Web UI contracts in nbdev workflow                              | [sources/nbs.05_webui_contracts.ipynb.md](sources/nbs.05_webui_contracts.ipynb.md), [sources/ml_deploy.webui_contracts.py.md](sources/ml_deploy.webui_contracts.py.md) |
 | Review the planned example inventory                                 | [architecture/example-matrix.md](architecture/example-matrix.md), [topologies/index.md](topologies/index.md)                                                                                                                                                         |
 | Start the first implementation-aligned architecture slice            | [architecture/first-vertical-slice.md](architecture/first-vertical-slice.md), [architecture/example-matrix.md](architecture/example-matrix.md), [contracts/index.md](contracts/index.md)                                                                            |
 | Inspect concrete local slice implementation details                   | [sources/ml_deploy.vertical_slice.py.md](sources/ml_deploy.vertical_slice.py.md), [sources/tests.test_vertical_slice.py.md](sources/tests.test_vertical_slice.py.md)                                                                                                  |
@@ -165,6 +168,7 @@ sources:
 - [sources/ml-deploy-reference-repo.allium.md](sources/ml-deploy-reference-repo.allium.md) — synthesized summary of the distilled repository-level Allium spec.
 - [sources/ml_deploy.vertical_slice.py.md](sources/ml_deploy.vertical_slice.py.md) — synthesized summary of the implemented local vertical-slice module.
 - [sources/ml_deploy.webui_contracts.py.md](sources/ml_deploy.webui_contracts.py.md) — synthesized summary of Web UI execution/run-visibility contract helpers.
+- [sources/nbs.05_webui_contracts.ipynb.md](sources/nbs.05_webui_contracts.ipynb.md) — synthesized summary of nbdev notebook source-of-truth for Web UI contracts.
 - [sources/tests.test_vertical_slice.py.md](sources/tests.test_vertical_slice.py.md) — synthesized summary of vertical-slice behavior tests.
 - [sources/tests.test_webui_contracts.py.md](sources/tests.test_webui_contracts.py.md) — synthesized summary of Web UI contract behavior tests.
 
@@ -178,6 +182,7 @@ sources:
 - [revisions/2026-05-10-first-vertical-slice-implementation.md](revisions/2026-05-10-first-vertical-slice-implementation.md) — captures code implementation of the first local vertical slice and test coverage.
 - [revisions/2026-05-10-platform-requirements-alignment.md](revisions/2026-05-10-platform-requirements-alignment.md) — captures alignment to MLflow PostgreSQL/S3, Lambda.ai Slurm, AWS Kubernetes, notebook Web UI, and Python-managed Terraform requirements.
 - [revisions/2026-05-10-webui-contract-and-mlflow-parity.md](revisions/2026-05-10-webui-contract-and-mlflow-parity.md) — captures executable Web UI backend contracts plus intake/MLflow parity artifacts.
+- [revisions/2026-05-10-nbdev-webui-contract-translation.md](revisions/2026-05-10-nbdev-webui-contract-translation.md) — captures migration of Web UI contract code into nbdev notebook source-of-truth.
 - [revisions/2026-05-09-example-matrix.md](revisions/2026-05-09-example-matrix.md) — captures the first architecture-aligned example inventory.
 - [revisions/2026-05-09-default-stack-decisions.md](revisions/2026-05-09-default-stack-decisions.md) — captures the accepted default stack and boundary decisions.
 - [revisions/2026-05-09-topology-pages.md](revisions/2026-05-09-topology-pages.md) — captures the first pass of reference topology pages.

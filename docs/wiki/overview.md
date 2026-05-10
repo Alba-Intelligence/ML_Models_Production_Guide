@@ -43,6 +43,7 @@ This repository is becoming a **documentation-first, Python-heavy ML deployment 
 - Ratified architecture write-up pages for the reference skeleton, documentation TOC, and first vertical slice.
 - A concrete local vertical-slice implementation module (`ml_deploy/vertical_slice.py`) plus end-to-end tests (`tests/test_vertical_slice.py`).
 - A thin Web UI backend contract module (`ml_deploy/webui_contracts.py`) with tests (`tests/test_webui_contracts.py`) for immutable notebook execution requests and MLflow-linked run summaries.
+- The Web UI contract module is now generated from `nbs/05_webui_contracts.ipynb` through nbdev export.
 
 ## What does not exist yet
 

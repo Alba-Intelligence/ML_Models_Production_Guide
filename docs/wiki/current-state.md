@@ -26,6 +26,7 @@ sources:
   - decisions/notebook-intake-validation-and-approval.md
   - sources/ml-deploy-reference-repo.allium.md
   - sources/ml_deploy.webui_contracts.py.md
+  - sources/nbs.05_webui_contracts.ipynb.md
   - sources/tests.test_webui_contracts.py.md
 ---
 
@@ -44,6 +45,7 @@ As of 2026-05-10, the repository contains:
 - `docs/wiki/` (the living memory layer, now including architecture decision for notebook repository web UI)
 - `specs/ml-deploy-reference-repo.allium` (distilled repository-level Allium specification)
 - nbdev 3 project structure with `pyproject.toml`, `nbs/` directory for notebooks, and `ml_deploy/` package
+- `nbs/05_webui_contracts.ipynb` as nbdev source for Web UI backend contracts
 - git metadata for a repository now rebased onto `origin/main`
 
 ## What is working
@@ -66,6 +68,7 @@ As of 2026-05-10, the repository contains:
 - The first implementation-aligned architecture slice is now defined in `architecture/first-vertical-slice.md`.
 - The first local vertical slice is now implemented in `ml_deploy/vertical_slice.py` with tests in `tests/test_vertical_slice.py`.
 - A thin Web UI backend contract module now exists in `ml_deploy/webui_contracts.py` with tests in `tests/test_webui_contracts.py`.
+- The Web UI contract module is now notebook-owned and exported from `nbs/05_webui_contracts.ipynb`.
 - A distilled repository-wide Allium specification now exists and is indexed in the wiki.
 - An nbdev 3 project structure has been initialized with pyproject.toml, nbs/ directory, and ml_deploy/ package placeholder.
 - Notebooks can be successfully exported to Python packages using `nbdev-export --path nbs/`.
