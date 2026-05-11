@@ -1,6 +1,6 @@
 ---
 updated: 2026-05-11
-summary: Synthesized summary of the distilled repository-level Allium specification with spec-quality and documentation-series implementation gating.
+summary: Synthesized summary of the distilled repository-level Allium specification with spec-quality, documentation-series, and infrastructure-MCP interrogation gating.
 read_when:
   - You need the repo behavior expressed as a formal spec
   - You are planning spec-first changes and need the current baseline
@@ -43,6 +43,8 @@ It converts the repository's implemented shell behavior and governance decisions
 - OpenTofu configuration gate requiring Terranix-generated JSON configuration from both flake and devenv pathways.
 - Specification-first gate that blocks implementation without explicit approval.
 - Additional implementation readiness gate requiring passed spec quality unless explicitly overridden.
+- Conditional infrastructure MCP requirement: when infrastructure MCP servers are available, infrastructure interrogation must be included in the default assistant surface.
+- Infrastructure interrogation minimum coverage is now explicit and testable: IaC plans/state, Kubernetes runtime state, Lambda.ai/Slurm runtime state, cloud resource inventory, and cost/usage signals.
 - Surface declarations that make key governance, shell, and documentation triggers reachable for executable analysis.
 
 ## Practical implication

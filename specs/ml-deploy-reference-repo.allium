@@ -10,7 +10,8 @@
 
 enum MonitoringTool { evidently | prometheus | grafana | mlflow }
 enum CostTool { aws_cost_explorer | aws_cur | aws_athena | aws_budgets | python_lambda_ai_attribution }
-enum McpSurface { mlflow | observability | aws_cost_visibility | lambda_ai_usage_visibility | docs_and_decisions }
+enum McpSurface { mlflow | observability | aws_cost_visibility | lambda_ai_usage_visibility | infrastructure_visibility | docs_and_decisions }
+enum InfrastructureInterrogationAspect { iac_plans_and_state | kubernetes_runtime_state | lambda_ai_slurm_runtime_state | cloud_resource_inventory | cost_and_usage_signals }
 enum CrossCuttingContract { security | data_lineage | experiment_traceability | model_traceability | reproducibility }
 enum DocumentationAudience { software_engineer | ml_researcher }
 enum MlflowBackendStore { sqlite | postgresql }
@@ -18,6 +19,7 @@ enum MlflowArtifactStore { filesystem | minio | s3 }
 enum PromotionStage { dev | uat | regression | prod }
 enum WorkloadScheduler { slurm | kubernetes }
 enum CicdPlatform { github_actions | argocd | custom }
+enum DocumentationSourceFormat { quarto_qmd | nbdev_ipynb | hybrid }
 
 entity Repository {
     name: String
@@ -51,11 +53,15 @@ entity Repository {
     lambda_ai_inference_scheduler: WorkloadScheduler
     cicd_platform: CicdPlatform
     uses_community_model_flavors: Boolean
+    documentation_source_format: DocumentationSourceFormat
 
     required_contracts: Set<CrossCuttingContract>
     default_monitoring_stack: Set<MonitoringTool>
     default_cost_stack: Set<CostTool>
     default_mcp_scope: Set<McpSurface>
+    requires_infrastructure_mcp_if_available: Boolean
+    required_infrastructure_interrogation_aspects: Set<InfrastructureInterrogationAspect>
+    infrastructure_interrogation_aspects: Set<InfrastructureInterrogationAspect>
 
     implementation_permitted: phase = implementation_enabled
 }
@@ -167,7 +173,8 @@ config {
 
     default_monitoring_stack: Set<MonitoringTool> = {evidently, prometheus, grafana, mlflow}
     default_cost_stack: Set<CostTool> = {aws_cost_explorer, aws_cur, aws_athena, aws_budgets, python_lambda_ai_attribution}
-    default_mcp_scope: Set<McpSurface> = {mlflow, observability, aws_cost_visibility, lambda_ai_usage_visibility, docs_and_decisions}
+    default_mcp_scope: Set<McpSurface> = {mlflow, observability, aws_cost_visibility, lambda_ai_usage_visibility, infrastructure_visibility, docs_and_decisions}
+    required_infrastructure_interrogation_aspects: Set<InfrastructureInterrogationAspect> = {iac_plans_and_state, kubernetes_runtime_state, lambda_ai_slurm_runtime_state, cloud_resource_inventory, cost_and_usage_signals}
     required_contracts: Set<CrossCuttingContract> = {security, data_lineage, experiment_traceability, model_traceability, reproducibility}
 }
 
@@ -205,6 +212,8 @@ rule InitializeRepositoryDefaults {
     ensures: repository.default_monitoring_stack = config.default_monitoring_stack
     ensures: repository.default_cost_stack = config.default_cost_stack
     ensures: repository.default_mcp_scope = config.default_mcp_scope
+    ensures: repository.requires_infrastructure_mcp_if_available = true
+    ensures: repository.required_infrastructure_interrogation_aspects = config.required_infrastructure_interrogation_aspects
 }
 
 rule EnterShellWithProjectDefinitionAndSync {
@@ -339,6 +348,23 @@ rule RequireLocalEmulationParity {
         -- is attempted. Use docker-compose.local-infra.yml for compute plane (LocalStack,
         -- K3s/Kind, Slurm-Docker) and docker-compose.dev.yml for data plane
         -- (MLflow, PostgreSQL, MinIO).
+}
+
+rule RequireInfrastructureMcpInterrogationWhenAvailable {
+    when: InfrastructureMcpAvailabilityAssessed(repository, mcp_servers_available)
+
+    requires: repository.requires_infrastructure_mcp_if_available
+    requires: mcp_servers_available
+
+    ensures: repository.default_mcp_scope = config.default_mcp_scope
+    ensures: repository.infrastructure_interrogation_aspects = repository.required_infrastructure_interrogation_aspects
+
+    @guidance
+        -- If MCP servers exist for infrastructure systems, they must be exposed for
+        -- assistant interrogation of relevant infrastructure state rather than being
+        -- omitted from the assistant integration surface.
+        -- Minimum interrogation aspects: IaC plans/state, Kubernetes runtime state,
+        -- Lambda.ai/Slurm runtime state, cloud resource inventory, and cost/usage signals.
 }
 
 rule BlockImplementationWithoutExplicitConfirmation {
@@ -502,6 +528,7 @@ surface GovernanceAndDocumentationSurface {
     provides: DocumentationSeriesDeclared(repository, series)
     provides: OpenTofuConfigurationDeclared(repository, configuration)
     provides: LocalEmulationStackDeclared(repository, stack)
+    provides: InfrastructureMcpAvailabilityAssessed(repository, mcp_servers_available)
     provides: ImplementationCodeRequested(repository, explicit_user_confirmation)
 }
 
