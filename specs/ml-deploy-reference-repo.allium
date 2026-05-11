@@ -13,6 +13,9 @@ enum CostTool { aws_cost_explorer | aws_cur | aws_athena | aws_budgets | python_
 enum McpSurface { mlflow | observability | aws_cost_visibility | lambda_ai_usage_visibility | docs_and_decisions }
 enum CrossCuttingContract { security | data_lineage | experiment_traceability | model_traceability | reproducibility }
 enum DocumentationAudience { software_engineer | ml_researcher }
+enum MlflowBackendStore { sqlite | postgresql }
+enum MlflowArtifactStore { filesystem | minio | s3 }
+enum PromotionStage { dev | uat | regression | prod }
 
 entity Repository {
     name: String
@@ -40,6 +43,8 @@ entity Repository {
     aws_in_scope: Boolean
     active_deployment_profile: DeploymentProfile
     local_emulation_verified: Boolean
+    cicd_pipeline_in_scope: Boolean
+    promotion_pipeline_in_scope: Boolean
 
     required_contracts: Set<CrossCuttingContract>
     default_monitoring_stack: Set<MonitoringTool>
@@ -120,6 +125,21 @@ entity WorkBlocked {
     reason: explicit_spec_confirmation_required
 }
 
+entity MlflowTrackingServer {
+    backend_store: MlflowBackendStore
+    artifact_store: MlflowArtifactStore
+    has_reverse_proxy: Boolean
+    model_version_source_validation_enabled: Boolean
+    profile_switchable: Boolean
+    deployment_profile: DeploymentProfile
+}
+
+entity ModelArtifact {
+    tracked_in_mlflow: Boolean
+    stage: PromotionStage
+    promotion_approved: Boolean
+}
+
 config {
     kernel_name: String = "ml_ops"
     project_jupyter_dir: String = "jupyter"
@@ -156,6 +176,8 @@ rule InitializeRepositoryDefaults {
     ensures: repository.aws_in_scope = true
     ensures: repository.active_deployment_profile = local_emulation
     ensures: repository.local_emulation_verified = false
+    ensures: repository.cicd_pipeline_in_scope = true
+    ensures: repository.promotion_pipeline_in_scope = true
 
     ensures: repository.required_contracts = config.required_contracts
     ensures: repository.default_monitoring_stack = config.default_monitoring_stack
@@ -290,7 +312,11 @@ rule RequireLocalEmulationParity {
     ensures: stack.slurm_emulated = true
     ensures: stack.profile = local_emulation
 
-    @guidance "Local emulation stack must be fully verified before any cloud profile deployment is attempted. Use docker-compose.local-infra.yml for compute plane (LocalStack, K3s/Kind, Slurm-Docker) and docker-compose.dev.yml for data plane (MLflow, PostgreSQL, MinIO)."
+    @guidance
+        -- Local emulation stack must be fully verified before any cloud profile deployment
+        -- is attempted. Use docker-compose.local-infra.yml for compute plane (LocalStack,
+        -- K3s/Kind, Slurm-Docker) and docker-compose.dev.yml for data plane
+        -- (MLflow, PostgreSQL, MinIO).
 }
 
 rule BlockImplementationWithoutExplicitConfirmation {
@@ -312,6 +338,81 @@ rule AllowImplementationAfterGate {
     ensures: OperationRecord.created(kind: implementation_allowed, tool: policy)
 }
 
+rule RequireMlflowProfileSwitchable {
+    when: MlflowTrackingServerDeployed(repository, server)
+
+    requires: repository.mlflow_in_scope
+
+    ensures: server.profile_switchable = true
+
+    @guidance
+        -- The MLflow tracking server implementation must produce identical API behaviour
+        -- across local_emulation and cloud deployment profiles without code changes.
+        -- Consider mlflow-go with mlflow-go-backend, which supports both
+        -- SQLite/local-PostgreSQL and cloud PostgreSQL backends via configuration alone.
+}
+
+rule RequireMlflowProductionStorageBackends {
+    when: MlflowTrackingServerDeployed(repository, server)
+
+    requires: repository.mlflow_in_scope
+    requires: server.deployment_profile = cloud
+
+    ensures: server.backend_store = postgresql
+    ensures: server.artifact_store = s3
+
+    @guidance
+        -- In production, PostgreSQL is required as the MLflow backend store (SQLite has no
+        -- concurrent-writer support and no backup story). S3 is required as the artifact store.
+        -- In local_emulation profile, SQLite or PostgreSQL with MinIO or filesystem artifact
+        -- store are acceptable.
+}
+
+rule RequireMlflowReverseProxyInProduction {
+    when: MlflowTrackingServerDeployed(repository, server)
+
+    requires: repository.mlflow_in_scope
+    requires: server.deployment_profile = cloud
+
+    ensures: server.has_reverse_proxy = true
+
+    @guidance
+        -- MLflow upstream documentation recommends routing all tracking server traffic
+        -- through a reverse proxy (e.g. nginx, Traefik) in production. The proxy provides
+        -- TLS termination, authentication enforcement, and rate limiting that the MLflow
+        -- server itself does not supply.
+}
+
+rule RequireMlflowSourceValidationInProduction {
+    when: MlflowTrackingServerDeployed(repository, server)
+
+    requires: repository.mlflow_in_scope
+    requires: server.deployment_profile = cloud
+
+    ensures: server.model_version_source_validation_enabled = true
+
+    @guidance
+        -- Set MLFLOW_CREATE_MODEL_VERSION_SOURCE_VALIDATION_REGEX to restrict model version
+        -- source URIs to trusted registries only. This prevents model poisoning via untrusted
+        -- or attacker-controlled source URIs registered as model versions.
+}
+
+rule RequireModelPromotionApproval {
+    when: ModelArtifactPromoted(artifact, to_stage)
+
+    requires: artifact.tracked_in_mlflow
+    requires: to_stage = prod
+    requires: artifact.promotion_approved
+
+    ensures: artifact.stage = prod
+
+    @guidance
+        -- No model artifact may enter production without explicit promotion approval.
+        -- The approval gate must include passing regression test results. Track all
+        -- promotion events in the MLflow model registry using stage transitions
+        -- (Staging → Production). No model may skip stages.
+}
+
 surface DeveloperShellSurface {
     provides: DeveloperEntersShell(repository, session)
     provides: EnsureJupyterKernel(session)
@@ -326,3 +427,14 @@ surface GovernanceAndDocumentationSurface {
     provides: LocalEmulationStackDeclared(repository, stack)
     provides: ImplementationCodeRequested(repository, explicit_user_confirmation)
 }
+
+surface MlflowOperationsSurface {
+    provides: MlflowTrackingServerDeployed(repository, server)
+    provides: ModelArtifactPromoted(artifact, to_stage)
+}
+
+open question "Lambda.ai Slurm vs Kubernetes: should training jobs be dispatched via Slurm only, via Kubernetes only, or should the system support both interchangeably per workload type? Lambda.ai supports both — a scheduling preference must be defined for training and for inference serving separately."
+open question "MLflow model flavors: must models be logged and loaded using the bigmlflow community flavor (https://mlflow.org/docs/latest/ml/community-model-flavors/) for cloud MLflow deployments, or is the standard mlflow.sklearn / mlflow.pytorch flavor sufficient across all profiles? If bigmlflow is required, OurMLFlow base class must wrap log() and load() for both local and cloud contexts."
+open question "CI/CD tooling: which CI/CD platform should gate the promotion pipeline (DEV → UAT → REGRESSION → PROD) and enforce spec compliance checks? Options include GitHub Actions, ArgoCD, or a custom orchestration layer."
+open question "Promotion gate criteria: what automated checks must pass at each stage boundary — DEV→UAT, UAT→REGRESSION, REGRESSION→PROD? Are human approvals required at any gate?"
+open question "PyTorch inference optimisation: which tuning steps from https://docs.pytorch.org/tutorials/recipes/recipes/tuning_guide.html are mandatory before a model is eligible for production promotion? E.g. torch.compile, mixed precision, channels-last memory format."
