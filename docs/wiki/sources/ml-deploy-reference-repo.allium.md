@@ -35,11 +35,13 @@ It converts the repository's implemented shell behavior and governance decisions
 - Repository default posture initialization.
 - Spec-quality readiness state modeled on the repository (`spec_quality_gate_passed`).
 - Shell entry behavior with and without `pyproject.toml`.
+- Conditional dependency synchronization on shell entry (only when dependencies are missing or explicitly requested).
 - Jupyter kernel ensure + JupyterLab launch behavior.
 - Mandatory wiki update workflow after durable changes.
 - Notebook-series completeness gate for implementation-ready architecture documentation (steps, trade-offs, security, examples, audience coverage, and implementation/docs-module linkage).
 - Specification-first gate that blocks implementation without explicit approval.
 - Additional implementation readiness gate requiring passed spec quality unless explicitly overridden.
+- Surface declarations that make key governance, shell, and documentation triggers reachable for executable analysis.
 
 ## Practical implication
 

@@ -11,6 +11,7 @@ from pathlib import Path
 from typing import Any, Callable
 from uuid import uuid4
 
+from .mlflow_parity import resolve_mlflow_storage_config
 from .vertical_slice import execute_first_vertical_slice
 from .webui_contracts import NotebookExecutionRequest, RunVisibility, summarize_run_for_webui
 
@@ -66,6 +67,75 @@ class LocalExecutionAdapter:
             run_visibility=run_summary,
             output_dir=run_payload["output_dir"],
             prediction_log_path=run_payload["prediction_log_path"],
+        )
+
+
+@dataclass(frozen=True)
+class BackendSubmission:
+    request_id: str
+    backend: str
+    status: str
+    submission_payload: dict[str, Any]
+    run_visibility: RunVisibility | None = None
+    prediction_log_path: Path | None = None
+
+
+class ExecutionOrchestrator:
+    """Route normalized notebook requests to local, Slurm, or Kubernetes execution backends."""
+
+    def __init__(self, mlflow_base_url: str, local_adapter: LocalExecutionAdapter | None = None):
+        self._local_adapter = local_adapter or LocalExecutionAdapter(mlflow_base_url)
+
+    @staticmethod
+    def _resolve_backend(target: str) -> str:
+        normalized = target.strip().lower()
+        if normalized in {"local", "local-replica"}:
+            return "local"
+        if normalized in {"lambda-slurm", "slurm"}:
+            return "slurm"
+        if normalized in {"aws-kubernetes", "kubernetes", "k8s"}:
+            return "kubernetes"
+        raise ValueError(f"Unsupported execution target: {target}")
+
+    def submit(
+        self,
+        request: NotebookExecutionRequest,
+        *,
+        work_dir: Path,
+        tracking_uri: str | None = None,
+        request_id: str | None = None,
+    ) -> BackendSubmission:
+        resolved_request = request.with_defaults(request_id=request_id or f"req-{uuid4().hex[:12]}")
+        job_spec = resolved_request.as_job_spec()
+        backend = self._resolve_backend(job_spec["target"])
+
+        if backend == "local":
+            runtime_tracking_uri = tracking_uri or resolve_mlflow_storage_config().tracking_uri
+            local_result = self._local_adapter.submit(
+                resolved_request,
+                work_dir=work_dir,
+                tracking_uri=runtime_tracking_uri,
+                request_id=job_spec["request_id"],
+            )
+            return BackendSubmission(
+                request_id=local_result.request_id,
+                backend=backend,
+                status="completed",
+                submission_payload=job_spec,
+                run_visibility=local_result.run_visibility,
+                prediction_log_path=local_result.prediction_log_path,
+            )
+
+        if backend == "slurm":
+            submission_payload = map_to_slurm_job_spec(job_spec)
+        else:
+            submission_payload = map_to_kubernetes_job_spec(job_spec)
+
+        return BackendSubmission(
+            request_id=job_spec["request_id"],
+            backend=backend,
+            status="submitted",
+            submission_payload=submission_payload,
         )
 
 
@@ -128,4 +198,5 @@ def map_to_kubernetes_job_spec(job_spec: dict[str, Any]) -> dict[str, Any]:
 
 
 # %% auto #0
-__all__ = ['LocalExecutionResult', 'LocalExecutionAdapter', 'map_to_slurm_job_spec', 'map_to_kubernetes_job_spec']
+__all__ = ['LocalExecutionResult', 'LocalExecutionAdapter', 'BackendSubmission', 'ExecutionOrchestrator',
+           'map_to_slurm_job_spec', 'map_to_kubernetes_job_spec']

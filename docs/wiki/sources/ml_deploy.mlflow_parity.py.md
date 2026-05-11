@@ -1,6 +1,6 @@
 ---
 updated: 2026-05-11
-summary: Synthesized summary of helpers for local MLflow parity stack (PostgreSQL backend + S3-compatible artifacts).
+summary: Synthesized summary of helpers for local and runtime MLflow storage parity (PostgreSQL backend + S3-compatible artifacts).
 read_when:
   - You are wiring local MLflow infrastructure parity
   - You need compose/runtime configuration for PostgreSQL + MinIO + MLflow
@@ -22,9 +22,11 @@ Provides Python helpers to define and bootstrap local MLflow parity posture:
 ## Main components
 
 - `LocalMlflowParityConfig` — typed configuration for ports, credentials, and URIs.
+- `MlflowStorageConfig` — runtime storage/tracking configuration model.
 - `render_local_compose_config` — compose config renderer for postgres/minio/mlflow services.
 - `write_local_compose_file` — writes JSON-serialized compose config.
-- `build_mlflow_server_command` / `build_mlflow_runtime_env` — runtime command/env helpers.
+- `build_mlflow_server_command` / `build_mlflow_runtime_env` — local parity command/env helpers.
+- `resolve_mlflow_storage_config` / `build_mlflow_runtime_env_from_storage` — environment-driven PostgreSQL+S3 runtime configuration helpers.
 
 ## Ownership
 
@@ -33,4 +35,4 @@ Provides Python helpers to define and bootstrap local MLflow parity posture:
 
 ## Practical implication
 
-Local stack setup and runtime environment can be produced consistently from code, reducing drift from production posture.
+Local stack setup and runtime environment can be produced consistently from code, reducing drift between local parity and production storage posture.

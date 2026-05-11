@@ -34,6 +34,21 @@ On shell entry, the shell hook will:
 
 This should happen automatically in normal `nix develop` entry for this repository.
 
+## Docker-first local development path
+
+Bring up the canonical Docker stack (dev shell + MLflow/PostgreSQL/MinIO):
+
+```bash
+docker compose -f docker-compose.dev.yml up -d --build
+docker compose -f docker-compose.dev.yml exec dev bash
+```
+
+Shut it down:
+
+```bash
+docker compose -f docker-compose.dev.yml down
+```
+
 ## Install or refresh the Jupyter kernel
 
 ```bash

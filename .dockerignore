@@ -1,0 +1,7 @@
+.git
+.venv
+__pycache__
+_docs
+docs/wiki
+mlruns
+*.pyc

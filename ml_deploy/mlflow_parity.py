@@ -7,8 +7,9 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 import json
+import os
 from pathlib import Path
-from typing import Any
+from typing import Any, Mapping
 
 
 @dataclass(frozen=True)
@@ -46,6 +47,18 @@ class LocalMlflowParityConfig:
     @property
     def minio_endpoint(self) -> str:
         return f"http://localhost:{self.minio_api_port}"
+
+
+@dataclass(frozen=True)
+class MlflowStorageConfig:
+    """Runtime MLflow storage configuration aligned to PostgreSQL + S3."""
+
+    backend_store_uri: str
+    artifacts_destination: str
+    tracking_uri: str
+    aws_access_key_id: str
+    aws_secret_access_key: str
+    s3_endpoint_url: str | None = None
 
 
 def render_local_compose_config(config: LocalMlflowParityConfig) -> dict[str, Any]:
@@ -146,6 +159,39 @@ def build_mlflow_runtime_env(config: LocalMlflowParityConfig) -> dict[str, str]:
     }
 
 
+def resolve_mlflow_storage_config(
+    env: Mapping[str, str] | None = None,
+) -> MlflowStorageConfig:
+    """Resolve MLflow runtime settings with PostgreSQL + S3 parity defaults."""
+    values = env or os.environ
+    return MlflowStorageConfig(
+        backend_store_uri=values.get(
+            "MLFLOW_BACKEND_STORE_URI",
+            "postgresql://mlflow:mlflow@localhost:5432/mlflow",
+        ),
+        artifacts_destination=values.get("MLFLOW_ARTIFACTS_DESTINATION", "s3://mlflow"),
+        tracking_uri=values.get("MLFLOW_TRACKING_URI", "http://localhost:5000"),
+        aws_access_key_id=values.get("AWS_ACCESS_KEY_ID", "minioadmin"),
+        aws_secret_access_key=values.get("AWS_SECRET_ACCESS_KEY", "minioadmin"),
+        s3_endpoint_url=values.get("MLFLOW_S3_ENDPOINT_URL"),
+    )
+
+
+def build_mlflow_runtime_env_from_storage(config: MlflowStorageConfig) -> dict[str, str]:
+    """Build process env vars from resolved PostgreSQL + S3 MLflow settings."""
+    env = {
+        "MLFLOW_TRACKING_URI": config.tracking_uri,
+        "MLFLOW_BACKEND_STORE_URI": config.backend_store_uri,
+        "MLFLOW_ARTIFACTS_DESTINATION": config.artifacts_destination,
+        "AWS_ACCESS_KEY_ID": config.aws_access_key_id,
+        "AWS_SECRET_ACCESS_KEY": config.aws_secret_access_key,
+    }
+    if config.s3_endpoint_url:
+        env["MLFLOW_S3_ENDPOINT_URL"] = config.s3_endpoint_url
+    return env
+
+
 # %% auto #0
 __all__ = ['LocalMlflowParityConfig', 'render_local_compose_config', 'write_local_compose_file', 'build_mlflow_server_command',
-           'build_mlflow_runtime_env']
+           'build_mlflow_runtime_env', 'MlflowStorageConfig', 'resolve_mlflow_storage_config',
+           'build_mlflow_runtime_env_from_storage']

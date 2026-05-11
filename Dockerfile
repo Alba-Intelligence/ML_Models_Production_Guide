@@ -1,0 +1,20 @@
+FROM python:3.13-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    UV_LINK_MODE=copy \
+    PATH="/root/.local/bin:${PATH}"
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends build-essential curl git \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh
+
+WORKDIR /workspace
+
+COPY pyproject.toml README.md /workspace/
+COPY uv.lock /workspace/uv.lock
+RUN uv sync --frozen
+
+CMD ["bash"]

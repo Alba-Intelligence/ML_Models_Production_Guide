@@ -8,6 +8,9 @@ sources:
   - sources/flake.nix.md
   - sources/devenv.nix.md
   - sources/flake.lock.md
+  - sources/.dockerignore.md
+  - sources/Dockerfile.md
+  - sources/docker-compose.dev.yml.md
   - sources/gitignore.md
   - sources/LICENSE.md
   - sources/README.md
@@ -100,6 +103,8 @@ As of 2026-05-11, the repository contains:
 - Notebook intake validation gates now exist for immutable refs, notebook structure, and optional nbdev export checks.
 - Python-driven Terraform bootstrap helpers now generate Terraform JSON stack files and expose init/plan/apply runners.
 - Runtime helper modules are now notebook-owned and exported through nbdev, not maintained as hand-edited Python sources.
+- Runtime orchestration now routes notebook execution requests across local, Slurm, and Kubernetes targets with explicit submitted/completed backend states.
+- Docker-first reproducible development is now implemented with `Dockerfile` and `docker-compose.dev.yml` (including local MLflow PostgreSQL+MinIO parity services).
 - A distilled repository-wide Allium specification now exists and is indexed in the wiki.
 - An nbdev 3 project structure has been initialized with pyproject.toml, nbs/ directory, and ml_deploy/ package placeholder.
 - Notebooks can be successfully exported to Python packages using `nbdev-export --path nbs/`.
@@ -110,14 +115,13 @@ As of 2026-05-11, the repository contains:
 
 ## Current limitations
 
-- Docker-based reproducible development is a hard requirement, but Docker workflows are still not implemented in-repo.
 - `ipykernel` is included in the flake-provided toolchain for Jupyter kernel setup.
 - Building `allium` may require network access for Rust crate dependency fetches during Nix builds.
 - CUDA support is explicitly commented out in `flake.nix`.
 - There is no production-ready ML data pipeline or deployment implementation yet.
 - Contract validation is currently test-level for the local vertical slice, not yet generalized across all topologies.
 - New architecture requirements now specify MLflow PostgreSQL/S3 storage, Lambda.ai Slurm coordination/redundancy, AWS Kubernetes for non-Lambda.ai services, and Python-managed Terraform-first infrastructure workflows.
-- Slurm/Kubernetes mappings exist, but direct submission clients and runtime orchestration integration are still minimal scaffolding.
+- Slurm/Kubernetes paths currently emit backend-ready submission payloads, but external scheduler client integrations remain to be connected.
 - The distilled Allium spec currently models repository posture, shell behavior, and governance constraints; it does not yet cover any real ML implementation logic because that code still does not exist.
 - The distilled Allium spec now also models a spec-quality readiness gate required for default implementation allowance.
 - The distilled Allium spec now models notebook-series completeness requirements (architecture steps, trade-offs, security, examples, audience learning paths, and implementation/docs linkage).
@@ -130,7 +134,6 @@ The repo is currently best understood as a **specification-first and documentati
 
 ## Most likely next additions
 
-- Docker-based development definition
 - local replica topology that mirrors production control planes (Kubernetes/Slurm/storage) where feasible
 - promotion of the implemented local slice into Docker-first execution flow
 - expansion into distributed, batch, and online production topologies

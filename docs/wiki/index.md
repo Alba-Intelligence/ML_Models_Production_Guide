@@ -35,6 +35,9 @@ sources:
   - sources/flake.nix.md
   - sources/devenv.nix.md
   - sources/flake.lock.md
+  - sources/.dockerignore.md
+  - sources/Dockerfile.md
+  - sources/docker-compose.dev.yml.md
   - sources/gitignore.md
   - sources/LICENSE.md
   - sources/README.md
@@ -85,6 +88,7 @@ sources:
   - revisions/2026-05-11-allium-doc-series-completeness.md
   - revisions/2026-05-11-propagated-doc-series-tests.md
   - revisions/2026-05-11-doc-series-obligations-implementation.md
+  - revisions/2026-05-11-spec-runtime-docker-implementation.md
 ---
 
 # Wiki index
@@ -205,6 +209,9 @@ sources:
 - [sources/flake.nix.md](sources/flake.nix.md) — synthesized summary of the flake definition.
 - [sources/devenv.nix.md](sources/devenv.nix.md) — synthesized summary of the auxiliary devenv shell definition.
 - [sources/flake.lock.md](sources/flake.lock.md) — synthesized summary of flake input pins.
+- [sources/.dockerignore.md](sources/.dockerignore.md) — synthesized summary of Docker build-context exclusions.
+- [sources/Dockerfile.md](sources/Dockerfile.md) — synthesized summary of the Docker-first development image.
+- [sources/docker-compose.dev.yml.md](sources/docker-compose.dev.yml.md) — synthesized summary of the Docker-first local development + MLflow parity stack.
 - [sources/gitignore.md](sources/gitignore.md) — synthesized summary of ignored paths and tracking implications.
 - [sources/LICENSE.md](sources/LICENSE.md) — synthesized summary of the repository license and its provenance from origin.
 - [sources/README.md](sources/README.md) — synthesized summary of root newcomer-onboarding guidance.
@@ -257,6 +264,7 @@ sources:
 - [revisions/2026-05-11-allium-doc-series-completeness.md](revisions/2026-05-11-allium-doc-series-completeness.md) — captures spec-level notebook-series completeness obligations for implementation-ready engineering use.
 - [revisions/2026-05-11-propagated-doc-series-tests.md](revisions/2026-05-11-propagated-doc-series-tests.md) — captures test propagation from the documentation-series rule into executable/aspirational test groups.
 - [revisions/2026-05-11-doc-series-obligations-implementation.md](revisions/2026-05-11-doc-series-obligations-implementation.md) — captures completion of deferred doc-series requirements and activation of full non-skipped enforcement tests.
+- [revisions/2026-05-11-spec-runtime-docker-implementation.md](revisions/2026-05-11-spec-runtime-docker-implementation.md) — captures trigger-reachability + shell-sync spec alignment, backend orchestration routing, MLflow runtime storage config, and Docker-first workflow implementation.
 - [revisions/2026-05-09-example-matrix.md](revisions/2026-05-09-example-matrix.md) — captures the first architecture-aligned example inventory.
 - [revisions/2026-05-09-default-stack-decisions.md](revisions/2026-05-09-default-stack-decisions.md) — captures the accepted default stack and boundary decisions.
 - [revisions/2026-05-09-topology-pages.md](revisions/2026-05-09-topology-pages.md) — captures the first pass of reference topology pages.
@@ -272,7 +280,6 @@ sources:
 
 ## Known gaps
 
-- Docker-based reproducible workflow is a hard requirement but is not yet implemented in-repo.
 - A distilled `.allium` baseline exists, but it still reflects repository posture more than implemented ML runtime behavior.
 - The first local vertical slice is implemented, but Docker-first execution and multi-topology expansion remain pending.
 - Contract checks exist for the local slice, but generalized validation hooks are not implemented yet.

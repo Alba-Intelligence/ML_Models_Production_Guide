@@ -7,6 +7,7 @@ import tempfile
 import unittest
 
 from ml_deploy.execution_backends import (
+    ExecutionOrchestrator,
     LocalExecutionAdapter,
     map_to_kubernetes_job_spec,
     map_to_slurm_job_spec,
@@ -67,6 +68,36 @@ class TestExecutionBackends(unittest.TestCase):
         self.assertEqual(slurm_payload["scheduler"], "slurm")
         self.assertIn("Job", k8s_payload["kind"])
         self.assertEqual(k8s_payload["metadata"]["name"], "nb-req-map-01")
+
+    def test_orchestrator_routes_targets(self) -> None:
+        orchestrator = ExecutionOrchestrator(
+            "http://localhost:5000",
+            local_adapter=LocalExecutionAdapter("http://localhost:5000", runner=_fake_runner),
+        )
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            work_dir = Path(tmp_dir)
+            local = orchestrator.submit(
+                self._request(),
+                work_dir=work_dir,
+                tracking_uri="http://localhost:5000",
+                request_id="req-local-01",
+            )
+            self.assertEqual(local.backend, "local")
+            self.assertEqual(local.status, "completed")
+            self.assertIsNotNone(local.run_visibility)
+
+            slurm = orchestrator.submit(
+                NotebookExecutionRequest(
+                    notebook=self._request().notebook,
+                    target="lambda-slurm",
+                    requested_by="engineer@example.com",
+                ),
+                work_dir=work_dir,
+                request_id="req-slurm-01",
+            )
+            self.assertEqual(slurm.backend, "slurm")
+            self.assertEqual(slurm.status, "submitted")
+            self.assertEqual(slurm.submission_payload["scheduler"], "slurm")
 
 
 if __name__ == "__main__":

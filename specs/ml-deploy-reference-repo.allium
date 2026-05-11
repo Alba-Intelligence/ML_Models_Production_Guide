@@ -66,6 +66,8 @@ entity DocumentationSeries {
 
 entity ShellSession {
     has_pyproject: Boolean
+    dependencies_missing: Boolean
+    sync_explicitly_requested: Boolean
     venv_exists: Boolean
     venv_active: Boolean
     ipykernel_available: Boolean
@@ -128,17 +130,32 @@ rule InitializeRepositoryDefaults {
     ensures: repository.default_mcp_scope = config.default_mcp_scope
 }
 
-rule EnterShellWithProjectDefinition {
+rule EnterShellWithProjectDefinitionAndSync {
     when: DeveloperEntersShell(repository, session)
 
     requires: repository.current_dev_shell = nix
     requires: session.has_pyproject
+    requires: session.dependencies_missing or session.sync_explicitly_requested
 
     ensures: OperationRecord.created(kind: shell_entered, tool: nix)
     ensures: session.venv_exists = true
     ensures: session.venv_active = true
     ensures: OperationRecord.created(kind: venv_created, tool: uv)
     ensures: OperationRecord.created(kind: dependencies_synced, tool: uv)
+}
+
+rule EnterShellWithProjectDefinitionNoSync {
+    when: DeveloperEntersShell(repository, session)
+
+    requires: repository.current_dev_shell = nix
+    requires: session.has_pyproject
+    requires: not session.dependencies_missing
+    requires: not session.sync_explicitly_requested
+
+    ensures: OperationRecord.created(kind: shell_entered, tool: nix)
+    ensures: session.venv_exists = true
+    ensures: session.venv_active = true
+    ensures: OperationRecord.created(kind: venv_created, tool: uv)
 }
 
 rule EnterShellWithoutProjectDefinition {
@@ -226,4 +243,17 @@ rule AllowImplementationAfterGate {
     requires: repository.spec_quality_gate_passed or explicit_user_confirmation
 
     ensures: OperationRecord.created(kind: implementation_allowed, tool: policy)
+}
+
+surface DeveloperShellSurface {
+    provides: DeveloperEntersShell(repository, session)
+    provides: EnsureJupyterKernel(session)
+    provides: StartJupyter(session)
+}
+
+surface GovernanceAndDocumentationSurface {
+    provides: RepositoryInitialized(repository)
+    provides: DurableRepositoryChangeObserved(wiki, change_is_non_trivial)
+    provides: DocumentationSeriesDeclared(repository, series)
+    provides: ImplementationCodeRequested(repository, explicit_user_confirmation)
 }
