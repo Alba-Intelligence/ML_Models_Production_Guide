@@ -82,6 +82,8 @@ entity DocumentationSeries {
     has_security_considerations: Boolean
     has_usage_examples: Boolean
     has_role_specific_learning_paths: Boolean
+    is_self_contained_for_implementation: Boolean
+    has_copy_pastable_code_examples: Boolean
     audiences_covered: Set<DocumentationAudience>
     has_python_implementation_module: Boolean
     has_docs_site_module_section: Boolean
@@ -184,6 +186,7 @@ rule InitializeRepositoryDefaults {
     ensures: repository.phase = config.default_project_phase
     ensures: repository.required_reproducible_dev = docker
     ensures: repository.canonical_docs_source = markdown_in_git
+    ensures: repository.documentation_source_format = quarto_qmd
 
     ensures: repository.prefers_python = true
     ensures: repository.linux_only = true
@@ -307,9 +310,18 @@ rule RequireImplementationReadyNotebookSeries {
     ensures: series.has_security_considerations = true
     ensures: series.has_usage_examples = true
     ensures: series.has_role_specific_learning_paths = true
+    ensures: series.is_self_contained_for_implementation = true
+    ensures: series.has_copy_pastable_code_examples = true
     ensures: series.audiences_covered = {software_engineer, ml_researcher}
     ensures: series.has_python_implementation_module = true
     ensures: series.has_docs_site_module_section = true
+
+    @guidance
+        -- The website must be sufficient to implement the full system from the published
+        -- pages alone.
+        -- Infrastructure-relevant code and configuration snippets should appear in the QMD
+        -- pages in copy-pastable form rather than being discoverable only by browsing the
+        -- repository folder tree.
 }
 
 rule RequireNixGeneratedOpenTofuConfiguration {
