@@ -100,7 +100,39 @@ The standard `mlflow.sklearn` / `mlflow.pytorch` flavors may be sufficient. The 
 
 ---
 
-## Related pages
+## Lambda.ai workload scheduling
+
+**Decision**: Slurm for training, Kubernetes for inference serving.
+
+- Training jobs (long-running, GPU batch) → submitted via Slurm on Lambda.ai
+- Inference serving (latency-sensitive, scalable) → deployed via Kubernetes
+- Both schedulers are present in the local emulation stack (`docker-compose.local-infra.yml`)
+- `Repository.lambda_ai_training_scheduler = slurm`
+- `Repository.lambda_ai_inference_scheduler = kubernetes`
+
+---
+
+## CI/CD platform
+
+**Decision**: GitHub Actions.
+
+- GitHub Actions workflows gate all stage promotions (DEV→UAT→REGRESSION→PROD)
+- Triggers: model registry webhook events, git tags, manual approval steps
+- `Repository.cicd_platform = github_actions`
+
+---
+
+## MLflow model flavors
+
+**Decision**: Standard MLflow Python API only — no bigmlflow community flavor.
+
+- Use `mlflow.pytorch`, `mlflow.sklearn` etc. throughout all profiles
+- `Repository.uses_community_model_flavors = false`
+- This avoids extra dependency risk and keeps local/cloud code identical
+
+---
+
+
 
 - `docs/wiki/architecture/local-emulation-stack.md`
 - `docs/wiki/decisions/project-scope-and-constraints.md`

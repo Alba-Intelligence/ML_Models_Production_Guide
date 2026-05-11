@@ -31,33 +31,51 @@ No model may skip a stage. Progression to `prod` requires explicit `promotion_ap
 
 ---
 
-## Gate criteria (current open question)
+## Gate criteria — **RESOLVED**
 
-The exact automated checks required at each gate are an **open question** in the spec:
+All gate criteria are now formally encoded in the spec as rules.
 
-> "What automated checks must pass at each stage boundary — DEV→UAT, UAT→REGRESSION, REGRESSION→PROD?"
+### DEV → UAT (`RequirePromotionGateDevToUat`)
+- `artifact.tracked_in_mlflow = true`
+- `artifact.passes_smoke_tests = true` (model loads, output shape correct)
 
-**Proposed minimum gates** (not yet formally spec'd):
+### UAT → REGRESSION (`RequirePromotionGateUatToRegression`)
+- `artifact.passes_uat_suite = true`
+- `artifact.no_data_leakage_detected = true`
+- `artifact.meets_minimum_metrics = true`
 
-### DEV → UAT
-- Model is logged in MLflow with all required metadata (params, metrics, artifact URI)
-- Training run is reproducible (fixed seed, pinned deps)
-- Basic smoke tests pass (model loads, produces output shape)
-
-### UAT → REGRESSION
-- UAT test suite passes (sample production-representative data)
-- No data leakage detected (train/test split verified)
-- Performance metrics meet minimum thresholds (to be defined per model type)
-
-### REGRESSION → PROD
-- Full regression suite passes on reference holdout datasets
-- No performance regression vs. current production model
-- Security scan passes (no unexpected dependencies)
-- **Human approval gate** (ML lead sign-off)
+### REGRESSION → PROD (`RequireModelPromotionApproval` + `RequirePromotionGateProdQualityChecks`)
+- `artifact.passes_regression_suite = true`
+- `artifact.no_performance_regression = true`
+- `artifact.security_scan_passed = true`
+- `artifact.promotion_approved = true` (human gate)
+- All 5 PyTorch optimisation flags = true (see below)
 
 ---
 
-## MLflow model registry alignment
+## CI/CD platform — **RESOLVED**
+
+**GitHub Actions** gates the promotion pipeline.
+
+---
+
+## PyTorch inference optimisations — **RESOLVED**
+
+All 5 optimisations are mandatory before prod promotion (`RequirePromotionGateProdQualityChecks`):
+
+| Field | Optimisation |
+|---|---|
+| `pytorch_compile_applied` | `torch.compile` — graph compilation |
+| `pytorch_no_grad_applied` | `torch.no_grad()` — disable gradient tracking |
+| `pytorch_mixed_precision_applied` | `torch.autocast` — mixed precision inference |
+| `pytorch_channels_last_applied` | Channels-last memory format (CNN models) |
+| `pytorch_memory_fraction_limited` | GPU memory fraction cap |
+
+Reference: https://docs.pytorch.org/tutorials/recipes/recipes/tuning_guide.html
+
+---
+
+
 
 MLflow stage names map as follows:
 
@@ -72,17 +90,12 @@ The spec rule `RequireModelPromotionApproval` enforces that `stage = prod` requi
 
 ---
 
-## CI/CD pipeline integration
+## CI/CD pipeline integration — **RESOLVED**
 
-The promotion pipeline must be gated by CI/CD. The specific tooling is an **open question** in the spec:
-
-> "Which CI/CD platform should gate the promotion pipeline?"
-
-**Candidate approaches**:
-
-1. **GitHub Actions** — Native to the repo; workflows trigger on model registry webhooks or on git tags
-2. **ArgoCD** + Kubernetes — Better for Kubernetes-native deployment promotion
-3. **Custom orchestration** — Python-driven promotion scripts triggered by MLflow webhooks
+**GitHub Actions** gates the promotion pipeline. Workflows trigger on:
+- Model registry webhook events (stage transitions)
+- Git tags (release candidates)
+- Manual approval steps (REGRESSION → PROD human gate)
 
 ---
 
@@ -97,17 +110,9 @@ The promotion pipeline must be gated by CI/CD. The specific tooling is an **open
 
 ---
 
-## PyTorch inference optimisation
+## PyTorch inference optimisation — **RESOLVED**
 
-Before a model is eligible for `regression` or `prod` promotion, PyTorch-specific performance tuning should be applied. The mandatory steps are an **open question** in the spec. Reference:
-[PyTorch Performance Tuning Guide](https://docs.pytorch.org/tutorials/recipes/recipes/tuning_guide.html)
-
-**Candidates to formalise**:
-- `torch.compile` (graph compilation)
-- Mixed-precision inference (`torch.autocast`)
-- Channels-last memory format for CNN models
-- `torch.no_grad()` context for all inference paths
-- GPU memory fraction limits
+See gate criteria table above. All 5 optimisations are mandatory.
 
 ---
 
