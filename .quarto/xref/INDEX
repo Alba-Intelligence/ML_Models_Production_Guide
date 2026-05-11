@@ -1,0 +1,54 @@
+{
+  "nbs/00_core.qmd": {
+    "00_core.html": "c7f56093",
+    "00_core.md": "dfd4a4d8"
+  },
+  "nbs/01_platform_narrative.qmd": {
+    "01_platform_narrative.html": "9cfa7173",
+    "01_platform_narrative.md": "e2bff3c5"
+  },
+  "nbs/02_data.qmd": {
+    "02_data.html": "55b5296e",
+    "02_data.md": "92a452d5"
+  },
+  "nbs/03_model_training.qmd": {
+    "03_model_training.html": "685662c2",
+    "03_model_training.md": "975dbfd0"
+  },
+  "nbs/04_web_ui.qmd": {
+    "04_web_ui.html": "65863274",
+    "04_web_ui.md": "333e68a6"
+  },
+  "nbs/05_webui_contracts.qmd": {
+    "05_webui_contracts.html": "434fdf18",
+    "05_webui_contracts.md": "6a837639"
+  },
+  "nbs/06_vertical_slice.qmd": {
+    "06_vertical_slice.html": "d172eb7e",
+    "06_vertical_slice.md": "d6312d23"
+  },
+  "nbs/07_mlflow_parity.qmd": {
+    "07_mlflow_parity.html": "caa059e9",
+    "07_mlflow_parity.md": "3f0f36ab"
+  },
+  "nbs/08_execution_backends.qmd": {
+    "08_execution_backends.html": "84f43acb",
+    "08_execution_backends.md": "2aa39e53"
+  },
+  "nbs/09_notebook_intake.qmd": {
+    "09_notebook_intake.html": "14a83256",
+    "09_notebook_intake.md": "ac900184"
+  },
+  "nbs/12_system_interaction_analysis.qmd": {
+    "12_system_interaction_analysis.html": "255a0277",
+    "12_system_interaction_analysis.md": "1ab8c284"
+  },
+  "nbs/13_opentofu_infra.qmd": {
+    "13_opentofu_infra.html": "ff7be36e",
+    "13_opentofu_infra.md": "f346ba17"
+  },
+  "nbs/index.qmd": {
+    "index.html": "34acdd33",
+    "index.md": "128b1bb3"
+  }
+}

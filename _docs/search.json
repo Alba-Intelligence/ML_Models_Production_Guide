@@ -1,0 +1,512 @@
+[
+  {
+    "objectID": "nbs/index.html",
+    "href": "nbs/index.html",
+    "title": "ML Deploy Reference",
+    "section": "",
+    "text": "This is the navigation homepage for the Quarto-first ML deployment reference.\nRead pages in the structure below to understand the system from architecture to execution details.",
+    "crumbs": [
+      "ML Deploy Reference"
+    ]
+  },
+  {
+    "objectID": "nbs/index.html#foundations",
+    "href": "nbs/index.html#foundations",
+    "title": "ML Deploy Reference",
+    "section": "Foundations",
+    "text": "Foundations\n\nPlatform narrative\nCore module baseline",
+    "crumbs": [
+      "ML Deploy Reference"
+    ]
+  },
+  {
+    "objectID": "nbs/index.html#lifecycle-notebooks",
+    "href": "nbs/index.html#lifecycle-notebooks",
+    "title": "ML Deploy Reference",
+    "section": "Lifecycle notebooks",
+    "text": "Lifecycle notebooks\n\nData loading and exploration\nModel training\nWeb UI reference context\nVertical slice reference\nWeb UI contracts",
+    "crumbs": [
+      "ML Deploy Reference"
+    ]
+  },
+  {
+    "objectID": "nbs/index.html#architecture-analysis",
+    "href": "nbs/index.html#architecture-analysis",
+    "title": "ML Deploy Reference",
+    "section": "Architecture analysis",
+    "text": "Architecture analysis\n\nSystem interaction analysis\nOpenTofu infrastructure architecture",
+    "crumbs": [
+      "ML Deploy Reference"
+    ]
+  },
+  {
+    "objectID": "nbs/index.html#topology-and-operations-notebooks",
+    "href": "nbs/index.html#topology-and-operations-notebooks",
+    "title": "ML Deploy Reference",
+    "section": "Topology and operations notebooks",
+    "text": "Topology and operations notebooks\n\nMLflow parity\nExecution backends\nNotebook intake validation\nTerraform bootstrap",
+    "crumbs": [
+      "ML Deploy Reference"
+    ]
+  },
+  {
+    "objectID": "nbs/12_system_interaction_analysis.html",
+    "href": "nbs/12_system_interaction_analysis.html",
+    "title": "System Interaction Analysis",
+    "section": "",
+    "text": "This page captures the five-layer interaction analysis used to reason about boundaries and coupling:",
+    "crumbs": [
+      "System Interaction Analysis"
+    ]
+  },
+  {
+    "objectID": "nbs/12_system_interaction_analysis.html#interaction-checkpoints",
+    "href": "nbs/12_system_interaction_analysis.html#interaction-checkpoints",
+    "title": "System Interaction Analysis",
+    "section": "Interaction checkpoints",
+    "text": "Interaction checkpoints\n\nRequest normalization and immutable notebook revision validation.\nExecution target routing (local, Slurm, Kubernetes).\nMLflow-linked run visibility and traceability.\nArtifact and deployment record integrity.\nInfrastructure parity and MCP interrogation readiness.",
+    "crumbs": [
+      "System Interaction Analysis"
+    ]
+  },
+  {
+    "objectID": "nbs/09_notebook_intake.html",
+    "href": "nbs/09_notebook_intake.html",
+    "title": "Notebook Intake Validation",
+    "section": "",
+    "text": "Notebook Intake Validation\n\nnbdev source for immutable notebook intake and validation gate helpers.\n\n\nfrom __future__ import annotations\n\nfrom dataclasses import dataclass\nimport json\nfrom pathlib import Path\nimport subprocess\nfrom typing import Callable\n\nfrom ml_deploy.webui_contracts import NotebookRevision\n\n\ndef validate_immutable_revision(revision: NotebookRevision) -&gt; None:\n    \"\"\"Validate that a notebook revision is immutable and executable.\"\"\"\n    revision.validate()\n    if revision.revision_kind not in {\"commit\", \"tag\", \"approved-ref\"}:\n        raise ValueError(\"revision_kind must be one of commit, tag, approved-ref\")\n\n\ndef validate_notebook_structure(notebook_path: Path) -&gt; None:\n    \"\"\"Validate basic notebook structure without mutating notebook content.\"\"\"\n    if not notebook_path.exists():\n        raise ValueError(f\"notebook does not exist: {notebook_path}\")\n    payload = json.loads(notebook_path.read_text(encoding=\"utf-8\"))\n    if payload.get(\"nbformat\") is None:\n        raise ValueError(\"notebook is missing nbformat\")\n    cells = payload.get(\"cells\")\n    if not isinstance(cells, list):\n        raise ValueError(\"notebook cells must be a list\")\n    if not cells:\n        raise ValueError(\"notebook must contain at least one cell\")\n\n\ndef run_nbdev_export_check(\n    notebook_path: Path,\n    repo_root: Path,\n    executor: Callable[..., subprocess.CompletedProcess[str]] = subprocess.run,\n) -&gt; None:\n    \"\"\"Run nbdev export to verify notebook compatibility with project workflow.\"\"\"\n    command = [\n        \"uv\",\n        \"run\",\n        \"nbdev-export\",\n        \"--path\",\n        str(notebook_path.parent.relative_to(repo_root)),\n    ]\n    result = executor(\n        command,\n        cwd=str(repo_root),\n        text=True,\n        capture_output=True,\n        check=False,\n    )\n    if result.returncode != 0:\n        raise ValueError(f\"nbdev export check failed: {result.stderr.strip()}\")\n\n\n@dataclass(frozen=True)\nclass IntakeValidationReport:\n    revision_valid: bool\n    notebook_structure_valid: bool\n    nbdev_export_valid: bool\n\n\ndef validate_notebook_for_execution(\n    *,\n    revision: NotebookRevision,\n    notebook_path: Path,\n    repo_root: Path,\n    run_export_check: bool = True,\n    executor: Callable[..., subprocess.CompletedProcess[str]] = subprocess.run,\n) -&gt; IntakeValidationReport:\n    \"\"\"Run immutable-ref, structure, and optional export validation gates.\"\"\"\n    validate_immutable_revision(revision)\n    validate_notebook_structure(notebook_path)\n    export_valid = True\n    if run_export_check:\n        run_nbdev_export_check(notebook_path, repo_root, executor=executor)\n    return IntakeValidationReport(\n        revision_valid=True,\n        notebook_structure_valid=True,\n        nbdev_export_valid=export_valid,\n    )",
+    "crumbs": [
+      "Notebook Intake Validation"
+    ]
+  },
+  {
+    "objectID": "nbs/07_mlflow_parity.html",
+    "href": "nbs/07_mlflow_parity.html",
+    "title": "MLflow Parity Helpers",
+    "section": "",
+    "text": "MLflow Parity Helpers\n\nnbdev source for local MLflow parity stack helpers (PostgreSQL + S3-compatible artifacts).\n\n\nfrom __future__ import annotations\n\nfrom dataclasses import dataclass\nimport json\nimport os\nfrom pathlib import Path\nfrom typing import Any, Mapping\n\n\n@dataclass(frozen=True)\nclass LocalMlflowParityConfig:\n    \"\"\"Configuration for local MLflow parity stack.\"\"\"\n\n    postgres_user: str = \"mlflow\"\n    postgres_password: str = \"mlflow\"\n    postgres_db: str = \"mlflow\"\n    postgres_port: int = 5432\n    minio_access_key: str = \"minioadmin\"\n    minio_secret_key: str = \"minioadmin\"\n    minio_bucket: str = \"mlflow\"\n    minio_api_port: int = 9000\n    minio_console_port: int = 9001\n    mlflow_port: int = 5000\n    mlflow_host: str = \"0.0.0.0\"\n    compose_project_name: str = \"mlflow-parity\"\n\n    @property\n    def backend_store_uri(self) -&gt; str:\n        return (\n            f\"postgresql://{self.postgres_user}:{self.postgres_password}\"\n            f\"@localhost:{self.postgres_port}/{self.postgres_db}\"\n        )\n\n    @property\n    def artifacts_destination(self) -&gt; str:\n        return f\"s3://{self.minio_bucket}\"\n\n    @property\n    def mlflow_tracking_uri(self) -&gt; str:\n        return f\"http://localhost:{self.mlflow_port}\"\n\n    @property\n    def minio_endpoint(self) -&gt; str:\n        return f\"http://localhost:{self.minio_api_port}\"\n\n\n@dataclass(frozen=True)\nclass MlflowStorageConfig:\n    \"\"\"Runtime MLflow storage configuration aligned to PostgreSQL + S3.\"\"\"\n\n    backend_store_uri: str\n    artifacts_destination: str\n    tracking_uri: str\n    aws_access_key_id: str\n    aws_secret_access_key: str\n    s3_endpoint_url: str | None = None\n\n\ndef render_local_compose_config(config: LocalMlflowParityConfig) -&gt; dict[str, Any]:\n    \"\"\"Render a Docker Compose config for local PostgreSQL + MinIO + MLflow.\"\"\"\n    postgres_image = \"postgres:16-alpine\"\n    minio_image = \"minio/minio:latest\"\n    mlflow_image = \"ghcr.io/mlflow/mlflow:v2.14.2\"\n    return {\n        \"name\": config.compose_project_name,\n        \"services\": {\n            \"postgres\": {\n                \"image\": postgres_image,\n                \"environment\": {\n                    \"POSTGRES_USER\": config.postgres_user,\n                    \"POSTGRES_PASSWORD\": config.postgres_password,\n                    \"POSTGRES_DB\": config.postgres_db,\n                },\n                \"ports\": [f\"{config.postgres_port}:5432\"],\n                \"healthcheck\": {\n                    \"test\": [\"CMD-SHELL\", \"pg_isready -U $${POSTGRES_USER}\"],\n                    \"interval\": \"5s\",\n                    \"timeout\": \"3s\",\n                    \"retries\": 20,\n                },\n            },\n            \"minio\": {\n                \"image\": minio_image,\n                \"command\": \"server /data --console-address :9001\",\n                \"environment\": {\n                    \"MINIO_ROOT_USER\": config.minio_access_key,\n                    \"MINIO_ROOT_PASSWORD\": config.minio_secret_key,\n                },\n                \"ports\": [\n                    f\"{config.minio_api_port}:9000\",\n                    f\"{config.minio_console_port}:9001\",\n                ],\n            },\n            \"mlflow\": {\n                \"image\": mlflow_image,\n                \"depends_on\": {\"postgres\": {\"condition\": \"service_healthy\"}, \"minio\": {}},\n                \"command\": [\n                    \"mlflow\",\n                    \"server\",\n                    \"--host\",\n                    config.mlflow_host,\n                    \"--port\",\n                    str(config.mlflow_port),\n                    \"--backend-store-uri\",\n                    (\n                        f\"postgresql://{config.postgres_user}:{config.postgres_password}\"\n                        f\"@postgres:5432/{config.postgres_db}\"\n                    ),\n                    \"--artifacts-destination\",\n                    f\"s3://{config.minio_bucket}\",\n                ],\n                \"environment\": {\n                    \"AWS_ACCESS_KEY_ID\": config.minio_access_key,\n                    \"AWS_SECRET_ACCESS_KEY\": config.minio_secret_key,\n                    \"MLFLOW_S3_ENDPOINT_URL\": \"http://minio:9000\",\n                },\n                \"ports\": [f\"{config.mlflow_port}:{config.mlflow_port}\"],\n            },\n        },\n    }\n\n\ndef write_local_compose_file(path: Path, config: LocalMlflowParityConfig) -&gt; Path:\n    \"\"\"Write compose configuration as JSON-compatible YAML subset.\"\"\"\n    path.parent.mkdir(parents=True, exist_ok=True)\n    compose_dict = render_local_compose_config(config)\n    path.write_text(json.dumps(compose_dict, indent=2) + \"\\n\", encoding=\"utf-8\")\n    return path\n\n\ndef build_mlflow_server_command(config: LocalMlflowParityConfig) -&gt; list[str]:\n    \"\"\"Build an MLflow server command matching the parity posture.\"\"\"\n    return [\n        \"mlflow\",\n        \"server\",\n        \"--host\",\n        config.mlflow_host,\n        \"--port\",\n        str(config.mlflow_port),\n        \"--backend-store-uri\",\n        config.backend_store_uri,\n        \"--artifacts-destination\",\n        config.artifacts_destination,\n    ]\n\n\ndef build_mlflow_runtime_env(config: LocalMlflowParityConfig) -&gt; dict[str, str]:\n    \"\"\"Build environment variables for S3-compatible MLflow artifact storage.\"\"\"\n    return {\n        \"MLFLOW_TRACKING_URI\": config.mlflow_tracking_uri,\n        \"AWS_ACCESS_KEY_ID\": config.minio_access_key,\n        \"AWS_SECRET_ACCESS_KEY\": config.minio_secret_key,\n        \"MLFLOW_S3_ENDPOINT_URL\": config.minio_endpoint,\n    }\n\n\ndef resolve_mlflow_storage_config(\n    env: Mapping[str, str] | None = None,\n) -&gt; MlflowStorageConfig:\n    \"\"\"Resolve MLflow runtime settings with PostgreSQL + S3 parity defaults.\"\"\"\n    values = env or os.environ\n    return MlflowStorageConfig(\n        backend_store_uri=values.get(\n            \"MLFLOW_BACKEND_STORE_URI\",\n            \"postgresql://mlflow:mlflow@localhost:5432/mlflow\",\n        ),\n        artifacts_destination=values.get(\"MLFLOW_ARTIFACTS_DESTINATION\", \"s3://mlflow\"),\n        tracking_uri=values.get(\"MLFLOW_TRACKING_URI\", \"http://localhost:5000\"),\n        aws_access_key_id=values.get(\"AWS_ACCESS_KEY_ID\", \"minioadmin\"),\n        aws_secret_access_key=values.get(\"AWS_SECRET_ACCESS_KEY\", \"minioadmin\"),\n        s3_endpoint_url=values.get(\"MLFLOW_S3_ENDPOINT_URL\"),\n    )\n\n\ndef build_mlflow_runtime_env_from_storage(config: MlflowStorageConfig) -&gt; dict[str, str]:\n    \"\"\"Build process env vars from resolved PostgreSQL + S3 MLflow settings.\"\"\"\n    env = {\n        \"MLFLOW_TRACKING_URI\": config.tracking_uri,\n        \"MLFLOW_BACKEND_STORE_URI\": config.backend_store_uri,\n        \"MLFLOW_ARTIFACTS_DESTINATION\": config.artifacts_destination,\n        \"AWS_ACCESS_KEY_ID\": config.aws_access_key_id,\n        \"AWS_SECRET_ACCESS_KEY\": config.aws_secret_access_key,\n    }\n    if config.s3_endpoint_url:\n        env[\"MLFLOW_S3_ENDPOINT_URL\"] = config.s3_endpoint_url\n    return env",
+    "crumbs": [
+      "MLflow Parity Helpers"
+    ]
+  },
+  {
+    "objectID": "nbs/05_webui_contracts.html",
+    "href": "nbs/05_webui_contracts.html",
+    "title": "Web UI Backend Contracts",
+    "section": "",
+    "text": "Web UI Backend Contracts\n\nnbdev source for immutable notebook execution requests and MLflow-first run visibility helpers.\n\n\nfrom __future__ import annotations\n\nfrom dataclasses import asdict, dataclass, field\nfrom datetime import datetime, timezone\nfrom typing import Any, Literal\n\n\nExecutionTarget = Literal[\"local-replica\", \"lambda-slurm\", \"aws-kubernetes\"]\nRevisionKind = Literal[\"commit\", \"tag\", \"approved-ref\"]\nRunStatus = Literal[\"queued\", \"running\", \"finished\", \"failed\", \"canceled\", \"unknown\"]\n\n\ndef _utc_now() -&gt; str:\n    return datetime.now(timezone.utc).isoformat()\n\n\ndef _normalize_base_url(base_url: str) -&gt; str:\n    return base_url.strip().rstrip(\"/\")\n\n\ndef build_mlflow_run_url(mlflow_base_url: str, run_id: str) -&gt; str:\n    \"\"\"Build a stable deep link to the MLflow run detail page.\"\"\"\n    normalized = _normalize_base_url(mlflow_base_url)\n    if not normalized:\n        raise ValueError(\"mlflow_base_url must be non-empty\")\n    if not run_id.strip():\n        raise ValueError(\"run_id must be non-empty\")\n    return f\"{normalized}/#/experiments/0/runs/{run_id.strip()}\"\n\n\ndef _normalize_status(raw_status: Any) -&gt; RunStatus:\n    status = str(raw_status).strip().lower()\n    if status == \"queued\":\n        return \"queued\"\n    if status == \"running\":\n        return \"running\"\n    if status == \"finished\":\n        return \"finished\"\n    if status == \"failed\":\n        return \"failed\"\n    if status == \"canceled\":\n        return \"canceled\"\n    return \"unknown\"\n\n\n@dataclass(frozen=True)\nclass NotebookRevision:\n    \"\"\"Immutable notebook reference used as execution source-of-truth.\"\"\"\n\n    repository: str\n    notebook_path: str\n    revision: str\n    revision_kind: RevisionKind = \"commit\"\n\n    def as_dict(self) -&gt; dict[str, Any]:\n        return asdict(self)\n\n    def validate(self) -&gt; None:\n        if not self.repository.strip():\n            raise ValueError(\"repository must be non-empty\")\n        if not self.notebook_path.strip():\n            raise ValueError(\"notebook_path must be non-empty\")\n        if not self.revision.strip():\n            raise ValueError(\"revision must be non-empty\")\n        if self.revision_kind == \"commit\":\n            cleaned = self.revision.strip().lower()\n            if len(cleaned) &lt; 7 or any(c not in \"0123456789abcdef\" for c in cleaned):\n                raise ValueError(\"commit revisions must be a git SHA (&gt;=7 hex chars)\")\n\n\n@dataclass(frozen=True)\nclass NotebookExecutionRequest:\n    \"\"\"Web UI request payload for environment-specific execution.\"\"\"\n\n    notebook: NotebookRevision\n    target: ExecutionTarget\n    requested_by: str\n    config_profile: str = \"default\"\n    parameters: dict[str, Any] = field(default_factory=dict)\n    request_id: str = \"\"\n    requested_at: str = \"\"\n\n    def with_defaults(self, *, request_id: str) -&gt; \"NotebookExecutionRequest\":\n        if not request_id.strip():\n            raise ValueError(\"request_id must be non-empty\")\n        return NotebookExecutionRequest(\n            notebook=self.notebook,\n            target=self.target,\n            requested_by=self.requested_by,\n            config_profile=self.config_profile,\n            parameters=self.parameters,\n            request_id=request_id,\n            requested_at=self.requested_at or _utc_now(),\n        )\n\n    def validate(self) -&gt; None:\n        self.notebook.validate()\n        if not self.requested_by.strip():\n            raise ValueError(\"requested_by must be non-empty\")\n        if not self.config_profile.strip():\n            raise ValueError(\"config_profile must be non-empty\")\n        if self.request_id and not self.request_id.strip():\n            raise ValueError(\"request_id must be non-empty when provided\")\n\n    def as_job_spec(self) -&gt; dict[str, Any]:\n        self.validate()\n        if not self.request_id:\n            raise ValueError(\"request_id must be set before producing a job spec\")\n        if not self.requested_at:\n            raise ValueError(\"requested_at must be set before producing a job spec\")\n        return {\n            \"request_id\": self.request_id,\n            \"requested_at\": self.requested_at,\n            \"requested_by\": self.requested_by,\n            \"target\": self.target,\n            \"config_profile\": self.config_profile,\n            \"notebook\": self.notebook.as_dict(),\n            \"parameters\": self.parameters,\n        }\n\n\n@dataclass(frozen=True)\nclass RunVisibility:\n    \"\"\"Web UI summary model with MLflow-first observability linkage.\"\"\"\n\n    run_id: str\n    status: RunStatus\n    started_at: str\n    finished_at: str | None\n    model_version: str | None\n    mlflow_run_url: str\n\n    def as_dict(self) -&gt; dict[str, Any]:\n        return asdict(self)\n\n\ndef summarize_run_for_webui(\n    run_metadata: dict[str, Any], *, mlflow_base_url: str\n) -&gt; RunVisibility:\n    \"\"\"Map backend run metadata to an MLflow-linked Web UI summary.\"\"\"\n    run_id = str(run_metadata.get(\"run_id\", \"\")).strip()\n    if not run_id:\n        raise ValueError(\"run_metadata.run_id is required\")\n\n    normalized_status = _normalize_status(run_metadata.get(\"status\", \"unknown\"))\n    started_at = str(run_metadata.get(\"started_at\", \"\")).strip() or _utc_now()\n    finished_at_raw = run_metadata.get(\"finished_at\")\n    finished_at = str(finished_at_raw).strip() if finished_at_raw is not None else None\n    model_version_raw = run_metadata.get(\"model_version\")\n    model_version = (\n        str(model_version_raw).strip() if model_version_raw is not None else None\n    )\n\n    return RunVisibility(\n        run_id=run_id,\n        status=normalized_status,\n        started_at=started_at,\n        finished_at=finished_at or None,\n        model_version=model_version or None,\n        mlflow_run_url=build_mlflow_run_url(mlflow_base_url, run_id),\n    )",
+    "crumbs": [
+      "Web UI Backend Contracts"
+    ]
+  },
+  {
+    "objectID": "nbs/03_model_training.html",
+    "href": "nbs/03_model_training.html",
+    "title": "Model Training",
+    "section": "",
+    "text": "This notebook demonstrates how to train a simple machine learning model.\n\nWe will use the data prepared in the previous notebook to train a logistic regression model.\n\nimport pandas as pd\nimport numpy as np\nfrom sklearn.linear_model import LogisticRegression\nfrom sklearn.metrics import accuracy_score, classification_report, confusion_matrix\nimport mlflow\nimport mlflow.sklearn\n\n\n\nIn a real project, we would load the data that was prepared and saved. For simplicity, we’ll regenerate the same data split as in the previous notebook.\n\n# Regenerate the same data split for consistency\nimport numpy as np\nimport pandas as pd\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import StandardScaler\n\n# Create sample data (same as in 02_data.ipynb)\nnp.random.seed(42)  # for reproducibility\ndata = {\n    'feature_1': np.random.randn(100),\n    'feature_2': np.random.randn(100) * 2 + 1,\n    'feature_3': np.random.randn(100) * 0.5,\n    'target': (np.random.randn(100) &gt; 0).astype(int)\n}\ndf = pd.DataFrame(data)\n\n# Prepare features and target\nX = df.drop('target', axis=1)\ny = df['target']\n\n# Split into train and test sets\nX_train, X_test, y_train, y_test = train_test_split(\n    X, y, test_size=0.2, random_state=42, stratify=y\n)\n\n# Scale features\nscaler = StandardScaler()\nX_train_scaled = scaler.fit_transform(X_train)\nX_test_scaled = scaler.transform(X_test)\n\n# Convert back to DataFrame\nX_train_scaled = pd.DataFrame(X_train_scaled, columns=X.columns, index=X_train.index)\nX_test_scaled = pd.DataFrame(X_test_scaled, columns=X.columns, index=X_test.index)\n\nprint(f\"Training set shape: {X_train_scaled.shape}\")\nprint(f\"Test set shape: {X_test_scaled.shape}\")\n\n\n\n\nWe will use MLflow to track our experiment, parameters, and metrics.\n\n# Set MLflow tracking URI (optional, for local tracking)\nmlflow.set_tracking_uri(\"file://./mlruns\")\n\n# Set experiment\nmlflow.set_experiment(\"ml_deploy_baseline\")\n\n# Start an MLflow run\nwith mlflow.start_run(run_name=\"logistic_regression_baseline\") as run:\n    # Log parameters\n    max_iter = 1000\n    solver = 'liblinear'\n    mlflow.log_param(\"max_iter\", max_iter)\n    mlflow.log_param(\"solver\", solver)\n    \n    # Create and train model\n    model = LogisticRegression(max_iter=max_iter, solver=solver, random_state=42)\n    model.fit(X_train_scaled, y_train)\n    \n    # Make predictions\n    y_pred = model.predict(X_test_scaled)\n    \n    # Calculate metrics\n    accuracy = accuracy_score(y_test, y_pred)\n    \n    # Log metrics\n    mlflow.log_metric(\"accuracy\", accuracy)\n    \n    # Log the model\n    mlflow.sklearn.log_model(model, \"model\")\n    \n    # Print results\n    print(f\"Accuracy: {accuracy:.4f}\")\n    print(\"\\nClassification Report:\")\n    print(classification_report(y_test, y_pred))\n    print(\"\\nConfusion Matrix:\")\n    print(confusion_matrix(y_test, y_pred))\n\n\n\n\nWe can also save the model using joblib or pickle for later use. However, MLflow already provides a way to save and load the model. For completeness, let’s also save the scaler so we can preprocess new data the same way.\n\nimport joblib\nimport os\n\n# Create a directory to save artifacts\nos.makedirs(\"models\", exist_ok=True)\n\n# Save the model\njoblib.dump(model, \"models/logistic_regression_model.joblib\")\n\n# Save the scaler\njoblib.dump(scaler, \"models/standard_scaler.joblib\")\n\nprint(\"Model and scaler saved to 'models/' directory.\")\n\n\n\n\nIn this notebook, we’ve: 1. Loaded and prepared the data (same as in the previous notebook) 2. Trained a logistic regression model 3. Tracked the experiment with MLflow (parameters, metrics, and model) 4. Evaluated the model on the test set 5. Saved the model and scaler for later use\nThe next steps would be to: - Package the model for deployment - Create a serving API (e.g., with FastAPI or another framework) - Set up monitoring for the deployed model\n\nThis notebook exports functions and variables that can be used in other notebooks.",
+    "crumbs": [
+      "Model Training"
+    ]
+  },
+  {
+    "objectID": "nbs/03_model_training.html#load-processed-data",
+    "href": "nbs/03_model_training.html#load-processed-data",
+    "title": "Model Training",
+    "section": "",
+    "text": "In a real project, we would load the data that was prepared and saved. For simplicity, we’ll regenerate the same data split as in the previous notebook.\n\n# Regenerate the same data split for consistency\nimport numpy as np\nimport pandas as pd\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import StandardScaler\n\n# Create sample data (same as in 02_data.ipynb)\nnp.random.seed(42)  # for reproducibility\ndata = {\n    'feature_1': np.random.randn(100),\n    'feature_2': np.random.randn(100) * 2 + 1,\n    'feature_3': np.random.randn(100) * 0.5,\n    'target': (np.random.randn(100) &gt; 0).astype(int)\n}\ndf = pd.DataFrame(data)\n\n# Prepare features and target\nX = df.drop('target', axis=1)\ny = df['target']\n\n# Split into train and test sets\nX_train, X_test, y_train, y_test = train_test_split(\n    X, y, test_size=0.2, random_state=42, stratify=y\n)\n\n# Scale features\nscaler = StandardScaler()\nX_train_scaled = scaler.fit_transform(X_train)\nX_test_scaled = scaler.transform(X_test)\n\n# Convert back to DataFrame\nX_train_scaled = pd.DataFrame(X_train_scaled, columns=X.columns, index=X_train.index)\nX_test_scaled = pd.DataFrame(X_test_scaled, columns=X.columns, index=X_test.index)\n\nprint(f\"Training set shape: {X_train_scaled.shape}\")\nprint(f\"Test set shape: {X_test_scaled.shape}\")",
+    "crumbs": [
+      "Model Training"
+    ]
+  },
+  {
+    "objectID": "nbs/03_model_training.html#model-training-with-mlflow-tracking",
+    "href": "nbs/03_model_training.html#model-training-with-mlflow-tracking",
+    "title": "Model Training",
+    "section": "",
+    "text": "We will use MLflow to track our experiment, parameters, and metrics.\n\n# Set MLflow tracking URI (optional, for local tracking)\nmlflow.set_tracking_uri(\"file://./mlruns\")\n\n# Set experiment\nmlflow.set_experiment(\"ml_deploy_baseline\")\n\n# Start an MLflow run\nwith mlflow.start_run(run_name=\"logistic_regression_baseline\") as run:\n    # Log parameters\n    max_iter = 1000\n    solver = 'liblinear'\n    mlflow.log_param(\"max_iter\", max_iter)\n    mlflow.log_param(\"solver\", solver)\n    \n    # Create and train model\n    model = LogisticRegression(max_iter=max_iter, solver=solver, random_state=42)\n    model.fit(X_train_scaled, y_train)\n    \n    # Make predictions\n    y_pred = model.predict(X_test_scaled)\n    \n    # Calculate metrics\n    accuracy = accuracy_score(y_test, y_pred)\n    \n    # Log metrics\n    mlflow.log_metric(\"accuracy\", accuracy)\n    \n    # Log the model\n    mlflow.sklearn.log_model(model, \"model\")\n    \n    # Print results\n    print(f\"Accuracy: {accuracy:.4f}\")\n    print(\"\\nClassification Report:\")\n    print(classification_report(y_test, y_pred))\n    print(\"\\nConfusion Matrix:\")\n    print(confusion_matrix(y_test, y_pred))",
+    "crumbs": [
+      "Model Training"
+    ]
+  },
+  {
+    "objectID": "nbs/03_model_training.html#model-serialization",
+    "href": "nbs/03_model_training.html#model-serialization",
+    "title": "Model Training",
+    "section": "",
+    "text": "We can also save the model using joblib or pickle for later use. However, MLflow already provides a way to save and load the model. For completeness, let’s also save the scaler so we can preprocess new data the same way.\n\nimport joblib\nimport os\n\n# Create a directory to save artifacts\nos.makedirs(\"models\", exist_ok=True)\n\n# Save the model\njoblib.dump(model, \"models/logistic_regression_model.joblib\")\n\n# Save the scaler\njoblib.dump(scaler, \"models/standard_scaler.joblib\")\n\nprint(\"Model and scaler saved to 'models/' directory.\")",
+    "crumbs": [
+      "Model Training"
+    ]
+  },
+  {
+    "objectID": "nbs/03_model_training.html#summary",
+    "href": "nbs/03_model_training.html#summary",
+    "title": "Model Training",
+    "section": "",
+    "text": "In this notebook, we’ve: 1. Loaded and prepared the data (same as in the previous notebook) 2. Trained a logistic regression model 3. Tracked the experiment with MLflow (parameters, metrics, and model) 4. Evaluated the model on the test set 5. Saved the model and scaler for later use\nThe next steps would be to: - Package the model for deployment - Create a serving API (e.g., with FastAPI or another framework) - Set up monitoring for the deployed model\n\nThis notebook exports functions and variables that can be used in other notebooks.",
+    "crumbs": [
+      "Model Training"
+    ]
+  },
+  {
+    "objectID": "nbs/01_platform_narrative.html",
+    "href": "nbs/01_platform_narrative.html",
+    "title": "Platform Narrative",
+    "section": "",
+    "text": "The platform is organized around:\n\nNotebook-first authoring and execution contracts.\nMLflow-centered traceability.\nLocal emulation parity for infrastructure and operations.\nPromotion-oriented governance toward production controls.\n\n\n\n\n\n\nflowchart TD\n  A[\"Notebook intake\"] --&gt; B[\"Execution routing\"]\n  B --&gt; C[\"MLflow traceability\"]\n  C --&gt; D[\"Artifact + deployment records\"]\n  D --&gt; E[\"Promotion and governance gates\"]",
+    "crumbs": [
+      "Platform Narrative"
+    ]
+  },
+  {
+    "objectID": "nbs/01_platform_narrative.html#platform-architecture",
+    "href": "nbs/01_platform_narrative.html#platform-architecture",
+    "title": "Platform Narrative",
+    "section": "",
+    "text": "The platform is organized around:\n\nNotebook-first authoring and execution contracts.\nMLflow-centered traceability.\nLocal emulation parity for infrastructure and operations.\nPromotion-oriented governance toward production controls.\n\n\n\n\n\n\nflowchart TD\n  A[\"Notebook intake\"] --&gt; B[\"Execution routing\"]\n  B --&gt; C[\"MLflow traceability\"]\n  C --&gt; D[\"Artifact + deployment records\"]\n  D --&gt; E[\"Promotion and governance gates\"]",
+    "crumbs": [
+      "Platform Narrative"
+    ]
+  },
+  {
+    "objectID": "nbs/01_platform_narrative.html#core-architecture-direction",
+    "href": "nbs/01_platform_narrative.html#core-architecture-direction",
+    "title": "Platform Narrative",
+    "section": "Core architecture direction",
+    "text": "Core architecture direction\n\nLanguage/runtime posture: Python-first, Linux-first.\nTracking posture: MLflow for run and model metadata.\nInfrastructure posture: Nix/Terranix generated OpenTofu JSON with local-emulation and cloud profiles.\nExecution posture: local, Slurm, and Kubernetes targets through normalized request contracts.\nDocumentation posture: Quarto-rendered docs with wiki-backed long-term project memory.",
+    "crumbs": [
+      "Platform Narrative"
+    ]
+  },
+  {
+    "objectID": "nbs/01_platform_narrative.html#implementation-steps",
+    "href": "nbs/01_platform_narrative.html#implementation-steps",
+    "title": "Platform Narrative",
+    "section": "Implementation steps",
+    "text": "Implementation steps\n\nValidate immutable notebook intake and execution request contracts.\nRoute execution through local, Slurm, or Kubernetes adapters.\nRecord MLflow-linked outcomes and artifact metadata.\nApply promotion gates for higher environments.\nVerify infrastructure parity and observability coverage before cloud rollout.",
+    "crumbs": [
+      "Platform Narrative"
+    ]
+  },
+  {
+    "objectID": "nbs/01_platform_narrative.html#trade-offs",
+    "href": "nbs/01_platform_narrative.html#trade-offs",
+    "title": "Platform Narrative",
+    "section": "Trade-offs",
+    "text": "Trade-offs\n\nNotebook-first workflows improve discoverability but require strict immutability and export guards.\nLocal emulation reduces cloud-risk iteration cost but cannot fully replicate all production failure modes.\nSpec-first governance improves consistency but can lag implementation if drift checks are skipped.",
+    "crumbs": [
+      "Platform Narrative"
+    ]
+  },
+  {
+    "objectID": "nbs/01_platform_narrative.html#security-considerations",
+    "href": "nbs/01_platform_narrative.html#security-considerations",
+    "title": "Platform Narrative",
+    "section": "Security considerations",
+    "text": "Security considerations\n\nKeep assistant/MCP integrations read-first and least-privilege by default.\nEnforce immutable notebook references for execution.\nTreat cloud deployment credentials and runtime secrets as externally managed inputs.",
+    "crumbs": [
+      "Platform Narrative"
+    ]
+  },
+  {
+    "objectID": "nbs/01_platform_narrative.html#examples-of-use",
+    "href": "nbs/01_platform_narrative.html#examples-of-use",
+    "title": "Platform Narrative",
+    "section": "Examples of use",
+    "text": "Examples of use\n\nLocal reference slice execution with MLflow-linked run visibility.\nBackend payload mapping for Slurm/Kubernetes submissions.\nNotebook intake validation and optional export checks.",
+    "crumbs": [
+      "Platform Narrative"
+    ]
+  },
+  {
+    "objectID": "nbs/01_platform_narrative.html#software-engineer-learning-path",
+    "href": "nbs/01_platform_narrative.html#software-engineer-learning-path",
+    "title": "Platform Narrative",
+    "section": "Software engineer learning path",
+    "text": "Software engineer learning path\nStart with the Web UI contract and execution adapters, then move to topology pages and infrastructure profile docs.",
+    "crumbs": [
+      "Platform Narrative"
+    ]
+  },
+  {
+    "objectID": "nbs/01_platform_narrative.html#ml-researcher-learning-path",
+    "href": "nbs/01_platform_narrative.html#ml-researcher-learning-path",
+    "title": "Platform Narrative",
+    "section": "ML researcher learning path",
+    "text": "ML researcher learning path\nStart with the platform architecture and MLflow traceability flow, then use vertical-slice and promotion references.",
+    "crumbs": [
+      "Platform Narrative"
+    ]
+  },
+  {
+    "objectID": "nbs/00_core.html",
+    "href": "nbs/00_core.html",
+    "title": "ml_deploy",
+    "section": "",
+    "text": "ml_deploy\n\nA Python package for ML deployment reference.\n\nThis notebook will become the core of the ml_deploy package.\n\n\"\"\"Top-level package for ml_deploy.\"\"\"\n\n__author__ = \"\"\"ML Engineer\"\"\"\n__email__ = 'ml@example.com'\n__version__ = '0.1.0'\n\n\ndef say_hello() -&gt; str:\n    \"\"\"Return a greeting message.\"\"\"\n    return \"Hello from ml_deploy!\"\n\n\ndef add_numbers(a: int, b: int) -&gt; int:\n    \"\"\"Add two numbers and return the result.\"\"\"\n    return a + b",
+    "crumbs": [
+      "ml_deploy"
+    ]
+  },
+  {
+    "objectID": "nbs/02_data.html",
+    "href": "nbs/02_data.html",
+    "title": "Data Loading and Exploration",
+    "section": "",
+    "text": "This notebook demonstrates how to load and explore data for ML projects.\n\nIn a real ML deployment project, this would typically involve: - Loading data from various sources (databases, APIs, files) - Performing exploratory data analysis (EDA) - Data cleaning and preprocessing - Feature engineering - Splitting data into train/validation/test sets\n\n\n\nFirst, let’s import the necessary libraries.\n\nimport pandas as pd\nimport numpy as np\n\n\n\n\nFor demonstration purposes, we’ll create a simple dataset.\n\n# Create sample data\ndata = {\n    'feature_1': np.random.randn(100),\n    'feature_2': np.random.randn(100) * 2 + 1,\n    'feature_3': np.random.randn(100) * 0.5,\n    'target': (np.random.randn(100) &gt; 0).astype(int)\n}\ndf = pd.DataFrame(data)\n\nprint(f\"Dataset shape: {df.shape}\")\nprint(df.head())\n\n\n\n\nLet’s look at basic statistics.\n\ndf.describe()\n\n\n\n\nIt’s important to check for missing values in real datasets.\n\nmissing_values = df.isnull().sum()\nprint(\"Missing values per column:\")\nprint(missing_values)\nprint(f\"Total missing values: {missing_values.sum()}\")\n\n\n\n\nLet’s examine the distribution of our target variable.\n\ntarget_counts = df['target'].value_counts()\nprint(\"Target distribution:\")\nprint(target_counts)\nprint(f\"\\nClass balance: {target_counts[0]/len(df):.2%} negative, {target_counts[1]/len(df):.2%} positive\")\n\n\n\n\nNow let’s prepare our data for modeling by splitting and scaling.\n\n# Separate features and target\nX = df.drop('target', axis=1)\ny = df['target']\n\n# Split into train and test sets\nfrom sklearn.model_selection import train_test_split\nX_train, X_test, y_train, y_test = train_test_split(\n    X, y, test_size=0.2, random_state=42, stratify=y\n)\n\nprint(\"Training set size: \" + str(X_train.shape))\nprint(\"Test set size: \" + str(X_test.shape))\n\n\n\n\nMany ML algorithms perform better when features are scaled.\n\n# Initialize scaler\nfrom sklearn.preprocessing import StandardScaler\nscaler = StandardScaler()\n\n# Fit on training data and transform both train and test\nX_train_scaled = scaler.fit_transform(X_train)\nX_test_scaled = scaler.transform(X_test)\n\n# Convert back to DataFrame for convenience\nX_train_scaled = pd.DataFrame(X_train_scaled, columns=X.columns, index=X_train.index)\nX_test_scaled = pd.DataFrame(X_test_scaled, columns=X.columns, index=X_test.index)\n\nprint(\"Feature scaling completed.\")\nprint(f\"Training data mean: {X_train_scaled.mean().mean():.2f}, std: {X_train_scaled.std().mean():.2f}\")\n\n\n\n\nIn this notebook, we’ve: 1. Created a sample dataset 2. Performed basic exploratory data analysis 3. Checked for missing values 4. Examined target distribution 5. Split data into train/test sets 6. Applied feature scaling\nThe processed data is now ready for model training, which we’ll cover in the next notebook.\n\nThis notebook exports functions and variables that can be used in other notebooks.",
+    "crumbs": [
+      "Data Loading and Exploration"
+    ]
+  },
+  {
+    "objectID": "nbs/02_data.html#setup",
+    "href": "nbs/02_data.html#setup",
+    "title": "Data Loading and Exploration",
+    "section": "",
+    "text": "First, let’s import the necessary libraries.\n\nimport pandas as pd\nimport numpy as np",
+    "crumbs": [
+      "Data Loading and Exploration"
+    ]
+  },
+  {
+    "objectID": "nbs/02_data.html#creating-sample-data",
+    "href": "nbs/02_data.html#creating-sample-data",
+    "title": "Data Loading and Exploration",
+    "section": "",
+    "text": "For demonstration purposes, we’ll create a simple dataset.\n\n# Create sample data\ndata = {\n    'feature_1': np.random.randn(100),\n    'feature_2': np.random.randn(100) * 2 + 1,\n    'feature_3': np.random.randn(100) * 0.5,\n    'target': (np.random.randn(100) &gt; 0).astype(int)\n}\ndf = pd.DataFrame(data)\n\nprint(f\"Dataset shape: {df.shape}\")\nprint(df.head())",
+    "crumbs": [
+      "Data Loading and Exploration"
+    ]
+  },
+  {
+    "objectID": "nbs/02_data.html#basic-data-exploration",
+    "href": "nbs/02_data.html#basic-data-exploration",
+    "title": "Data Loading and Exploration",
+    "section": "",
+    "text": "Let’s look at basic statistics.\n\ndf.describe()",
+    "crumbs": [
+      "Data Loading and Exploration"
+    ]
+  },
+  {
+    "objectID": "nbs/02_data.html#check-for-missing-values",
+    "href": "nbs/02_data.html#check-for-missing-values",
+    "title": "Data Loading and Exploration",
+    "section": "",
+    "text": "It’s important to check for missing values in real datasets.\n\nmissing_values = df.isnull().sum()\nprint(\"Missing values per column:\")\nprint(missing_values)\nprint(f\"Total missing values: {missing_values.sum()}\")",
+    "crumbs": [
+      "Data Loading and Exploration"
+    ]
+  },
+  {
+    "objectID": "nbs/02_data.html#target-variable-distribution",
+    "href": "nbs/02_data.html#target-variable-distribution",
+    "title": "Data Loading and Exploration",
+    "section": "",
+    "text": "Let’s examine the distribution of our target variable.\n\ntarget_counts = df['target'].value_counts()\nprint(\"Target distribution:\")\nprint(target_counts)\nprint(f\"\\nClass balance: {target_counts[0]/len(df):.2%} negative, {target_counts[1]/len(df):.2%} positive\")",
+    "crumbs": [
+      "Data Loading and Exploration"
+    ]
+  },
+  {
+    "objectID": "nbs/02_data.html#data-preprocessing",
+    "href": "nbs/02_data.html#data-preprocessing",
+    "title": "Data Loading and Exploration",
+    "section": "",
+    "text": "Now let’s prepare our data for modeling by splitting and scaling.\n\n# Separate features and target\nX = df.drop('target', axis=1)\ny = df['target']\n\n# Split into train and test sets\nfrom sklearn.model_selection import train_test_split\nX_train, X_test, y_train, y_test = train_test_split(\n    X, y, test_size=0.2, random_state=42, stratify=y\n)\n\nprint(\"Training set size: \" + str(X_train.shape))\nprint(\"Test set size: \" + str(X_test.shape))",
+    "crumbs": [
+      "Data Loading and Exploration"
+    ]
+  },
+  {
+    "objectID": "nbs/02_data.html#feature-scaling",
+    "href": "nbs/02_data.html#feature-scaling",
+    "title": "Data Loading and Exploration",
+    "section": "",
+    "text": "Many ML algorithms perform better when features are scaled.\n\n# Initialize scaler\nfrom sklearn.preprocessing import StandardScaler\nscaler = StandardScaler()\n\n# Fit on training data and transform both train and test\nX_train_scaled = scaler.fit_transform(X_train)\nX_test_scaled = scaler.transform(X_test)\n\n# Convert back to DataFrame for convenience\nX_train_scaled = pd.DataFrame(X_train_scaled, columns=X.columns, index=X_train.index)\nX_test_scaled = pd.DataFrame(X_test_scaled, columns=X.columns, index=X_test.index)\n\nprint(\"Feature scaling completed.\")\nprint(f\"Training data mean: {X_train_scaled.mean().mean():.2f}, std: {X_train_scaled.std().mean():.2f}\")",
+    "crumbs": [
+      "Data Loading and Exploration"
+    ]
+  },
+  {
+    "objectID": "nbs/02_data.html#summary",
+    "href": "nbs/02_data.html#summary",
+    "title": "Data Loading and Exploration",
+    "section": "",
+    "text": "In this notebook, we’ve: 1. Created a sample dataset 2. Performed basic exploratory data analysis 3. Checked for missing values 4. Examined target distribution 5. Split data into train/test sets 6. Applied feature scaling\nThe processed data is now ready for model training, which we’ll cover in the next notebook.\n\nThis notebook exports functions and variables that can be used in other notebooks.",
+    "crumbs": [
+      "Data Loading and Exploration"
+    ]
+  },
+  {
+    "objectID": "nbs/04_web_ui.html",
+    "href": "nbs/04_web_ui.html",
+    "title": "Notebook Repository Web UI",
+    "section": "",
+    "text": "This notebook describes the design for a centralized notebook repository web UI that enables engineers to browse, select, and trigger notebook executions across environments while keeping notebooks as the immutable source of truth.\n\n\n\nProvide a centralized interface for ML engineers to interact with versioned notebooks, trigger executions across different environments (local replica, Lambda.ai Slurm, AWS Kubernetes), and monitor results—while preserving notebooks as the immutable source of truth.\n\n\n\n\n\n\nBrowsing and searching versioned notebooks from the repository\nExecuting notebooks with environment-specific configuration injection\nTriggering runs against local replica architecture for development/testing\nPromoting successful runs to production environments (Lambda.ai Slurm, AWS Kubernetes)\nViewing execution results linked to MLflow tracking\nLaunching MCP-powered monitoring and analysis tools from execution results\nRole-based access control for notebook access and execution triggering\n\n\n\n\n\nEditing notebooks through the UI (notebooks remain source of truth in Git)\nStoring execution parameters within notebooks themselves\nDuplicating MLflow tracking functionality (links to existing MLflow UI)\nLong-term notebook storage (uses Git as source of truth)\n\n\n\n\n\n\nGit repository containing nbdev notebooks (source of truth)\nMLflow tracking server (for execution results and model lineage)\nLocal replica architecture (Slurm-like scheduler, K8s, MinIO, PostgreSQL)\nProduction infrastructure (Lambda.ai Slurm, AWS Kubernetes, S3, RDS)\nMCP server ecosystem (for monitoring/analysis tooling)\nAuthentication/authorization system (for role-based access)\n\n\n\n\n\nPrimary: ML Engineering / Platform Team\nSecondary: DevOps / Infrastructure Team (for environment provisioning)\nTertiary: Data Science Leadership (for oversight and governance)\n\n\n\n\n\nFrom Git: Immutable notebook versions via commit references\nFrom MLflow: Run metadata, metrics, artifacts, and model registry entries\nFrom Environment APIs: Job submission/status interfaces (Slurm, K8s)\nFrom MCP: Monitoring and analysis capabilities triggered from execution results\n\n\n\n\n\nExecution Triggers: Standardized job specifications for each target environment\nConfiguration Injection: Environment-specific parameters passed to notebook execution\nResult Links: References to MLflow runs, artifacts, and model versions\nMCP Invocations: Context for launching assistant-assisted monitoring workflows\n\n\n\n\n\nLocal Development: Primary interface for triggering runs against local replica\nEnvironment Promotion: Gateway for moving validated runs to production\nProduction Monitoring: Launchpad for MCP-assisted analysis of production executions\nGovernance: Audit trail of who triggered what, when, and with which configuration\n\n\n\n\n\nImmutability Guarantee: Notebooks cannot be altered through the UI; changes must go through Git\nExecution Traceability: Every run links back to exact notebook version + execution config\nEnvironment Parity: Same notebook runs against local replica and production (with config differences)\nSecret Management: Execution credentials/tokens injected securely at runtime, never stored\nRole-Based Execution: Different roles may have access to different environments or notebook sets\nCost Attribution: Executions tagged with user/project for cost governance visibility\n\n\n\n\n\nRepository Implementation: Git-based (with webhook triggers) vs. object storage + metadata DB for notebook storage?\nExecution Configuration: Should we use dedicated config files (YAML/JSON) or environment variables for parameter injection?\nApproval Workflows: Should production executions require approval gates, and if so, how implemented?\nNotebook Versioning: Should we support branching/merging workflows for experimental notebook changes?\nUI Technology Stack: What framework/library should we use for the web interface (Streamlit, Gradio, custom React/Vue)?\n\n\n\n\n\nStart with a simple prototype that lists notebooks from Git and allows manual execution triggering\nAdd environment selection (local replica vs. production targets)\nImplement configuration injection mechanism (external YAML/JSON files)\nLink execution results to MLflow runs\nAdd role-based access control\nIntegrate MCP tool launching from execution results\nImplement approval workflows for production promotions\nAdd advanced features like notebook diffing, version comparison, and branching",
+    "crumbs": [
+      "Notebook Repository Web UI"
+    ]
+  },
+  {
+    "objectID": "nbs/04_web_ui.html#purpose",
+    "href": "nbs/04_web_ui.html#purpose",
+    "title": "Notebook Repository Web UI",
+    "section": "",
+    "text": "Provide a centralized interface for ML engineers to interact with versioned notebooks, trigger executions across different environments (local replica, Lambda.ai Slurm, AWS Kubernetes), and monitor results—while preserving notebooks as the immutable source of truth.",
+    "crumbs": [
+      "Notebook Repository Web UI"
+    ]
+  },
+  {
+    "objectID": "nbs/04_web_ui.html#scope-and-non-goals",
+    "href": "nbs/04_web_ui.html#scope-and-non-goals",
+    "title": "Notebook Repository Web UI",
+    "section": "",
+    "text": "Browsing and searching versioned notebooks from the repository\nExecuting notebooks with environment-specific configuration injection\nTriggering runs against local replica architecture for development/testing\nPromoting successful runs to production environments (Lambda.ai Slurm, AWS Kubernetes)\nViewing execution results linked to MLflow tracking\nLaunching MCP-powered monitoring and analysis tools from execution results\nRole-based access control for notebook access and execution triggering\n\n\n\n\n\nEditing notebooks through the UI (notebooks remain source of truth in Git)\nStoring execution parameters within notebooks themselves\nDuplicating MLflow tracking functionality (links to existing MLflow UI)\nLong-term notebook storage (uses Git as source of truth)",
+    "crumbs": [
+      "Notebook Repository Web UI"
+    ]
+  },
+  {
+    "objectID": "nbs/04_web_ui.html#upstream-dependencies",
+    "href": "nbs/04_web_ui.html#upstream-dependencies",
+    "title": "Notebook Repository Web UI",
+    "section": "",
+    "text": "Git repository containing nbdev notebooks (source of truth)\nMLflow tracking server (for execution results and model lineage)\nLocal replica architecture (Slurm-like scheduler, K8s, MinIO, PostgreSQL)\nProduction infrastructure (Lambda.ai Slurm, AWS Kubernetes, S3, RDS)\nMCP server ecosystem (for monitoring/analysis tooling)\nAuthentication/authorization system (for role-based access)",
+    "crumbs": [
+      "Notebook Repository Web UI"
+    ]
+  },
+  {
+    "objectID": "nbs/04_web_ui.html#domain-ownership",
+    "href": "nbs/04_web_ui.html#domain-ownership",
+    "title": "Notebook Repository Web UI",
+    "section": "",
+    "text": "Primary: ML Engineering / Platform Team\nSecondary: DevOps / Infrastructure Team (for environment provisioning)\nTertiary: Data Science Leadership (for oversight and governance)",
+    "crumbs": [
+      "Notebook Repository Web UI"
+    ]
+  },
+  {
+    "objectID": "nbs/04_web_ui.html#contracts-consumed",
+    "href": "nbs/04_web_ui.html#contracts-consumed",
+    "title": "Notebook Repository Web UI",
+    "section": "",
+    "text": "From Git: Immutable notebook versions via commit references\nFrom MLflow: Run metadata, metrics, artifacts, and model registry entries\nFrom Environment APIs: Job submission/status interfaces (Slurm, K8s)\nFrom MCP: Monitoring and analysis capabilities triggered from execution results",
+    "crumbs": [
+      "Notebook Repository Web UI"
+    ]
+  },
+  {
+    "objectID": "nbs/04_web_ui.html#contracts-produced",
+    "href": "nbs/04_web_ui.html#contracts-produced",
+    "title": "Notebook Repository Web UI",
+    "section": "",
+    "text": "Execution Triggers: Standardized job specifications for each target environment\nConfiguration Injection: Environment-specific parameters passed to notebook execution\nResult Links: References to MLflow runs, artifacts, and model versions\nMCP Invocations: Context for launching assistant-assisted monitoring workflows",
+    "crumbs": [
+      "Notebook Repository Web UI"
+    ]
+  },
+  {
+    "objectID": "nbs/04_web_ui.html#topology-relevance",
+    "href": "nbs/04_web_ui.html#topology-relevance",
+    "title": "Notebook Repository Web UI",
+    "section": "",
+    "text": "Local Development: Primary interface for triggering runs against local replica\nEnvironment Promotion: Gateway for moving validated runs to production\nProduction Monitoring: Launchpad for MCP-assisted analysis of production executions\nGovernance: Audit trail of who triggered what, when, and with which configuration",
+    "crumbs": [
+      "Notebook Repository Web UI"
+    ]
+  },
+  {
+    "objectID": "nbs/04_web_ui.html#operationalsecuritylineage-implications",
+    "href": "nbs/04_web_ui.html#operationalsecuritylineage-implications",
+    "title": "Notebook Repository Web UI",
+    "section": "",
+    "text": "Immutability Guarantee: Notebooks cannot be altered through the UI; changes must go through Git\nExecution Traceability: Every run links back to exact notebook version + execution config\nEnvironment Parity: Same notebook runs against local replica and production (with config differences)\nSecret Management: Execution credentials/tokens injected securely at runtime, never stored\nRole-Based Execution: Different roles may have access to different environments or notebook sets\nCost Attribution: Executions tagged with user/project for cost governance visibility",
+    "crumbs": [
+      "Notebook Repository Web UI"
+    ]
+  },
+  {
+    "objectID": "nbs/04_web_ui.html#open-questions-and-deferred-decisions",
+    "href": "nbs/04_web_ui.html#open-questions-and-deferred-decisions",
+    "title": "Notebook Repository Web UI",
+    "section": "",
+    "text": "Repository Implementation: Git-based (with webhook triggers) vs. object storage + metadata DB for notebook storage?\nExecution Configuration: Should we use dedicated config files (YAML/JSON) or environment variables for parameter injection?\nApproval Workflows: Should production executions require approval gates, and if so, how implemented?\nNotebook Versioning: Should we support branching/merging workflows for experimental notebook changes?\nUI Technology Stack: What framework/library should we use for the web interface (Streamlit, Gradio, custom React/Vue)?",
+    "crumbs": [
+      "Notebook Repository Web UI"
+    ]
+  },
+  {
+    "objectID": "nbs/04_web_ui.html#recommended-implementation-approach",
+    "href": "nbs/04_web_ui.html#recommended-implementation-approach",
+    "title": "Notebook Repository Web UI",
+    "section": "",
+    "text": "Start with a simple prototype that lists notebooks from Git and allows manual execution triggering\nAdd environment selection (local replica vs. production targets)\nImplement configuration injection mechanism (external YAML/JSON files)\nLink execution results to MLflow runs\nAdd role-based access control\nIntegrate MCP tool launching from execution results\nImplement approval workflows for production promotions\nAdd advanced features like notebook diffing, version comparison, and branching",
+    "crumbs": [
+      "Notebook Repository Web UI"
+    ]
+  },
+  {
+    "objectID": "nbs/06_vertical_slice.html",
+    "href": "nbs/06_vertical_slice.html",
+    "title": "First Vertical Slice (EX-01 -> EX-03)",
+    "section": "",
+    "text": "First Vertical Slice (EX-01 -&gt; EX-03)\n\nnbdev source for the concrete local vertical slice implementation.\n\n\nfrom __future__ import annotations\n\nfrom dataclasses import dataclass\nfrom datetime import datetime, timezone\nimport json\nfrom pathlib import Path\nimport time\nfrom typing import Any\nfrom uuid import uuid4\n\nimport joblib\nimport mlflow\nimport mlflow.sklearn\nimport numpy as np\nimport pandas as pd\nfrom sklearn.linear_model import LogisticRegression\nfrom sklearn.metrics import accuracy_score\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import StandardScaler\n\n\nDEFAULT_FEATURES = [\"feature_1\", \"feature_2\", \"feature_3\"]\nDEFAULT_TARGET = \"target\"\n\n\n@dataclass\nclass TrainingOutcome:\n    model: LogisticRegression\n    scaler: StandardScaler\n    feature_names: list[str]\n    mlflow_run_id: str\n    accuracy: float\n    dataset_version: str\n    transformation_version: str\n    code_revision: str\n    container_revision: str\n    compute_context: str\n\n\ndef _utc_now() -&gt; str:\n    return datetime.now(timezone.utc).isoformat()\n\n\ndef _write_json(path: Path, payload: dict[str, Any]) -&gt; None:\n    path.parent.mkdir(parents=True, exist_ok=True)\n    path.write_text(json.dumps(payload, indent=2) + \"\\n\")\n\n\ndef _append_jsonl(path: Path, payload: dict[str, Any]) -&gt; None:\n    path.parent.mkdir(parents=True, exist_ok=True)\n    with path.open(\"a\", encoding=\"utf-8\") as handle:\n        handle.write(json.dumps(payload) + \"\\n\")\n\n\ndef generate_synthetic_dataset(\n    n_rows: int = 200,\n    random_state: int = 42,\n    feature_names: list[str] | None = None,\n    target_name: str = DEFAULT_TARGET,\n) -&gt; pd.DataFrame:\n    \"\"\"Generate a deterministic binary classification dataset for local slice testing.\"\"\"\n    names = feature_names or DEFAULT_FEATURES\n    rng = np.random.default_rng(random_state)\n    features = rng.normal(size=(n_rows, len(names)))\n    linear_signal = features[:, 0] + 0.5 * features[:, 1] - 0.25 * features[:, 2]\n    target = (linear_signal + rng.normal(scale=0.25, size=n_rows) &gt; 0).astype(int)\n    frame = pd.DataFrame(features, columns=names)\n    frame[target_name] = target\n    return frame\n\n\ndef prepare_training_data(\n    frame: pd.DataFrame,\n    feature_names: list[str] | None = None,\n    target_name: str = DEFAULT_TARGET,\n    test_size: float = 0.2,\n    random_state: int = 42,\n) -&gt; tuple[pd.DataFrame, pd.DataFrame, pd.Series, pd.Series, StandardScaler]:\n    \"\"\"Split and scale features for model training.\"\"\"\n    names = feature_names or DEFAULT_FEATURES\n    X = frame[names]\n    y = frame[target_name]\n    X_train, X_test, y_train, y_test = train_test_split(\n        X, y, test_size=test_size, random_state=random_state, stratify=y\n    )\n    scaler = StandardScaler()\n    X_train_scaled = pd.DataFrame(\n        scaler.fit_transform(X_train), columns=names, index=X_train.index\n    )\n    X_test_scaled = pd.DataFrame(\n        scaler.transform(X_test), columns=names, index=X_test.index\n    )\n    return X_train_scaled, X_test_scaled, y_train, y_test, scaler\n\n\ndef train_with_traceability(\n    X_train: pd.DataFrame,\n    X_test: pd.DataFrame,\n    y_train: pd.Series,\n    y_test: pd.Series,\n    scaler: StandardScaler,\n    *,\n    feature_names: list[str] | None = None,\n    tracking_uri: str,\n    dataset_version: str = \"dataset-v1\",\n    transformation_version: str = \"transform-v1\",\n    code_revision: str = \"local-working-tree\",\n    container_revision: str = \"local-container-v1\",\n    compute_context: str = \"local-cpu\",\n    experiment_name: str = \"ml_deploy_vertical_slice\",\n) -&gt; TrainingOutcome:\n    \"\"\"Train a baseline model and log required traceability metadata in MLflow.\"\"\"\n    names = feature_names or DEFAULT_FEATURES\n    mlflow.set_tracking_uri(tracking_uri)\n    mlflow.set_experiment(experiment_name)\n\n    max_iter = 1000\n    solver = \"liblinear\"\n\n    with mlflow.start_run(run_name=\"ex01_local_training_traceability\") as run:\n        mlflow.log_param(\"max_iter\", max_iter)\n        mlflow.log_param(\"solver\", solver)\n        mlflow.log_param(\"dataset_version\", dataset_version)\n        mlflow.log_param(\"transformation_version\", transformation_version)\n        mlflow.log_param(\"code_revision\", code_revision)\n        mlflow.log_param(\"container_revision\", container_revision)\n        mlflow.log_param(\"compute_context\", compute_context)\n        mlflow.log_param(\"feature_names\", \",\".join(names))\n\n        model = LogisticRegression(max_iter=max_iter, solver=solver, random_state=42)\n        model.fit(X_train, y_train)\n        predictions = model.predict(X_test)\n        accuracy = float(accuracy_score(y_test, predictions))\n        mlflow.log_metric(\"accuracy\", accuracy)\n        mlflow.sklearn.log_model(model, \"model\")\n\n    return TrainingOutcome(\n        model=model,\n        scaler=scaler,\n        feature_names=names,\n        mlflow_run_id=run.info.run_id,\n        accuracy=accuracy,\n        dataset_version=dataset_version,\n        transformation_version=transformation_version,\n        code_revision=code_revision,\n        container_revision=container_revision,\n        compute_context=compute_context,\n    )\n\n\ndef package_and_register_model(\n    outcome: TrainingOutcome,\n    output_dir: Path,\n    *,\n    expected_input_schema_version: str = \"input-schema-v1\",\n    expected_output_schema_version: str = \"output-schema-v1\",\n    intended_serving_modes: list[str] | None = None,\n) -&gt; dict[str, Any]:\n    \"\"\"Create EX-02 artifact bundle + model-version record with required metadata.\"\"\"\n    serving_modes = intended_serving_modes or [\"batch\", \"online\"]\n    artifact_id = f\"artifact-{uuid4().hex[:10]}\"\n    bundle_dir = output_dir / \"artifacts\" / artifact_id\n    bundle_dir.mkdir(parents=True, exist_ok=True)\n\n    model_path = bundle_dir / \"model.joblib\"\n    scaler_path = bundle_dir / \"scaler.joblib\"\n    joblib.dump(outcome.model, model_path)\n    joblib.dump(outcome.scaler, scaler_path)\n\n    artifact_metadata = {\n        \"artifact_identifier\": artifact_id,\n        \"originating_training_run_identifier\": outcome.mlflow_run_id,\n        \"framework\": \"scikit-learn\",\n        \"framework_version\": \"sklearn-logistic-regression\",\n        \"serialization_format\": \"joblib\",\n        \"expected_input_schema_version\": expected_input_schema_version,\n        \"expected_output_schema_version\": expected_output_schema_version,\n        \"evaluation_summary\": {\"accuracy\": outcome.accuracy},\n        \"intended_serving_modes\": serving_modes,\n        \"compatibility_notes\": \"Local baseline logistic regression bundle.\",\n        \"storage_location\": str(bundle_dir.resolve()),\n        \"dataset_version\": outcome.dataset_version,\n        \"transformation_version\": outcome.transformation_version,\n        \"feature_names\": outcome.feature_names,\n    }\n    artifact_metadata_path = bundle_dir / \"artifact_metadata.json\"\n    _write_json(artifact_metadata_path, artifact_metadata)\n\n    model_version_id = f\"model-version-{uuid4().hex[:10]}\"\n    model_version_record = {\n        \"model_version_identifier\": model_version_id,\n        \"source_artifact_identifier\": artifact_id,\n        \"promotion_status\": \"approved-local\",\n        \"approval_basis\": f\"accuracy={outcome.accuracy:.4f}\",\n        \"allowed_environments\": [\"local\"],\n        \"rollback_predecessor\": None,\n        \"recorded_at\": _utc_now(),\n    }\n    model_version_path = bundle_dir / \"model_version.json\"\n    _write_json(model_version_path, model_version_record)\n\n    return {\n        \"bundle_dir\": bundle_dir,\n        \"model_path\": model_path,\n        \"scaler_path\": scaler_path,\n        \"artifact_metadata_path\": artifact_metadata_path,\n        \"artifact_metadata\": artifact_metadata,\n        \"model_version_path\": model_version_path,\n        \"model_version_record\": model_version_record,\n    }\n\n\ndef create_local_deployment_record(\n    model_version_record: dict[str, Any], output_dir: Path\n) -&gt; dict[str, Any]:\n    \"\"\"Create EX-03 local deployment record for serving and prediction traceability.\"\"\"\n    deployment_id = f\"deployment-{uuid4().hex[:10]}\"\n    record = {\n        \"deployment_identifier\": deployment_id,\n        \"deployed_model_version\": model_version_record[\"model_version_identifier\"],\n        \"target_environment\": \"local\",\n        \"infrastructure_revision\": \"local-dev-v1\",\n        \"deployment_timestamp\": _utc_now(),\n        \"deployment_actor_owner\": \"local-vertical-slice\",\n        \"rollout_strategy\": \"all-at-once\",\n        \"rollback_target\": None,\n        \"monitoring_configuration\": \"jsonl-prediction-log\",\n        \"approval_state\": \"approved-local\",\n    }\n    path = output_dir / \"deployment_record.json\"\n    _write_json(path, record)\n    return {\"deployment_record_path\": path, \"deployment_record\": record}\n\n\ndef predict_and_log(\n    bundle_dir: Path,\n    deployment_record_path: Path,\n    prediction_log_path: Path,\n    *,\n    features: dict[str, float],\n    request_id: str | None = None,\n) -&gt; dict[str, Any]:\n    \"\"\"Run a local prediction and emit contract-aligned prediction logs.\"\"\"\n    artifact_metadata = json.loads((bundle_dir / \"artifact_metadata.json\").read_text())\n    model_version_record = json.loads((bundle_dir / \"model_version.json\").read_text())\n    deployment_record = json.loads(deployment_record_path.read_text())\n    model = joblib.load(bundle_dir / \"model.joblib\")\n    scaler = joblib.load(bundle_dir / \"scaler.joblib\")\n    feature_names = artifact_metadata[\"feature_names\"]\n\n    start = time.perf_counter()\n    resolved_request_id = request_id or f\"req-{uuid4().hex[:12]}\"\n    row = pd.DataFrame([features], columns=feature_names)\n    transformed = scaler.transform(row)\n    prediction = int(model.predict(transformed)[0])\n    latency_ms = (time.perf_counter() - start) * 1000\n\n    log_entry = {\n        \"timestamp\": _utc_now(),\n        \"model_version_used\": model_version_record[\"model_version_identifier\"],\n        \"deployment_identifier\": deployment_record[\"deployment_identifier\"],\n        \"request_identifier\": resolved_request_id,\n        \"input_schema_version_reference\": artifact_metadata[\n            \"expected_input_schema_version\"\n        ],\n        \"output_capture_policy\": \"prediction-only\",\n        \"runtime_metadata\": {\n            \"latency_ms\": latency_ms,\n            \"environment\": deployment_record[\"target_environment\"],\n            \"service_identity\": \"local-nbdev-vertical-slice\",\n        },\n        \"traceability_link\": {\n            \"training_run_id\": artifact_metadata[\n                \"originating_training_run_identifier\"\n            ]\n        },\n    }\n    _append_jsonl(prediction_log_path, log_entry)\n\n    return {\n        \"request_id\": resolved_request_id,\n        \"prediction\": prediction,\n        \"model_version\": model_version_record[\"model_version_identifier\"],\n        \"deployment_id\": deployment_record[\"deployment_identifier\"],\n    }\n\n\ndef execute_first_vertical_slice(work_dir: Path, *, tracking_uri: str) -&gt; dict[str, Any]:\n    \"\"\"Run EX-01 -&gt; EX-03 and return all generated records and paths.\"\"\"\n    output_dir = work_dir / \"vertical_slice\"\n    output_dir.mkdir(parents=True, exist_ok=True)\n\n    dataset = generate_synthetic_dataset()\n    X_train, X_test, y_train, y_test, scaler = prepare_training_data(dataset)\n    outcome = train_with_traceability(\n        X_train,\n        X_test,\n        y_train,\n        y_test,\n        scaler,\n        tracking_uri=tracking_uri,\n    )\n    packaged = package_and_register_model(outcome, output_dir)\n    deployed = create_local_deployment_record(packaged[\"model_version_record\"], output_dir)\n\n    prediction_log_path = output_dir / \"prediction_logs.jsonl\"\n    sample_features = dataset[DEFAULT_FEATURES].iloc[0].to_dict()\n\n    return {\n        \"output_dir\": output_dir,\n        \"tracking_uri\": tracking_uri,\n        \"training_outcome\": outcome,\n        \"packaged\": packaged,\n        \"deployment\": deployed,\n        \"prediction_log_path\": prediction_log_path,\n        \"sample_features\": sample_features,\n    }",
+    "crumbs": [
+      "First Vertical Slice (EX-01 -> EX-03)"
+    ]
+  },
+  {
+    "objectID": "nbs/08_execution_backends.html",
+    "href": "nbs/08_execution_backends.html",
+    "title": "Execution Backends",
+    "section": "",
+    "text": "Execution Backends\n\nnbdev source for local execution adapter and Slurm/Kubernetes mapping helpers.\n\n\nfrom __future__ import annotations\n\nfrom dataclasses import dataclass\nfrom datetime import datetime, timezone\nfrom pathlib import Path\nfrom typing import Any, Callable\nfrom uuid import uuid4\n\nfrom ml_deploy.mlflow_parity import resolve_mlflow_storage_config\nfrom ml_deploy.vertical_slice import execute_first_vertical_slice\nfrom ml_deploy.webui_contracts import NotebookExecutionRequest, RunVisibility, summarize_run_for_webui\n\n\ndef _utc_now() -&gt; str:\n    return datetime.now(timezone.utc).isoformat()\n\n\n@dataclass(frozen=True)\nclass LocalExecutionResult:\n    request_id: str\n    run_visibility: RunVisibility\n    output_dir: Path\n    prediction_log_path: Path\n\n\nclass LocalExecutionAdapter:\n    \"\"\"Adapter that maps normalized web UI requests to local execution.\"\"\"\n\n    def __init__(self, mlflow_base_url: str, runner: Callable[..., dict[str, Any]] | None = None):\n        self.mlflow_base_url = mlflow_base_url\n        self._runner = runner or execute_first_vertical_slice\n\n    def submit(\n        self,\n        request: NotebookExecutionRequest,\n        *,\n        work_dir: Path,\n        tracking_uri: str,\n        request_id: str | None = None,\n    ) -&gt; LocalExecutionResult:\n        resolved_request = request.with_defaults(request_id=request_id or f\"req-{uuid4().hex[:12]}\")\n        job_spec = resolved_request.as_job_spec()\n\n        run_payload = self._runner(work_dir, tracking_uri=tracking_uri)\n        run_id = run_payload[\"training_outcome\"].mlflow_run_id\n        run_summary = summarize_run_for_webui(\n            {\n                \"run_id\": run_id,\n                \"status\": \"finished\",\n                \"started_at\": _utc_now(),\n                \"finished_at\": _utc_now(),\n                \"model_version\": run_payload[\"packaged\"][\"model_version_record\"][\n                    \"model_version_identifier\"\n                ],\n                \"request_id\": job_spec[\"request_id\"],\n            },\n            mlflow_base_url=self.mlflow_base_url,\n        )\n\n        return LocalExecutionResult(\n            request_id=job_spec[\"request_id\"],\n            run_visibility=run_summary,\n            output_dir=run_payload[\"output_dir\"],\n            prediction_log_path=run_payload[\"prediction_log_path\"],\n        )\n\n\n@dataclass(frozen=True)\nclass BackendSubmission:\n    request_id: str\n    backend: str\n    status: str\n    submission_payload: dict[str, Any]\n    run_visibility: RunVisibility | None = None\n    prediction_log_path: Path | None = None\n\n\nclass ExecutionOrchestrator:\n    \"\"\"Route normalized notebook requests to local, Slurm, or Kubernetes execution backends.\"\"\"\n\n    def __init__(self, mlflow_base_url: str, local_adapter: LocalExecutionAdapter | None = None):\n        self._local_adapter = local_adapter or LocalExecutionAdapter(mlflow_base_url)\n\n    @staticmethod\n    def _resolve_backend(target: str) -&gt; str:\n        normalized = target.strip().lower()\n        if normalized in {\"local\", \"local-replica\"}:\n            return \"local\"\n        if normalized in {\"lambda-slurm\", \"slurm\"}:\n            return \"slurm\"\n        if normalized in {\"aws-kubernetes\", \"kubernetes\", \"k8s\"}:\n            return \"kubernetes\"\n        raise ValueError(f\"Unsupported execution target: {target}\")\n\n    def submit(\n        self,\n        request: NotebookExecutionRequest,\n        *,\n        work_dir: Path,\n        tracking_uri: str | None = None,\n        request_id: str | None = None,\n    ) -&gt; BackendSubmission:\n        resolved_request = request.with_defaults(request_id=request_id or f\"req-{uuid4().hex[:12]}\")\n        job_spec = resolved_request.as_job_spec()\n        backend = self._resolve_backend(job_spec[\"target\"])\n\n        if backend == \"local\":\n            runtime_tracking_uri = tracking_uri or resolve_mlflow_storage_config().tracking_uri\n            local_result = self._local_adapter.submit(\n                resolved_request,\n                work_dir=work_dir,\n                tracking_uri=runtime_tracking_uri,\n                request_id=job_spec[\"request_id\"],\n            )\n            return BackendSubmission(\n                request_id=local_result.request_id,\n                backend=backend,\n                status=\"completed\",\n                submission_payload=job_spec,\n                run_visibility=local_result.run_visibility,\n                prediction_log_path=local_result.prediction_log_path,\n            )\n\n        if backend == \"slurm\":\n            submission_payload = map_to_slurm_job_spec(job_spec)\n        else:\n            submission_payload = map_to_kubernetes_job_spec(job_spec)\n\n        return BackendSubmission(\n            request_id=job_spec[\"request_id\"],\n            backend=backend,\n            status=\"submitted\",\n            submission_payload=submission_payload,\n        )\n\n\ndef map_to_slurm_job_spec(job_spec: dict[str, Any]) -&gt; dict[str, Any]:\n    \"\"\"Map normalized job spec to a Slurm submission payload.\"\"\"\n    notebook = job_spec[\"notebook\"]\n    return {\n        \"scheduler\": \"slurm\",\n        \"job_name\": f\"nb-{job_spec['request_id']}\",\n        \"command\": \"python -m ml_deploy.jobs.run_notebook\",\n        \"arguments\": [\n            f\"--repository={notebook['repository']}\",\n            f\"--notebook-path={notebook['notebook_path']}\",\n            f\"--revision={notebook['revision']}\",\n            f\"--target={job_spec['target']}\",\n            f\"--config-profile={job_spec['config_profile']}\",\n        ],\n        \"environment\": {\n            \"REQUEST_ID\": job_spec[\"request_id\"],\n            \"REQUESTED_BY\": job_spec[\"requested_by\"],\n        },\n    }\n\n\ndef map_to_kubernetes_job_spec(job_spec: dict[str, Any]) -&gt; dict[str, Any]:\n    \"\"\"Map normalized job spec to a Kubernetes Job manifest.\"\"\"\n    notebook = job_spec[\"notebook\"]\n    return {\n        \"apiVersion\": \"batch/v1\",\n        \"kind\": \"Job\",\n        \"metadata\": {\"name\": f\"nb-{job_spec['request_id']}\"},\n        \"spec\": {\n            \"template\": {\n                \"spec\": {\n                    \"restartPolicy\": \"Never\",\n                    \"containers\": [\n                        {\n                            \"name\": \"notebook-runner\",\n                            \"image\": \"python:3.13-slim\",\n                            \"args\": [\n                                \"python\",\n                                \"-m\",\n                                \"ml_deploy.jobs.run_notebook\",\n                                f\"--repository={notebook['repository']}\",\n                                f\"--notebook-path={notebook['notebook_path']}\",\n                                f\"--revision={notebook['revision']}\",\n                                f\"--target={job_spec['target']}\",\n                                f\"--config-profile={job_spec['config_profile']}\",\n                            ],\n                            \"env\": [\n                                {\"name\": \"REQUEST_ID\", \"value\": job_spec[\"request_id\"]},\n                                {\"name\": \"REQUESTED_BY\", \"value\": job_spec[\"requested_by\"]},\n                            ],\n                        }\n                    ],\n                }\n            }\n        },\n    }",
+    "crumbs": [
+      "Execution Backends"
+    ]
+  },
+  {
+    "objectID": "nbs/13_opentofu_infra.html",
+    "href": "nbs/13_opentofu_infra.html",
+    "title": "OpenTofu Infrastructure Profiles",
+    "section": "",
+    "text": "This page summarizes the dual-profile infrastructure posture.",
+    "crumbs": [
+      "OpenTofu Infrastructure Profiles"
+    ]
+  },
+  {
+    "objectID": "nbs/13_opentofu_infra.html#profiles",
+    "href": "nbs/13_opentofu_infra.html#profiles",
+    "title": "OpenTofu Infrastructure Profiles",
+    "section": "Profiles",
+    "text": "Profiles\n\nlocal_emulation: LocalStack + K3s + Slurm-Docker paired with MLflow/PostgreSQL/MinIO.\ncloud: AWS-backed infrastructure with Kubernetes control plane and Lambda.ai integration surfaces.",
+    "crumbs": [
+      "OpenTofu Infrastructure Profiles"
+    ]
+  },
+  {
+    "objectID": "nbs/13_opentofu_infra.html#generation-model",
+    "href": "nbs/13_opentofu_infra.html#generation-model",
+    "title": "OpenTofu Infrastructure Profiles",
+    "section": "Generation model",
+    "text": "Generation model\n\nTerranix modules under nix/modules/ provide shared plus profile-specific definitions.\nProfile entrypoints under nix/profiles/ compose modules into OpenTofu-compatible JSON.\nApply flow is profile-scoped and local-emulation validation should precede cloud rollout.",
+    "crumbs": [
+      "OpenTofu Infrastructure Profiles"
+    ]
+  },
+  {
+    "objectID": "nbs/13_opentofu_infra.html#key-outputs",
+    "href": "nbs/13_opentofu_infra.html#key-outputs",
+    "title": "OpenTofu Infrastructure Profiles",
+    "section": "Key outputs",
+    "text": "Key outputs\n\nDeployment profile identification.\nMLflow tracking URI per profile.\nStorage and scheduler endpoint references required by orchestration layers.",
+    "crumbs": [
+      "OpenTofu Infrastructure Profiles"
+    ]
+  }
+]
