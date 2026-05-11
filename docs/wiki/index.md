@@ -1,5 +1,5 @@
 ---
-updated: 2026-05-11
+updated: 2026-05-12
 summary: Primary router for the living wiki. Read this first, then load only the pages relevant to the task.
 read_when:
   - Starting any task in this repository
@@ -54,10 +54,12 @@ sources:
   - sources/ml_deploy.webui_contracts.py.md
   - sources/ml_deploy.execution_backends.py.md
   - sources/ml_deploy.mlflow_parity.py.md
+  - sources/ml_deploy.infrastructure_mcp.py.md
   - sources/ml_deploy.notebook_intake.py.md
   - sources/ml_deploy.terraform_bootstrap.py.md
   - sources/nbs.01_platform_narrative.qmd.md
   - sources/nbs.07_mlflow_parity.qmd.md
+  - sources/nbs.14_infrastructure_mcp.qmd.md
   - sources/nbs.08_execution_backends.qmd.md
   - sources/nbs.09_notebook_intake.qmd.md
   - sources/nbs.10_terraform_bootstrap.qmd.md
@@ -70,6 +72,7 @@ sources:
   - sources/tests.test_documentation_series_contracts.py.md
   - sources/tests.test_docs_freshness.py.md
   - sources/tests.test_mcp_infrastructure_contracts.py.md
+  - sources/tests.test_infrastructure_mcp.py.md
   - sources/scripts.finalize-task.sh.md
   - revisions/2026-05-10-distilled-allium-spec.md
   - revisions/2026-05-10-allium-cli-build-fix.md

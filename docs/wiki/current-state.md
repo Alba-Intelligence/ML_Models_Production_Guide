@@ -1,5 +1,5 @@
 ---
-updated: 2026-05-11
+updated: 2026-05-12
 summary: Honest snapshot of the repository's present state, notable constraints, and likely next steps.
 read_when:
   - You need a current repo snapshot
@@ -37,9 +37,11 @@ sources:
   - sources/ml_deploy.webui_contracts.py.md
   - sources/ml_deploy.execution_backends.py.md
   - sources/ml_deploy.mlflow_parity.py.md
+  - sources/ml_deploy.infrastructure_mcp.py.md
   - sources/ml_deploy.notebook_intake.py.md
   - sources/ml_deploy.terraform_bootstrap.py.md
   - sources/nbs.07_mlflow_parity.qmd.md
+  - sources/nbs.14_infrastructure_mcp.qmd.md
   - sources/nbs.08_execution_backends.qmd.md
   - sources/nbs.09_notebook_intake.qmd.md
   - sources/nbs.10_terraform_bootstrap.qmd.md
@@ -51,6 +53,7 @@ sources:
   - sources/tests.test_webui_contracts.py.md
   - sources/tests.test_docs_freshness.py.md
   - sources/tests.test_mcp_infrastructure_contracts.py.md
+  - sources/tests.test_infrastructure_mcp.py.md
   - sources/scripts.finalize-task.sh.md
   - queries/spec-quality-elicitation-session-01.md
 ---
@@ -114,6 +117,7 @@ As of 2026-05-11, the repository contains:
 - Python-driven Terraform bootstrap helpers now generate Terraform JSON stack files and expose init/plan/apply runners.
 - Runtime helper modules are now Quarto-owned and exported through nbdev, not maintained as hand-edited Python sources.
 - MLflow parity helpers now also render compute-plane local emulation compose configuration (LocalStack, K3s, Slurm) and a merged full local-emulation stack config.
+- Infrastructure MCP interrogation now has a concrete helper module that turns available server inventory into the required default assistant scope and realized infrastructure aspects.
 - Runtime orchestration now routes notebook execution requests across local, Slurm, and Kubernetes targets with explicit submitted/completed backend states.
 - Docker-first reproducible development is now implemented with `Dockerfile` and `docker-compose.dev.yml` (data plane: MLflow, PostgreSQL, MinIO).
 - **Local emulation compute plane** now exists in `docker-compose.local-infra.yml` (LocalStack, K3s, Slurm-Docker).

@@ -1,6 +1,6 @@
 ---
-updated: 2026-05-11
-summary: Synthesized summary of the Quarto homepage source that now replaces the notebook index entrypoint.
+updated: 2026-05-12
+summary: Synthesized summary of the Quarto homepage source that now replaces the notebook index entrypoint and links the runtime helper pages.
 read_when:
   - You need the current docs landing page source-of-truth
   - You are editing documentation navigation structure
@@ -16,7 +16,7 @@ Primary Quarto homepage for docs navigation.
 ## What it contains
 
 - Foundations, lifecycle, architecture analysis, and operations navigation groups.
-- Links to Quarto-converted architecture pages and notebook-backed runtime/module pages.
+- Links to Quarto-converted architecture pages and notebook-backed runtime/module pages, including the infrastructure MCP helper notebook.
 - Deprecated content removed from the landing navigation.
 
 ## Practical implication

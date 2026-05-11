@@ -1,5 +1,5 @@
 ---
-updated: 2026-05-10
+updated: 2026-05-12
 summary: Accepted MCP assistant integration surfaces and docs-delivery posture aligned to nbdev-first architecture.
 read_when:
   - You are designing assistant/tool interfaces
@@ -50,6 +50,8 @@ Minimum required infrastructure interrogation coverage (when infrastructure MCP 
 3. Lambda.ai/Slurm runtime state
 4. Cloud resource inventory
 5. Cost and usage signals
+
+The Quarto-owned helper module `ml_deploy/infrastructure_mcp.py` now encodes this default profile selection in executable form.
 
 ## Documentation delivery posture
 
