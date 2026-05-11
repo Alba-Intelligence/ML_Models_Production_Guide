@@ -94,6 +94,7 @@ As of 2026-05-11, the repository contains:
 - The first local vertical slice is now implemented in `ml_deploy/vertical_slice.py` with tests in `tests/test_vertical_slice.py`.
 - The vertical-slice module is now notebook-owned and exported from `nbs/06_vertical_slice.ipynb`.
 - A thin Web UI backend contract module now exists in `ml_deploy/webui_contracts.py` with tests in `tests/test_webui_contracts.py`.
+- Spec-propagated tests now validate implemented documentation-series completeness obligations in `tests/test_documentation_series_contracts.py`, with explicit skipped cases for aspirational gaps.
 - The Web UI contract module is now notebook-owned and exported from `nbs/05_webui_contracts.ipynb`.
 - Execution adapter mappings now exist for local, Slurm, and Kubernetes payloads.
 - Notebook intake validation gates now exist for immutable refs, notebook structure, and optional nbdev export checks.
@@ -119,6 +120,7 @@ As of 2026-05-11, the repository contains:
 - Slurm/Kubernetes mappings exist, but direct submission clients and runtime orchestration integration are still minimal scaffolding.
 - The distilled Allium spec currently models repository posture, shell behavior, and governance constraints; it does not yet cover any real ML implementation logic because that code still does not exist.
 - The distilled Allium spec now also models a spec-quality readiness gate required for default implementation allowance.
+- The distilled Allium spec now models notebook-series completeness requirements (architecture steps, trade-offs, security, examples, audience learning paths, and implementation/docs linkage).
 - `flake.lock` is not tracked by git under the current ignore rules, so lockfile drift may be local-only unless that policy changes.
 - The origin currently contributes a `LICENSE` file, while the expected remote `README.md` was not present during synchronization.
 

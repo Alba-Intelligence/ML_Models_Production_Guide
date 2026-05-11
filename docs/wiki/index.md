@@ -56,6 +56,7 @@ sources:
   - sources/nbs.05_webui_contracts.ipynb.md
   - sources/tests.test_vertical_slice.py.md
   - sources/tests.test_webui_contracts.py.md
+  - sources/tests.test_documentation_series_contracts.py.md
   - sources/scripts.finalize-task.sh.md
   - revisions/2026-05-10-distilled-allium-spec.md
   - revisions/2026-05-10-allium-cli-build-fix.md
@@ -81,6 +82,8 @@ sources:
   - revisions/2026-05-11-notebook-escaped-newline-cleanup.md
   - revisions/2026-05-11-index-mermaid-hardening.md
   - revisions/2026-05-11-notebook-presentation-restructure.md
+  - revisions/2026-05-11-allium-doc-series-completeness.md
+  - revisions/2026-05-11-propagated-doc-series-tests.md
 ---
 
 # Wiki index
@@ -222,6 +225,7 @@ sources:
 - [sources/nbs.05_webui_contracts.ipynb.md](sources/nbs.05_webui_contracts.ipynb.md) — synthesized summary of nbdev notebook source-of-truth for Web UI contracts.
 - [sources/tests.test_vertical_slice.py.md](sources/tests.test_vertical_slice.py.md) — synthesized summary of vertical-slice behavior tests.
 - [sources/tests.test_webui_contracts.py.md](sources/tests.test_webui_contracts.py.md) — synthesized summary of Web UI contract behavior tests.
+- [sources/tests.test_documentation_series_contracts.py.md](sources/tests.test_documentation_series_contracts.py.md) — synthesized summary of spec-propagated documentation-series completeness tests.
 - [sources/scripts.finalize-task.sh.md](sources/scripts.finalize-task.sh.md) — synthesized summary of the canonical end-of-task export/docs/tests command.
 
 ## Revision artifacts
@@ -249,6 +253,8 @@ sources:
 - [revisions/2026-05-11-index-mermaid-hardening.md](revisions/2026-05-11-index-mermaid-hardening.md) — captures parser-safe Mermaid hardening on the docs homepage diagram.
 - [revisions/2026-05-11-notebook-escaped-newline-cleanup.md](revisions/2026-05-11-notebook-escaped-newline-cleanup.md) — captures cleanup of notebook markdown serialization to avoid literal `\n` text in rendered docs.
 - [revisions/2026-05-11-notebook-presentation-restructure.md](revisions/2026-05-11-notebook-presentation-restructure.md) — captures lifecycle/topology-oriented notebook presentation restructure with canonical platform narrative notebook.
+- [revisions/2026-05-11-allium-doc-series-completeness.md](revisions/2026-05-11-allium-doc-series-completeness.md) — captures spec-level notebook-series completeness obligations for implementation-ready engineering use.
+- [revisions/2026-05-11-propagated-doc-series-tests.md](revisions/2026-05-11-propagated-doc-series-tests.md) — captures test propagation from the documentation-series rule into executable/aspirational test groups.
 - [revisions/2026-05-09-example-matrix.md](revisions/2026-05-09-example-matrix.md) — captures the first architecture-aligned example inventory.
 - [revisions/2026-05-09-default-stack-decisions.md](revisions/2026-05-09-default-stack-decisions.md) — captures the accepted default stack and boundary decisions.
 - [revisions/2026-05-09-topology-pages.md](revisions/2026-05-09-topology-pages.md) — captures the first pass of reference topology pages.

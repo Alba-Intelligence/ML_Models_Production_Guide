@@ -12,6 +12,7 @@ enum MonitoringTool { evidently | prometheus | grafana | mlflow }
 enum CostTool { aws_cost_explorer | aws_cur | aws_athena | aws_budgets | python_lambda_ai_attribution }
 enum McpSurface { mlflow | observability | aws_cost_visibility | lambda_ai_usage_visibility | docs_and_decisions }
 enum CrossCuttingContract { security | data_lineage | experiment_traceability | model_traceability | reproducibility }
+enum DocumentationAudience { software_engineer | ml_researcher }
 
 entity Repository {
     name: String
@@ -48,6 +49,19 @@ entity Wiki {
     log_exists: Boolean
     requires_source_summaries: Boolean
     requires_revision_for_non_trivial_changes: Boolean
+}
+
+entity DocumentationSeries {
+    is_complete_system_description: Boolean
+    has_architecture_description: Boolean
+    has_implementation_steps: Boolean
+    has_tradeoff_analysis: Boolean
+    has_security_considerations: Boolean
+    has_usage_examples: Boolean
+    has_role_specific_learning_paths: Boolean
+    audiences_covered: Set<DocumentationAudience>
+    has_python_implementation_module: Boolean
+    has_docs_site_module_section: Boolean
 }
 
 entity ShellSession {
@@ -176,6 +190,23 @@ rule MaintainWikiAfterDurableChange {
     ensures:
         if change_is_non_trivial:
             WikiArtifact.created(kind: revision_entry)
+}
+
+rule RequireImplementationReadyNotebookSeries {
+    when: DocumentationSeriesDeclared(repository, series)
+
+    requires: repository.canonical_docs_source = markdown_in_git
+
+    ensures: series.is_complete_system_description = true
+    ensures: series.has_architecture_description = true
+    ensures: series.has_implementation_steps = true
+    ensures: series.has_tradeoff_analysis = true
+    ensures: series.has_security_considerations = true
+    ensures: series.has_usage_examples = true
+    ensures: series.has_role_specific_learning_paths = true
+    ensures: series.audiences_covered = {software_engineer, ml_researcher}
+    ensures: series.has_python_implementation_module = true
+    ensures: series.has_docs_site_module_section = true
 }
 
 rule BlockImplementationWithoutExplicitConfirmation {

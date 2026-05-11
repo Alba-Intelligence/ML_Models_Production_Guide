@@ -1,6 +1,6 @@
 ---
 updated: 2026-05-11
-summary: Synthesized summary of the distilled repository-level Allium specification with explicit spec-quality implementation gating.
+summary: Synthesized summary of the distilled repository-level Allium specification with spec-quality and documentation-series implementation gating.
 read_when:
   - You need the repo behavior expressed as a formal spec
   - You are planning spec-first changes and need the current baseline
@@ -26,6 +26,7 @@ It converts the repository's implemented shell behavior and governance decisions
 
 - `Repository` — phase, constraints, stack posture, and accepted defaults.
 - `Wiki` — required memory-layer maintenance surfaces.
+- `DocumentationSeries` — series-level documentation completeness obligations for software engineers and ML researchers.
 - `ShellSession` — shell-entry, environment, and Jupyter runtime state.
 - `OperationRecord`, `WikiArtifact`, `WorkBlocked` — emitted operational outcomes.
 
@@ -36,6 +37,7 @@ It converts the repository's implemented shell behavior and governance decisions
 - Shell entry behavior with and without `pyproject.toml`.
 - Jupyter kernel ensure + JupyterLab launch behavior.
 - Mandatory wiki update workflow after durable changes.
+- Notebook-series completeness gate for implementation-ready architecture documentation (steps, trade-offs, security, examples, audience coverage, and implementation/docs-module linkage).
 - Specification-first gate that blocks implementation without explicit approval.
 - Additional implementation readiness gate requiring passed spec quality unless explicitly overridden.
 
