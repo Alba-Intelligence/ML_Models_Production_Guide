@@ -1,9 +1,8 @@
 ---
-updated: 2026-05-11
-summary: Synthesized summary of Python-driven Terraform bootstrap helpers for MLflow storage and baseline platform resources.
+updated: 2026-05-12
+summary: Deprecated historical summary of the old Python Terraform bootstrap helper module.
 read_when:
-  - You are bootstrapping infrastructure with Python-managed Terraform
-  - You need generated Terraform JSON and runner behavior
+  - You are reviewing historical bootstrap behavior that has been superseded by Nix/Terranix OpenTofu docs
 source_file: ../../ml_deploy/terraform_bootstrap.py
 sources:
   - nbs.10_terraform_bootstrap.qmd.md
@@ -13,7 +12,7 @@ sources:
 
 ## Role
 
-Provides Python-first Terraform bootstrap support:
+Historical helper module summary:
 
 - typed stack configuration
 - generated Terraform JSON files (`main.tf.json`, `terraform.tfvars.json`)
@@ -33,4 +32,4 @@ Provides Python-first Terraform bootstrap support:
 
 ## Practical implication
 
-Infrastructure bootstrap can be initiated from Python orchestration without hand-writing initial Terraform HCL files.
+This content is retained only as historical context. The active infrastructure direction is Nix/Terranix-generated OpenTofu JSON, not Python-managed Terraform bootstrapping.

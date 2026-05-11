@@ -46,8 +46,8 @@ This repository is becoming a **documentation-first, Python-heavy ML deployment 
 - The vertical-slice module is now generated from `nbs/06_vertical_slice.qmd` through nbdev export.
 - A thin Web UI backend contract module (`ml_deploy/webui_contracts.py`) with tests (`tests/test_webui_contracts.py`) for immutable notebook execution requests and MLflow-linked run summaries.
 - The Web UI contract module is now generated from `nbs/05_webui_contracts.qmd` through nbdev export.
-- Runtime scaffolding now exists for MLflow parity config, execution adapters, notebook intake validation, and Python-managed Terraform bootstrap.
-- These runtime helpers are now sourced from nbdev notebooks (`nbs/07` through `nbs/10`) and exported into package modules.
+- Runtime scaffolding now exists for MLflow parity config, execution adapters, notebook intake validation, and Nix/Terranix-oriented OpenTofu infrastructure helpers.
+- These runtime helpers are now sourced from nbdev notebooks (`nbs/07`, `nbs/08`, `nbs/09`, `nbs/13`, `nbs/14`) and exported into package modules.
 - A standard end-of-task workflow now exists via `./scripts/finalize-task.sh` to export notebooks, render docs, and run tests.
 - Root README onboarding is now explicit about project status and where newcomers should start.
 

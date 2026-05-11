@@ -37,14 +37,11 @@ sources:
   - sources/ml_deploy.webui_contracts.py.md
   - sources/ml_deploy.execution_backends.py.md
   - sources/ml_deploy.mlflow_parity.py.md
-  - sources/ml_deploy.infrastructure_mcp.py.md
   - sources/ml_deploy.notebook_intake.py.md
-  - sources/ml_deploy.terraform_bootstrap.py.md
   - sources/nbs.07_mlflow_parity.qmd.md
   - sources/nbs.14_infrastructure_mcp.qmd.md
   - sources/nbs.08_execution_backends.qmd.md
   - sources/nbs.09_notebook_intake.qmd.md
-  - sources/nbs.10_terraform_bootstrap.qmd.md
   - sources/nbs.01_platform_narrative.qmd.md
   - sources/nbs.12_system_interaction_analysis.qmd.md
   - sources/nbs.13_opentofu_infra.qmd.md
@@ -80,10 +77,9 @@ As of 2026-05-11, the repository contains:
 - `nbs/07_mlflow_parity.qmd` as nbdev source for MLflow parity helpers
 - `nbs/08_execution_backends.qmd` as nbdev source for backend execution adapters
 - `nbs/09_notebook_intake.qmd` as nbdev source for notebook intake validation
-- `nbs/10_terraform_bootstrap.qmd` as nbdev source for Terraform bootstrap helpers
 - `nbs/01_platform_narrative.qmd` as the canonical platform architecture narrative page
 - Quarto `.qmd` counterparts for all active nbdev notebooks in `nbs/` (docs rendering path)
-- runtime helper modules for MLflow parity, execution adapters, intake validation, and Terraform bootstrap
+- runtime helper modules for MLflow parity, execution adapters, intake validation, OpenTofu infrastructure, and infrastructure MCP interrogation
 - git metadata for a repository now rebased onto `origin/main`
 
 ## What is working
@@ -114,7 +110,7 @@ As of 2026-05-11, the repository contains:
 - The Web UI contract module is now Quarto-owned and exported from `nbs/05_webui_contracts.qmd`.
 - Execution adapter mappings now exist for local, Slurm, and Kubernetes payloads.
 - Notebook intake validation gates now exist for immutable refs, notebook structure, and optional nbdev export checks.
-- Python-driven Terraform bootstrap helpers now generate Terraform JSON stack files and expose init/plan/apply runners.
+- Nix/Terranix-oriented OpenTofu infrastructure helpers now own the platform bootstrap story.
 - Runtime helper modules are now Quarto-owned and exported through nbdev, not maintained as hand-edited Python sources.
 - MLflow parity helpers now also render compute-plane local emulation compose configuration (LocalStack, K3s, Slurm) and a merged full local-emulation stack config.
 - Infrastructure MCP interrogation now has a concrete helper module that turns available server inventory into the required default assistant scope and realized infrastructure aspects.

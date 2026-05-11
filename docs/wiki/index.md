@@ -56,13 +56,11 @@ sources:
   - sources/ml_deploy.mlflow_parity.py.md
   - sources/ml_deploy.infrastructure_mcp.py.md
   - sources/ml_deploy.notebook_intake.py.md
-  - sources/ml_deploy.terraform_bootstrap.py.md
   - sources/nbs.01_platform_narrative.qmd.md
   - sources/nbs.07_mlflow_parity.qmd.md
   - sources/nbs.14_infrastructure_mcp.qmd.md
   - sources/nbs.08_execution_backends.qmd.md
   - sources/nbs.09_notebook_intake.qmd.md
-  - sources/nbs.10_terraform_bootstrap.qmd.md
   - sources/nbs.12_system_interaction_analysis.qmd.md
   - sources/nbs.13_opentofu_infra.qmd.md
   - sources/nbs.index.qmd.md
@@ -136,7 +134,7 @@ sources:
 | Review latest platform requirements alignment                        | [decisions/project-scope-and-constraints.md](decisions/project-scope-and-constraints.md), [architecture/target-system.md](architecture/target-system.md), [revisions/2026-05-10-platform-requirements-alignment.md](revisions/2026-05-10-platform-requirements-alignment.md) |
 | Review executable Web UI backend contracts                           | [architecture/webui-backend-contract.md](architecture/webui-backend-contract.md), [sources/ml_deploy.webui_contracts.py.md](sources/ml_deploy.webui_contracts.py.md), [sources/tests.test_webui_contracts.py.md](sources/tests.test_webui_contracts.py.md) |
 | Review runtime adapter scaffolding                                    | [sources/ml_deploy.execution_backends.py.md](sources/ml_deploy.execution_backends.py.md), [sources/ml_deploy.notebook_intake.py.md](sources/ml_deploy.notebook_intake.py.md), [sources/ml_deploy.mlflow_parity.py.md](sources/ml_deploy.mlflow_parity.py.md) |
-| Edit runtime helpers in nbdev workflow                                | [sources/nbs.07_mlflow_parity.qmd.md](sources/nbs.07_mlflow_parity.qmd.md), [sources/nbs.08_execution_backends.qmd.md](sources/nbs.08_execution_backends.qmd.md), [sources/nbs.09_notebook_intake.qmd.md](sources/nbs.09_notebook_intake.qmd.md), [sources/nbs.10_terraform_bootstrap.qmd.md](sources/nbs.10_terraform_bootstrap.qmd.md) |
+| Edit runtime helpers in nbdev workflow                                | [sources/nbs.07_mlflow_parity.qmd.md](sources/nbs.07_mlflow_parity.qmd.md), [sources/nbs.08_execution_backends.qmd.md](sources/nbs.08_execution_backends.qmd.md), [sources/nbs.09_notebook_intake.qmd.md](sources/nbs.09_notebook_intake.qmd.md), [sources/nbs.13_opentofu_infra.qmd.md](sources/nbs.13_opentofu_infra.qmd.md), [sources/nbs.14_infrastructure_mcp.qmd.md](sources/nbs.14_infrastructure_mcp.qmd.md) |
 | Present the full platform architecture visually                       | [sources/nbs.01_platform_narrative.qmd.md](sources/nbs.01_platform_narrative.qmd.md), [architecture/target-system.md](architecture/target-system.md), [topologies/index.md](topologies/index.md) |
 | Edit Web UI contracts in nbdev workflow                              | [sources/nbs.05_webui_contracts.qmd.md](sources/nbs.05_webui_contracts.qmd.md), [sources/ml_deploy.webui_contracts.py.md](sources/ml_deploy.webui_contracts.py.md) |
 | Review the planned example inventory                                 | [architecture/example-matrix.md](architecture/example-matrix.md), [topologies/index.md](topologies/index.md)                                                                                                                                                         |
@@ -253,12 +251,10 @@ sources:
 - [sources/ml_deploy.execution_backends.py.md](sources/ml_deploy.execution_backends.py.md) — synthesized summary of local/slurm/k8s execution adapter mappings.
 - [sources/ml_deploy.mlflow_parity.py.md](sources/ml_deploy.mlflow_parity.py.md) — synthesized summary of local MLflow parity stack helpers.
 - [sources/ml_deploy.notebook_intake.py.md](sources/ml_deploy.notebook_intake.py.md) — synthesized summary of notebook intake validation gates.
-- [sources/ml_deploy.terraform_bootstrap.py.md](sources/ml_deploy.terraform_bootstrap.py.md) — synthesized summary of Python-first Terraform bootstrap helpers.
 - [sources/nbs.01_platform_narrative.qmd.md](sources/nbs.01_platform_narrative.qmd.md) — synthesized summary of the canonical platform architecture narrative Quarto page.
 - [sources/nbs.07_mlflow_parity.qmd.md](sources/nbs.07_mlflow_parity.qmd.md) — synthesized summary of Quarto nbdev source-of-truth for MLflow parity helpers.
 - [sources/nbs.08_execution_backends.qmd.md](sources/nbs.08_execution_backends.qmd.md) — synthesized summary of Quarto nbdev source-of-truth for execution adapters.
 - [sources/nbs.09_notebook_intake.qmd.md](sources/nbs.09_notebook_intake.qmd.md) — synthesized summary of Quarto nbdev source-of-truth for notebook intake gates.
-- [sources/nbs.10_terraform_bootstrap.qmd.md](sources/nbs.10_terraform_bootstrap.qmd.md) — synthesized summary of Quarto nbdev source-of-truth for Terraform bootstrap helpers.
 - [sources/nbs.12_system_interaction_analysis.qmd.md](sources/nbs.12_system_interaction_analysis.qmd.md) — synthesized summary of the five-layer system interaction analysis Quarto page.
 - [sources/nbs.13_opentofu_infra.qmd.md](sources/nbs.13_opentofu_infra.qmd.md) — synthesized summary of the OpenTofu infrastructure profile Quarto page.
 - [sources/nbs.index.qmd.md](sources/nbs.index.qmd.md) — synthesized summary of the rendered docs homepage Quarto page.
@@ -282,7 +278,6 @@ sources:
 - [revisions/2026-05-10-webui-contract-and-mlflow-parity.md](revisions/2026-05-10-webui-contract-and-mlflow-parity.md) — captures executable Web UI backend contracts plus intake/MLflow parity artifacts.
 - [revisions/2026-05-10-nbdev-webui-contract-translation.md](revisions/2026-05-10-nbdev-webui-contract-translation.md) — captures migration of Web UI contract code into nbdev notebook source-of-truth.
 - [revisions/2026-05-10-nbdev-vertical-slice-translation.md](revisions/2026-05-10-nbdev-vertical-slice-translation.md) — captures migration of vertical-slice implementation into nbdev notebook source-of-truth.
-- [revisions/2026-05-11-runtime-adapters-and-bootstrap.md](revisions/2026-05-11-runtime-adapters-and-bootstrap.md) — captures runtime adapter, intake gate, parity helper, and Terraform bootstrap implementation pass.
 - [revisions/2026-05-11-nbdev-runtime-modules-translation.md](revisions/2026-05-11-nbdev-runtime-modules-translation.md) — captures migration of runtime helper modules into nbdev notebook source-of-truth.
 - [revisions/2026-05-11-end-of-task-docs-finalization.md](revisions/2026-05-11-end-of-task-docs-finalization.md) — captures the standard publishable-docs finalization workflow addition.
 - [revisions/2026-05-11-readme-newcomer-onboarding.md](revisions/2026-05-11-readme-newcomer-onboarding.md) — captures improvements to explicit newcomer onboarding in root README.
