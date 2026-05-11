@@ -1,6 +1,6 @@
 ---
-updated: 2026-05-11
-summary: Synthesized summary of Docker Compose development stack including dev shell, MLflow, PostgreSQL, and MinIO.
+updated: 2026-05-12
+summary: Synthesized summary of Docker Compose development stack including dev shell, MLflow, PostgreSQL, and Floci-backed artifacts.
 read_when:
   - You need the canonical Docker-first local workflow
   - You are bringing up local MLflow parity services
@@ -17,8 +17,7 @@ Defines the containerized local development and MLflow parity stack.
 
 - `dev` interactive workspace container with project mount and `uv sync --frozen`.
 - `postgres` metadata backend for MLflow.
-- `minio` S3-compatible artifact storage.
-- `create-minio-bucket` one-shot bucket bootstrap.
+- `MLFLOW_S3_ENDPOINT_URL` points at the shared Floci emulator.
 - `mlflow` tracking server using PostgreSQL backend + S3 artifacts destination.
 
 ## Practical implication

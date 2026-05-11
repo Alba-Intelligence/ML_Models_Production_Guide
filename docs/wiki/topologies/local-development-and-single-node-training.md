@@ -42,7 +42,7 @@ Provide the lowest-friction reference topology for:
 
 - Docker is the canonical reproducible environment
 - Nix may help developers locally, but Docker is the standard reference artifact
-- MLflow is reachable with PostgreSQL backend and S3-compatible artifact storage (MinIO accepted for local parity)
+- MLflow is reachable with PostgreSQL backend and S3-compatible artifact storage (Floci-backed local parity)
 - local replica should include Slurm-like coordination and Kubernetes control-plane approximations where practical
 - the developer may have access to a local GPU or attached single-node GPU environment
 

@@ -1,5 +1,5 @@
 ---
-updated: 2026-05-11
+updated: 2026-05-12
 summary: Operational commands and caveats for entering the shell and using Jupyter helpers.
 read_when:
   - You want to run the repo
@@ -36,11 +36,11 @@ This should happen automatically in normal `nix develop` entry for this reposito
 
 ## Docker-first local development path
 
-Bring up the canonical Docker stack (dev shell + MLflow/PostgreSQL/MinIO):
+Bring up the canonical Docker stack (Floci + MLflow/PostgreSQL):
 
 ```bash
-docker compose -f docker-compose.dev.yml up -d --build
-docker compose -f docker-compose.dev.yml exec dev bash
+docker compose -f docker-compose.aws-emulator.yml -f docker-compose.dev.yml up -d --build
+docker compose -f docker-compose.aws-emulator.yml -f docker-compose.dev.yml exec dev bash
 ```
 
 Shut it down:

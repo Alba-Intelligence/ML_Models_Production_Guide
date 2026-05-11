@@ -15,7 +15,7 @@ enum InfrastructureInterrogationAspect { iac_plans_and_state | kubernetes_runtim
 enum CrossCuttingContract { security | data_lineage | experiment_traceability | model_traceability | reproducibility }
 enum DocumentationAudience { software_engineer | ml_researcher }
 enum MlflowBackendStore { sqlite | postgresql }
-enum MlflowArtifactStore { filesystem | minio | s3 }
+enum MlflowArtifactStore { filesystem | floci | s3 }
 enum PromotionStage { dev | uat | regression | prod }
 enum WorkloadScheduler { slurm | kubernetes }
 enum CicdPlatform { github_actions | argocd | custom }
@@ -54,6 +54,11 @@ entity Repository {
     cicd_platform: CicdPlatform
     uses_community_model_flavors: Boolean
     documentation_source_format: DocumentationSourceFormat
+    docs_are_hierarchical: Boolean
+    docs_use_mermaid_diagrams: Boolean
+    docs_expose_python_source_in_qmd: Boolean
+    nix_generates_docker_files: Boolean
+    nix_generates_docker_compose_files: Boolean
 
     required_contracts: Set<CrossCuttingContract>
     default_monitoring_stack: Set<MonitoringTool>
@@ -76,6 +81,8 @@ entity Wiki {
 
 entity DocumentationSeries {
     is_complete_system_description: Boolean
+    has_high_level_introduction: Boolean
+    is_hierarchically_structured: Boolean
     has_architecture_description: Boolean
     has_implementation_steps: Boolean
     has_tradeoff_analysis: Boolean
@@ -84,6 +91,9 @@ entity DocumentationSeries {
     has_role_specific_learning_paths: Boolean
     is_self_contained_for_implementation: Boolean
     has_copy_pastable_code_examples: Boolean
+    has_generated_config_examples: Boolean
+    has_mermaid_diagrams_where_helpful: Boolean
+    has_python_source_visible_in_docs: Boolean
     audiences_covered: Set<DocumentationAudience>
     has_python_implementation_module: Boolean
     has_docs_site_module_section: Boolean
@@ -191,6 +201,11 @@ rule InitializeRepositoryDefaults {
     ensures: repository.required_reproducible_dev = docker
     ensures: repository.canonical_docs_source = markdown_in_git
     ensures: repository.documentation_source_format = quarto_qmd
+    ensures: repository.docs_are_hierarchical = true
+    ensures: repository.docs_use_mermaid_diagrams = true
+    ensures: repository.docs_expose_python_source_in_qmd = true
+    ensures: repository.nix_generates_docker_files = true
+    ensures: repository.nix_generates_docker_compose_files = true
 
     ensures: repository.prefers_python = true
     ensures: repository.linux_only = true
@@ -308,6 +323,8 @@ rule RequireImplementationReadyNotebookSeries {
     requires: repository.canonical_docs_source = markdown_in_git
 
     ensures: series.is_complete_system_description = true
+    ensures: series.has_high_level_introduction = true
+    ensures: series.is_hierarchically_structured = true
     ensures: series.has_architecture_description = true
     ensures: series.has_implementation_steps = true
     ensures: series.has_tradeoff_analysis = true
@@ -316,6 +333,9 @@ rule RequireImplementationReadyNotebookSeries {
     ensures: series.has_role_specific_learning_paths = true
     ensures: series.is_self_contained_for_implementation = true
     ensures: series.has_copy_pastable_code_examples = true
+    ensures: series.has_generated_config_examples = true
+    ensures: series.has_mermaid_diagrams_where_helpful = true
+    ensures: series.has_python_source_visible_in_docs = true
     ensures: series.audiences_covered = {software_engineer, ml_researcher}
     ensures: series.has_python_implementation_module = true
     ensures: series.has_docs_site_module_section = true
@@ -323,9 +343,15 @@ rule RequireImplementationReadyNotebookSeries {
     @guidance
         -- The website must be sufficient to implement the full system from the published
         -- pages alone.
+        -- Start with a high-level introduction, then descend into architecture, concrete
+        -- implementation details, and copy-pastable examples.
+        -- Use Mermaid diagrams where they materially improve understanding of the system,
+        -- especially for architecture, control/data flows, and local/production parity.
         -- Infrastructure-relevant code and configuration snippets should appear in the QMD
         -- pages in copy-pastable form rather than being discoverable only by browsing the
         -- repository folder tree.
+        -- Python source that matters to implementation should be visible from the docs, even
+        -- if the actual module is still generated from notebook source.
 }
 
 rule RequireNixGeneratedOpenTofuConfiguration {
@@ -347,6 +373,8 @@ rule RequireNixGeneratedOpenTofuConfiguration {
     @guidance
         -- The canonical infrastructure path is Nix (flake + devenv) plus Terranix-generated
         -- OpenTofu JSON.
+        -- Extend that generation posture to Docker and Docker Compose artifacts wherever the
+        -- repo can reasonably generate them instead of hand-authoring them.
         -- Do not reintroduce a Python Terraform-bootstrap path as the default infrastructure flow.
 }
 
@@ -437,7 +465,7 @@ rule RequireMlflowProductionStorageBackends {
     @guidance
         -- In production, PostgreSQL is required as the MLflow backend store (SQLite has no
         -- concurrent-writer support and no backup story). S3 is required as the artifact store.
-        -- In local_emulation profile, SQLite or PostgreSQL with MinIO or filesystem artifact
+        -- In local_emulation profile, SQLite or PostgreSQL with Floci-backed or filesystem artifact
         -- store are acceptable.
 }
 

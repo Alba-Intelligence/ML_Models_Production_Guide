@@ -1,5 +1,5 @@
 ---
-updated: 2026-05-11
+updated: 2026-05-12
 summary: High-level summary of the repository as it exists today and the intended project direction.
 read_when:
   - You need orientation
@@ -48,6 +48,8 @@ This repository is becoming a **documentation-first, Python-heavy ML deployment 
 - The Web UI contract module is now generated from `nbs/05_webui_contracts.qmd` through nbdev export.
 - Runtime scaffolding now exists for MLflow parity config, execution adapters, notebook intake validation, and Nix/Terranix-oriented OpenTofu infrastructure helpers.
 - These runtime helpers are now sourced from nbdev notebooks (`nbs/07`, `nbs/08`, `nbs/09`, `nbs/13`, `nbs/14`) and exported into package modules.
+- The docs direction now expects a high-level introduction first, hierarchical notebook organization, Mermaid diagrams where they help, and implementation-relevant code/config to be visible from the published pages.
+- Floci is now the canonical local AWS emulator and the docs/wiki explain the Floci-backed local parity posture.
 - A standard end-of-task workflow now exists via `./scripts/finalize-task.sh` to export notebooks, render docs, and run tests.
 - Root README onboarding is now explicit about project status and where newcomers should start.
 

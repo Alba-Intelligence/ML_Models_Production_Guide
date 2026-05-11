@@ -1,5 +1,5 @@
 ---
-updated: 2026-05-11
+updated: 2026-05-12
 summary: Runbook for MLflow tracking parity between local replica and production posture (PostgreSQL backend + S3-compatible artifacts).
 read_when:
   - You need local/production parity for MLflow storage
@@ -17,20 +17,20 @@ sources:
 Provide a single storage posture for both local replica and production-style flows:
 
 - MLflow backend store on PostgreSQL
-- MLflow artifacts on S3-compatible object storage (MinIO locally, S3 in AWS)
+- MLflow artifacts on S3-compatible object storage (Floci locally, S3 in AWS)
 
 ## Local replica baseline
 
 1. Generate stack configuration via `ml_deploy/mlflow_parity.py`:
    - `render_local_compose_config(...)`
    - `write_local_compose_file(...)`
-2. Start local PostgreSQL and MinIO endpoints.
+2. Start the Floci AWS emulator, then local PostgreSQL.
 3. Configure MLflow server:
    - `--backend-store-uri postgresql://...`
    - `--artifacts-destination s3://...`
 4. Export runtime environment for artifact access:
-   - `MLFLOW_S3_ENDPOINT_URL` (local MinIO endpoint)
-   - AWS-style credentials for MinIO or S3
+   - `MLFLOW_S3_ENDPOINT_URL` (local Floci endpoint)
+   - AWS-style credentials for Floci or S3
 5. Point local notebook execution and vertical-slice code at the MLflow server URI.
 
 ## Production baseline

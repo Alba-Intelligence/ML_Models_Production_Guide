@@ -6,7 +6,7 @@ title: "Infrastructure MCP Interrogation"
 
 This page owns the executable helper layer for the spec rule that requires infrastructure MCP surfaces, when available, to expose the minimum interrogation scope by default.
 
-::: {#c8d3fe36 .cell export='null'}
+::: {#49c38b02 .cell export='null'}
 ``` {.python .cell-code}
 from __future__ import annotations
 

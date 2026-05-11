@@ -1,5 +1,5 @@
 ---
-updated: 2026-05-11
+updated: 2026-05-12
 summary: Append-only log of meaningful wiki maintenance events.
 read_when:
   - You want a quick history of what the wiki captured
@@ -48,12 +48,16 @@ sources:
   - revisions/2026-05-11-root-docs-regeneration-from-qmd.md
   - revisions/2026-05-11-docs-freshness-and-lockfile-policy.md
   - revisions/2026-05-11-ci-enforcement-and-revision-archive-notes.md
+  - revisions/2026-05-12-floci-and-docs-hardening.md
+  - revisions/2026-05-12-docs-hierarchy-and-config-generation.md
 ---
 
 # Wiki log
 
 | Date       | Type             | Summary                                                                                                                                                                                                                       | Touched                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | ---------- | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 2026-05-12 | docs architecture | Tightened the docs contract so the website must be hierarchical, start with a high-level introduction, use Mermaid diagrams where helpful, and surface implementation-relevant code/config from the published pages. | `specs/ml-deploy-reference-repo.allium`, `docs/wiki/overview.md`, `docs/wiki/architecture/documentation-toc.md`, `docs/wiki/architecture/assistant-integration-and-docs-delivery.md`, `docs/wiki/current-state.md`, `docs/wiki/revisions/2026-05-12-docs-hierarchy-and-config-generation.md`, `docs/wiki/log.md` |
+| 2026-05-12 | implementation    | Replaced the LocalStack/MinIO local AWS parity path with Floci, added a shared Floci compose file, and updated the nbdev/wiki docs to document the copy-pastable stack and Terranix entrypoints. | `docker-compose.aws-emulator.yml`, `docker-compose.dev.yml`, `docker-compose.local-infra.yml`, `nbs/07_mlflow_parity.qmd`, `nbs/13_opentofu_infra.qmd`, `nbs/15_aws_emulator.qmd`, `nbs/16_terranix_infra.qmd`, `nix/modules/local.nix`, `nix/modules/shared.nix`, `docs/wiki/current-state.md`, `docs/wiki/architecture/local-emulation-stack.md`, `docs/wiki/runbooks/mlflow-tracking-postgres-s3-parity.md`, `docs/wiki/runbooks/jupyter-and-shell.md`, `docs/wiki/index.md`, `docs/wiki/log.md` |
 | 2026-05-12 | docs clarification | Clarified in the runbook that the rendered homepage lives at `_docs/nbs/index.html` and that `_docs/index.html` forwards to it. | `docs/wiki/runbooks/jupyter-and-shell.md`, `docs/wiki/log.md` |
 | 2026-05-12 | docs cleanup      | Repointed the root docs redirect to the Quarto navigation homepage rather than the core page. | `_docs/index.html`, `docs/wiki/current-state.md`, `docs/wiki/log.md` |
 | 2026-05-12 | docs cleanup      | Updated the docs landing page to target rendered HTML files instead of Quarto source files. | `_docs/nbs/index.html`, `docs/wiki/current-state.md`, `docs/wiki/log.md` |

@@ -33,7 +33,7 @@ Provide a centralized interface for ML engineers to interact with versioned note
 
 - Git repository containing nbdev notebooks (source of truth)
 - MLflow tracking server (for execution results and model lineage)
-- Local replica architecture (Slurm-like scheduler, K8s, MinIO, PostgreSQL)
+- Local replica architecture (Slurm-like scheduler, K8s, Floci-backed S3, PostgreSQL)
 - Production infrastructure (Lambda.ai Slurm, AWS Kubernetes, S3, RDS)
 - MCP server ecosystem (for monitoring/analysis tooling)
 - Authentication/authorization system (for role-based access)

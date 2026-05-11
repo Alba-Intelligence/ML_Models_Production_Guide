@@ -23,6 +23,8 @@ Read pages in the structure below to understand the system from architecture to 
 
 - [System interaction analysis](12_system_interaction_analysis.qmd)
 - [OpenTofu infrastructure architecture](13_opentofu_infra.qmd)
+- [Floci AWS emulator](15_aws_emulator.qmd)
+- [Terranix infrastructure source](16_terranix_infra.qmd)
 
 ## Topology and operations notebooks
 

@@ -1,5 +1,5 @@
 ---
-updated: 2026-05-10
+updated: 2026-05-12
 summary: Design for a centralized notebook repository web UI that enables engineers to browse, select, and trigger notebook executions across environments while keeping notebooks as the immutable source of truth.
 read_when:
   - You are designing the interface for triggering model training/inference runs
@@ -50,7 +50,7 @@ Accepted default:
 
 - Git repository containing nbdev notebooks (source of truth)
 - MLflow tracking server (for execution results and model lineage)
-- Local replica architecture (Slurm-like scheduler, K8s, MinIO, PostgreSQL)
+- Local replica architecture (Slurm-like scheduler, K8s, Floci-backed S3, PostgreSQL)
 - Production infrastructure (Lambda.ai Slurm, AWS Kubernetes, S3, RDS)
 - MCP server ecosystem (for monitoring/analysis tooling)
 - Authentication/authorization system (for role-based access)

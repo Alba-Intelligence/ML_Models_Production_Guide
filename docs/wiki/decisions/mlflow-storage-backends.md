@@ -12,7 +12,7 @@
 
 | Context | Backend store | Artifact store |
 |---|---|---|
-| `local_emulation` | SQLite or PostgreSQL | filesystem or MinIO |
+| `local_emulation` | SQLite or PostgreSQL | filesystem or Floci-backed S3 |
 | `cloud` | **PostgreSQL (required)** | **S3 (required)** |
 
 ---
@@ -29,7 +29,7 @@
 
 - MLflow artifacts (models, plots, datasets) can be very large — S3 provides unlimited scalable storage
 - S3 has versioning, lifecycle rules, and cross-region replication
-- MinIO is S3-API compatible and is used in `local_emulation` for exact API parity
+- Floci is the canonical local AWS emulator and provides the S3-compatible API surface for `local_emulation`
 
 ### Why SQLite is acceptable locally
 
@@ -80,7 +80,7 @@ This satisfies the spec's `RequireMlflowProfileSwitchable` rule.
 ```bash
 MLFLOW_BACKEND_STORE_URI=postgresql://mlflow:mlflow@postgres:5432/mlflow
 MLFLOW_DEFAULT_ARTIFACT_ROOT=s3://mlflow-artifacts
-MLFLOW_S3_ENDPOINT_URL=http://minio:9000  # MinIO in local_emulation
+MLFLOW_S3_ENDPOINT_URL=http://floci:4566  # Floci in local_emulation
 ```
 
 **Cloud usage** (same vars, different values):

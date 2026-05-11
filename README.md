@@ -24,10 +24,14 @@ architecture to execution details.
 ## Architecture analysis notebooks
 
 - [System interaction analysis](system_interaction_analysis.html)
+- [OpenTofu infrastructure](opentofu_infra.html)
+- [Floci AWS emulator](aws_emulator.html)
+- [Terranix infrastructure source](terranix_infra.html)
 
 ## Topology and operations notebooks
 
 - [MLflow parity](mlflow_parity.html)
+- [Infrastructure MCP interrogation](infrastructure_mcp.html)
 - [Execution backends](execution_backends.html)
 - [Notebook intake validation](notebook_intake.html)
 

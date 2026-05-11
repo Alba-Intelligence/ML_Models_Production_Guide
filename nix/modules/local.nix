@@ -1,6 +1,6 @@
 # nix/modules/local.nix
 # Terranix module: local_emulation profile overrides.
-# Wires all services to Docker Compose endpoints (LocalStack, K3s, Slurm-Docker, MinIO).
+# Wires all services to Docker Compose endpoints (Floci, K3s, Slurm-Docker).
 # Import alongside shared.nix in nix/profiles/local.nix.
 
 { config, lib, ... }:
@@ -13,11 +13,11 @@ with lib;
   config.mlDeploy = {
     profile             = "local_emulation";
     mlflowTrackingUri   = "http://localhost:5001";
-    awsEndpointUrl      = "http://localhost:4566";  # LocalStack
+    awsEndpointUrl      = "http://localhost:4566";  # Floci
     postgresHost        = "localhost";
   };
 
-  # LocalStack provider configuration
+  # Floci-compatible provider configuration
   config.provider.aws = {
     region                      = config.mlDeploy.awsRegion;
     access_key                  = "test";
@@ -53,6 +53,6 @@ with lib;
 
   config.output.s3_endpoint = {
     value       = "http://localhost:4566";
-    description = "LocalStack S3 endpoint (local_emulation profile).";
+    description = "Floci S3 endpoint (local_emulation profile).";
   };
 }

@@ -1,5 +1,5 @@
 ---
-updated: 2026-05-11
+updated: 2026-05-12
 summary: Current agreed purpose, constraints, and planning-phase rules for the project.
 read_when:
   - You are deciding whether proposed work fits scope
@@ -24,7 +24,7 @@ The project is intended to become an **extensive reference documentation set wit
 5. Reproducible development uses Docker.
 6. Docker files must be written explicitly even if Nix helps generate/support them.
 7. MLflow is mandatory, with PostgreSQL backend store and S3 artifact store as the default production posture.
-8. Local architecture should replicate production storage/control planes as closely as practical (for example PostgreSQL + S3-compatible storage such as MinIO).
+8. Local architecture should replicate production storage/control planes as closely as practical (for example PostgreSQL + S3-compatible storage such as Floci).
 9. Lambda.ai is the distributed compute platform in scope for training/inference coordination, using Slurm orchestration with redundancy/failure-handling patterns.
 10. AWS hosts the remaining platform services with Kubernetes as the default control/deployment substrate.
 11. A notebook Web UI is required for ML engineers to upload/select notebooks and trigger runs without editing notebook code.

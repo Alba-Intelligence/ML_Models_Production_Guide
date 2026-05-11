@@ -36,3 +36,5 @@ website:
       - nbs/09_notebook_intake.qmd
       - nbs/12_system_interaction_analysis.qmd
       - nbs/13_opentofu_infra.qmd
+      - nbs/15_aws_emulator.qmd
+      - nbs/16_terranix_infra.qmd

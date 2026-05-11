@@ -1,5 +1,5 @@
 ---
-updated: 2026-05-11
+updated: 2026-05-12
 summary: Synthesized summary of Quarto nbdev source-of-truth for MLflow parity and local emulation compose helpers.
 read_when:
   - You are editing local MLflow parity behavior
@@ -14,8 +14,8 @@ source_file: ../../nbs/07_mlflow_parity.qmd
 Quarto-first source for local MLflow parity helpers:
 
   - PostgreSQL backend store URI configuration
-  - S3/MinIO artifact destination configuration
-  - compute-plane local emulation compose generation (LocalStack, K3s, Slurm)
+  - S3/Floci artifact destination configuration
+  - compute-plane local emulation compose generation (Floci, K3s, Slurm)
   - merged full local-emulation compose generation
 
 ## Export behavior

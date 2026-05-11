@@ -10,6 +10,8 @@ _proc/
 nbs/_quarto.yml
 nbs/nbdev.yml
 nbs/sidebar.yml
+**/*.html.md
+**/*.quarto_ipynb
 
 # Backups
 *.bak

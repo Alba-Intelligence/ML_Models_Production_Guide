@@ -1,5 +1,5 @@
 ---
-updated: 2026-05-10
+updated: 2026-05-12
 summary: Ratified table of contents for the documentation set, derived from the reference architecture skeleton.
 read_when:
   - You are deciding how to organize the documentation
@@ -19,6 +19,7 @@ Treat it as canonical for documentation and architecture-aligned example placeme
 
 ## TOC design rules
 
+- Start with a high-level introduction before any deep implementation pages.
 - Organize by lifecycle and domain, not by whichever tool is most visible.
 - Keep local development separate from production topology concerns.
 - Keep cross-cutting contracts separate from topology-specific implementations.
@@ -134,9 +135,9 @@ Candidate pages:
 - local smoke testing patterns
 - local Slurm-like workload scheduler (using Docker-compose, Nomad, or similar)
 - local Kubernetes cluster (using kind/minikube/k3s)
-- local S3-compatible storage (MinIO/Ceph)
+- local S3-compatible storage (Floci/Ceph)
 - local PostgreSQL for MLflow tracking and model registry
-- local artifact storage (MinIO for models, datasets, and outputs)
+- local artifact storage (Floci for models, datasets, and outputs)
 - environment parity validation (checking Slurm/K8s resource specs match)
 - configuration parity validation (identical Terraform modules with different backends)
 - notebook repository web UI (Git-backed with DB storage for traceability)

@@ -3,7 +3,7 @@ title: "MLflow Parity Helpers"
 ---
 # MLflow Parity Helpers
 
-> nbdev source for local MLflow parity stack helpers (PostgreSQL + S3-compatible artifacts).
+> nbdev source for local MLflow parity stack helpers (PostgreSQL + Floci-backed S3-compatible artifacts).
 
 ```{python}
 #| default_exp: mlflow_parity
@@ -28,11 +28,9 @@ class LocalMlflowParityConfig:
     postgres_password: str = "mlflow"
     postgres_db: str = "mlflow"
     postgres_port: int = 5432
-    minio_access_key: str = "minioadmin"
-    minio_secret_key: str = "minioadmin"
-    minio_bucket: str = "mlflow"
-    minio_api_port: int = 9000
-    minio_console_port: int = 9001
+    aws_access_key_id: str = "test"
+    aws_secret_access_key: str = "test"
+    s3_bucket: str = "mlflow"
     mlflow_port: int = 5000
     mlflow_host: str = "0.0.0.0"
     compose_project_name: str = "mlflow-parity"
@@ -46,15 +44,15 @@ class LocalMlflowParityConfig:
 
     @property
     def artifacts_destination(self) -> str:
-        return f"s3://{self.minio_bucket}"
+        return f"s3://{self.s3_bucket}"
 
     @property
     def mlflow_tracking_uri(self) -> str:
         return f"http://localhost:{self.mlflow_port}"
 
     @property
-    def minio_endpoint(self) -> str:
-        return f"http://localhost:{self.minio_api_port}"
+    def s3_endpoint_url(self) -> str:
+        return "http://floci:4566"
 
 
 @dataclass(frozen=True)
@@ -74,16 +72,14 @@ class LocalInfrastructureParityConfig:
     """Configuration for local compute-plane parity services."""
 
     aws_region: str = "us-east-1"
-    localstack_port: int = 4566
     k3s_api_port: int = 6443
     slurmctld_port: int = 6817
     network_name: str = "ml_local"
 
 
 def render_local_compose_config(config: LocalMlflowParityConfig) -> dict[str, Any]:
-    """Render a Docker Compose config for local PostgreSQL + MinIO + MLflow."""
+    """Render a Docker Compose config for local PostgreSQL + Floci-backed MLflow."""
     postgres_image = "postgres:16-alpine"
-    minio_image = "minio/minio:latest"
     mlflow_image = "ghcr.io/mlflow/mlflow:v2.14.2"
     return {
         "name": config.compose_project_name,
@@ -103,21 +99,9 @@ def render_local_compose_config(config: LocalMlflowParityConfig) -> dict[str, An
                     "retries": 20,
                 },
             },
-            "minio": {
-                "image": minio_image,
-                "command": "server /data --console-address :9001",
-                "environment": {
-                    "MINIO_ROOT_USER": config.minio_access_key,
-                    "MINIO_ROOT_PASSWORD": config.minio_secret_key,
-                },
-                "ports": [
-                    f"{config.minio_api_port}:9000",
-                    f"{config.minio_console_port}:9001",
-                ],
-            },
             "mlflow": {
                 "image": mlflow_image,
-                "depends_on": {"postgres": {"condition": "service_healthy"}, "minio": {}},
+                "depends_on": {"postgres": {"condition": "service_healthy"}},
                 "command": [
                     "mlflow",
                     "server",
@@ -131,12 +115,13 @@ def render_local_compose_config(config: LocalMlflowParityConfig) -> dict[str, An
                         f"@postgres:5432/{config.postgres_db}"
                     ),
                     "--artifacts-destination",
-                    f"s3://{config.minio_bucket}",
+                    f"s3://{config.s3_bucket}",
                 ],
                 "environment": {
-                    "AWS_ACCESS_KEY_ID": config.minio_access_key,
-                    "AWS_SECRET_ACCESS_KEY": config.minio_secret_key,
-                    "MLFLOW_S3_ENDPOINT_URL": "http://minio:9000",
+                    "AWS_ACCESS_KEY_ID": config.aws_access_key_id,
+                    "AWS_SECRET_ACCESS_KEY": config.aws_secret_access_key,
+                    "AWS_DEFAULT_REGION": "us-east-1",
+                    "MLFLOW_S3_ENDPOINT_URL": config.s3_endpoint_url,
                 },
                 "ports": [f"{config.mlflow_port}:{config.mlflow_port}"],
             },
@@ -147,20 +132,10 @@ def render_local_compose_config(config: LocalMlflowParityConfig) -> dict[str, An
 def render_local_infra_compose_config(
     config: LocalInfrastructureParityConfig | None = None,
 ) -> dict[str, Any]:
-    """Render local emulation compute-plane config (AWS APIs, Kubernetes, Slurm)."""
+    """Render local emulation compute-plane config (Kubernetes, Slurm)."""
     runtime = config or LocalInfrastructureParityConfig()
     return {
         "services": {
-            "localstack": {
-                "image": "localstack/localstack:3",
-                "ports": [f"{runtime.localstack_port}:4566"],
-                "environment": {
-                    "SERVICES": "s3,iam,ec2,sts,secretsmanager,cloudwatch,logs",
-                    "DEBUG": "0",
-                    "AWS_DEFAULT_REGION": runtime.aws_region,
-                },
-                "networks": [runtime.network_name],
-            },
             "k3s": {
                 "image": "rancher/k3s:v1.29.4-k3s1",
                 "privileged": True,
@@ -181,6 +156,65 @@ def render_local_infra_compose_config(
                 "networks": [runtime.network_name],
             },
         },
+        "networks": {runtime.network_name: {"driver": "bridge"}},
+    }
+
+
+def render_local_aws_emulator_compose_config(
+    config: LocalInfrastructureParityConfig | None = None,
+) -> dict[str, Any]:
+    """Render the shared Floci-backed AWS emulator compose config."""
+    runtime = config or LocalInfrastructureParityConfig()
+    return {
+        "services": {
+            "floci": {
+                "image": "floci/floci:latest",
+                "user": "root",
+                "ports": [f"{4566}:4566"],
+                "environment": {
+                    "FLOCI_HOSTNAME": "floci",
+                    "FLOCI_STORAGE_MODE": "persistent",
+                    "AWS_DEFAULT_REGION": runtime.aws_region,
+                },
+                "volumes": [
+                    "/var/run/docker.sock:/var/run/docker.sock",
+                    "floci_data:/var/lib/floci",
+                ],
+                "networks": [runtime.network_name],
+                "healthcheck": {
+                    "test": ["CMD", "curl", "-f", "http://localhost:4566/_localstack/health"],
+                    "interval": "15s",
+                    "timeout": "10s",
+                    "retries": 5,
+                    "start_period": "20s",
+                },
+            },
+            "floci_bootstrap": {
+                "image": "amazon/aws-cli:2.15.56",
+                "depends_on": {"floci": {"condition": "service_healthy"}},
+                "environment": {
+                    "AWS_ACCESS_KEY_ID": "test",
+                    "AWS_SECRET_ACCESS_KEY": "test",
+                    "AWS_DEFAULT_REGION": runtime.aws_region,
+                    "AWS_ENDPOINT_URL": "http://floci:4566",
+                },
+                "entrypoint": ["/bin/sh", "-c"],
+                "command": [
+                    """
+echo "Initialising Floci buckets and roles..."
+aws s3 mb s3://mlflow-artifacts --endpoint-url=http://floci:4566 || true
+aws s3 mb s3://model-registry --endpoint-url=http://floci:4566 || true
+aws iam create-role \
+  --role-name ml-deploy-local \
+  --assume-role-policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"Service":"ec2.amazonaws.com"},"Action":"sts:AssumeRole"}]}' \
+  --endpoint-url=http://floci:4566 || true
+echo "Floci init complete."
+""".strip()
+                ],
+                "networks": [runtime.network_name],
+            },
+        },
+        "volumes": {"floci_data": {}},
         "networks": {runtime.network_name: {"driver": "bridge"}},
     }
 
@@ -224,12 +258,12 @@ def build_mlflow_server_command(config: LocalMlflowParityConfig) -> list[str]:
 
 
 def build_mlflow_runtime_env(config: LocalMlflowParityConfig) -> dict[str, str]:
-    """Build environment variables for S3-compatible MLflow artifact storage."""
+    """Build environment variables for Floci-backed MLflow artifact storage."""
     return {
         "MLFLOW_TRACKING_URI": config.mlflow_tracking_uri,
-        "AWS_ACCESS_KEY_ID": config.minio_access_key,
-        "AWS_SECRET_ACCESS_KEY": config.minio_secret_key,
-        "MLFLOW_S3_ENDPOINT_URL": config.minio_endpoint,
+        "AWS_ACCESS_KEY_ID": config.aws_access_key_id,
+        "AWS_SECRET_ACCESS_KEY": config.aws_secret_access_key,
+        "MLFLOW_S3_ENDPOINT_URL": config.s3_endpoint_url,
     }
 
 
@@ -245,8 +279,8 @@ def resolve_mlflow_storage_config(
         ),
         artifacts_destination=values.get("MLFLOW_ARTIFACTS_DESTINATION", "s3://mlflow"),
         tracking_uri=values.get("MLFLOW_TRACKING_URI", "http://localhost:5000"),
-        aws_access_key_id=values.get("AWS_ACCESS_KEY_ID", "minioadmin"),
-        aws_secret_access_key=values.get("AWS_SECRET_ACCESS_KEY", "minioadmin"),
+        aws_access_key_id=values.get("AWS_ACCESS_KEY_ID", "test"),
+        aws_secret_access_key=values.get("AWS_SECRET_ACCESS_KEY", "test"),
         s3_endpoint_url=values.get("MLFLOW_S3_ENDPOINT_URL"),
     )
 

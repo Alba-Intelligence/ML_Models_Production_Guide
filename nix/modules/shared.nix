@@ -50,7 +50,7 @@ in {
     awsEndpointUrl = mkOption {
       type = types.nullOr types.str;
       default = null;
-      description = "Override AWS endpoint URL (used for LocalStack in local_emulation profile).";
+      description = "Override AWS endpoint URL (used for Floci in local_emulation profile).";
     };
 
     postgresHost = mkOption {

@@ -4,7 +4,7 @@
 
 **When to read**: When setting up local development, when running integration tests, or before applying a cloud OpenTofu profile.
 
-**Upstream source**: `docker-compose.local-infra.yml`, `docker-compose.dev.yml`, `nix/modules/local.nix`
+**Upstream source**: `docker-compose.aws-emulator.yml`, `docker-compose.local-infra.yml`, `docker-compose.dev.yml`, `nix/modules/local.nix`
 
 ---
 
@@ -19,37 +19,44 @@ It allows complete end-to-end verification of the system before any cloud infras
 
 ## Stack components
 
+### AWS emulator (`docker-compose.aws-emulator.yml`)
+
+| Service | Port | Emulates |
+|---|---|---|
+| Floci | 4566 | AWS APIs (S3, IAM, EC2, STS, Secrets Manager, CloudWatch) |
+| floci_bootstrap | — | Bootstrap: creates S3 buckets + IAM role |
+
 ### Data plane (`docker-compose.dev.yml`)
 
 | Service | Port | Emulates |
 |---|---|---|
 | PostgreSQL | 5432 | MLflow backend store (RDS in cloud) |
-| MinIO | 9000 / 9001 | S3-compatible artifact store |
 | MLflow | 5001 | Experiment tracking server |
 
 ### Compute plane (`docker-compose.local-infra.yml`)
 
 | Service | Port | Emulates |
 |---|---|---|
-| LocalStack | 4566 | AWS APIs (S3, IAM, EC2, STS, Secrets Manager, CloudWatch) |
 | K3s | 6443 | Kubernetes API (EKS in cloud) |
 | slurmctld | 6817 | Slurm controller (Lambda.ai head node) |
 | slurmd | — | Slurm worker (Lambda.ai compute nodes) |
-| localstack_init | — | Bootstrap: creates S3 buckets + IAM role |
 
 ---
 
 ## Starting the stack
 
 ```bash
-# Data plane (MLflow, PostgreSQL, MinIO)
+# AWS emulator
+docker compose -f docker-compose.aws-emulator.yml up -d
+
+# Data plane (MLflow, PostgreSQL)
 docker compose -f docker-compose.dev.yml up -d
 
-# Compute plane (LocalStack, K3s, Slurm)
+# Compute plane (K3s, Slurm)
 docker compose -f docker-compose.local-infra.yml up -d
 
 # Both together
-docker compose -f docker-compose.dev.yml -f docker-compose.local-infra.yml up -d
+docker compose -f docker-compose.aws-emulator.yml -f docker-compose.dev.yml -f docker-compose.local-infra.yml up -d
 ```
 
 ---
@@ -62,7 +69,7 @@ After both stacks are up, verify:
 # MLflow
 curl http://localhost:5001/health
 
-# LocalStack S3
+# Floci S3
 aws --endpoint-url=http://localhost:4566 s3 ls
 
 # K3s Kubernetes
@@ -80,7 +87,7 @@ uv run python -m unittest discover -s tests -q
 ## OpenTofu integration
 
 The local emulation stack is the OpenTofu `local_emulation` profile target.
-Generated via Terranix from `nix/profiles/local.nix`:
+Generated via Terranix from `nix/profiles/local.nix` and paired with `docker-compose.aws-emulator.yml`:
 
 ```bash
 nix build .#localInfraJson && cp result infra/local/main.tf.json
@@ -91,20 +98,20 @@ See `nbs/13_opentofu_infra.qmd` for the dual-mode architecture walkthrough.
 
 ---
 
-## LocalStack Community limitations
+## Floci limitations
 
-- EKS API is Pro-only → use K3s directly for local Kubernetes emulation
-- S3, IAM, STS, Secrets Manager, CloudWatch Logs available in Community
-- SageMaker not relevant (we use MLflow + Lambda.ai)
+- The local emulator still runs via Docker and a mounted Docker socket.
+- The Floci bootstrap role/bucket setup is intentionally minimal; add more init steps only when the stack needs them.
+- K3s is still the local Kubernetes target; AWS-specific control-plane APIs remain Floci-backed.
 
 ---
 
 ## Security notes
 
-- All LocalStack credentials are dummy values (`access_key = "test"`)
+- All local AWS credentials are dummy values (`access_key = "test"`)
 - Never use local emulation credentials in cloud contexts
 - K3s runs privileged — keep compute-plane Compose off production hosts
-- LocalStack volumes provide local persistence only; ephemeral by default
+- Floci state is local-only and should not be treated as durable cloud storage
 
 ---
 
