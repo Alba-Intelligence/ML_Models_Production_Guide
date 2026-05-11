@@ -34,6 +34,8 @@ sources:
   - decisions/mcp-default-scope-decision.md
   - decisions/documentation-delivery-decision.md
   - decisions/notebook-intake-validation-and-approval.md
+  - decisions/mlflow-storage-backends.md
+  - decisions/promotion-pipeline.md
   - sources/flake.nix.md
   - sources/devenv.nix.md
   - sources/flake.lock.md
@@ -211,6 +213,8 @@ sources:
 - [decisions/mcp-default-scope-decision.md](decisions/mcp-default-scope-decision.md) — accepted default MCP scope.
 - [decisions/documentation-delivery-decision.md](decisions/documentation-delivery-decision.md) — accepted docs-delivery posture.
 - [decisions/notebook-intake-validation-and-approval.md](decisions/notebook-intake-validation-and-approval.md) — accepted intake gates for immutable executable notebook revisions.
+- [decisions/mlflow-storage-backends.md](decisions/mlflow-storage-backends.md) — MLflow backend store and artifact store per profile; reverse proxy; MLFLOW_CREATE_MODEL_VERSION_SOURCE_VALIDATION_REGEX; mlflow-go parity.
+- [decisions/promotion-pipeline.md](decisions/promotion-pipeline.md) — DEV→UAT→REGRESSION→PROD pipeline, gate criteria, MLflow registry alignment, CI/CD integration.
 
 ## Source summaries
 

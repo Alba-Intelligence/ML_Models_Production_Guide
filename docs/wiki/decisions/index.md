@@ -32,6 +32,9 @@ These pages preserve durable choices that should not be rediscovered from scratc
 - [nbdev-framework-decision.md](nbdev-framework-decision.md) — accepted nbdev 3 framework for notebook-first development
 - [notebook-intake-validation-and-approval.md](notebook-intake-validation-and-approval.md) — accepted validation and approval gates for executable notebook intake
 
+- [mlflow-storage-backends.md](mlflow-storage-backends.md) — MLflow backend store and artifact store choices per profile; reverse proxy requirement; MLFLOW_CREATE_MODEL_VERSION_SOURCE_VALIDATION_REGEX; mlflow-go parity.
+- [promotion-pipeline.md](promotion-pipeline.md) — DEV→UAT→REGRESSION→PROD model promotion stages, gate criteria, MLflow registry alignment, CI/CD integration, PyTorch optimisation gate.
+
 ## Rule
 
 If a future choice materially changes architecture, operations, or implementation defaults, it should be captured as a new decision page or a revision to an existing one.

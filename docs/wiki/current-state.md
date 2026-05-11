@@ -128,6 +128,10 @@ As of 2026-05-11, the repository contains:
 - There is no production-ready ML data pipeline or deployment implementation yet.
 - Contract validation is currently test-level for the local vertical slice, not yet generalized across all topologies.
 - New architecture requirements now specify MLflow PostgreSQL/S3 storage, Lambda.ai Slurm coordination/redundancy, AWS Kubernetes for non-Lambda.ai services, and Nix (flake+devenv) Terranix-generated OpenTofu JSON infrastructure workflows.
+- Dual-profile (`local_emulation | cloud`) infrastructure now implemented: `docker-compose.local-infra.yml` (LocalStack + K3s + Slurm), Nix/Terranix modules in `nix/modules/` and `nix/profiles/`, and notebook `nbs/13_opentofu_infra.ipynb`.
+- Allium spec now covers MLflow storage backends (SQLite/PostgreSQL/MinIO/S3), security (reverse proxy, MLFLOW_CREATE_MODEL_VERSION_SOURCE_VALIDATION_REGEX), and a DEV→UAT→REGRESSION→PROD promotion pipeline with approval gate.
+- Five open questions formally recorded in the spec: Lambda.ai scheduling preference, bigmlflow flavor requirement, CI/CD tooling, promotion gate criteria, and PyTorch inference optimisation steps.
+- mlflow-go (`mlflow-go` server + `mlflow-go-backend` Python package) is the recommended approach for profile-switchable MLflow tracking (SQLite local, PostgreSQL cloud — no code changes required).
 - Slurm/Kubernetes paths currently emit backend-ready submission payloads, but external scheduler client integrations remain to be connected.
 - The distilled Allium spec currently models repository posture, shell behavior, and governance constraints; it does not yet cover any real ML implementation logic because that code still does not exist.
 - The distilled Allium spec now also models a spec-quality readiness gate required for default implementation allowance.
