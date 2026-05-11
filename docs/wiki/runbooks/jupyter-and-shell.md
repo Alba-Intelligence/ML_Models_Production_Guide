@@ -114,6 +114,8 @@ Render only the homepage:
 nix develop -c quarto render nbs/index.qmd --no-execute
 ```
 
+That homepage is what `_docs/index.html` forwards to in the published site; the rendered content lives at `_docs/nbs/index.html`.
+
 ## End-of-task publishable notebook workflow
 
 Use the standardized finalize command:

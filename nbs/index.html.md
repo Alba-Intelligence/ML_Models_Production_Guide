@@ -27,5 +27,6 @@ Read pages in the structure below to understand the system from architecture to 
 ## Topology and operations notebooks
 
 - [MLflow parity](07_mlflow_parity.qmd)
+- [Infrastructure MCP interrogation](14_infrastructure_mcp.qmd)
 - [Execution backends](08_execution_backends.qmd)
 - [Notebook intake validation](09_notebook_intake.qmd)
