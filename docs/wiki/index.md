@@ -15,6 +15,7 @@ sources:
   - architecture/assistant-integration-and-docs-delivery.md
   - architecture/notebook-repository-web-ui.md
   - architecture/full-system-interaction-analysis.md
+  - architecture/local-emulation-stack.md
   - architecture/webui-backend-contract.md
   - architecture/example-matrix.md
   - architecture/first-vertical-slice.md
@@ -151,6 +152,7 @@ sources:
 - [architecture/assistant-integration-and-docs-delivery.md](architecture/assistant-integration-and-docs-delivery.md) — accepted MCP defaults plus docs delivery guidance.
 - [architecture/notebook-repository-web-ui.md](architecture/notebook-repository-web-ui.md) — centralized interface for triggering notebook executions across environments while keeping notebooks immutable.
 - [architecture/full-system-interaction-analysis.md](architecture/full-system-interaction-analysis.md) — five-layer deep analysis of component boundaries, contracts, flows, coupling, and controls.
+- [architecture/local-emulation-stack.md](architecture/local-emulation-stack.md) — local emulation stack reference: LocalStack, K3s, Slurm-Docker, data+compute plane Compose files, verification checklist.
 - [architecture/webui-backend-contract.md](architecture/webui-backend-contract.md) — executable request/response contract for Web UI backend run triggering and MLflow-linked status.
 - [architecture/example-matrix.md](architecture/example-matrix.md) — proposed example inventory mapped to lifecycle, domains, contracts, and topologies.
 - [architecture/first-vertical-slice.md](architecture/first-vertical-slice.md) — concrete first end-to-end architecture slice with explicit I/O and success criteria.

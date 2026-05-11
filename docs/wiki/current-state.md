@@ -25,6 +25,7 @@ sources:
   - architecture/first-vertical-slice.md
   - architecture/webui-backend-contract.md
   - architecture/distilled-allium-spec.md
+  - architecture/local-emulation-stack.md
   - contracts/index.md
   - domains/index.md
   - topologies/index.md
@@ -98,22 +99,26 @@ As of 2026-05-11, the repository contains:
 - The first local vertical slice is now implemented in `ml_deploy/vertical_slice.py` with tests in `tests/test_vertical_slice.py`.
 - The vertical-slice module is now notebook-owned and exported from `nbs/06_vertical_slice.ipynb`.
 - A thin Web UI backend contract module now exists in `ml_deploy/webui_contracts.py` with tests in `tests/test_webui_contracts.py`.
-- Spec-propagated tests now enforce documentation-series completeness obligations in `tests/test_documentation_series_contracts.py` (implementation steps, trade-offs, security, examples, role-specific learning paths, and module/docs linkage).
+- Spec-propagated tests now enforce documentation-series completeness obligations in `tests/test_documentation_series_contracts.py`.
 - The Web UI contract module is now notebook-owned and exported from `nbs/05_webui_contracts.ipynb`.
 - Execution adapter mappings now exist for local, Slurm, and Kubernetes payloads.
 - Notebook intake validation gates now exist for immutable refs, notebook structure, and optional nbdev export checks.
 - Python-driven Terraform bootstrap helpers now generate Terraform JSON stack files and expose init/plan/apply runners.
 - Runtime helper modules are now notebook-owned and exported through nbdev, not maintained as hand-edited Python sources.
 - Runtime orchestration now routes notebook execution requests across local, Slurm, and Kubernetes targets with explicit submitted/completed backend states.
-- Docker-first reproducible development is now implemented with `Dockerfile` and `docker-compose.dev.yml` (including local MLflow PostgreSQL+MinIO parity services).
-- A full five-layer system interaction analysis now exists in both notebook and wiki forms for architecture-level component/coupling review.
+- Docker-first reproducible development is now implemented with `Dockerfile` and `docker-compose.dev.yml` (data plane: MLflow, PostgreSQL, MinIO).
+- **Local emulation compute plane** now exists in `docker-compose.local-infra.yml` (LocalStack, K3s, Slurm-Docker).
+- **Nix/Terranix module structure** now exists in `nix/` (shared, local, cloud modules; local and cloud profiles).
+- **Dual-mode OpenTofu spec** is encoded: `DeploymentProfile` enum, `LocalEmulationStack` entity, `RequireLocalEmulationParity` rule in Allium spec.
+- **Notebook 13** (`nbs/13_opentofu_infra.ipynb`) documents the full dual-mode architecture, workflow, trade-offs, security, and implementation steps.
+- A full five-layer system interaction analysis now exists in both notebook and wiki forms.
 - A distilled repository-wide Allium specification now exists and is indexed in the wiki.
 - An nbdev 3 project structure has been initialized with pyproject.toml, nbs/ directory, and ml_deploy/ package placeholder.
 - Notebooks can be successfully exported to Python packages using `nbdev-export --path nbs/`.
 - A single end-of-task command now exists to export notebooks, render docs, and run tests: `./scripts/finalize-task.sh`.
 - A canonical platform narrative notebook now owns the architecture story and Mermaid diagram.
 - The infrastructure overview notebook markdown is now cleaned to avoid literal `\n` rendering artifacts in docs output.
-- The rendered docs homepage is now notebook-driven (`nbs/index.ipynb`) and functions as navigation-first entrypoint into foundations/lifecycle/topology notebooks.
+- The rendered docs homepage is now notebook-driven (`nbs/index.ipynb`) and functions as navigation-first entrypoint.
 
 ## Current limitations
 
