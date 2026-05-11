@@ -129,7 +129,7 @@ As of 2026-05-11, the repository contains:
 - A canonical platform narrative Quarto page now owns the architecture story and Mermaid diagram.
 - The rendered docs homepage is now Quarto-driven (`nbs/index.qmd`) and functions as navigation-first entrypoint.
 - Full Quarto website generation from `.qmd` sources succeeds via `nix develop -c quarto render . --no-execute`.
-- Rendered Quarto outputs are refreshed under `_docs/nbs/*.html` with `_docs/index.html` as root entrypoint; that root page now forwards to an HTML landing page, the root sidebar no longer references the retired Terraform-bootstrap page, and the stale legacy `nbs/_docs/` snapshot has been removed.
+- Rendered Quarto outputs are refreshed under `_docs/nbs/*.html` with `_docs/index.html` as root entrypoint; that root page now forwards to an HTML landing page whose links target HTML docs, the root sidebar no longer references the retired Terraform-bootstrap page, and the stale legacy `nbs/_docs/` snapshot has been removed.
 - CI now enforces export/render/tests on pull requests and pushes, including docs freshness coverage.
 
 ## Current limitations
