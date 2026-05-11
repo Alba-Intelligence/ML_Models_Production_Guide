@@ -1,6 +1,6 @@
 ---
 updated: 2026-05-11
-summary: Synthesized summary of the infrastructure overview notebook with a cross-topology Mermaid architecture diagram.
+summary: Synthesized summary of the infrastructure overview notebook with cleaned markdown formatting and a cross-topology Mermaid architecture diagram.
 read_when:
   - You need a high-level visual briefing of the full platform
   - You are onboarding stakeholders before deep-dive domain pages
@@ -23,3 +23,8 @@ Presentation notebook for the whole-system architecture narrative.
 ## Practical implication
 
 This is the preferred first visual asset to explain the project before entering detailed contract/domain/topology specs.
+
+## Maintenance notes
+
+- Markdown cells must keep real line breaks in `source` arrays (not literal `\n` text).
+- Mermaid is authored with Quarto fence syntax (` ```{mermaid} `) and quoted labels where symbols are present.

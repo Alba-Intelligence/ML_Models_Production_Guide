@@ -84,7 +84,11 @@
             pyright
             # jupyter-all
           ])
-          ++ (with pkgs.python313Packages; [ ipykernel ]);
+          ++ (with pkgs.python313Packages; [
+            ipykernel
+            jupyter
+            jupyterlab
+          ]);
 
         devPkgs = with pkgs; [
           bash

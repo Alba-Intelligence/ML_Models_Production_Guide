@@ -77,6 +77,7 @@ sources:
   - revisions/2026-05-11-docs-index-overview-homepage.md
   - revisions/2026-05-11-index-mermaid-render-fix.md
   - revisions/2026-05-11-mermaid-syntax-error-resolution.md
+  - revisions/2026-05-11-notebook-escaped-newline-cleanup.md
 ---
 
 # Wiki index

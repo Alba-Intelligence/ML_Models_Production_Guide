@@ -102,6 +102,7 @@ As of 2026-05-11, the repository contains:
 - Notebooks can be successfully exported to Python packages using `nbdev-export --path nbs/`.
 - A single end-of-task command now exists to export notebooks, render docs, and run tests: `./scripts/finalize-task.sh`.
 - A presentation-friendly infrastructure overview notebook now exists to communicate the full architecture to mixed audiences.
+- The infrastructure overview notebook markdown is now cleaned to avoid literal `\n` rendering artifacts in docs output.
 - The rendered docs homepage is now notebook-driven (`nbs/index.ipynb`) and presents infrastructure, notebook-first approach, and traceability as the first view.
 
 ## Current limitations
