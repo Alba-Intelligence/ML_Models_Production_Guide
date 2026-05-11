@@ -38,6 +38,8 @@ entity Repository {
     terranix_json_output_required: Boolean
     lambda_ai_in_scope: Boolean
     aws_in_scope: Boolean
+    active_deployment_profile: DeploymentProfile
+    local_emulation_verified: Boolean
 
     required_contracts: Set<CrossCuttingContract>
     default_monitoring_stack: Set<MonitoringTool>
@@ -68,11 +70,25 @@ entity DocumentationSeries {
     has_docs_site_module_section: Boolean
 }
 
+enum DeploymentProfile { local_emulation | cloud }
+
 entity OpenTofuConfiguration {
     generated_with_terranix: Boolean
     generated_from_flake: Boolean
     generated_from_devenv: Boolean
     outputs_json_configuration: Boolean
+    supports_local_emulation: Boolean
+    supports_cloud_deployment: Boolean
+}
+
+entity LocalEmulationStack {
+    s3_emulated: Boolean
+    postgres_available: Boolean
+    mlflow_available: Boolean
+    aws_apis_emulated: Boolean
+    kubernetes_emulated: Boolean
+    slurm_emulated: Boolean
+    profile: DeploymentProfile
 }
 
 entity ShellSession {
@@ -138,6 +154,8 @@ rule InitializeRepositoryDefaults {
     ensures: repository.terranix_json_output_required = true
     ensures: repository.lambda_ai_in_scope = true
     ensures: repository.aws_in_scope = true
+    ensures: repository.active_deployment_profile = local_emulation
+    ensures: repository.local_emulation_verified = false
 
     ensures: repository.required_contracts = config.required_contracts
     ensures: repository.default_monitoring_stack = config.default_monitoring_stack
@@ -254,6 +272,25 @@ rule RequireNixGeneratedOpenTofuConfiguration {
     ensures: configuration.generated_from_flake = true
     ensures: configuration.generated_from_devenv = true
     ensures: configuration.outputs_json_configuration = true
+    ensures: configuration.supports_local_emulation = true
+    ensures: configuration.supports_cloud_deployment = true
+}
+
+rule RequireLocalEmulationParity {
+    when: LocalEmulationStackDeclared(repository, stack)
+
+    requires: repository.opentofu_in_scope
+    requires: repository.local_emulation_verified = false
+
+    ensures: stack.s3_emulated = true
+    ensures: stack.postgres_available = true
+    ensures: stack.mlflow_available = true
+    ensures: stack.aws_apis_emulated = true
+    ensures: stack.kubernetes_emulated = true
+    ensures: stack.slurm_emulated = true
+    ensures: stack.profile = local_emulation
+
+    @guidance "Local emulation stack must be fully verified before any cloud profile deployment is attempted. Use docker-compose.local-infra.yml for compute plane (LocalStack, K3s/Kind, Slurm-Docker) and docker-compose.dev.yml for data plane (MLflow, PostgreSQL, MinIO)."
 }
 
 rule BlockImplementationWithoutExplicitConfirmation {
@@ -286,5 +323,6 @@ surface GovernanceAndDocumentationSurface {
     provides: DurableRepositoryChangeObserved(wiki, change_is_non_trivial)
     provides: DocumentationSeriesDeclared(repository, series)
     provides: OpenTofuConfigurationDeclared(repository, configuration)
+    provides: LocalEmulationStackDeclared(repository, stack)
     provides: ImplementationCodeRequested(repository, explicit_user_confirmation)
 }
