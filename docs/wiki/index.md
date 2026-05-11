@@ -46,6 +46,7 @@ sources:
   - sources/ml_deploy.mlflow_parity.py.md
   - sources/ml_deploy.notebook_intake.py.md
   - sources/ml_deploy.terraform_bootstrap.py.md
+  - sources/nbs.01_platform_narrative.ipynb.md
   - sources/nbs.07_mlflow_parity.ipynb.md
   - sources/nbs.08_execution_backends.ipynb.md
   - sources/nbs.09_notebook_intake.ipynb.md
@@ -78,6 +79,8 @@ sources:
   - revisions/2026-05-11-index-mermaid-render-fix.md
   - revisions/2026-05-11-mermaid-syntax-error-resolution.md
   - revisions/2026-05-11-notebook-escaped-newline-cleanup.md
+  - revisions/2026-05-11-index-mermaid-hardening.md
+  - revisions/2026-05-11-notebook-presentation-restructure.md
 ---
 
 # Wiki index
@@ -101,7 +104,7 @@ sources:
 | Review executable Web UI backend contracts                           | [architecture/webui-backend-contract.md](architecture/webui-backend-contract.md), [sources/ml_deploy.webui_contracts.py.md](sources/ml_deploy.webui_contracts.py.md), [sources/tests.test_webui_contracts.py.md](sources/tests.test_webui_contracts.py.md) |
 | Review runtime adapter scaffolding                                    | [sources/ml_deploy.execution_backends.py.md](sources/ml_deploy.execution_backends.py.md), [sources/ml_deploy.notebook_intake.py.md](sources/ml_deploy.notebook_intake.py.md), [sources/ml_deploy.mlflow_parity.py.md](sources/ml_deploy.mlflow_parity.py.md) |
 | Edit runtime helpers in nbdev workflow                                | [sources/nbs.07_mlflow_parity.ipynb.md](sources/nbs.07_mlflow_parity.ipynb.md), [sources/nbs.08_execution_backends.ipynb.md](sources/nbs.08_execution_backends.ipynb.md), [sources/nbs.09_notebook_intake.ipynb.md](sources/nbs.09_notebook_intake.ipynb.md), [sources/nbs.10_terraform_bootstrap.ipynb.md](sources/nbs.10_terraform_bootstrap.ipynb.md) |
-| Present the full platform architecture visually                       | [sources/nbs.11_infrastructure_overview.ipynb.md](sources/nbs.11_infrastructure_overview.ipynb.md), [architecture/target-system.md](architecture/target-system.md), [topologies/index.md](topologies/index.md) |
+| Present the full platform architecture visually                       | [sources/nbs.01_platform_narrative.ipynb.md](sources/nbs.01_platform_narrative.ipynb.md), [architecture/target-system.md](architecture/target-system.md), [topologies/index.md](topologies/index.md) |
 | Edit Web UI contracts in nbdev workflow                              | [sources/nbs.05_webui_contracts.ipynb.md](sources/nbs.05_webui_contracts.ipynb.md), [sources/ml_deploy.webui_contracts.py.md](sources/ml_deploy.webui_contracts.py.md) |
 | Review the planned example inventory                                 | [architecture/example-matrix.md](architecture/example-matrix.md), [topologies/index.md](topologies/index.md)                                                                                                                                                         |
 | Start the first implementation-aligned architecture slice            | [architecture/first-vertical-slice.md](architecture/first-vertical-slice.md), [architecture/example-matrix.md](architecture/example-matrix.md), [contracts/index.md](contracts/index.md)                                                                            |
@@ -209,6 +212,7 @@ sources:
 - [sources/ml_deploy.mlflow_parity.py.md](sources/ml_deploy.mlflow_parity.py.md) — synthesized summary of local MLflow parity stack helpers.
 - [sources/ml_deploy.notebook_intake.py.md](sources/ml_deploy.notebook_intake.py.md) — synthesized summary of notebook intake validation gates.
 - [sources/ml_deploy.terraform_bootstrap.py.md](sources/ml_deploy.terraform_bootstrap.py.md) — synthesized summary of Python-first Terraform bootstrap helpers.
+- [sources/nbs.01_platform_narrative.ipynb.md](sources/nbs.01_platform_narrative.ipynb.md) — synthesized summary of the canonical platform architecture narrative notebook.
 - [sources/nbs.07_mlflow_parity.ipynb.md](sources/nbs.07_mlflow_parity.ipynb.md) — synthesized summary of nbdev source-of-truth for MLflow parity helpers.
 - [sources/nbs.08_execution_backends.ipynb.md](sources/nbs.08_execution_backends.ipynb.md) — synthesized summary of nbdev source-of-truth for execution adapters.
 - [sources/nbs.09_notebook_intake.ipynb.md](sources/nbs.09_notebook_intake.ipynb.md) — synthesized summary of nbdev source-of-truth for notebook intake gates.
@@ -242,6 +246,9 @@ sources:
 - [revisions/2026-05-11-infrastructure-overview-notebook.md](revisions/2026-05-11-infrastructure-overview-notebook.md) — captures creation of the high-level Mermaid-based architecture overview notebook.
 - [revisions/2026-05-11-docs-index-overview-homepage.md](revisions/2026-05-11-docs-index-overview-homepage.md) — captures replacement of redirect index with an overview homepage covering infra, notebook-first flow, and traceability.
 - [revisions/2026-05-11-index-mermaid-render-fix.md](revisions/2026-05-11-index-mermaid-render-fix.md) — captures the homepage Mermaid rendering fix using Quarto Mermaid block syntax.
+- [revisions/2026-05-11-index-mermaid-hardening.md](revisions/2026-05-11-index-mermaid-hardening.md) — captures parser-safe Mermaid hardening on the docs homepage diagram.
+- [revisions/2026-05-11-notebook-escaped-newline-cleanup.md](revisions/2026-05-11-notebook-escaped-newline-cleanup.md) — captures cleanup of notebook markdown serialization to avoid literal `\n` text in rendered docs.
+- [revisions/2026-05-11-notebook-presentation-restructure.md](revisions/2026-05-11-notebook-presentation-restructure.md) — captures lifecycle/topology-oriented notebook presentation restructure with canonical platform narrative notebook.
 - [revisions/2026-05-09-example-matrix.md](revisions/2026-05-09-example-matrix.md) — captures the first architecture-aligned example inventory.
 - [revisions/2026-05-09-default-stack-decisions.md](revisions/2026-05-09-default-stack-decisions.md) — captures the accepted default stack and boundary decisions.
 - [revisions/2026-05-09-topology-pages.md](revisions/2026-05-09-topology-pages.md) — captures the first pass of reference topology pages.

@@ -37,6 +37,7 @@ sources:
   - sources/nbs.08_execution_backends.ipynb.md
   - sources/nbs.09_notebook_intake.ipynb.md
   - sources/nbs.10_terraform_bootstrap.ipynb.md
+  - sources/nbs.01_platform_narrative.ipynb.md
   - sources/nbs.11_infrastructure_overview.ipynb.md
   - sources/nbs.index.ipynb.md
   - sources/nbs.05_webui_contracts.ipynb.md
@@ -66,7 +67,8 @@ As of 2026-05-11, the repository contains:
 - `nbs/08_execution_backends.ipynb` as nbdev source for backend execution adapters
 - `nbs/09_notebook_intake.ipynb` as nbdev source for notebook intake validation
 - `nbs/10_terraform_bootstrap.ipynb` as nbdev source for Terraform bootstrap helpers
-- `nbs/11_infrastructure_overview.ipynb` as high-level visual architecture briefing notebook with Mermaid diagram
+- `nbs/01_platform_narrative.ipynb` as the canonical platform architecture narrative notebook
+- `nbs/11_infrastructure_overview.ipynb` retained as a deprecated compatibility page that points to `01_platform_narrative`
 - runtime helper modules for MLflow parity, execution adapters, intake validation, and Terraform bootstrap
 - git metadata for a repository now rebased onto `origin/main`
 
@@ -101,9 +103,9 @@ As of 2026-05-11, the repository contains:
 - An nbdev 3 project structure has been initialized with pyproject.toml, nbs/ directory, and ml_deploy/ package placeholder.
 - Notebooks can be successfully exported to Python packages using `nbdev-export --path nbs/`.
 - A single end-of-task command now exists to export notebooks, render docs, and run tests: `./scripts/finalize-task.sh`.
-- A presentation-friendly infrastructure overview notebook now exists to communicate the full architecture to mixed audiences.
+- A canonical platform narrative notebook now owns the architecture story and Mermaid diagram.
 - The infrastructure overview notebook markdown is now cleaned to avoid literal `\n` rendering artifacts in docs output.
-- The rendered docs homepage is now notebook-driven (`nbs/index.ipynb`) and presents infrastructure, notebook-first approach, and traceability as the first view.
+- The rendered docs homepage is now notebook-driven (`nbs/index.ipynb`) and functions as navigation-first entrypoint into foundations/lifecycle/topology notebooks.
 
 ## Current limitations
 
