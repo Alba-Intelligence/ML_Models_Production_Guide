@@ -136,3 +136,5 @@ devenv.local.yaml
 
 /.quarto/
 **/*.quarto_ipynb
+site_libs/
+nbs/site_libs/
