@@ -31,8 +31,8 @@ website:
       - nbs/05_webui_contracts.qmd
       - nbs/06_vertical_slice.qmd
       - nbs/07_mlflow_parity.qmd
+      - nbs/14_infrastructure_mcp.qmd
       - nbs/08_execution_backends.qmd
       - nbs/09_notebook_intake.qmd
-      - nbs/10_terraform_bootstrap.qmd
       - nbs/12_system_interaction_analysis.qmd
       - nbs/13_opentofu_infra.qmd
