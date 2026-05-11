@@ -108,6 +108,7 @@ sources:
   - revisions/2026-05-11-root-docs-regeneration-from-qmd.md
   - revisions/2026-05-11-docs-freshness-and-lockfile-policy.md
   - revisions/2026-05-11-ci-enforcement-and-revision-archive-notes.md
+  - revisions/2026-05-11-local-emulation-parity-helpers.md
 ---
 
 # Wiki index

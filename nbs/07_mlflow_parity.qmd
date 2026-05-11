@@ -69,6 +69,17 @@ class MlflowStorageConfig:
     s3_endpoint_url: str | None = None
 
 
+@dataclass(frozen=True)
+class LocalInfrastructureParityConfig:
+    """Configuration for local compute-plane parity services."""
+
+    aws_region: str = "us-east-1"
+    localstack_port: int = 4566
+    k3s_api_port: int = 6443
+    slurmctld_port: int = 6817
+    network_name: str = "ml_local"
+
+
 def render_local_compose_config(config: LocalMlflowParityConfig) -> dict[str, Any]:
     """Render a Docker Compose config for local PostgreSQL + MinIO + MLflow."""
     postgres_image = "postgres:16-alpine"
@@ -130,6 +141,61 @@ def render_local_compose_config(config: LocalMlflowParityConfig) -> dict[str, An
                 "ports": [f"{config.mlflow_port}:{config.mlflow_port}"],
             },
         },
+    }
+
+
+def render_local_infra_compose_config(
+    config: LocalInfrastructureParityConfig | None = None,
+) -> dict[str, Any]:
+    """Render local emulation compute-plane config (AWS APIs, Kubernetes, Slurm)."""
+    runtime = config or LocalInfrastructureParityConfig()
+    return {
+        "services": {
+            "localstack": {
+                "image": "localstack/localstack:3",
+                "ports": [f"{runtime.localstack_port}:4566"],
+                "environment": {
+                    "SERVICES": "s3,iam,ec2,sts,secretsmanager,cloudwatch,logs",
+                    "DEBUG": "0",
+                    "AWS_DEFAULT_REGION": runtime.aws_region,
+                },
+                "networks": [runtime.network_name],
+            },
+            "k3s": {
+                "image": "rancher/k3s:v1.29.4-k3s1",
+                "privileged": True,
+                "command": "server --disable traefik --disable metrics-server",
+                "ports": [f"{runtime.k3s_api_port}:6443"],
+                "networks": [runtime.network_name],
+            },
+            "slurmctld": {
+                "image": "nathanhess/slurm:latest",
+                "command": ["slurm_controller"],
+                "ports": [f"{runtime.slurmctld_port}:6817"],
+                "networks": [runtime.network_name],
+            },
+            "slurmd": {
+                "image": "nathanhess/slurm:latest",
+                "command": ["slurm_worker"],
+                "depends_on": {"slurmctld": {"condition": "service_started"}},
+                "networks": [runtime.network_name],
+            },
+        },
+        "networks": {runtime.network_name: {"driver": "bridge"}},
+    }
+
+
+def render_full_local_emulation_compose_config(
+    data_plane: LocalMlflowParityConfig | None = None,
+    infra_plane: LocalInfrastructureParityConfig | None = None,
+) -> dict[str, Any]:
+    """Combine data-plane and compute-plane services for full local emulation parity."""
+    data = render_local_compose_config(data_plane or LocalMlflowParityConfig())
+    infra = render_local_infra_compose_config(infra_plane)
+    return {
+        "name": (data_plane or LocalMlflowParityConfig()).compose_project_name,
+        "services": {**data["services"], **infra["services"]},
+        "networks": infra["networks"],
     }
 
 

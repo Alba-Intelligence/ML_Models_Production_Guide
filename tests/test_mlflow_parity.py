@@ -8,11 +8,14 @@ import tempfile
 import unittest
 
 from ml_deploy.mlflow_parity import (
+    LocalInfrastructureParityConfig,
     LocalMlflowParityConfig,
     build_mlflow_runtime_env_from_storage,
     build_mlflow_runtime_env,
     build_mlflow_server_command,
+    render_full_local_emulation_compose_config,
     render_local_compose_config,
+    render_local_infra_compose_config,
     resolve_mlflow_storage_config,
     write_local_compose_file,
 )
@@ -25,6 +28,26 @@ class TestMlflowParity(unittest.TestCase):
         self.assertIn("postgres", compose["services"])
         self.assertIn("minio", compose["services"])
         self.assertIn("mlflow", compose["services"])
+
+    def test_render_local_infra_compose_contains_required_services(self) -> None:
+        compose = render_local_infra_compose_config(LocalInfrastructureParityConfig())
+        self.assertIn("localstack", compose["services"])
+        self.assertIn("k3s", compose["services"])
+        self.assertIn("slurmctld", compose["services"])
+        self.assertIn("slurmd", compose["services"])
+
+    def test_render_full_local_emulation_includes_data_and_compute_planes(self) -> None:
+        compose = render_full_local_emulation_compose_config()
+        for service_name in (
+            "postgres",
+            "minio",
+            "mlflow",
+            "localstack",
+            "k3s",
+            "slurmctld",
+            "slurmd",
+        ):
+            self.assertIn(service_name, compose["services"])
 
     def test_command_and_env_match_postgres_s3_posture(self) -> None:
         config = LocalMlflowParityConfig()

@@ -1,9 +1,10 @@
 ---
 updated: 2026-05-11
-summary: Synthesized summary of helpers for local and runtime MLflow storage parity (PostgreSQL backend + S3-compatible artifacts).
+summary: Synthesized summary of helpers for local MLflow parity and full local-emulation compose rendering.
 read_when:
   - You are wiring local MLflow infrastructure parity
   - You need compose/runtime configuration for PostgreSQL + MinIO + MLflow
+  - You need compute-plane emulation config (LocalStack, K3s, Slurm) from Python
 source_file: ../../ml_deploy/mlflow_parity.py
 sources:
   - nbs.07_mlflow_parity.qmd.md
@@ -23,7 +24,10 @@ Provides Python helpers to define and bootstrap local MLflow parity posture:
 
 - `LocalMlflowParityConfig` — typed configuration for ports, credentials, and URIs.
 - `MlflowStorageConfig` — runtime storage/tracking configuration model.
+- `LocalInfrastructureParityConfig` — compute-plane configuration for AWS API/Kubernetes/Slurm emulation.
 - `render_local_compose_config` — compose config renderer for postgres/minio/mlflow services.
+- `render_local_infra_compose_config` — compose config renderer for localstack/k3s/slurm services.
+- `render_full_local_emulation_compose_config` — merges data-plane and compute-plane compose services.
 - `write_local_compose_file` — writes JSON-serialized compose config.
 - `build_mlflow_server_command` / `build_mlflow_runtime_env` — local parity command/env helpers.
 - `resolve_mlflow_storage_config` / `build_mlflow_runtime_env_from_storage` — environment-driven PostgreSQL+S3 runtime configuration helpers.
