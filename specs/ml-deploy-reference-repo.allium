@@ -16,6 +16,8 @@ enum DocumentationAudience { software_engineer | ml_researcher }
 enum MlflowBackendStore { sqlite | postgresql }
 enum MlflowArtifactStore { filesystem | minio | s3 }
 enum PromotionStage { dev | uat | regression | prod }
+enum WorkloadScheduler { slurm | kubernetes }
+enum CicdPlatform { github_actions | argocd | custom }
 
 entity Repository {
     name: String
@@ -45,6 +47,10 @@ entity Repository {
     local_emulation_verified: Boolean
     cicd_pipeline_in_scope: Boolean
     promotion_pipeline_in_scope: Boolean
+    lambda_ai_training_scheduler: WorkloadScheduler
+    lambda_ai_inference_scheduler: WorkloadScheduler
+    cicd_platform: CicdPlatform
+    uses_community_model_flavors: Boolean
 
     required_contracts: Set<CrossCuttingContract>
     default_monitoring_stack: Set<MonitoringTool>
@@ -138,6 +144,18 @@ entity ModelArtifact {
     tracked_in_mlflow: Boolean
     stage: PromotionStage
     promotion_approved: Boolean
+    passes_smoke_tests: Boolean
+    passes_uat_suite: Boolean
+    no_data_leakage_detected: Boolean
+    meets_minimum_metrics: Boolean
+    passes_regression_suite: Boolean
+    no_performance_regression: Boolean
+    security_scan_passed: Boolean
+    pytorch_compile_applied: Boolean
+    pytorch_no_grad_applied: Boolean
+    pytorch_mixed_precision_applied: Boolean
+    pytorch_channels_last_applied: Boolean
+    pytorch_memory_fraction_limited: Boolean
 }
 
 config {
@@ -178,6 +196,10 @@ rule InitializeRepositoryDefaults {
     ensures: repository.local_emulation_verified = false
     ensures: repository.cicd_pipeline_in_scope = true
     ensures: repository.promotion_pipeline_in_scope = true
+    ensures: repository.lambda_ai_training_scheduler = slurm
+    ensures: repository.lambda_ai_inference_scheduler = kubernetes
+    ensures: repository.cicd_platform = github_actions
+    ensures: repository.uses_community_model_flavors = false
 
     ensures: repository.required_contracts = config.required_contracts
     ensures: repository.default_monitoring_stack = config.default_monitoring_stack
@@ -413,6 +435,61 @@ rule RequireModelPromotionApproval {
         -- (Staging → Production). No model may skip stages.
 }
 
+rule RequirePromotionGateDevToUat {
+    when: ModelArtifactPromoted(artifact, to_stage)
+
+    requires: to_stage = uat
+    requires: artifact.tracked_in_mlflow
+    requires: artifact.passes_smoke_tests
+
+    ensures: artifact.stage = uat
+
+    @guidance
+        -- Before promoting to UAT the model must be fully tracked in MLflow (params,
+        -- metrics, artifact URI) and must pass smoke tests: model loads without error
+        -- and produces an output of the expected shape.
+}
+
+rule RequirePromotionGateUatToRegression {
+    when: ModelArtifactPromoted(artifact, to_stage)
+
+    requires: to_stage = regression
+    requires: artifact.passes_uat_suite
+    requires: artifact.no_data_leakage_detected
+    requires: artifact.meets_minimum_metrics
+
+    ensures: artifact.stage = regression
+
+    @guidance
+        -- Before promoting to REGRESSION the model must pass the UAT test suite on
+        -- production-representative sample data, pass a data leakage check confirming
+        -- train/test split integrity, and meet the minimum performance metric thresholds
+        -- defined for the model type.
+}
+
+rule RequirePromotionGateProdQualityChecks {
+    when: ModelArtifactPromoted(artifact, to_stage)
+
+    requires: to_stage = prod
+    requires: artifact.passes_regression_suite
+    requires: artifact.no_performance_regression
+    requires: artifact.security_scan_passed
+    requires: artifact.pytorch_compile_applied
+    requires: artifact.pytorch_no_grad_applied
+    requires: artifact.pytorch_mixed_precision_applied
+    requires: artifact.pytorch_channels_last_applied
+    requires: artifact.pytorch_memory_fraction_limited
+
+    @guidance
+        -- All automated quality gates must pass before production promotion.
+        -- PyTorch inference optimisations (torch.compile, torch.no_grad, autocast
+        -- mixed precision, channels-last memory format, GPU memory fraction limit)
+        -- must be applied and verified. See:
+        -- https://docs.pytorch.org/tutorials/recipes/recipes/tuning_guide.html
+        -- A security dependency scan must pass. The model must not regress on
+        -- reference holdout datasets versus the current production model.
+}
+
 surface DeveloperShellSurface {
     provides: DeveloperEntersShell(repository, session)
     provides: EnsureJupyterKernel(session)
@@ -432,9 +509,3 @@ surface MlflowOperationsSurface {
     provides: MlflowTrackingServerDeployed(repository, server)
     provides: ModelArtifactPromoted(artifact, to_stage)
 }
-
-open question "Lambda.ai Slurm vs Kubernetes: should training jobs be dispatched via Slurm only, via Kubernetes only, or should the system support both interchangeably per workload type? Lambda.ai supports both — a scheduling preference must be defined for training and for inference serving separately."
-open question "MLflow model flavors: must models be logged and loaded using the bigmlflow community flavor (https://mlflow.org/docs/latest/ml/community-model-flavors/) for cloud MLflow deployments, or is the standard mlflow.sklearn / mlflow.pytorch flavor sufficient across all profiles? If bigmlflow is required, OurMLFlow base class must wrap log() and load() for both local and cloud contexts."
-open question "CI/CD tooling: which CI/CD platform should gate the promotion pipeline (DEV → UAT → REGRESSION → PROD) and enforce spec compliance checks? Options include GitHub Actions, ArgoCD, or a custom orchestration layer."
-open question "Promotion gate criteria: what automated checks must pass at each stage boundary — DEV→UAT, UAT→REGRESSION, REGRESSION→PROD? Are human approvals required at any gate?"
-open question "PyTorch inference optimisation: which tuning steps from https://docs.pytorch.org/tutorials/recipes/recipes/tuning_guide.html are mandatory before a model is eligible for production promotion? E.g. torch.compile, mixed precision, channels-last memory format."
