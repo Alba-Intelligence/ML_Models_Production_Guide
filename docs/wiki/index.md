@@ -32,6 +32,7 @@ sources:
   - decisions/cost-monitoring-stack-decision.md
   - decisions/docker-nix-boundary-decision.md
   - decisions/mcp-default-scope-decision.md
+  - decisions/infrastructure-mcp-server-inventory.md
   - decisions/documentation-delivery-decision.md
   - decisions/notebook-intake-validation-and-approval.md
   - decisions/mlflow-storage-backends.md
@@ -45,26 +46,30 @@ sources:
   - sources/gitignore.md
   - sources/LICENSE.md
   - sources/README.md
+  - sources/_quarto.yml.md
+  - sources/.github.workflows.ci.yml.md
   - sources/ml-deploy-reference-repo.allium.md
   - sources/ml_deploy.vertical_slice.py.md
-  - sources/nbs.06_vertical_slice.ipynb.md
+  - sources/nbs.06_vertical_slice.qmd.md
   - sources/ml_deploy.webui_contracts.py.md
   - sources/ml_deploy.execution_backends.py.md
   - sources/ml_deploy.mlflow_parity.py.md
   - sources/ml_deploy.notebook_intake.py.md
   - sources/ml_deploy.terraform_bootstrap.py.md
-  - sources/nbs.01_platform_narrative.ipynb.md
-  - sources/nbs.07_mlflow_parity.ipynb.md
-  - sources/nbs.08_execution_backends.ipynb.md
-  - sources/nbs.09_notebook_intake.ipynb.md
-  - sources/nbs.10_terraform_bootstrap.ipynb.md
-  - sources/nbs.11_infrastructure_overview.ipynb.md
-  - sources/nbs.12_system_interaction_analysis.ipynb.md
-  - sources/nbs.index.ipynb.md
-  - sources/nbs.05_webui_contracts.ipynb.md
+  - sources/nbs.01_platform_narrative.qmd.md
+  - sources/nbs.07_mlflow_parity.qmd.md
+  - sources/nbs.08_execution_backends.qmd.md
+  - sources/nbs.09_notebook_intake.qmd.md
+  - sources/nbs.10_terraform_bootstrap.qmd.md
+  - sources/nbs.12_system_interaction_analysis.qmd.md
+  - sources/nbs.13_opentofu_infra.qmd.md
+  - sources/nbs.index.qmd.md
+  - sources/nbs.05_webui_contracts.qmd.md
   - sources/tests.test_vertical_slice.py.md
   - sources/tests.test_webui_contracts.py.md
   - sources/tests.test_documentation_series_contracts.py.md
+  - sources/tests.test_docs_freshness.py.md
+  - sources/tests.test_mcp_infrastructure_contracts.py.md
   - sources/scripts.finalize-task.sh.md
   - revisions/2026-05-10-distilled-allium-spec.md
   - revisions/2026-05-10-allium-cli-build-fix.md
@@ -95,7 +100,14 @@ sources:
   - revisions/2026-05-11-doc-series-obligations-implementation.md
   - revisions/2026-05-11-spec-runtime-docker-implementation.md
   - revisions/2026-05-11-opentofu-terranix-spec-shift.md
+  - revisions/2026-05-11-mcp-infrastructure-interrogation-requirement.md
+  - revisions/2026-05-11-quarto-conversion-and-pruning.md
   - revisions/2026-05-11-full-system-interaction-analysis.md
+  - revisions/2026-05-11-quarto-render-metadata-fix.md
+  - revisions/2026-05-11-quarto-code-ownership-switch.md
+  - revisions/2026-05-11-root-docs-regeneration-from-qmd.md
+  - revisions/2026-05-11-docs-freshness-and-lockfile-policy.md
+  - revisions/2026-05-11-ci-enforcement-and-revision-archive-notes.md
 ---
 
 # Wiki index
@@ -111,21 +123,22 @@ sources:
 | Review the ratified architecture skeleton                            | [architecture/reference-architecture-skeleton.md](architecture/reference-architecture-skeleton.md), [architecture/target-system.md](architecture/target-system.md)                                                                                                   |
 | Review the ratified documentation structure                          | [architecture/documentation-toc.md](architecture/documentation-toc.md), [architecture/reference-architecture-skeleton.md](architecture/reference-architecture-skeleton.md)                                                                                           |
 | Review assistant/MCP and docs-delivery proposals                     | [architecture/assistant-integration-and-docs-delivery.md](architecture/assistant-integration-and-docs-delivery.md), [architecture/target-system.md](architecture/target-system.md)                                                                                   |
-| Run full five-layer interaction analysis                             | [architecture/full-system-interaction-analysis.md](architecture/full-system-interaction-analysis.md), [sources/nbs.12_system_interaction_analysis.ipynb.md](sources/nbs.12_system_interaction_analysis.ipynb.md) |
+| Run full five-layer interaction analysis                             | [architecture/full-system-interaction-analysis.md](architecture/full-system-interaction-analysis.md), [sources/nbs.12_system_interaction_analysis.qmd.md](sources/nbs.12_system_interaction_analysis.qmd.md) |
 | Review the cross-cutting contracts                                   | [contracts/index.md](contracts/index.md), [architecture/reference-architecture-skeleton.md](architecture/reference-architecture-skeleton.md)                                                                                                                         |
 | Review the bounded domain pages                                      | [domains/index.md](domains/index.md), [architecture/reference-architecture-skeleton.md](architecture/reference-architecture-skeleton.md)                                                                                                                             |
 | Review the reference topologies                                      | [topologies/index.md](topologies/index.md), [architecture/reference-architecture-skeleton.md](architecture/reference-architecture-skeleton.md)                                                                                                                       |
 | Review accepted default stack decisions                              | [decisions/monitoring-stack-decision.md](decisions/monitoring-stack-decision.md), [decisions/cost-monitoring-stack-decision.md](decisions/cost-monitoring-stack-decision.md), [decisions/docker-nix-boundary-decision.md](decisions/docker-nix-boundary-decision.md) |
+| Review required infrastructure MCP coverage                          | [decisions/infrastructure-mcp-server-inventory.md](decisions/infrastructure-mcp-server-inventory.md), [decisions/mcp-default-scope-decision.md](decisions/mcp-default-scope-decision.md) |
 | Review latest platform requirements alignment                        | [decisions/project-scope-and-constraints.md](decisions/project-scope-and-constraints.md), [architecture/target-system.md](architecture/target-system.md), [revisions/2026-05-10-platform-requirements-alignment.md](revisions/2026-05-10-platform-requirements-alignment.md) |
 | Review executable Web UI backend contracts                           | [architecture/webui-backend-contract.md](architecture/webui-backend-contract.md), [sources/ml_deploy.webui_contracts.py.md](sources/ml_deploy.webui_contracts.py.md), [sources/tests.test_webui_contracts.py.md](sources/tests.test_webui_contracts.py.md) |
 | Review runtime adapter scaffolding                                    | [sources/ml_deploy.execution_backends.py.md](sources/ml_deploy.execution_backends.py.md), [sources/ml_deploy.notebook_intake.py.md](sources/ml_deploy.notebook_intake.py.md), [sources/ml_deploy.mlflow_parity.py.md](sources/ml_deploy.mlflow_parity.py.md) |
-| Edit runtime helpers in nbdev workflow                                | [sources/nbs.07_mlflow_parity.ipynb.md](sources/nbs.07_mlflow_parity.ipynb.md), [sources/nbs.08_execution_backends.ipynb.md](sources/nbs.08_execution_backends.ipynb.md), [sources/nbs.09_notebook_intake.ipynb.md](sources/nbs.09_notebook_intake.ipynb.md), [sources/nbs.10_terraform_bootstrap.ipynb.md](sources/nbs.10_terraform_bootstrap.ipynb.md) |
-| Present the full platform architecture visually                       | [sources/nbs.01_platform_narrative.ipynb.md](sources/nbs.01_platform_narrative.ipynb.md), [architecture/target-system.md](architecture/target-system.md), [topologies/index.md](topologies/index.md) |
-| Edit Web UI contracts in nbdev workflow                              | [sources/nbs.05_webui_contracts.ipynb.md](sources/nbs.05_webui_contracts.ipynb.md), [sources/ml_deploy.webui_contracts.py.md](sources/ml_deploy.webui_contracts.py.md) |
+| Edit runtime helpers in nbdev workflow                                | [sources/nbs.07_mlflow_parity.qmd.md](sources/nbs.07_mlflow_parity.qmd.md), [sources/nbs.08_execution_backends.qmd.md](sources/nbs.08_execution_backends.qmd.md), [sources/nbs.09_notebook_intake.qmd.md](sources/nbs.09_notebook_intake.qmd.md), [sources/nbs.10_terraform_bootstrap.qmd.md](sources/nbs.10_terraform_bootstrap.qmd.md) |
+| Present the full platform architecture visually                       | [sources/nbs.01_platform_narrative.qmd.md](sources/nbs.01_platform_narrative.qmd.md), [architecture/target-system.md](architecture/target-system.md), [topologies/index.md](topologies/index.md) |
+| Edit Web UI contracts in nbdev workflow                              | [sources/nbs.05_webui_contracts.qmd.md](sources/nbs.05_webui_contracts.qmd.md), [sources/ml_deploy.webui_contracts.py.md](sources/ml_deploy.webui_contracts.py.md) |
 | Review the planned example inventory                                 | [architecture/example-matrix.md](architecture/example-matrix.md), [topologies/index.md](topologies/index.md)                                                                                                                                                         |
 | Start the first implementation-aligned architecture slice            | [architecture/first-vertical-slice.md](architecture/first-vertical-slice.md), [architecture/example-matrix.md](architecture/example-matrix.md), [contracts/index.md](contracts/index.md)                                                                            |
 | Inspect concrete local slice implementation details                   | [sources/ml_deploy.vertical_slice.py.md](sources/ml_deploy.vertical_slice.py.md), [sources/tests.test_vertical_slice.py.md](sources/tests.test_vertical_slice.py.md)                                                                                                  |
-| Edit vertical-slice implementation in nbdev workflow                  | [sources/nbs.06_vertical_slice.ipynb.md](sources/nbs.06_vertical_slice.ipynb.md), [sources/ml_deploy.vertical_slice.py.md](sources/ml_deploy.vertical_slice.py.md) |
+| Edit vertical-slice implementation in nbdev workflow                  | [sources/nbs.06_vertical_slice.qmd.md](sources/nbs.06_vertical_slice.qmd.md), [sources/ml_deploy.vertical_slice.py.md](sources/ml_deploy.vertical_slice.py.md) |
 | Decide how much weight to give decision records                      | [queries/decision-records-and-project-restart.md](queries/decision-records-and-project-restart.md), [architecture/top-down-planning.md](architecture/top-down-planning.md)                                                                                           |
 | Check whether implementation is allowed yet                          | [decisions/project-scope-and-constraints.md](decisions/project-scope-and-constraints.md), [current-state.md](current-state.md)                                                                                                                                       |
 | Modify the Nix dev shell or toolchain                                | [architecture/dev-environment.md](architecture/dev-environment.md), [sources/flake.nix.md](sources/flake.nix.md)                                                                                                                                                     |
@@ -211,6 +224,7 @@ sources:
 - [decisions/cost-monitoring-stack-decision.md](decisions/cost-monitoring-stack-decision.md) — accepted default cost stack.
 - [decisions/docker-nix-boundary-decision.md](decisions/docker-nix-boundary-decision.md) — accepted Docker/Nix boundary.
 - [decisions/mcp-default-scope-decision.md](decisions/mcp-default-scope-decision.md) — accepted default MCP scope.
+- [decisions/infrastructure-mcp-server-inventory.md](decisions/infrastructure-mcp-server-inventory.md) — required infrastructure MCP interrogation coverage and server inventory defaults.
 - [decisions/documentation-delivery-decision.md](decisions/documentation-delivery-decision.md) — accepted docs-delivery posture.
 - [decisions/notebook-intake-validation-and-approval.md](decisions/notebook-intake-validation-and-approval.md) — accepted intake gates for immutable executable notebook revisions.
 - [decisions/mlflow-storage-backends.md](decisions/mlflow-storage-backends.md) — MLflow backend store and artifact store per profile; reverse proxy; MLFLOW_CREATE_MODEL_VERSION_SOURCE_VALIDATION_REGEX; mlflow-go parity.
@@ -227,26 +241,29 @@ sources:
 - [sources/gitignore.md](sources/gitignore.md) — synthesized summary of ignored paths and tracking implications.
 - [sources/LICENSE.md](sources/LICENSE.md) — synthesized summary of the repository license and its provenance from origin.
 - [sources/README.md](sources/README.md) — synthesized summary of root newcomer-onboarding guidance.
+- [sources/.github.workflows.ci.yml.md](sources/.github.workflows.ci.yml.md) — synthesized summary of CI enforcement for export, render, and test checks.
 - [sources/ml-deploy-reference-repo.allium.md](sources/ml-deploy-reference-repo.allium.md) — synthesized summary of the distilled repository-level Allium spec.
 - [sources/ml_deploy.vertical_slice.py.md](sources/ml_deploy.vertical_slice.py.md) — synthesized summary of the implemented local vertical-slice module.
-- [sources/nbs.06_vertical_slice.ipynb.md](sources/nbs.06_vertical_slice.ipynb.md) — synthesized summary of nbdev notebook source-of-truth for vertical-slice implementation.
+- [sources/nbs.06_vertical_slice.qmd.md](sources/nbs.06_vertical_slice.qmd.md) — synthesized summary of Quarto nbdev source-of-truth for vertical-slice implementation.
 - [sources/ml_deploy.webui_contracts.py.md](sources/ml_deploy.webui_contracts.py.md) — synthesized summary of Web UI execution/run-visibility contract helpers.
 - [sources/ml_deploy.execution_backends.py.md](sources/ml_deploy.execution_backends.py.md) — synthesized summary of local/slurm/k8s execution adapter mappings.
 - [sources/ml_deploy.mlflow_parity.py.md](sources/ml_deploy.mlflow_parity.py.md) — synthesized summary of local MLflow parity stack helpers.
 - [sources/ml_deploy.notebook_intake.py.md](sources/ml_deploy.notebook_intake.py.md) — synthesized summary of notebook intake validation gates.
 - [sources/ml_deploy.terraform_bootstrap.py.md](sources/ml_deploy.terraform_bootstrap.py.md) — synthesized summary of Python-first Terraform bootstrap helpers.
-- [sources/nbs.01_platform_narrative.ipynb.md](sources/nbs.01_platform_narrative.ipynb.md) — synthesized summary of the canonical platform architecture narrative notebook.
-- [sources/nbs.07_mlflow_parity.ipynb.md](sources/nbs.07_mlflow_parity.ipynb.md) — synthesized summary of nbdev source-of-truth for MLflow parity helpers.
-- [sources/nbs.08_execution_backends.ipynb.md](sources/nbs.08_execution_backends.ipynb.md) — synthesized summary of nbdev source-of-truth for execution adapters.
-- [sources/nbs.09_notebook_intake.ipynb.md](sources/nbs.09_notebook_intake.ipynb.md) — synthesized summary of nbdev source-of-truth for notebook intake gates.
-- [sources/nbs.10_terraform_bootstrap.ipynb.md](sources/nbs.10_terraform_bootstrap.ipynb.md) — synthesized summary of nbdev source-of-truth for Terraform bootstrap helpers.
-- [sources/nbs.11_infrastructure_overview.ipynb.md](sources/nbs.11_infrastructure_overview.ipynb.md) — synthesized summary of audience-facing infrastructure architecture overview notebook.
-- [sources/nbs.12_system_interaction_analysis.ipynb.md](sources/nbs.12_system_interaction_analysis.ipynb.md) — synthesized summary of the five-layer system interaction analysis notebook.
-- [sources/nbs.index.ipynb.md](sources/nbs.index.ipynb.md) — synthesized summary of the rendered docs homepage notebook.
-- [sources/nbs.05_webui_contracts.ipynb.md](sources/nbs.05_webui_contracts.ipynb.md) — synthesized summary of nbdev notebook source-of-truth for Web UI contracts.
+- [sources/nbs.01_platform_narrative.qmd.md](sources/nbs.01_platform_narrative.qmd.md) — synthesized summary of the canonical platform architecture narrative Quarto page.
+- [sources/nbs.07_mlflow_parity.qmd.md](sources/nbs.07_mlflow_parity.qmd.md) — synthesized summary of Quarto nbdev source-of-truth for MLflow parity helpers.
+- [sources/nbs.08_execution_backends.qmd.md](sources/nbs.08_execution_backends.qmd.md) — synthesized summary of Quarto nbdev source-of-truth for execution adapters.
+- [sources/nbs.09_notebook_intake.qmd.md](sources/nbs.09_notebook_intake.qmd.md) — synthesized summary of Quarto nbdev source-of-truth for notebook intake gates.
+- [sources/nbs.10_terraform_bootstrap.qmd.md](sources/nbs.10_terraform_bootstrap.qmd.md) — synthesized summary of Quarto nbdev source-of-truth for Terraform bootstrap helpers.
+- [sources/nbs.12_system_interaction_analysis.qmd.md](sources/nbs.12_system_interaction_analysis.qmd.md) — synthesized summary of the five-layer system interaction analysis Quarto page.
+- [sources/nbs.13_opentofu_infra.qmd.md](sources/nbs.13_opentofu_infra.qmd.md) — synthesized summary of the OpenTofu infrastructure profile Quarto page.
+- [sources/nbs.index.qmd.md](sources/nbs.index.qmd.md) — synthesized summary of the rendered docs homepage Quarto page.
+- [sources/nbs.05_webui_contracts.qmd.md](sources/nbs.05_webui_contracts.qmd.md) — synthesized summary of Quarto nbdev source-of-truth for Web UI contracts.
 - [sources/tests.test_vertical_slice.py.md](sources/tests.test_vertical_slice.py.md) — synthesized summary of vertical-slice behavior tests.
 - [sources/tests.test_webui_contracts.py.md](sources/tests.test_webui_contracts.py.md) — synthesized summary of Web UI contract behavior tests.
 - [sources/tests.test_documentation_series_contracts.py.md](sources/tests.test_documentation_series_contracts.py.md) — synthesized summary of spec-propagated documentation-series completeness tests.
+- [sources/tests.test_docs_freshness.py.md](sources/tests.test_docs_freshness.py.md) — synthesized summary of docs freshness checks for Quarto-rendered HTML.
+- [sources/tests.test_mcp_infrastructure_contracts.py.md](sources/tests.test_mcp_infrastructure_contracts.py.md) — synthesized summary of spec-propagated infrastructure MCP interrogation contract tests.
 - [sources/scripts.finalize-task.sh.md](sources/scripts.finalize-task.sh.md) — synthesized summary of the canonical end-of-task export/docs/tests command.
 
 ## Revision artifacts
@@ -279,6 +296,8 @@ sources:
 - [revisions/2026-05-11-doc-series-obligations-implementation.md](revisions/2026-05-11-doc-series-obligations-implementation.md) — captures completion of deferred doc-series requirements and activation of full non-skipped enforcement tests.
 - [revisions/2026-05-11-spec-runtime-docker-implementation.md](revisions/2026-05-11-spec-runtime-docker-implementation.md) — captures trigger-reachability + shell-sync spec alignment, backend orchestration routing, MLflow runtime storage config, and Docker-first workflow implementation.
 - [revisions/2026-05-11-opentofu-terranix-spec-shift.md](revisions/2026-05-11-opentofu-terranix-spec-shift.md) — captures the canonical infrastructure shift to Nix (flake+devenv) Terranix-generated OpenTofu JSON.
+- [revisions/2026-05-11-mcp-infrastructure-interrogation-requirement.md](revisions/2026-05-11-mcp-infrastructure-interrogation-requirement.md) — captures the requirement, minimum interrogation aspects, and propagated tests for infrastructure MCP availability.
+- [revisions/2026-05-11-quarto-conversion-and-pruning.md](revisions/2026-05-11-quarto-conversion-and-pruning.md) — captures narrative docs conversion to Quarto pages and pruning of deprecated notebook artifacts.
 - [revisions/2026-05-11-full-system-interaction-analysis.md](revisions/2026-05-11-full-system-interaction-analysis.md) — captures the five-layer full-system component interaction analysis and notebook/wiki note expansion.
 - [revisions/2026-05-09-example-matrix.md](revisions/2026-05-09-example-matrix.md) — captures the first architecture-aligned example inventory.
 - [revisions/2026-05-09-default-stack-decisions.md](revisions/2026-05-09-default-stack-decisions.md) — captures the accepted default stack and boundary decisions.

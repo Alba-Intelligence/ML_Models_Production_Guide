@@ -95,6 +95,7 @@ High-value assistant tasks here include:
 - identifying missing lineage links between input and output datasets
 - comparing job costs and run durations
 - checking whether an output set is traceable back to model version and input batch
+- interrogating AWS/Kubernetes runtime and IaC plan/state surfaces through MCP interfaces where available
 
 ## Open decisions
 

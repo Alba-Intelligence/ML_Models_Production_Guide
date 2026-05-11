@@ -51,6 +51,16 @@ Until real project code lands, the practical areas of concern are:
 - Jupyter workflow
 - upstream pinning through `flake.lock`
 
+## Decision: keep `flake.lock` local-only (gitignored)
+
+`flake.lock` remains intentionally ignored in this repository.
+
+### Why this matters
+
+- `nix develop` in this environment may rewrite lockfile inputs during routine commands.
+- Tracking that file today would create noisy diffs unrelated to core spec/docs/code changes.
+- Reproducibility is still available locally, but lock updates are not treated as canonical history yet.
+
 See also: [project-scope-and-constraints.md](project-scope-and-constraints.md) and [../architecture/target-system.md](../architecture/target-system.md).
 
 ## When this page should change

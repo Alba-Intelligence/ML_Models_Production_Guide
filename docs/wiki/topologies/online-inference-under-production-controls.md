@@ -96,6 +96,7 @@ High-value assistant tasks here include:
 - correlating deployments with latency/error shifts
 - summarizing incident context from logs/metrics/deployments
 - identifying likely rollback candidates and missing observability signals
+- interrogating Kubernetes runtime state and infrastructure drift/cost signals through MCP surfaces where available
 
 ## Open decisions
 

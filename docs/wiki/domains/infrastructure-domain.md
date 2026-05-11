@@ -64,6 +64,7 @@ Useful assistant capabilities here include:
 - surfacing environment drift
 - comparing intended vs deployed resource shape
 - checking presence of required tags, network assumptions, or secret integrations
+- interrogating IaC plans/state, Kubernetes runtime state, Lambda.ai/Slurm runtime state, cloud resource inventory, and infrastructure cost/usage signals when MCP servers are available
 
 ## Open decisions
 

@@ -485,7 +485,7 @@ If a dynamic documentation service is used, the design should assume:
 - Optional environment assistance: Nix
 - Default monitoring stack: `evidently` + Prometheus/Grafana + MLflow
 - Default cost stack: AWS CUR/Athena/Budgets + Python attribution layer for Lambda.ai
-- Default assistant integration scope: MLflow + observability + cost + Lambda.ai usage + documentation/decision retrieval through MCP-style interfaces
+- Default assistant integration scope: MLflow + observability + cost + Lambda.ai usage + infrastructure interrogation (when MCP servers are available) + documentation/decision retrieval through MCP-style interfaces
 - Docs delivery posture: markdown-in-git is canonical; optional dynamic docs services must remain separate from inference serving
 
 ## What this skeleton should enable next

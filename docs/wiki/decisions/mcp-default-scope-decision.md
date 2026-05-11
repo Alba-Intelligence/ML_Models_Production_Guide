@@ -1,6 +1,6 @@
 ---
-updated: 2026-05-09
-summary: Accepted default scope for MCP-enabled assistant integrations.
+updated: 2026-05-11
+summary: Accepted default scope for MCP-enabled assistant integrations, including infrastructure interrogation when MCPs exist.
 read_when:
   - You are deciding which assistant integrations are core vs optional
   - You are building assistant-support or monitoring docs
@@ -19,19 +19,24 @@ sources:
 
 ## Decision
 
-The default MCP/assistant-support scope includes all five of these core surfaces:
+The default MCP/assistant-support scope includes these core surfaces:
 
 1. **MLflow**
 2. **Observability backends** (Prometheus/Grafana and/or CloudWatch as relevant)
 3. **AWS cost visibility**
 4. **Lambda.ai job/usage visibility**
-5. **Documentation / decision retrieval**
+5. **Infrastructure visibility/interrogation** (when relevant infrastructure MCP servers are available)
+6. **Documentation / decision retrieval**
 
 These are the default reference integrations to plan around.
 
+For required infrastructure interrogation coverage and default-vs-optional server inventory, see:
+
+- [infrastructure-mcp-server-inventory.md](infrastructure-mcp-server-inventory.md)
+
 ## Why
 
-Together, these five surfaces give the assistant the most practical leverage for:
+Together, these surfaces give the assistant the most practical leverage for:
 
 - experiment analysis
 - deployment review
@@ -52,12 +57,13 @@ This is the smallest set that still makes the assistant operationally useful acr
 
 ## Consequences
 
-- assistant-related docs should treat these five as core reference capabilities
+- assistant-related docs should treat these as core reference capabilities
+- if infrastructure MCP servers are present, they should be exposed as a default assistant surface rather than treated as optional
 - additional integrations can still exist, but should be labeled optional/extensions
 - decision retrieval becomes a first-class assistant capability, not an afterthought
 
 ## Revisit if
 
-- one of the five surfaces proves too costly or low-value to justify as default
+- one of the core surfaces proves too costly or low-value to justify as default
 - platform constraints limit one of the integrations in practice
 - the project narrows its scope away from full lifecycle operational support

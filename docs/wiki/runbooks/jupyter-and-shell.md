@@ -98,6 +98,20 @@ uv run python -m unittest discover -s tests -q
 
 This validates the local implementation of EX-01 -> EX-03 in `ml_deploy/vertical_slice.py`.
 
+## Render Quarto docs from `.qmd`
+
+Render the full docs site from Quarto sources without executing notebook kernels:
+
+```bash
+nix develop -c quarto render . --no-execute
+```
+
+Render only the homepage:
+
+```bash
+nix develop -c quarto render nbs/index.qmd --no-execute
+```
+
 ## End-of-task publishable notebook workflow
 
 Use the standardized finalize command:
@@ -109,11 +123,17 @@ Use the standardized finalize command:
 This runs:
 
 1. `nbdev-export --path nbs/`
-2. `nbdev-docs --path nbs/`
+2. `quarto render . --no-execute`
 3. `python -m unittest discover -s tests -q`
+
+Docs freshness is enforced by `tests/test_docs_freshness.py`, which fails if `_docs/nbs/*.html` is older than `nbs/*.qmd`.
+
+The same export/render/test sequence is enforced in CI via `.github/workflows/ci.yml`.
 
 ## Known sharp edges
 
 - If `uv sync` has not been run yet in the current workspace, project-local Python dependencies may be missing.
 - If `ipykernel` is missing, Jupyter helper commands will not complete successfully.
+- Root Quarto project render writes the canonical repo docs output under `_docs/` (notably `_docs/nbs/*.html` and `_docs/index.html`).
+- Quarto render with execution enabled depends on a valid configured Jupyter kernel path; use `--no-execute` for docs-generation validation when kernel execution is not required.
 - Jupyter is configured for convenience over security; the defaults are suitable for a trusted local/dev environment, not an exposed production service.

@@ -11,7 +11,7 @@ nbs/_quarto.yml
 nbs/nbdev.yml
 nbs/sidebar.yml
 
-# Backups 
+# Backups
 *.bak
 
 # Private documents
@@ -133,3 +133,6 @@ devenv.local.yaml
 
 # Local tooling cache
 .tools/
+
+/.quarto/
+**/*.quarto_ipynb

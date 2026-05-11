@@ -1,6 +1,6 @@
 ---
 updated: 2026-05-10
-summary: Router for durable architectural and stack decisions.
+summary: Router for durable architectural and stack decisions, including infrastructure MCP availability expectations.
 read_when:
   - You need the accepted defaults quickly
   - You are deciding whether a major choice is already settled
@@ -12,6 +12,7 @@ sources:
   - mcp-default-scope-decision.md
   - documentation-delivery-decision.md
   - notebook-intake-validation-and-approval.md
+  - infrastructure-mcp-server-inventory.md
 ---
 
 # Decisions
@@ -31,6 +32,7 @@ These pages preserve durable choices that should not be rediscovered from scratc
 - [documentation-delivery-decision.md](documentation-delivery-decision.md) — accepted docs-delivery posture.
 - [nbdev-framework-decision.md](nbdev-framework-decision.md) — accepted nbdev 3 framework for notebook-first development
 - [notebook-intake-validation-and-approval.md](notebook-intake-validation-and-approval.md) — accepted validation and approval gates for executable notebook intake
+- [infrastructure-mcp-server-inventory.md](infrastructure-mcp-server-inventory.md) — required infrastructure MCP coverage and default vs optional server inventory.
 
 - [mlflow-storage-backends.md](mlflow-storage-backends.md) — MLflow backend store and artifact store choices per profile; reverse proxy requirement; MLFLOW_CREATE_MODEL_VERSION_SOURCE_VALIDATION_REGEX; mlflow-go parity.
 - [promotion-pipeline.md](promotion-pipeline.md) — DEV→UAT→REGRESSION→PROD model promotion stages, gate criteria, MLflow registry alignment, CI/CD integration, PyTorch optimisation gate.

@@ -11,15 +11,17 @@ source_file: ../../.gitignore
 
 ## Role
 
-The root `.gitignore` currently defines a very small ignore policy.
+The root `.gitignore` defines ignore rules for lockfiles, generated docs/build artifacts, local environment outputs, and common Python/tooling caches.
 
-## Ignored paths
+## Notable ignored paths
 
-- `flake.lock`
-- `docs/reference/private`
+- lockfiles: `flake.lock`, `devenv.lock`, `uv.lock`
+- generated docs/build artifacts: `docs/*`, `_docs/`, `_proc/`, `.quarto/`, `**/*.quarto_ipynb`
+- nbdev generated metadata: `nbs/_quarto.yml`, `nbs/nbdev.yml`, `nbs/sidebar.yml`
+- local env and tooling: `.venv`, `.devenv*`, `.tools/`, logs/cache folders
 
 ## Practical implications
 
-- The repo keeps a local `flake.lock`, but it is currently ignored by git, so lockfile updates will not be tracked unless ignore rules change.
-- There is an intended location for private reference material under `docs/reference/private`.
-- Because the ignore policy is minimal, most new files will appear in git status unless explicitly ignored later.
+- `flake.lock` stays local-only, which avoids noisy lockfile churn from normal `nix develop` runs.
+- Generated docs outputs are intentionally not tracked; canonical durable documentation lives in `docs/wiki`.
+- New operational files still appear in git unless covered by these explicit patterns.

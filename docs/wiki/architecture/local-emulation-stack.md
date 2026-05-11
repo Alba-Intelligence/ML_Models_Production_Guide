@@ -87,7 +87,7 @@ nix build .#localInfraJson && cp result infra/local/main.tf.json
 cd infra/local && tofu init && tofu apply
 ```
 
-See `nbs/13_opentofu_infra.ipynb` for the full dual-mode architecture walkthrough.
+See `nbs/13_opentofu_infra.qmd` for the dual-mode architecture walkthrough.
 
 ---
 
@@ -113,4 +113,4 @@ See `nbs/13_opentofu_infra.ipynb` for the full dual-mode architecture walkthroug
 - `docs/wiki/architecture/full-system-interaction-analysis.md`
 - `docs/wiki/decisions/project-scope-and-constraints.md`
 - `docs/wiki/runbooks/mlflow-tracking-postgres-s3-parity.md`
-- Notebook: `nbs/13_opentofu_infra.ipynb`
+- Quarto page: `nbs/13_opentofu_infra.qmd`

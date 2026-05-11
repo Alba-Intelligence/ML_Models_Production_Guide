@@ -12,6 +12,8 @@ sources:
 
 # Revision: 2026-05-10 nbdev translation for Web UI contracts
 
+> Historical note (2026-05-11): This revision records a superseded `.ipynb` ownership phase. Canonical code ownership now lives in Quarto sources (`.qmd`) per `2026-05-11-quarto-code-ownership-switch.md`.
+
 ## Trigger
 
 The implementation needed to move from hand-edited Python module form into nbdev notebook ownership.

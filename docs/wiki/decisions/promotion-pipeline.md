@@ -121,5 +121,5 @@ See gate criteria table above. All 5 optimisations are mandatory.
 - `docs/wiki/decisions/project-scope-and-constraints.md`
 - `docs/wiki/decisions/mlflow-storage-backends.md`
 - `docs/wiki/architecture/local-emulation-stack.md`
-- Notebook: `nbs/12_system_interaction_analysis.ipynb`
-- Notebook: `nbs/13_opentofu_infra.ipynb`
+- Quarto page: `nbs/12_system_interaction_analysis.qmd`
+- Quarto page: `nbs/13_opentofu_infra.qmd`

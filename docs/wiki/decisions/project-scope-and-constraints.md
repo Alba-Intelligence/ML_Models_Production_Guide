@@ -45,7 +45,8 @@ The project is intended to become an **extensive reference documentation set wit
 - AWS platform examples should default to **Kubernetes-based operations** for non-Lambda.ai platform services.
 - Local replica work should mirror the same architecture layers (Kubernetes/Slurm/storage/control planes) where feasible.
 - Nix may assist with Docker generation, but Docker remains the primary reproducible development artifact.
-- The default MCP scope includes MLflow, observability, AWS cost visibility, Lambda.ai usage visibility, and documentation/decision retrieval.
+- The default MCP scope includes MLflow, observability, AWS cost visibility, Lambda.ai usage visibility, infrastructure interrogation when infrastructure MCP servers are available, and documentation/decision retrieval.
+- Infrastructure interrogation minimum coverage includes IaC plans/state, Kubernetes runtime state, Lambda.ai/Slurm runtime state, cloud resource inventory, and cost/usage signals.
 - Default monitoring stack: Evidently + Prometheus + Grafana + MLflow.
 - Default cost stack: AWS Cost Explorer / CUR / Athena / Budgets + Python attribution layer for Lambda.ai.
 

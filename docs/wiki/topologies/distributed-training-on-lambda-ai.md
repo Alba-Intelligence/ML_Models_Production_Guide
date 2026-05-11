@@ -92,6 +92,7 @@ High-value assistant tasks here include:
 - surfacing missing metadata in distributed jobs
 - correlating cost spikes with topology or resource shape
 - checking whether a failed job produced enough evidence for recovery
+- interrogating Lambda.ai/Slurm runtime state through MCP surfaces where available
 
 ## Open decisions
 

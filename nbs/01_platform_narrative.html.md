@@ -1,0 +1,76 @@
+---
+title: "Platform Narrative"
+---
+
+## Platform architecture
+
+The platform is organized around:
+
+1. Notebook-first authoring and execution contracts.
+2. MLflow-centered traceability.
+3. Local emulation parity for infrastructure and operations.
+4. Promotion-oriented governance toward production controls.
+
+
+::::::{.cell layout-align="default"}
+
+:::::{.cell-output-display}
+
+::::{}
+`<figure class=''>`{=html}
+
+:::{}
+
+<pre class="mermaid mermaid-js">flowchart TD
+  A[&quot;Notebook intake&quot;] --&gt; B[&quot;Execution routing&quot;]
+  B --&gt; C[&quot;MLflow traceability&quot;]
+  C --&gt; D[&quot;Artifact + deployment records&quot;]
+  D --&gt; E[&quot;Promotion and governance gates&quot;]
+</pre>
+:::
+`</figure>`{=html}
+::::
+:::::
+::::::
+
+## Core architecture direction
+
+- **Language/runtime posture**: Python-first, Linux-first.
+- **Tracking posture**: MLflow for run and model metadata.
+- **Infrastructure posture**: Nix/Terranix generated OpenTofu JSON with local-emulation and cloud profiles.
+- **Execution posture**: local, Slurm, and Kubernetes targets through normalized request contracts.
+- **Documentation posture**: Quarto-rendered docs with wiki-backed long-term project memory.
+
+## Implementation steps
+
+1. Validate immutable notebook intake and execution request contracts.
+2. Route execution through local, Slurm, or Kubernetes adapters.
+3. Record MLflow-linked outcomes and artifact metadata.
+4. Apply promotion gates for higher environments.
+5. Verify infrastructure parity and observability coverage before cloud rollout.
+
+## Trade-offs
+
+- Notebook-first workflows improve discoverability but require strict immutability and export guards.
+- Local emulation reduces cloud-risk iteration cost but cannot fully replicate all production failure modes.
+- Spec-first governance improves consistency but can lag implementation if drift checks are skipped.
+
+## Security considerations
+
+- Keep assistant/MCP integrations read-first and least-privilege by default.
+- Enforce immutable notebook references for execution.
+- Treat cloud deployment credentials and runtime secrets as externally managed inputs.
+
+## Examples of use
+
+- Local reference slice execution with MLflow-linked run visibility.
+- Backend payload mapping for Slurm/Kubernetes submissions.
+- Notebook intake validation and optional export checks.
+
+## Software engineer learning path
+
+Start with the Web UI contract and execution adapters, then move to topology pages and infrastructure profile docs.
+
+## ML researcher learning path
+
+Start with the platform architecture and MLflow traceability flow, then use vertical-slice and promotion references.

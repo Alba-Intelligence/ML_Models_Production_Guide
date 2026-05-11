@@ -43,9 +43,9 @@ This repository is becoming a **documentation-first, Python-heavy ML deployment 
 - An nbdev 3 scaffold with `pyproject.toml`, notebooks under `nbs/`, package exports under `ml_deploy/`, and baseline tests.
 - Ratified architecture write-up pages for the reference skeleton, documentation TOC, and first vertical slice.
 - A concrete local vertical-slice implementation module (`ml_deploy/vertical_slice.py`) plus end-to-end tests (`tests/test_vertical_slice.py`).
-- The vertical-slice module is now generated from `nbs/06_vertical_slice.ipynb` through nbdev export.
+- The vertical-slice module is now generated from `nbs/06_vertical_slice.qmd` through nbdev export.
 - A thin Web UI backend contract module (`ml_deploy/webui_contracts.py`) with tests (`tests/test_webui_contracts.py`) for immutable notebook execution requests and MLflow-linked run summaries.
-- The Web UI contract module is now generated from `nbs/05_webui_contracts.ipynb` through nbdev export.
+- The Web UI contract module is now generated from `nbs/05_webui_contracts.qmd` through nbdev export.
 - Runtime scaffolding now exists for MLflow parity config, execution adapters, notebook intake validation, and Python-managed Terraform bootstrap.
 - These runtime helpers are now sourced from nbdev notebooks (`nbs/07` through `nbs/10`) and exported into package modules.
 - A standard end-of-task workflow now exists via `./scripts/finalize-task.sh` to export notebooks, render docs, and run tests.
@@ -72,12 +72,13 @@ This repository is becoming a **documentation-first, Python-heavy ML deployment 
 - Security, data lineage, traceability, and reproducibility are permanent architectural requirements.
 - Reproducible development is expected to use Docker, while Nix may remain as a helper layer.
 - The project now has ratified architecture write-up layers (skeleton + TOC), enforceability guidance for contracts, and flow-oriented topology pages.
+- MCP assistant scope now explicitly requires infrastructure interrogation when infra MCP servers are available, with defined minimum coverage aspects.
 - The first implementation-aligned vertical slice is explicitly defined to prevent scope drift.
 - The repo now also has a formal distilled spec that captures current shell behavior and specification-first governance constraints.
 - The shell is prepared for Python and Jupyter work, but Python environment auto-creation only activates once a `pyproject.toml` appears.
 - Jupyter support is present and opinionated, including a fixed kernel name: `ml_ops`.
 - The shell now provides `allium` as a reproducible `naersk`-built package for `.allium` parsing/checking workflows.
-- Git tracking is intentionally minimal; notably, `flake.lock` is present locally but ignored by the current `.gitignore`.
+- Git tracking intentionally keeps `flake.lock` local-only (ignored by `.gitignore`) to avoid lockfile churn noise during normal `nix develop` workflows.
 - The local branch history has now been rebased onto the configured GitHub origin.
 
 ## High-value pages

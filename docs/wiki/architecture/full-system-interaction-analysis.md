@@ -5,7 +5,7 @@ read_when:
   - You need a full-system interaction map before implementing new features
   - You want risk-focused understanding of component boundaries and coupling
 sources:
-  - ../../nbs/12_system_interaction_analysis.ipynb
+  - ../../nbs/12_system_interaction_analysis.qmd
   - target-system.md
   - reference-architecture-skeleton.md
   - notebook-repository-web-ui.md
@@ -20,7 +20,7 @@ Provide a higher-order architecture analysis that explicitly maps **what each co
 
 This page mirrors and indexes the canonical notebook notes in:
 
-- `nbs/12_system_interaction_analysis.ipynb`
+- `nbs/12_system_interaction_analysis.qmd`
 
 ## Layered analysis model
 

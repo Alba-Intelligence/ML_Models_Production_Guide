@@ -25,7 +25,8 @@ The default assistant-support scope includes:
 2. Observability surfaces (Prometheus/Grafana/CloudWatch as applicable)
 3. AWS cost visibility
 4. Lambda.ai usage/job visibility
-5. Documentation and decision retrieval
+5. Infrastructure-state interrogation when infrastructure MCP servers are available
+6. Documentation and decision retrieval
 
 ## Design rules
 
@@ -41,6 +42,14 @@ The default assistant-support scope includes:
 - Cost MCP (AWS billing + Lambda.ai attribution)
 - Infrastructure MCP (Terraform state/plans, Kubernetes/Lambda.ai deployment state)
 - Documentation MCP (architecture/decisions/runbooks/contracts retrieval)
+
+Minimum required infrastructure interrogation coverage (when infrastructure MCP servers are available):
+
+1. IaC plans/state
+2. Kubernetes runtime state
+3. Lambda.ai/Slurm runtime state
+4. Cloud resource inventory
+5. Cost and usage signals
 
 ## Documentation delivery posture
 

@@ -97,7 +97,10 @@ The project uses the following **default MCP/assistant-support scope**:
 - observability systems such as Prometheus/Grafana and/or CloudWatch
 - AWS cost visibility systems
 - Lambda.ai job/usage visibility
+- infrastructure-state interrogation surfaces when infrastructure MCP servers are available
 - documentation and decision retrieval
+
+Minimum infrastructure interrogation coverage should include IaC plans/state, Kubernetes runtime state, Lambda.ai/Slurm runtime state, cloud resource inventory, and cost/usage signals.
 
 Design posture:
 

@@ -136,5 +136,5 @@ The standard `mlflow.sklearn` / `mlflow.pytorch` flavors may be sufficient. The 
 
 - `docs/wiki/architecture/local-emulation-stack.md`
 - `docs/wiki/decisions/project-scope-and-constraints.md`
-- Notebook: `nbs/07_mlflow_parity.ipynb`
-- Notebook: `nbs/13_opentofu_infra.ipynb`
+- Notebook: `nbs/07_mlflow_parity.qmd`
+- Notebook: `nbs/13_opentofu_infra.qmd`

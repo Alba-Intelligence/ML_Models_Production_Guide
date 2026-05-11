@@ -65,6 +65,7 @@ Useful assistant capabilities here include:
 - correlating rollout events with metric shifts
 - linking drift symptoms to model/version or schema changes
 - suggesting next diagnostic steps from current telemetry
+- consuming infrastructure MCP interrogation outputs (Kubernetes, Lambda.ai/Slurm, IaC/state, cost signals) to add operational context
 
 ## Open decisions
 

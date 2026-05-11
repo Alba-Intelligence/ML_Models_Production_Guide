@@ -1,0 +1,200 @@
+---
+title: "MLflow Parity Helpers"
+---
+# MLflow Parity Helpers
+
+> nbdev source for local MLflow parity stack helpers (PostgreSQL + S3-compatible artifacts).
+
+```{python}
+#| default_exp: mlflow_parity
+```
+
+```{python}
+#| export:
+from __future__ import annotations
+
+from dataclasses import dataclass
+import json
+import os
+from pathlib import Path
+from typing import Any, Mapping
+
+
+@dataclass(frozen=True)
+class LocalMlflowParityConfig:
+    """Configuration for local MLflow parity stack."""
+
+    postgres_user: str = "mlflow"
+    postgres_password: str = "mlflow"
+    postgres_db: str = "mlflow"
+    postgres_port: int = 5432
+    minio_access_key: str = "minioadmin"
+    minio_secret_key: str = "minioadmin"
+    minio_bucket: str = "mlflow"
+    minio_api_port: int = 9000
+    minio_console_port: int = 9001
+    mlflow_port: int = 5000
+    mlflow_host: str = "0.0.0.0"
+    compose_project_name: str = "mlflow-parity"
+
+    @property
+    def backend_store_uri(self) -> str:
+        return (
+            f"postgresql://{self.postgres_user}:{self.postgres_password}"
+            f"@localhost:{self.postgres_port}/{self.postgres_db}"
+        )
+
+    @property
+    def artifacts_destination(self) -> str:
+        return f"s3://{self.minio_bucket}"
+
+    @property
+    def mlflow_tracking_uri(self) -> str:
+        return f"http://localhost:{self.mlflow_port}"
+
+    @property
+    def minio_endpoint(self) -> str:
+        return f"http://localhost:{self.minio_api_port}"
+
+
+@dataclass(frozen=True)
+class MlflowStorageConfig:
+    """Runtime MLflow storage configuration aligned to PostgreSQL + S3."""
+
+    backend_store_uri: str
+    artifacts_destination: str
+    tracking_uri: str
+    aws_access_key_id: str
+    aws_secret_access_key: str
+    s3_endpoint_url: str | None = None
+
+
+def render_local_compose_config(config: LocalMlflowParityConfig) -> dict[str, Any]:
+    """Render a Docker Compose config for local PostgreSQL + MinIO + MLflow."""
+    postgres_image = "postgres:16-alpine"
+    minio_image = "minio/minio:latest"
+    mlflow_image = "ghcr.io/mlflow/mlflow:v2.14.2"
+    return {
+        "name": config.compose_project_name,
+        "services": {
+            "postgres": {
+                "image": postgres_image,
+                "environment": {
+                    "POSTGRES_USER": config.postgres_user,
+                    "POSTGRES_PASSWORD": config.postgres_password,
+                    "POSTGRES_DB": config.postgres_db,
+                },
+                "ports": [f"{config.postgres_port}:5432"],
+                "healthcheck": {
+                    "test": ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER}"],
+                    "interval": "5s",
+                    "timeout": "3s",
+                    "retries": 20,
+                },
+            },
+            "minio": {
+                "image": minio_image,
+                "command": "server /data --console-address :9001",
+                "environment": {
+                    "MINIO_ROOT_USER": config.minio_access_key,
+                    "MINIO_ROOT_PASSWORD": config.minio_secret_key,
+                },
+                "ports": [
+                    f"{config.minio_api_port}:9000",
+                    f"{config.minio_console_port}:9001",
+                ],
+            },
+            "mlflow": {
+                "image": mlflow_image,
+                "depends_on": {"postgres": {"condition": "service_healthy"}, "minio": {}},
+                "command": [
+                    "mlflow",
+                    "server",
+                    "--host",
+                    config.mlflow_host,
+                    "--port",
+                    str(config.mlflow_port),
+                    "--backend-store-uri",
+                    (
+                        f"postgresql://{config.postgres_user}:{config.postgres_password}"
+                        f"@postgres:5432/{config.postgres_db}"
+                    ),
+                    "--artifacts-destination",
+                    f"s3://{config.minio_bucket}",
+                ],
+                "environment": {
+                    "AWS_ACCESS_KEY_ID": config.minio_access_key,
+                    "AWS_SECRET_ACCESS_KEY": config.minio_secret_key,
+                    "MLFLOW_S3_ENDPOINT_URL": "http://minio:9000",
+                },
+                "ports": [f"{config.mlflow_port}:{config.mlflow_port}"],
+            },
+        },
+    }
+
+
+def write_local_compose_file(path: Path, config: LocalMlflowParityConfig) -> Path:
+    """Write compose configuration as JSON-compatible YAML subset."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    compose_dict = render_local_compose_config(config)
+    path.write_text(json.dumps(compose_dict, indent=2) + "\n", encoding="utf-8")
+    return path
+
+
+def build_mlflow_server_command(config: LocalMlflowParityConfig) -> list[str]:
+    """Build an MLflow server command matching the parity posture."""
+    return [
+        "mlflow",
+        "server",
+        "--host",
+        config.mlflow_host,
+        "--port",
+        str(config.mlflow_port),
+        "--backend-store-uri",
+        config.backend_store_uri,
+        "--artifacts-destination",
+        config.artifacts_destination,
+    ]
+
+
+def build_mlflow_runtime_env(config: LocalMlflowParityConfig) -> dict[str, str]:
+    """Build environment variables for S3-compatible MLflow artifact storage."""
+    return {
+        "MLFLOW_TRACKING_URI": config.mlflow_tracking_uri,
+        "AWS_ACCESS_KEY_ID": config.minio_access_key,
+        "AWS_SECRET_ACCESS_KEY": config.minio_secret_key,
+        "MLFLOW_S3_ENDPOINT_URL": config.minio_endpoint,
+    }
+
+
+def resolve_mlflow_storage_config(
+    env: Mapping[str, str] | None = None,
+) -> MlflowStorageConfig:
+    """Resolve MLflow runtime settings with PostgreSQL + S3 parity defaults."""
+    values = env or os.environ
+    return MlflowStorageConfig(
+        backend_store_uri=values.get(
+            "MLFLOW_BACKEND_STORE_URI",
+            "postgresql://mlflow:mlflow@localhost:5432/mlflow",
+        ),
+        artifacts_destination=values.get("MLFLOW_ARTIFACTS_DESTINATION", "s3://mlflow"),
+        tracking_uri=values.get("MLFLOW_TRACKING_URI", "http://localhost:5000"),
+        aws_access_key_id=values.get("AWS_ACCESS_KEY_ID", "minioadmin"),
+        aws_secret_access_key=values.get("AWS_SECRET_ACCESS_KEY", "minioadmin"),
+        s3_endpoint_url=values.get("MLFLOW_S3_ENDPOINT_URL"),
+    )
+
+
+def build_mlflow_runtime_env_from_storage(config: MlflowStorageConfig) -> dict[str, str]:
+    """Build process env vars from resolved PostgreSQL + S3 MLflow settings."""
+    env = {
+        "MLFLOW_TRACKING_URI": config.tracking_uri,
+        "MLFLOW_BACKEND_STORE_URI": config.backend_store_uri,
+        "MLFLOW_ARTIFACTS_DESTINATION": config.artifacts_destination,
+        "AWS_ACCESS_KEY_ID": config.aws_access_key_id,
+        "AWS_SECRET_ACCESS_KEY": config.aws_secret_access_key,
+    }
+    if config.s3_endpoint_url:
+        env["MLFLOW_S3_ENDPOINT_URL"] = config.s3_endpoint_url
+    return env
+```

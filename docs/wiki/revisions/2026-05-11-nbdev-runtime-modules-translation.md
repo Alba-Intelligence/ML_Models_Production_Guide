@@ -17,6 +17,8 @@ sources:
 
 # Revision: 2026-05-11 nbdev translation for runtime modules
 
+> Historical note (2026-05-11): This revision records a superseded `.ipynb` ownership phase. Canonical code ownership now lives in Quarto sources (`.qmd`) per `2026-05-11-quarto-code-ownership-switch.md`.
+
 ## Trigger
 
 Runtime modules had been introduced as direct Python files and needed to be corrected to notebook-first ownership.

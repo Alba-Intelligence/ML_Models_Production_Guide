@@ -1,0 +1,96 @@
+---
+title: "Notebook Intake Validation"
+---
+# Notebook Intake Validation
+
+> nbdev source for immutable notebook intake and validation gate helpers.
+
+```{python}
+#| default_exp: notebook_intake
+```
+
+```{python}
+#| export:
+from __future__ import annotations
+
+from dataclasses import dataclass
+import json
+from pathlib import Path
+import subprocess
+from typing import Callable
+
+from ml_deploy.webui_contracts import NotebookRevision
+
+
+def validate_immutable_revision(revision: NotebookRevision) -> None:
+    """Validate that a notebook revision is immutable and executable."""
+    revision.validate()
+    if revision.revision_kind not in {"commit", "tag", "approved-ref"}:
+        raise ValueError("revision_kind must be one of commit, tag, approved-ref")
+
+
+def validate_notebook_structure(notebook_path: Path) -> None:
+    """Validate basic notebook structure without mutating notebook content."""
+    if not notebook_path.exists():
+        raise ValueError(f"notebook does not exist: {notebook_path}")
+    payload = json.loads(notebook_path.read_text(encoding="utf-8"))
+    if payload.get("nbformat") is None:
+        raise ValueError("notebook is missing nbformat")
+    cells = payload.get("cells")
+    if not isinstance(cells, list):
+        raise ValueError("notebook cells must be a list")
+    if not cells:
+        raise ValueError("notebook must contain at least one cell")
+
+
+def run_nbdev_export_check(
+    notebook_path: Path,
+    repo_root: Path,
+    executor: Callable[..., subprocess.CompletedProcess[str]] = subprocess.run,
+) -> None:
+    """Run nbdev export to verify notebook compatibility with project workflow."""
+    command = [
+        "uv",
+        "run",
+        "nbdev-export",
+        "--path",
+        str(notebook_path.parent.relative_to(repo_root)),
+    ]
+    result = executor(
+        command,
+        cwd=str(repo_root),
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    if result.returncode != 0:
+        raise ValueError(f"nbdev export check failed: {result.stderr.strip()}")
+
+
+@dataclass(frozen=True)
+class IntakeValidationReport:
+    revision_valid: bool
+    notebook_structure_valid: bool
+    nbdev_export_valid: bool
+
+
+def validate_notebook_for_execution(
+    *,
+    revision: NotebookRevision,
+    notebook_path: Path,
+    repo_root: Path,
+    run_export_check: bool = True,
+    executor: Callable[..., subprocess.CompletedProcess[str]] = subprocess.run,
+) -> IntakeValidationReport:
+    """Run immutable-ref, structure, and optional export validation gates."""
+    validate_immutable_revision(revision)
+    validate_notebook_structure(notebook_path)
+    export_valid = True
+    if run_export_check:
+        run_nbdev_export_check(notebook_path, repo_root, executor=executor)
+    return IntakeValidationReport(
+        revision_valid=True,
+        notebook_structure_valid=True,
+        nbdev_export_valid=export_valid,
+    )
+```

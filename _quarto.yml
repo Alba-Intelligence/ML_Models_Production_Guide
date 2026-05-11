@@ -1,0 +1,38 @@
+project:
+  type: website
+  output-dir: _docs
+  render:
+    - "nbs/*.qmd"
+
+format:
+  html:
+    theme: cosmo
+    css: nbs/styles.css
+    toc: true
+    keep-md: true
+  commonmark: default
+
+website:
+  twitter-card: true
+  open-graph: true
+  repo-actions: [issue]
+  navbar:
+    background: primary
+    search: true
+  sidebar:
+    style: floating
+    contents:
+      - nbs/index.qmd
+      - nbs/00_core.qmd
+      - nbs/01_platform_narrative.qmd
+      - nbs/02_data.qmd
+      - nbs/03_model_training.qmd
+      - nbs/04_web_ui.qmd
+      - nbs/05_webui_contracts.qmd
+      - nbs/06_vertical_slice.qmd
+      - nbs/07_mlflow_parity.qmd
+      - nbs/08_execution_backends.qmd
+      - nbs/09_notebook_intake.qmd
+      - nbs/10_terraform_bootstrap.qmd
+      - nbs/12_system_interaction_analysis.qmd
+      - nbs/13_opentofu_infra.qmd

@@ -14,8 +14,10 @@ sources:
   - sources/gitignore.md
   - sources/LICENSE.md
   - sources/README.md
+  - sources/_quarto.yml.md
+  - sources/.github.workflows.ci.yml.md
   - sources/ml_deploy.vertical_slice.py.md
-  - sources/nbs.06_vertical_slice.ipynb.md
+  - sources/nbs.06_vertical_slice.qmd.md
   - sources/tests.test_vertical_slice.py.md
   - architecture/target-system.md
   - architecture/reference-architecture-skeleton.md
@@ -37,16 +39,18 @@ sources:
   - sources/ml_deploy.mlflow_parity.py.md
   - sources/ml_deploy.notebook_intake.py.md
   - sources/ml_deploy.terraform_bootstrap.py.md
-  - sources/nbs.07_mlflow_parity.ipynb.md
-  - sources/nbs.08_execution_backends.ipynb.md
-  - sources/nbs.09_notebook_intake.ipynb.md
-  - sources/nbs.10_terraform_bootstrap.ipynb.md
-  - sources/nbs.01_platform_narrative.ipynb.md
-  - sources/nbs.11_infrastructure_overview.ipynb.md
-  - sources/nbs.12_system_interaction_analysis.ipynb.md
-  - sources/nbs.index.ipynb.md
-  - sources/nbs.05_webui_contracts.ipynb.md
+  - sources/nbs.07_mlflow_parity.qmd.md
+  - sources/nbs.08_execution_backends.qmd.md
+  - sources/nbs.09_notebook_intake.qmd.md
+  - sources/nbs.10_terraform_bootstrap.qmd.md
+  - sources/nbs.01_platform_narrative.qmd.md
+  - sources/nbs.12_system_interaction_analysis.qmd.md
+  - sources/nbs.13_opentofu_infra.qmd.md
+  - sources/nbs.index.qmd.md
+  - sources/nbs.05_webui_contracts.qmd.md
   - sources/tests.test_webui_contracts.py.md
+  - sources/tests.test_docs_freshness.py.md
+  - sources/tests.test_mcp_infrastructure_contracts.py.md
   - sources/scripts.finalize-task.sh.md
   - queries/spec-quality-elicitation-session-01.md
 ---
@@ -62,18 +66,20 @@ As of 2026-05-11, the repository contains:
 - `flake.lock` (local, but currently gitignored)
 - `.gitignore`
 - `AGENTS.md`
+- `_quarto.yml` (root Quarto project for repository docs output)
+- `.github/workflows/ci.yml` (CI pipeline for export/render/tests)
 - `devenv.nix`, `devenv.yaml`, and `devenv.lock`
 - `docs/wiki/` (the living memory layer, now including architecture decision for notebook repository web UI)
 - `specs/ml-deploy-reference-repo.allium` (distilled repository-level Allium specification)
 - nbdev 3 project structure with `pyproject.toml`, `nbs/` directory for notebooks, and `ml_deploy/` package
-- `nbs/05_webui_contracts.ipynb` as nbdev source for Web UI backend contracts
-- `nbs/06_vertical_slice.ipynb` as nbdev source for first-vertical-slice implementation
-- `nbs/07_mlflow_parity.ipynb` as nbdev source for MLflow parity helpers
-- `nbs/08_execution_backends.ipynb` as nbdev source for backend execution adapters
-- `nbs/09_notebook_intake.ipynb` as nbdev source for notebook intake validation
-- `nbs/10_terraform_bootstrap.ipynb` as nbdev source for Terraform bootstrap helpers
-- `nbs/01_platform_narrative.ipynb` as the canonical platform architecture narrative notebook
-- `nbs/11_infrastructure_overview.ipynb` retained as a deprecated compatibility page that points to `01_platform_narrative`
+- `nbs/05_webui_contracts.qmd` as nbdev source for Web UI backend contracts
+- `nbs/06_vertical_slice.qmd` as nbdev source for first-vertical-slice implementation
+- `nbs/07_mlflow_parity.qmd` as nbdev source for MLflow parity helpers
+- `nbs/08_execution_backends.qmd` as nbdev source for backend execution adapters
+- `nbs/09_notebook_intake.qmd` as nbdev source for notebook intake validation
+- `nbs/10_terraform_bootstrap.qmd` as nbdev source for Terraform bootstrap helpers
+- `nbs/01_platform_narrative.qmd` as the canonical platform architecture narrative page
+- Quarto `.qmd` counterparts for all active nbdev notebooks in `nbs/` (docs rendering path)
 - runtime helper modules for MLflow parity, execution adapters, intake validation, and Terraform bootstrap
 - git metadata for a repository now rebased onto `origin/main`
 
@@ -90,35 +96,39 @@ As of 2026-05-11, the repository contains:
 - A git repository exists and is currently at `main`, with the local planning commits rebased onto the GitHub origin history.
 - The project now has a much clearer target specification captured in the wiki.
 - The reference architecture skeleton and documentation TOC are now ratified in the wiki.
-- The project now also has accepted defaults for MCP scope, monitoring stack, cost stack, Docker/Nix posture, and docs-delivery posture captured in decision records.
+- The project now also has accepted defaults for MCP scope (including infrastructure interrogation when MCP servers are available), monitoring stack, cost stack, Docker/Nix posture, and docs-delivery posture captured in decision records.
+- Infrastructure MCP coverage now has explicit minimum interrogation aspects (IaC state/plans, Kubernetes runtime state, Lambda.ai/Slurm runtime state, cloud resource inventory, cost/usage signals) plus a default-vs-optional server inventory decision page.
 - The first pass of cross-cutting contract pages now exists in the wiki.
 - The first pass of bounded domain pages now exists in the wiki.
 - The topology pages now include explicit control/data/artifact flow specifications and contract checkpoints.
 - The first architecture-aligned example matrix now exists in the wiki.
 - The first implementation-aligned architecture slice is now defined in `architecture/first-vertical-slice.md`.
 - The first local vertical slice is now implemented in `ml_deploy/vertical_slice.py` with tests in `tests/test_vertical_slice.py`.
-- The vertical-slice module is now notebook-owned and exported from `nbs/06_vertical_slice.ipynb`.
+- The vertical-slice module is now Quarto-owned and exported from `nbs/06_vertical_slice.qmd`.
 - A thin Web UI backend contract module now exists in `ml_deploy/webui_contracts.py` with tests in `tests/test_webui_contracts.py`.
 - Spec-propagated tests now enforce documentation-series completeness obligations in `tests/test_documentation_series_contracts.py`.
-- The Web UI contract module is now notebook-owned and exported from `nbs/05_webui_contracts.ipynb`.
+- Spec-propagated tests now also enforce infrastructure MCP scope and minimum interrogation-aspect obligations in `tests/test_mcp_infrastructure_contracts.py`.
+- The Web UI contract module is now Quarto-owned and exported from `nbs/05_webui_contracts.qmd`.
 - Execution adapter mappings now exist for local, Slurm, and Kubernetes payloads.
 - Notebook intake validation gates now exist for immutable refs, notebook structure, and optional nbdev export checks.
 - Python-driven Terraform bootstrap helpers now generate Terraform JSON stack files and expose init/plan/apply runners.
-- Runtime helper modules are now notebook-owned and exported through nbdev, not maintained as hand-edited Python sources.
+- Runtime helper modules are now Quarto-owned and exported through nbdev, not maintained as hand-edited Python sources.
 - Runtime orchestration now routes notebook execution requests across local, Slurm, and Kubernetes targets with explicit submitted/completed backend states.
 - Docker-first reproducible development is now implemented with `Dockerfile` and `docker-compose.dev.yml` (data plane: MLflow, PostgreSQL, MinIO).
 - **Local emulation compute plane** now exists in `docker-compose.local-infra.yml` (LocalStack, K3s, Slurm-Docker).
 - **Nix/Terranix module structure** now exists in `nix/` (shared, local, cloud modules; local and cloud profiles).
 - **Dual-mode OpenTofu spec** is encoded: `DeploymentProfile` enum, `LocalEmulationStack` entity, `RequireLocalEmulationParity` rule in Allium spec.
-- **Notebook 13** (`nbs/13_opentofu_infra.ipynb`) documents the full dual-mode architecture, workflow, trade-offs, security, and implementation steps.
-- A full five-layer system interaction analysis now exists in both notebook and wiki forms.
+- **Quarto page 13** (`nbs/13_opentofu_infra.qmd`) documents the dual-mode infrastructure profile architecture.
+- A full five-layer system interaction analysis now exists in Quarto-page and wiki forms.
 - A distilled repository-wide Allium specification now exists and is indexed in the wiki.
 - An nbdev 3 project structure has been initialized with pyproject.toml, nbs/ directory, and ml_deploy/ package placeholder.
 - Notebooks can be successfully exported to Python packages using `nbdev-export --path nbs/`.
 - A single end-of-task command now exists to export notebooks, render docs, and run tests: `./scripts/finalize-task.sh`.
-- A canonical platform narrative notebook now owns the architecture story and Mermaid diagram.
-- The infrastructure overview notebook markdown is now cleaned to avoid literal `\n` rendering artifacts in docs output.
-- The rendered docs homepage is now notebook-driven (`nbs/index.ipynb`) and functions as navigation-first entrypoint.
+- A canonical platform narrative Quarto page now owns the architecture story and Mermaid diagram.
+- The rendered docs homepage is now Quarto-driven (`nbs/index.qmd`) and functions as navigation-first entrypoint.
+- Full Quarto website generation from `.qmd` sources succeeds via `nix develop -c quarto render . --no-execute`.
+- Rendered Quarto outputs are refreshed under `_docs/nbs/*.html` with `_docs/index.html` as root entrypoint.
+- CI now enforces export/render/tests on pull requests and pushes, including docs freshness coverage.
 
 ## Current limitations
 
@@ -128,7 +138,7 @@ As of 2026-05-11, the repository contains:
 - There is no production-ready ML data pipeline or deployment implementation yet.
 - Contract validation is currently test-level for the local vertical slice, not yet generalized across all topologies.
 - New architecture requirements now specify MLflow PostgreSQL/S3 storage, Lambda.ai Slurm coordination/redundancy, AWS Kubernetes for non-Lambda.ai services, and Nix (flake+devenv) Terranix-generated OpenTofu JSON infrastructure workflows.
-- Dual-profile (`local_emulation | cloud`) infrastructure now implemented: `docker-compose.local-infra.yml` (LocalStack + K3s + Slurm), Nix/Terranix modules in `nix/modules/` and `nix/profiles/`, and notebook `nbs/13_opentofu_infra.ipynb`.
+- Dual-profile (`local_emulation | cloud`) infrastructure now implemented: `docker-compose.local-infra.yml` (LocalStack + K3s + Slurm), Nix/Terranix modules in `nix/modules/` and `nix/profiles/`, and Quarto page `nbs/13_opentofu_infra.qmd`.
 - Allium spec now covers MLflow storage backends (SQLite/PostgreSQL/MinIO/S3), security (reverse proxy, MLFLOW_CREATE_MODEL_VERSION_SOURCE_VALIDATION_REGEX), and a DEV→UAT→REGRESSION→PROD promotion pipeline with approval gate.
 - Five open questions formally recorded in the spec: Lambda.ai scheduling preference, bigmlflow flavor requirement, CI/CD tooling, promotion gate criteria, and PyTorch inference optimisation steps.
 - mlflow-go (`mlflow-go` server + `mlflow-go-backend` Python package) is the recommended approach for profile-switchable MLflow tracking (SQLite local, PostgreSQL cloud — no code changes required).
@@ -136,7 +146,8 @@ As of 2026-05-11, the repository contains:
 - The distilled Allium spec currently models repository posture, shell behavior, and governance constraints; it does not yet cover any real ML implementation logic because that code still does not exist.
 - The distilled Allium spec now also models a spec-quality readiness gate required for default implementation allowance.
 - The distilled Allium spec now models notebook-series completeness requirements (architecture steps, trade-offs, security, examples, audience learning paths, and implementation/docs linkage).
-- `flake.lock` is not tracked by git under the current ignore rules, so lockfile drift may be local-only unless that policy changes.
+- `flake.lock` is intentionally not tracked by git under the current ignore rules; local lockfile churn is expected and non-canonical.
+- Full Quarto render with execution enabled depends on a valid active Jupyter kernel path; `--no-execute` is the stable validation mode for docs generation.
 - The origin currently contributes a `LICENSE` file, while the expected remote `README.md` was not present during synchronization.
 
 ## Repo posture

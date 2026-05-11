@@ -12,6 +12,8 @@ sources:
 
 # Revision: 2026-05-10 nbdev translation for first vertical slice
 
+> Historical note (2026-05-11): This revision records a superseded `.ipynb` ownership phase. Canonical code ownership now lives in Quarto sources (`.qmd`) per `2026-05-11-quarto-code-ownership-switch.md`.
+
 ## Trigger
 
 After starting nbdev translation, the first local vertical slice module also needed notebook ownership to stay consistent with the repository workflow.

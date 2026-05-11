@@ -22,11 +22,12 @@ The spec is intended as a compact, formal baseline for current repository behavi
 
 ## What the spec currently models
 
-1. **Repository posture and constraints** (Python/Linux/PyTorch/GPU/MLflow/Terranix+OpenTofu-from-flake+devenv/Lambda.ai/AWS direction plus accepted default monitoring/cost/MCP sets).
+1. **Repository posture and constraints** (Python/Linux/PyTorch/GPU/MLflow/Terranix+OpenTofu-from-flake+devenv/Lambda.ai/AWS direction plus accepted default monitoring/cost/MCP sets, including infrastructure interrogation when MCP servers are available).
 2. **Implemented shell behavior** from `flake.nix` (shell entry, `uv` bootstrap when `pyproject.toml` exists, Jupyter helper expectations).
 3. **Wiki maintenance obligations** from `AGENTS.md` and the current wiki process.
 4. **Implementation gating** (specification-first block unless explicit confirmation is present).
 5. **Spec quality readiness gating** (implementation is also gated unless spec-quality readiness is passed or explicitly overridden).
+6. **Infrastructure MCP interrogation gating** (when infra MCP servers are available, minimum interrogation coverage is required and explicit).
 
 ## Scope boundaries
 
