@@ -47,7 +47,7 @@ Provide a Python-first reference for ML engineers in hedge funds that covers the
 - local serving via nbdev-exported Python inference interfaces
 - batch inference patterns
 - online inference patterns
-- infrastructure workflows with `python-terraform`
+- infrastructure workflows with Terranix-generated OpenTofu JSON from both flake and devenv paths
 - AWS Kubernetes production patterns for non-Lambda.ai services
 - MLflow persistence with PostgreSQL backend + S3 artifact storage
 - Slurm coordination/redundancy patterns on Lambda.ai for distributed runs
@@ -200,7 +200,7 @@ These are the major object types the reference should treat as first-class.
 
 **Owns**
 
-- `python-terraform` workflows
+- Terranix-generated OpenTofu JSON workflows from flake/devenv
 - AWS resource patterns
 - AWS Kubernetes patterns for platform services
 - Lambda.ai compute patterns
@@ -478,7 +478,7 @@ If a dynamic documentation service is used, the design should assume:
 - Experiment tracking: MLflow
 - MLflow storage: PostgreSQL backend + S3 artifact store
 - Local serving: nbdev-exported Python inference interfaces
-- Infra workflows: `python-terraform`
+- Infra workflows: Terranix-generated OpenTofu JSON from flake + devenv
 - Distributed training: Lambda.ai + Slurm coordination/redundancy
 - Production platform patterns: AWS Kubernetes for non-Lambda.ai services
 - Reproducible development: Docker

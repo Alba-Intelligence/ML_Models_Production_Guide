@@ -28,7 +28,7 @@ The project is intended to become an **extensive reference documentation set wit
 9. Lambda.ai is the distributed compute platform in scope for training/inference coordination, using Slurm orchestration with redundancy/failure-handling patterns.
 10. AWS hosts the remaining platform services with Kubernetes as the default control/deployment substrate.
 11. A notebook Web UI is required for ML engineers to upload/select notebooks and trigger runs without editing notebook code.
-12. Infrastructure should be managed through Python-driven Terraform workflows (`python-terraform`), with hand-written Terraform minimized.
+12. Infrastructure should be managed through Nix-driven Terranix generation of OpenTofu JSON from both flake and devenv paths, with hand-written Terraform/OpenTofu minimized.
 13. Security is a permanent requirement.
 14. Data lineage is a permanent requirement.
 15. Experiment traceability, model traceability, and reproducibility are permanent requirements.
@@ -69,7 +69,7 @@ Any eventual implementation should be judged against these questions:
 - Does it preserve security expectations?
 - Does it preserve data lineage?
 - Does it improve reproducibility and traceability rather than weaken them?
-- Does it fit the MLflow + PostgreSQL/S3 + python-terraform + Lambda.ai(Slurm) + AWS(Kubernetes) direction?
+- Does it fit the MLflow + PostgreSQL/S3 + Terranix/OpenTofu (flake+devenv) + Lambda.ai(Slurm) + AWS(Kubernetes) direction?
 
 ## Open items still requiring explicit agreement
 

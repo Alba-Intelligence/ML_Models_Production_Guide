@@ -21,6 +21,10 @@ architecture to execution details.
 - [Vertical slice reference](vertical_slice.html)
 - [Web UI contracts](webui_contracts.html)
 
+## Architecture analysis notebooks
+
+- [System interaction analysis](system_interaction_analysis.html)
+
 ## Topology and operations notebooks
 
 - [MLflow parity](mlflow_parity.html)

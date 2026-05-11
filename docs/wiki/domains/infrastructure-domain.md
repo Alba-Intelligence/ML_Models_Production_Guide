@@ -1,6 +1,6 @@
 ---
 updated: 2026-05-09
-summary: Infrastructure domain responsibilities for AWS, Lambda.ai, networking, storage, environments, and python-terraform workflows.
+summary: Infrastructure domain responsibilities for AWS, Lambda.ai, networking, storage, environments, and Terranix/OpenTofu generation workflows.
 read_when:
   - You are defining platform shape or cloud resources
   - You are deciding where infrastructure concerns stop and application/domain concerns begin
@@ -16,7 +16,7 @@ sources:
 
 ## Owns
 
-- `python-terraform` workflows
+- Terranix-generated OpenTofu JSON workflows from flake/devenv
 - AWS resource patterns
 - Lambda.ai compute patterns
 - environment separation
@@ -54,7 +54,7 @@ Primary coverage:
 ## Key questions this domain must answer
 
 - How are environments separated?
-- What does `python-terraform` own vs what remains manual or external?
+- What does Terranix/OpenTofu generation own vs what remains manual or external?
 - How are Lambda.ai and AWS integrated in one mental model?
 - How does infrastructure expose the metadata needed by security, deployment, and cost contracts?
 

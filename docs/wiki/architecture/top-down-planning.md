@@ -72,7 +72,7 @@ Recommended domains:
 - **Training domain** — PyTorch training, GPU execution, distributed training, experiment config
 - **Artifact domain** — model artifacts, metadata, registries, versioning, promotion
 - **Serving domain** — local inference interfaces, online inference contracts, batch jobs
-- **Infrastructure domain** — python-terraform, Lambda.ai compute, AWS resources, networking
+- **Infrastructure domain** — Terranix/OpenTofu generation (flake+devenv), Lambda.ai compute, AWS resources, networking
 - **Observability domain** — metrics, logs, traces, drift, data quality, SLOs
 - **Governance domain** — security, secrets, IAM, approvals, compliance posture, auditability
 - **Cost domain** — provider billing, tagging, attribution, budgets, unit economics

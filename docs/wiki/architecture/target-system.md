@@ -63,7 +63,7 @@ The project is not just about serving a model. It should document and demonstrat
 
 ### Infrastructure and compute
 
-- **python-terraform** for Python-driven infrastructure workflows
+- **Terranix + OpenTofu JSON generation** from both flake and devenv as the canonical infrastructure definition path
 - **Lambda.ai / Lambda Labs** for distributed compute coordinated with Slurm redundancy/failure-handling patterns
 - **AWS Kubernetes** for non-Lambda.ai platform services and production-adjacent infrastructure concerns
 
@@ -243,7 +243,7 @@ Tradeoffs:
 - experiment tracking with MLflow
 - MLflow PostgreSQL/S3 storage pattern
 - artifact/model packaging via nbdev
-- infrastructure with python-terraform
+- infrastructure generation with Terranix -> OpenTofu JSON
 - distributed compute on Lambda.ai (Slurm coordination/redundancy)
 - AWS Kubernetes tooling and production integration
 - local architecture replication of production control/storage layers

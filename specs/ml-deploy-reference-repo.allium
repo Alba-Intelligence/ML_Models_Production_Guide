@@ -2,7 +2,7 @@
 -- ml-deploy-reference-repo.allium
 
 -- Scope: Entire repository (all files) as requested.
--- Includes: flake-defined shell behavior, Jupyter helper behavior,
+-- Includes: flake/devenv shell behavior, Jupyter helper behavior,
 --   wiki maintenance workflow, and accepted architecture/default-stack constraints.
 -- Excludes:
 --   - runtime internals of external systems (AWS, Lambda.ai, MLflow, Prometheus, Grafana)
@@ -31,7 +31,11 @@ entity Repository {
     fastapi_in_scope: Boolean
     spec_quality_gate_passed: Boolean
     mlflow_in_scope: Boolean
-    python_terraform_in_scope: Boolean
+    opentofu_in_scope: Boolean
+    terranix_in_scope: Boolean
+    nix_flake_in_scope: Boolean
+    nix_devenv_in_scope: Boolean
+    terranix_json_output_required: Boolean
     lambda_ai_in_scope: Boolean
     aws_in_scope: Boolean
 
@@ -62,6 +66,13 @@ entity DocumentationSeries {
     audiences_covered: Set<DocumentationAudience>
     has_python_implementation_module: Boolean
     has_docs_site_module_section: Boolean
+}
+
+entity OpenTofuConfiguration {
+    generated_with_terranix: Boolean
+    generated_from_flake: Boolean
+    generated_from_devenv: Boolean
+    outputs_json_configuration: Boolean
 }
 
 entity ShellSession {
@@ -120,7 +131,11 @@ rule InitializeRepositoryDefaults {
     ensures: repository.fastapi_in_scope = false
     ensures: repository.spec_quality_gate_passed = false
     ensures: repository.mlflow_in_scope = true
-    ensures: repository.python_terraform_in_scope = true
+    ensures: repository.opentofu_in_scope = true
+    ensures: repository.terranix_in_scope = true
+    ensures: repository.nix_flake_in_scope = true
+    ensures: repository.nix_devenv_in_scope = true
+    ensures: repository.terranix_json_output_required = true
     ensures: repository.lambda_ai_in_scope = true
     ensures: repository.aws_in_scope = true
 
@@ -226,6 +241,21 @@ rule RequireImplementationReadyNotebookSeries {
     ensures: series.has_docs_site_module_section = true
 }
 
+rule RequireNixGeneratedOpenTofuConfiguration {
+    when: OpenTofuConfigurationDeclared(repository, configuration)
+
+    requires: repository.opentofu_in_scope
+    requires: repository.terranix_in_scope
+    requires: repository.nix_flake_in_scope
+    requires: repository.nix_devenv_in_scope
+    requires: repository.terranix_json_output_required
+
+    ensures: configuration.generated_with_terranix = true
+    ensures: configuration.generated_from_flake = true
+    ensures: configuration.generated_from_devenv = true
+    ensures: configuration.outputs_json_configuration = true
+}
+
 rule BlockImplementationWithoutExplicitConfirmation {
     when: ImplementationCodeRequested(repository, explicit_user_confirmation)
 
@@ -255,5 +285,6 @@ surface GovernanceAndDocumentationSurface {
     provides: RepositoryInitialized(repository)
     provides: DurableRepositoryChangeObserved(wiki, change_is_non_trivial)
     provides: DocumentationSeriesDeclared(repository, series)
+    provides: OpenTofuConfigurationDeclared(repository, configuration)
     provides: ImplementationCodeRequested(repository, explicit_user_confirmation)
 }

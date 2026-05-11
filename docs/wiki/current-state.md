@@ -42,6 +42,7 @@ sources:
   - sources/nbs.10_terraform_bootstrap.ipynb.md
   - sources/nbs.01_platform_narrative.ipynb.md
   - sources/nbs.11_infrastructure_overview.ipynb.md
+  - sources/nbs.12_system_interaction_analysis.ipynb.md
   - sources/nbs.index.ipynb.md
   - sources/nbs.05_webui_contracts.ipynb.md
   - sources/tests.test_webui_contracts.py.md
@@ -105,6 +106,7 @@ As of 2026-05-11, the repository contains:
 - Runtime helper modules are now notebook-owned and exported through nbdev, not maintained as hand-edited Python sources.
 - Runtime orchestration now routes notebook execution requests across local, Slurm, and Kubernetes targets with explicit submitted/completed backend states.
 - Docker-first reproducible development is now implemented with `Dockerfile` and `docker-compose.dev.yml` (including local MLflow PostgreSQL+MinIO parity services).
+- A full five-layer system interaction analysis now exists in both notebook and wiki forms for architecture-level component/coupling review.
 - A distilled repository-wide Allium specification now exists and is indexed in the wiki.
 - An nbdev 3 project structure has been initialized with pyproject.toml, nbs/ directory, and ml_deploy/ package placeholder.
 - Notebooks can be successfully exported to Python packages using `nbdev-export --path nbs/`.
@@ -120,7 +122,7 @@ As of 2026-05-11, the repository contains:
 - CUDA support is explicitly commented out in `flake.nix`.
 - There is no production-ready ML data pipeline or deployment implementation yet.
 - Contract validation is currently test-level for the local vertical slice, not yet generalized across all topologies.
-- New architecture requirements now specify MLflow PostgreSQL/S3 storage, Lambda.ai Slurm coordination/redundancy, AWS Kubernetes for non-Lambda.ai services, and Python-managed Terraform-first infrastructure workflows.
+- New architecture requirements now specify MLflow PostgreSQL/S3 storage, Lambda.ai Slurm coordination/redundancy, AWS Kubernetes for non-Lambda.ai services, and Nix (flake+devenv) Terranix-generated OpenTofu JSON infrastructure workflows.
 - Slurm/Kubernetes paths currently emit backend-ready submission payloads, but external scheduler client integrations remain to be connected.
 - The distilled Allium spec currently models repository posture, shell behavior, and governance constraints; it does not yet cover any real ML implementation logic because that code still does not exist.
 - The distilled Allium spec now also models a spec-quality readiness gate required for default implementation allowance.
@@ -135,6 +137,7 @@ The repo is currently best understood as a **specification-first and documentati
 ## Most likely next additions
 
 - local replica topology that mirrors production control planes (Kubernetes/Slurm/storage) where feasible
+- deeper executable coverage for remote scheduler lifecycle states (submitted/running/failed/finished)
 - promotion of the implemented local slice into Docker-first execution flow
 - expansion into distributed, batch, and online production topologies
 - notebook Web UI execution flow with immutable notebook source semantics

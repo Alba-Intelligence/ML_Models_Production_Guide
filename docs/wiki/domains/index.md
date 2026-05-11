@@ -30,7 +30,7 @@ Each domain page should answer:
 - [training-domain.md](training-domain.md) — PyTorch training, GPU execution, distributed training behavior, and experiment traceability.
 - [artifact-domain.md](artifact-domain.md) — model packaging, registry, versioning, and promotion.
 - [serving-domain.md](serving-domain.md) — local serving, batch/online inference contracts, and rollout behavior.
-- [infrastructure-domain.md](infrastructure-domain.md) — AWS, Lambda.ai, networking, storage, and `python-terraform` workflows.
+- [infrastructure-domain.md](infrastructure-domain.md) — AWS, Lambda.ai, networking, storage, and Terranix/OpenTofu generation workflows.
 - [observability-domain.md](observability-domain.md) — metrics, logs, traces, drift, quality, and alerting.
 - [governance-domain.md](governance-domain.md) — security, approvals, auditability, IAM, and policy boundaries.
 - [cost-domain.md](cost-domain.md) — spend attribution, reporting, budgets, and unit economics.

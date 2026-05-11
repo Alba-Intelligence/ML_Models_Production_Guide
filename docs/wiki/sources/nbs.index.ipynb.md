@@ -16,6 +16,7 @@ Primary rendered documentation homepage (`_docs/index.html`) for structured navi
 ## What it communicates
 
 - Navigation-first reading order grouped by foundations, lifecycle, and topology/operations
+- A dedicated architecture-analysis notebook entry for deep interaction mapping
 - Notebook-first development model (`nbs/` source of truth, exported package artifacts)
 - Link to the canonical architecture narrative notebook (`nbs/01_platform_narrative.ipynb`)
 - Backwards-compatible link to deprecated infrastructure overview

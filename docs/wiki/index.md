@@ -14,6 +14,7 @@ sources:
   - architecture/documentation-toc.md
   - architecture/assistant-integration-and-docs-delivery.md
   - architecture/notebook-repository-web-ui.md
+  - architecture/full-system-interaction-analysis.md
   - architecture/webui-backend-contract.md
   - architecture/example-matrix.md
   - architecture/first-vertical-slice.md
@@ -55,6 +56,7 @@ sources:
   - sources/nbs.09_notebook_intake.ipynb.md
   - sources/nbs.10_terraform_bootstrap.ipynb.md
   - sources/nbs.11_infrastructure_overview.ipynb.md
+  - sources/nbs.12_system_interaction_analysis.ipynb.md
   - sources/nbs.index.ipynb.md
   - sources/nbs.05_webui_contracts.ipynb.md
   - sources/tests.test_vertical_slice.py.md
@@ -89,6 +91,8 @@ sources:
   - revisions/2026-05-11-propagated-doc-series-tests.md
   - revisions/2026-05-11-doc-series-obligations-implementation.md
   - revisions/2026-05-11-spec-runtime-docker-implementation.md
+  - revisions/2026-05-11-opentofu-terranix-spec-shift.md
+  - revisions/2026-05-11-full-system-interaction-analysis.md
 ---
 
 # Wiki index
@@ -104,6 +108,7 @@ sources:
 | Review the ratified architecture skeleton                            | [architecture/reference-architecture-skeleton.md](architecture/reference-architecture-skeleton.md), [architecture/target-system.md](architecture/target-system.md)                                                                                                   |
 | Review the ratified documentation structure                          | [architecture/documentation-toc.md](architecture/documentation-toc.md), [architecture/reference-architecture-skeleton.md](architecture/reference-architecture-skeleton.md)                                                                                           |
 | Review assistant/MCP and docs-delivery proposals                     | [architecture/assistant-integration-and-docs-delivery.md](architecture/assistant-integration-and-docs-delivery.md), [architecture/target-system.md](architecture/target-system.md)                                                                                   |
+| Run full five-layer interaction analysis                             | [architecture/full-system-interaction-analysis.md](architecture/full-system-interaction-analysis.md), [sources/nbs.12_system_interaction_analysis.ipynb.md](sources/nbs.12_system_interaction_analysis.ipynb.md) |
 | Review the cross-cutting contracts                                   | [contracts/index.md](contracts/index.md), [architecture/reference-architecture-skeleton.md](architecture/reference-architecture-skeleton.md)                                                                                                                         |
 | Review the bounded domain pages                                      | [domains/index.md](domains/index.md), [architecture/reference-architecture-skeleton.md](architecture/reference-architecture-skeleton.md)                                                                                                                             |
 | Review the reference topologies                                      | [topologies/index.md](topologies/index.md), [architecture/reference-architecture-skeleton.md](architecture/reference-architecture-skeleton.md)                                                                                                                       |
@@ -145,6 +150,7 @@ sources:
 - [architecture/documentation-toc.md](architecture/documentation-toc.md) — ratified table of contents for the documentation set.
 - [architecture/assistant-integration-and-docs-delivery.md](architecture/assistant-integration-and-docs-delivery.md) — accepted MCP defaults plus docs delivery guidance.
 - [architecture/notebook-repository-web-ui.md](architecture/notebook-repository-web-ui.md) — centralized interface for triggering notebook executions across environments while keeping notebooks immutable.
+- [architecture/full-system-interaction-analysis.md](architecture/full-system-interaction-analysis.md) — five-layer deep analysis of component boundaries, contracts, flows, coupling, and controls.
 - [architecture/webui-backend-contract.md](architecture/webui-backend-contract.md) — executable request/response contract for Web UI backend run triggering and MLflow-linked status.
 - [architecture/example-matrix.md](architecture/example-matrix.md) — proposed example inventory mapped to lifecycle, domains, contracts, and topologies.
 - [architecture/first-vertical-slice.md](architecture/first-vertical-slice.md) — concrete first end-to-end architecture slice with explicit I/O and success criteria.
@@ -229,6 +235,7 @@ sources:
 - [sources/nbs.09_notebook_intake.ipynb.md](sources/nbs.09_notebook_intake.ipynb.md) — synthesized summary of nbdev source-of-truth for notebook intake gates.
 - [sources/nbs.10_terraform_bootstrap.ipynb.md](sources/nbs.10_terraform_bootstrap.ipynb.md) — synthesized summary of nbdev source-of-truth for Terraform bootstrap helpers.
 - [sources/nbs.11_infrastructure_overview.ipynb.md](sources/nbs.11_infrastructure_overview.ipynb.md) — synthesized summary of audience-facing infrastructure architecture overview notebook.
+- [sources/nbs.12_system_interaction_analysis.ipynb.md](sources/nbs.12_system_interaction_analysis.ipynb.md) — synthesized summary of the five-layer system interaction analysis notebook.
 - [sources/nbs.index.ipynb.md](sources/nbs.index.ipynb.md) — synthesized summary of the rendered docs homepage notebook.
 - [sources/nbs.05_webui_contracts.ipynb.md](sources/nbs.05_webui_contracts.ipynb.md) — synthesized summary of nbdev notebook source-of-truth for Web UI contracts.
 - [sources/tests.test_vertical_slice.py.md](sources/tests.test_vertical_slice.py.md) — synthesized summary of vertical-slice behavior tests.
@@ -265,6 +272,8 @@ sources:
 - [revisions/2026-05-11-propagated-doc-series-tests.md](revisions/2026-05-11-propagated-doc-series-tests.md) — captures test propagation from the documentation-series rule into executable/aspirational test groups.
 - [revisions/2026-05-11-doc-series-obligations-implementation.md](revisions/2026-05-11-doc-series-obligations-implementation.md) — captures completion of deferred doc-series requirements and activation of full non-skipped enforcement tests.
 - [revisions/2026-05-11-spec-runtime-docker-implementation.md](revisions/2026-05-11-spec-runtime-docker-implementation.md) — captures trigger-reachability + shell-sync spec alignment, backend orchestration routing, MLflow runtime storage config, and Docker-first workflow implementation.
+- [revisions/2026-05-11-opentofu-terranix-spec-shift.md](revisions/2026-05-11-opentofu-terranix-spec-shift.md) — captures the canonical infrastructure shift to Nix (flake+devenv) Terranix-generated OpenTofu JSON.
+- [revisions/2026-05-11-full-system-interaction-analysis.md](revisions/2026-05-11-full-system-interaction-analysis.md) — captures the five-layer full-system component interaction analysis and notebook/wiki note expansion.
 - [revisions/2026-05-09-example-matrix.md](revisions/2026-05-09-example-matrix.md) — captures the first architecture-aligned example inventory.
 - [revisions/2026-05-09-default-stack-decisions.md](revisions/2026-05-09-default-stack-decisions.md) — captures the accepted default stack and boundary decisions.
 - [revisions/2026-05-09-topology-pages.md](revisions/2026-05-09-topology-pages.md) — captures the first pass of reference topology pages.
