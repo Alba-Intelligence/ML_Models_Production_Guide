@@ -1,6 +1,6 @@
 ---
 updated: 2026-05-11
-summary: Synthesized summary of the infrastructure overview notebook with cleaned markdown formatting and a cross-topology Mermaid architecture diagram.
+summary: Synthesized summary of the deprecated infrastructure overview notebook retained for backward-compatible links.
 read_when:
   - You need a high-level visual briefing of the full platform
   - You are onboarding stakeholders before deep-dive domain pages
@@ -11,20 +11,19 @@ source_file: ../../nbs/11_infrastructure_overview.ipynb
 
 ## Role
 
-Presentation notebook for the whole-system architecture narrative.
+Deprecated compatibility notebook that points readers to `nbs/01_platform_narrative.ipynb`.
 
 ## What it contains
 
-- Audience-friendly executive summary of the platform
-- Mermaid flow diagram covering local parity, Lambda.ai Slurm, AWS Kubernetes, and MLflow persistence
-- Explicit mapping of non-negotiable constraints and technology choices
-- Role-specific framing for ML engineers, platform engineers, and leadership stakeholders
+- Deprecation notice
+- Link to canonical architecture narrative notebook
+- Migration note explaining why architecture content moved
 
 ## Practical implication
 
-This is the preferred first visual asset to explain the project before entering detailed contract/domain/topology specs.
+Keep this file only for compatibility with existing links; do not add new architecture content here.
 
 ## Maintenance notes
 
-- Markdown cells must keep real line breaks in `source` arrays (not literal `\n` text).
-- Mermaid is authored with Quarto fence syntax (` ```{mermaid} `) and quoted labels where symbols are present.
+- New architecture updates belong in `nbs/01_platform_narrative.ipynb`.
+- This notebook can be removed once downstream links are fully migrated.
