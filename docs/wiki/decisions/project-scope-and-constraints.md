@@ -28,7 +28,7 @@ The project is intended to become an **extensive reference documentation set wit
 9. Lambda.ai is the distributed compute platform in scope for training/inference coordination, using Slurm orchestration with redundancy/failure-handling patterns.
 10. AWS hosts the remaining platform services with Kubernetes as the default control/deployment substrate.
 11. A notebook Web UI is required for ML engineers to upload/select notebooks and trigger runs without editing notebook code.
-12. Infrastructure should be managed through Nix-driven Terranix generation of OpenTofu JSON from both flake and devenv paths, with hand-written Terraform/OpenTofu minimized.
+12. Infrastructure should be managed through Nix-driven Terranix generation of OpenTofu JSON from both flake and devenv paths, with hand-written Terraform/OpenTofu minimized. The repo currently documents that direction more completely than it implements a full generator/apply pipeline.
 13. Security is a permanent requirement.
 14. Data lineage is a permanent requirement.
 15. Experiment traceability, model traceability, and reproducibility are permanent requirements.

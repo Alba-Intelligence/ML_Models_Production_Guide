@@ -110,7 +110,7 @@ As of 2026-05-11, the repository contains:
 - The Web UI contract module is now Quarto-owned and exported from `nbs/05_webui_contracts.qmd`.
 - Execution adapter mappings now exist for local, Slurm, and Kubernetes payloads.
 - Notebook intake validation gates now exist for immutable refs, notebook structure, and optional nbdev export checks.
-- Nix/Terranix-oriented OpenTofu infrastructure helpers now own the platform bootstrap story.
+- Nix/Terranix-oriented OpenTofu infrastructure helpers and documentation now describe the platform bootstrap story, but a repo-native Terranix generation/apply pipeline is still not executable end to end.
 - Runtime helper modules are now Quarto-owned and exported through nbdev, not maintained as hand-edited Python sources.
 - MLflow parity helpers now also render compute-plane local emulation compose configuration (LocalStack, K3s, Slurm) and a merged full local-emulation stack config.
 - Infrastructure MCP interrogation now has a concrete helper module that turns available server inventory into the required default assistant scope and realized infrastructure aspects.
@@ -139,7 +139,7 @@ As of 2026-05-11, the repository contains:
 - CUDA support is explicitly commented out in `flake.nix`.
 - There is no production-ready ML data pipeline or deployment implementation yet.
 - Contract validation is currently test-level for the local vertical slice, not yet generalized across all topologies.
-- New architecture requirements now specify MLflow PostgreSQL/S3 storage, Lambda.ai Slurm coordination/redundancy, AWS Kubernetes for non-Lambda.ai services, and Nix (flake+devenv) Terranix-generated OpenTofu JSON infrastructure workflows.
+- New architecture requirements now specify MLflow PostgreSQL/S3 storage, Lambda.ai Slurm coordination/redundancy, AWS Kubernetes for non-Lambda.ai services, and Nix (flake+devenv) Terranix-generated OpenTofu JSON infrastructure workflows; that infrastructure workflow is still partly documented rather than wired as a runnable generator in-repo.
 - Dual-profile (`local_emulation | cloud`) infrastructure now implemented: `docker-compose.local-infra.yml` (LocalStack + K3s + Slurm), Nix/Terranix modules in `nix/modules/` and `nix/profiles/`, and Quarto page `nbs/13_opentofu_infra.qmd`.
 - Allium spec now covers MLflow storage backends (SQLite/PostgreSQL/MinIO/S3), security (reverse proxy, MLFLOW_CREATE_MODEL_VERSION_SOURCE_VALIDATION_REGEX), and a DEV→UAT→REGRESSION→PROD promotion pipeline with approval gate.
 - Five open questions formally recorded in the spec: Lambda.ai scheduling preference, bigmlflow flavor requirement, CI/CD tooling, promotion gate criteria, and PyTorch inference optimisation steps.
