@@ -106,6 +106,8 @@ Render the full docs site from Quarto sources without executing notebook kernels
 nix develop -c quarto render . --no-execute
 ```
 
+This is the canonical way to recreate the HTML docs from source; it refreshes `_docs/index.html` and `_docs/nbs/*.html`.
+
 Render only the homepage:
 
 ```bash
