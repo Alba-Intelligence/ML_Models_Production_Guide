@@ -327,6 +327,11 @@ rule RequireNixGeneratedOpenTofuConfiguration {
     ensures: configuration.outputs_json_configuration = true
     ensures: configuration.supports_local_emulation = true
     ensures: configuration.supports_cloud_deployment = true
+
+    @guidance
+        -- The canonical infrastructure path is Nix (flake + devenv) plus Terranix-generated
+        -- OpenTofu JSON.
+        -- Do not reintroduce a Python Terraform-bootstrap path as the default infrastructure flow.
 }
 
 rule RequireLocalEmulationParity {
