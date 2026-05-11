@@ -56,7 +56,7 @@ class TestDocumentationSeriesImplementedObligations(unittest.TestCase):
             "vertical_slice.html",
             "webui_contracts.html",
             "execution_backends.html",
-            "terraform_bootstrap.html",
+            "infrastructure_mcp.html",
         )
         rendered = {p.name for p in self.docs_dir.glob("*.html")}
         rendered.update({p.name for p in (self.docs_dir / "nbs").glob("*.html")})

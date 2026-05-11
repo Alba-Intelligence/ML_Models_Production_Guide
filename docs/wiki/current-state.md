@@ -114,6 +114,7 @@ As of 2026-05-11, the repository contains:
 - Runtime helper modules are now Quarto-owned and exported through nbdev, not maintained as hand-edited Python sources.
 - MLflow parity helpers now also render compute-plane local emulation compose configuration (LocalStack, K3s, Slurm) and a merged full local-emulation stack config.
 - Infrastructure MCP interrogation now has a concrete helper module that turns available server inventory into the required default assistant scope and realized infrastructure aspects.
+- The old Python Terraform-bootstrap helper path has been removed; Nix/Terranix-generated OpenTofu remains the active infrastructure bootstrap direction.
 - Runtime orchestration now routes notebook execution requests across local, Slurm, and Kubernetes targets with explicit submitted/completed backend states.
 - Docker-first reproducible development is now implemented with `Dockerfile` and `docker-compose.dev.yml` (data plane: MLflow, PostgreSQL, MinIO).
 - **Local emulation compute plane** now exists in `docker-compose.local-infra.yml` (LocalStack, K3s, Slurm-Docker).

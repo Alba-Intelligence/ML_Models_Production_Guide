@@ -30,7 +30,6 @@ architecture to execution details.
 - [MLflow parity](mlflow_parity.html)
 - [Execution backends](execution_backends.html)
 - [Notebook intake validation](notebook_intake.html)
-- [Terraform bootstrap](terraform_bootstrap.html)
 
 ## Deprecated notebook
 

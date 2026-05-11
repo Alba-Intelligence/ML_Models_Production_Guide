@@ -47,7 +47,7 @@ Until real project code lands, the practical areas of concern are:
 - project purpose and constraints
 - target platform and documentation scope
 - dev shell behavior
-- Python bootstrap behavior
+- Nix/Terranix OpenTofu infrastructure bootstrap
 - Jupyter workflow
 - upstream pinning through `flake.lock`
 

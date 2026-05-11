@@ -29,4 +29,3 @@ Read pages in the structure below to understand the system from architecture to 
 - [MLflow parity](07_mlflow_parity.qmd)
 - [Execution backends](08_execution_backends.qmd)
 - [Notebook intake validation](09_notebook_intake.qmd)
-- [Terraform bootstrap](10_terraform_bootstrap.qmd)
