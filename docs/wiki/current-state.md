@@ -94,7 +94,7 @@ As of 2026-05-11, the repository contains:
 - The first local vertical slice is now implemented in `ml_deploy/vertical_slice.py` with tests in `tests/test_vertical_slice.py`.
 - The vertical-slice module is now notebook-owned and exported from `nbs/06_vertical_slice.ipynb`.
 - A thin Web UI backend contract module now exists in `ml_deploy/webui_contracts.py` with tests in `tests/test_webui_contracts.py`.
-- Spec-propagated tests now validate implemented documentation-series completeness obligations in `tests/test_documentation_series_contracts.py`, with explicit skipped cases for aspirational gaps.
+- Spec-propagated tests now enforce documentation-series completeness obligations in `tests/test_documentation_series_contracts.py` (implementation steps, trade-offs, security, examples, role-specific learning paths, and module/docs linkage).
 - The Web UI contract module is now notebook-owned and exported from `nbs/05_webui_contracts.ipynb`.
 - Execution adapter mappings now exist for local, Slurm, and Kubernetes payloads.
 - Notebook intake validation gates now exist for immutable refs, notebook structure, and optional nbdev export checks.

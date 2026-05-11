@@ -60,8 +60,8 @@ class TestDocumentationSeriesImplementedObligations(unittest.TestCase):
         self.assertTrue(expected.issubset(rendered))
 
 
-class TestDocumentationSeriesAspirationalObligations(unittest.TestCase):
-    """Aspirational obligations kept in spec but not yet implemented."""
+class TestDocumentationSeriesRequiredContentObligations(unittest.TestCase):
+    """Checks for required documentation-series content obligations."""
 
     @classmethod
     def setUpClass(cls) -> None:
@@ -80,17 +80,26 @@ class TestDocumentationSeriesAspirationalObligations(unittest.TestCase):
                 chunks.append(source)
         return "\n".join(chunks)
 
-    @unittest.skip("Aspirational obligation: dedicated trade-off analysis section not yet authored")
+    def test_implementation_steps_present(self) -> None:
+        text = self._load_notebook_text(self.platform_narrative)
+        self.assertIn("## Implementation steps", text)
+
     def test_tradeoff_analysis_present(self) -> None:
         text = self._load_notebook_text(self.platform_narrative)
         self.assertIn("## Trade-offs", text)
 
-    @unittest.skip("Aspirational obligation: usage examples section not yet authored")
+    def test_security_considerations_present(self) -> None:
+        text = self._load_notebook_text(self.platform_narrative)
+        self.assertIn("## Security considerations", text)
+
     def test_usage_examples_present(self) -> None:
         text = self._load_notebook_text(self.platform_narrative)
         self.assertIn("## Examples of use", text)
 
-    @unittest.skip("Aspirational obligation: ML researcher learning path not yet authored")
+    def test_software_engineer_learning_path_present(self) -> None:
+        text = self._load_notebook_text(self.platform_narrative)
+        self.assertIn("## Software engineer learning path", text)
+
     def test_ml_researcher_learning_path_present(self) -> None:
         text = self._load_notebook_text(self.platform_narrative)
         self.assertIn("## ML researcher learning path", text)

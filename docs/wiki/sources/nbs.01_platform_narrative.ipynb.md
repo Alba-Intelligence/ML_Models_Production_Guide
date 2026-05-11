@@ -19,6 +19,10 @@ Canonical architecture narrative notebook for the platform story.
 - Primary Mermaid architecture diagram spanning local parity, Lambda Slurm, and AWS Kubernetes
 - Reading lenses for lifecycle, topology, and operations interpretation
 - Explicit non-negotiable requirements list
+- Stepwise implementation plan for engineering execution
+- Trade-off analysis and explicit security considerations
+- Examples-of-use scenarios across local, distributed, and production contexts
+- Role-specific learning paths for software engineers and ML researchers
 
 ## Practical implication
 
