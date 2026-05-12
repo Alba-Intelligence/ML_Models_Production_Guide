@@ -10,5 +10,5 @@ sources:
 # `scripts/regenerate-html.sh`
 
 - Minimal helper script to regenerate HTML docs from Quarto sources.
-- Uses `nix develop -c quarto render . --no-execute` when Nix is available.
-- Falls back to `quarto render . --no-execute` when Quarto is already installed on PATH.
+- Uses `quarto render . --no-execute` when Quarto is already installed on PATH.
+- Falls back to `nix-shell --packages quarto --run 'quarto render . --no-execute'` when Quarto is missing.

@@ -114,6 +114,12 @@ Short helper script:
 ./scripts/regenerate-html.sh
 ```
 
+The helper prefers `quarto` directly if available and otherwise uses:
+
+```bash
+nix-shell --packages quarto --run 'quarto render . --no-execute'
+```
+
 Render only the homepage:
 
 ```bash
