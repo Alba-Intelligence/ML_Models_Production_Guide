@@ -99,6 +99,7 @@
           git
 
           quarto
+          d2
 
           # Python
           basePython

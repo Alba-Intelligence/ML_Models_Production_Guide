@@ -126,7 +126,7 @@ As of 2026-05-11, the repository contains:
 - **Local AWS emulator** now exists in `docker-compose.aws-emulator.yml` (Floci + bootstrap).
 - **Local emulation compute plane** now exists in `docker-compose.local-infra.yml` (K3s, Slurm-Docker).
 - **Nix/Terranix module structure** now exists in `nix/` (shared, local, cloud modules; local and cloud profiles) and is mirrored in self-contained Quarto docs pages.
-- The docs now need to read top-down, include D2 diagrams where they help, and expose implementation-relevant code/config from the published pages.
+- The docs now need to read top-down, include Mermaid diagrams where they help, and expose implementation-relevant code/config from the published pages.
 - **Dual-mode OpenTofu spec** is encoded: `DeploymentProfile` enum, `LocalEmulationStack` entity, `RequireLocalEmulationParity` rule in Allium spec.
 - **Quarto page 13** (`nbs/13_opentofu_infra.qmd`) documents the dual-mode infrastructure profile architecture.
 - A full five-layer system interaction analysis now exists in Quarto-page and wiki forms.
@@ -134,7 +134,7 @@ As of 2026-05-11, the repository contains:
 - An nbdev 3 project structure has been initialized with pyproject.toml, nbs/ directory, and ml_deploy/ package placeholder.
 - Notebooks can be successfully exported to Python packages using `nbdev-export --path nbs/`.
 - A single end-of-task command now exists to export notebooks, render docs, and run tests: `./scripts/finalize-task.sh`.
-- A canonical platform narrative Quarto page now owns the architecture story and D2 diagram.
+- A canonical platform narrative Quarto page now owns the architecture story and Mermaid diagram.
 - The rendered docs homepage is now Quarto-driven (`nbs/index.qmd`) and functions as navigation-first entrypoint.
 - Full Quarto website generation from `.qmd` sources succeeds via `nix develop -c quarto render . --no-execute`.
 - Rendered Quarto outputs are refreshed under `_docs/nbs/*.html` with `_docs/index.html` as root entrypoint; that root page now forwards to the Quarto navigation homepage at `_docs/nbs/index.html`, whose links target HTML docs, the root sidebar no longer references the retired Terraform-bootstrap page, and the stale legacy `nbs/_docs/` snapshot has been removed.

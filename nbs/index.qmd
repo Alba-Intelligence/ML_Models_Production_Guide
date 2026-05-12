@@ -5,7 +5,7 @@ title: "ML Deploy Reference"
 This is the **navigation homepage** for the Quarto-first ML deployment reference.
 
 Read pages in the structure below to understand the system from architecture to execution details.
-Architecture diagrams across the docs are authored in D2.
+Architecture diagrams across the docs are authored in Mermaid.
 
 ## Foundations
 

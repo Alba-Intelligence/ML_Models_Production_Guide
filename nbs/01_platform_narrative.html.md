@@ -11,20 +11,27 @@ The platform is organized around:
 3. Local emulation parity for infrastructure and operations.
 4. Promotion-oriented governance toward production controls.
 
-```{d2}
-direction: down
 
-notebook_intake: "Notebook intake"
-execution_routing: "Execution routing"
-mlflow_traceability: "MLflow traceability"
-artifact_records: "Artifact + deployment records"
-promotion_gates: "Promotion and governance gates"
+::::::{.cell layout-align="default"}
 
-notebook_intake -> execution_routing
-execution_routing -> mlflow_traceability
-mlflow_traceability -> artifact_records
-artifact_records -> promotion_gates
-```
+:::::{.cell-output-display}
+
+::::{}
+`<figure class=''>`{=html}
+
+:::{}
+
+<pre class="mermaid mermaid-js">flowchart TD
+  A[&quot;Notebook intake&quot;] --&gt; B[&quot;Execution routing&quot;]
+  B --&gt; C[&quot;MLflow traceability&quot;]
+  C --&gt; D[&quot;Artifact + deployment records&quot;]
+  D --&gt; E[&quot;Promotion and governance gates&quot;]
+</pre>
+:::
+`</figure>`{=html}
+::::
+:::::
+::::::
 
 ## Core architecture direction
 
@@ -67,4 +74,3 @@ Start with the Web UI contract and execution adapters, then move to topology pag
 ## ML researcher learning path
 
 Start with the platform architecture and MLflow traceability flow, then use vertical-slice and promotion references.
-

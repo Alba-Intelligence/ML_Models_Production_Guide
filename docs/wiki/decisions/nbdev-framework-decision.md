@@ -15,7 +15,7 @@ The project originally considered FastAPI for local serving and documentation de
 
 - Notebook-first development (source of truth in Jupyter notebooks)
 - Automatic Python package generation from notebooks
-- Documentation generation with Quarto (D2 diagrams, cross-references, indexing)
+- Documentation generation with Quarto (Mermaid diagrams, cross-references, indexing)
 - Experiment tracking integration with MLflow
 - Local development workflow
 
@@ -25,7 +25,7 @@ The project originally considered FastAPI for local serving and documentation de
 
 - Unified workflow: code, docs, and experiments live in notebooks
 - Automatic package generation via `nbdev_export`
-- Rich documentation with Quarto (D2, callouts, tabsets, etc.)
+- Rich documentation with Quarto (Mermaid, callouts, tabsets, etc.)
 - Easy local preview with `nbdev_preview`
 - Standardized project structure
 - Seamless integration with MLflow for experiment tracking
@@ -65,7 +65,7 @@ ml_deploy/
 
 - Source: notebooks in `nbs/` (markdown and code cells)
 - Output: Quarto-rendered site in `docs/` (typically gitignored)
-- Features: D2 diagrams, cross-references, automatic indexing, callouts
+- Features: Mermaid diagrams, cross-references, automatic indexing, callouts
 - The living wiki in `docs/wiki/` remains separate as project memory per AGENTS.md
 
 ### Serving

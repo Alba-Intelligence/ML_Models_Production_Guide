@@ -57,7 +57,7 @@ The project is not just about serving a model. It should document and demonstrat
 
 ### Documentation
 
-- **Quarto** (via nbdev 3) for rendered documentation with D2 diagrams, cross-references, and automatic indexing
+- **Quarto** (via nbdev 3) for rendered documentation with Mermaid diagrams, cross-references, and automatic indexing
 - Documentation source lives in notebooks (`nbs/`) and is rendered to `docs/`
 - The living wiki in `docs/wiki/` remains separate as project memory per AGENTS.md
 

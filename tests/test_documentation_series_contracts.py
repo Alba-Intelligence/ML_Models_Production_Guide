@@ -36,7 +36,7 @@ class TestDocumentationSeriesImplementedObligations(unittest.TestCase):
     def test_architecture_description_exists(self) -> None:
         text = self._load_document_text(self.platform_narrative)
         self.assertIn("## Platform architecture", text)
-        self.assertIn("```{d2}", text)
+        self.assertIn("```{mermaid}", text)
 
     def test_docs_site_module_section_exists(self) -> None:
         text = self._load_document_text(self.index_notebook)

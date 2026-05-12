@@ -103,6 +103,7 @@ in
     (with pkgs; [
       git
       quarto
+      d2
     ])
     ++ (with pkgs.python313Packages; [ nbdev ])
     ++ [

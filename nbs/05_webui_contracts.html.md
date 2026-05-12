@@ -6,7 +6,7 @@ title: "Web UI Backend Contracts"
 
 > nbdev source for immutable notebook execution requests and MLflow-first run visibility helpers.
 
-::: {#99c3ff51 .cell export='null'}
+::: {#f3cc4b20 .cell export='null'}
 ``` {.python .cell-code}
 from __future__ import annotations
 

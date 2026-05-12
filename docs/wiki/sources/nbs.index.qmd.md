@@ -17,7 +17,7 @@ Primary Quarto homepage for docs navigation.
 
 - Foundations, lifecycle, architecture analysis, and operations navigation groups.
 - Links to Quarto-converted architecture pages and notebook-backed runtime/module pages, including the infrastructure MCP helper notebook.
-- Explicit statement that architecture diagrams use D2 across the documentation set.
+- Explicit statement that architecture diagrams use Mermaid across the documentation set.
 - Deprecated content removed from the landing navigation.
 
 ## Practical implication

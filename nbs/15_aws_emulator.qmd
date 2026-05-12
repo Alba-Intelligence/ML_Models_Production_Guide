@@ -6,19 +6,12 @@ This page is the copy-pasteable source for the shared local AWS emulator.
 It replaces the earlier LocalStack/MinIO split and is the only local AWS
 emulator the repo now treats as canonical.
 
-```{d2}
-direction: right
-
-dev_compose: "docker-compose.dev.yml"
-infra_compose: "docker-compose.local-infra.yml"
-floci: "Floci"
-bootstrap: "floci_bootstrap"
-buckets: "S3 buckets and IAM role"
-
-dev_compose -> floci
-infra_compose -> floci
-floci -> bootstrap
-bootstrap -> buckets
+```{mermaid}
+graph LR
+  dev[docker-compose.dev.yml] --> floci[Floci]
+  infra[docker-compose.local-infra.yml] --> floci
+  floci --> bootstrap[floci_bootstrap]
+  bootstrap --> buckets[S3 buckets and IAM role]
 ```
 
 ## Compose file
