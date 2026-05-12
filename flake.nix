@@ -106,6 +106,9 @@
           alliumCli
           startJupyter
 
+          # Infrastructure as Code
+          opentofu
+
           # awscli
         ];
 

@@ -20,6 +20,7 @@ enum PromotionStage { dev | uat | regression | prod }
 enum WorkloadScheduler { slurm | kubernetes }
 enum CicdPlatform { github_actions | argocd | custom }
 enum DocumentationSourceFormat { quarto_qmd | nbdev_ipynb | hybrid }
+enum ReverseProxyTool { traefik }
 
 entity Repository {
     name: String
@@ -157,6 +158,7 @@ entity MlflowTrackingServer {
     backend_store: MlflowBackendStore
     artifact_store: MlflowArtifactStore
     has_reverse_proxy: Boolean
+    reverse_proxy_tool: ReverseProxyTool
     model_version_source_validation_enabled: Boolean
     profile_switchable: Boolean
     deployment_profile: DeploymentProfile
@@ -372,10 +374,11 @@ rule RequireNixGeneratedOpenTofuConfiguration {
 
     @guidance
         -- The canonical infrastructure path is Nix (flake + devenv) plus Terranix-generated
-        -- OpenTofu JSON.
-        -- Extend that generation posture to Docker and Docker Compose artifacts wherever the
-        -- repo can reasonably generate them instead of hand-authoring them.
-        -- Do not reintroduce a Python Terraform-bootstrap path as the default infrastructure flow.
+        -- OpenTofu JSON. This is NOT deferred or aspirational; it is a current requirement.
+        -- Terranix is the SOLE approach for generating infrastructure as code; no manual
+        -- Terraform files or alternative IaC tooling is permitted.
+        -- Docker and docker-compose artifacts MUST be generated via Terranix, not hand-authored.
+        -- Do not maintain hand-written Dockerfile or docker-compose files. Terranix generates them.
 }
 
 rule RequireLocalEmulationParity {
@@ -433,10 +436,19 @@ rule BlockImplementationWithoutExplicitConfirmation {
 rule AllowImplementationAfterGate {
     when: ImplementationCodeRequested(repository, explicit_user_confirmation)
 
-    requires: repository.phase = implementation_enabled or explicit_user_confirmation
-    requires: repository.spec_quality_gate_passed or explicit_user_confirmation
+    requires: repository.phase = specification_first or explicit_user_confirmation
+    requires: repository.spec_quality_gate_passed
+    requires: explicit_user_confirmation
 
+    ensures: repository.phase = implementation_enabled
     ensures: OperationRecord.created(kind: implementation_allowed, tool: policy)
+
+    @guidance
+        -- Implementation is only permitted in specification_first phase after:
+        -- (1) spec_quality_gate_passed is true (spec is stable and complete)
+        -- (2) Explicit user confirmation to transition to implementation_enabled
+        -- This ensures spec-first discipline: specification is always the source of truth,
+        -- implementation follows and must align with approved spec.
 }
 
 rule RequireMlflowProfileSwitchable {
@@ -473,15 +485,18 @@ rule RequireMlflowReverseProxyInProduction {
     when: MlflowTrackingServerDeployed(repository, server)
 
     requires: repository.mlflow_in_scope
-    requires: server.deployment_profile = cloud
 
     ensures: server.has_reverse_proxy = true
+    ensures: server.reverse_proxy_tool = traefik
 
     @guidance
-        -- MLflow upstream documentation recommends routing all tracking server traffic
-        -- through a reverse proxy (e.g. nginx, Traefik) in production. The proxy provides
-        -- TLS termination, authentication enforcement, and rate limiting that the MLflow
-        -- server itself does not supply.
+        -- MLflow tracking server MUST be routed through a Traefik reverse proxy in ALL
+        -- deployment profiles (both local_emulation and cloud). Traefik is the sole
+        -- reverse proxy implementation for this system.
+        -- The proxy provides TLS termination (in cloud), authentication enforcement,
+        -- request routing, and rate limiting that the MLflow server itself does not supply.
+        -- In local_emulation, Traefik provides consistent configuration parity with cloud.
+        -- In production (cloud profile), Traefik enables TLS termination and upstream auth integration.
 }
 
 rule RequireMlflowSourceValidationInProduction {
