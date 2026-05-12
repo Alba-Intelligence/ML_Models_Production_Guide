@@ -9,7 +9,7 @@ from dataclasses import dataclass
 import json
 import os
 from pathlib import Path
-from typing import Any, Mapping
+from typing import Any, Literal, Mapping
 
 
 @dataclass(frozen=True)
@@ -57,6 +57,31 @@ class MlflowStorageConfig:
     aws_access_key_id: str
     aws_secret_access_key: str
     s3_endpoint_url: str | None = None
+
+
+@dataclass(frozen=True)
+class MlflowTrackingServer:
+    """MLflow tracking server configuration per spec requirements.
+    
+    Implements entity from spec (ml-deploy-reference-repo.allium, line 157-165):
+    - backend_store: enum {sqlite, postgresql}
+    - artifact_store: enum {filesystem, floci, s3}
+    - has_reverse_proxy: Boolean (spec requirement: must be true)
+    - reverse_proxy_tool: enum {traefik} (NEW FIELD w007, required for compliance)
+    - model_version_source_validation_enabled: Boolean
+    - profile_switchable: Boolean
+    - deployment_profile: enum {local_emulation, cloud}
+    
+    Note: This class added during Phase 1 implementation (w007) to align code with updated spec.
+    Source: nbs/07_mlflow_parity.qmd (project uses Quarto, not nbdev .ipynb)
+    """
+    backend_store: Literal["sqlite", "postgresql"]
+    artifact_store: Literal["filesystem", "floci", "s3"]
+    has_reverse_proxy: bool
+    reverse_proxy_tool: Literal["traefik"]
+    model_version_source_validation_enabled: bool
+    profile_switchable: bool
+    deployment_profile: Literal["local_emulation", "cloud"]
 
 
 @dataclass(frozen=True)
@@ -292,7 +317,7 @@ def build_mlflow_runtime_env_from_storage(config: MlflowStorageConfig) -> dict[s
 
 
 # %% auto #0
-__all__ = ['LocalMlflowParityConfig', 'MlflowStorageConfig', 'LocalInfrastructureParityConfig', 'render_local_compose_config',
+__all__ = ['LocalMlflowParityConfig', 'MlflowStorageConfig', 'MlflowTrackingServer', 'LocalInfrastructureParityConfig', 'render_local_compose_config',
            'render_local_infra_compose_config', 'render_full_local_emulation_compose_config', 'write_local_compose_file',
            'build_mlflow_server_command', 'build_mlflow_runtime_env', 'resolve_mlflow_storage_config',
            'build_mlflow_runtime_env_from_storage']
