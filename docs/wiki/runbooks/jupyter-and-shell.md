@@ -103,7 +103,7 @@ This validates the local implementation of EX-01 -> EX-03 in `ml_deploy/vertical
 Render the full docs site from Quarto sources without executing notebook kernels:
 
 ```bash
-nix develop -c quarto render . --no-execute
+nix develop -c quarto render . --to html --no-execute
 ```
 
 This is the canonical way to recreate the HTML docs from source; it refreshes `_docs/index.html` and `_docs/nbs/*.html`.
@@ -117,13 +117,13 @@ Short helper script:
 The helper prefers `quarto` directly if available and otherwise uses:
 
 ```bash
-nix-shell --packages quarto --run 'quarto render . --no-execute'
+nix-shell --packages quarto --run 'quarto render . --to html --no-execute'
 ```
 
 Render only the homepage:
 
 ```bash
-nix develop -c quarto render nbs/index.qmd --no-execute
+nix develop -c quarto render nbs/index.qmd --to html --no-execute
 ```
 
 That homepage is what `_docs/index.html` forwards to in the published site; the rendered content lives at `_docs/nbs/index.html`.
@@ -139,7 +139,7 @@ Use the standardized finalize command:
 This runs:
 
 1. `nbdev-export --path nbs/`
-2. `quarto render . --no-execute`
+2. `quarto render . --to html --no-execute`
 3. `python -m unittest discover -s tests -q`
 
 Docs freshness is enforced by `tests/test_docs_freshness.py`, which fails if `_docs/nbs/*.html` is older than `nbs/*.qmd`.

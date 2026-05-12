@@ -20,5 +20,5 @@ Defines the standard task-finalization workflow:
 ## Commands executed
 
 - `uv run nbdev-export --path nbs/`
-- `quarto render . --no-execute`
+- `quarto render . --to html --no-execute`
 - `uv run python -m unittest discover -s tests -q`

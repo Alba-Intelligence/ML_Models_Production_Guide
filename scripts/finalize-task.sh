@@ -31,5 +31,5 @@ if ! command -v quarto >/dev/null 2>&1; then
 fi
 
 uv run nbdev-export --path nbs/
-quarto render . --no-execute
+quarto render . --to html --no-execute
 uv run python -m unittest discover -s tests -q
