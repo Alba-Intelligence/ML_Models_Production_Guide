@@ -270,6 +270,7 @@ sources:
 
 ## Revision artifacts
 
+- [revisions/2026-05-12-phase-1-implementation.md](revisions/2026-05-12-phase-1-implementation.md) — captures Phase 1 implementation: MlflowTrackingServer field addition, Traefik reverse proxy integration, and Terranix roadmap documentation.
 - [revisions/2026-05-12-d2-diagram-migration.md](revisions/2026-05-12-d2-diagram-migration.md) — captures migration of active docs/spec/test diagram language from Mermaid to D2.
 - [revisions/2026-05-10-distilled-allium-spec.md](revisions/2026-05-10-distilled-allium-spec.md) — captures the first repository-wide Allium distillation baseline.
 - [revisions/2026-05-10-allium-cli-build-fix.md](revisions/2026-05-10-allium-cli-build-fix.md) — captures the flake fix for allium-cli build reliability.

@@ -123,6 +123,12 @@ As of 2026-05-11, the repository contains:
 - The old Python Terraform-bootstrap helper path has been removed; Nix/Terranix-generated OpenTofu remains the active infrastructure bootstrap direction.
 - Runtime orchestration now routes notebook execution requests across local, Slurm, and Kubernetes targets with explicit submitted/completed backend states.
 - Docker-first reproducible development is now implemented with `Dockerfile` and `docker-compose.dev.yml` (data plane: MLflow, PostgreSQL, Floci-backed artifacts).
+- **Phase 1 (2026-05-12):** Traefik reverse proxy service now integrated into `docker-compose.dev.yml` (local_emulation profile).
+  - MLflow routed through Traefik with Docker label-based routing (`/mlflow` path prefix).
+  - Dev container updated to use Traefik endpoint; dashboard accessible on port 8080.
+  - MlflowTrackingServer dataclass added to `ml_deploy/mlflow_parity.py` with new `reverse_proxy_tool: Literal["traefik"]` field (spec compliance w007).
+  - Terranix infrastructure generation approach documented in `nix/TERRANIX_IMPLEMENTATION.md` with Phase 1 (script-based) and Phase 2 (full integration) recommendations.
+  - Re-audit conducted post-spec-update; 6 of 9 divergences resolved or documented (w001, w007, w008, w009 complete; w004 documented; w002, w003, w005, w006 pending Phase 2).
 - **Local AWS emulator** now exists in `docker-compose.aws-emulator.yml` (Floci + bootstrap).
 - **Local emulation compute plane** now exists in `docker-compose.local-infra.yml` (K3s, Slurm-Docker).
 - **Nix/Terranix module structure** now exists in `nix/` (shared, local, cloud modules; local and cloud profiles) and is mirrored in self-contained Quarto docs pages.
@@ -166,6 +172,13 @@ The repo is currently best understood as a **specification-first and documentati
 
 ## Most likely next additions
 
+**Phase 2 (Immediate priorities — spec-first implementation gating):**
+- Terranix Docker generation pipeline (script-based or flake-integrated): Generate Dockerfile, docker-compose.dev.yml, docker-compose.aws-emulator.yml as sole approach (w002, w003, w004)
+- Spec quality gate enforcement: Implement gate criteria validation and state transitions (w005)
+- Phase transition logic: Enforce specification_first → implementation_enabled state machine with explicit_user_confirmation (w006)
+- Cloud profile Traefik configuration: Extend reverse proxy to docker-compose.aws-emulator.yml and cloud variants (w001 partial)
+
+**Phase 3+ (Downstream work):**
 - local replica topology that mirrors production control planes (Kubernetes/Slurm/storage) where feasible
 - deeper executable coverage for remote scheduler lifecycle states (submitted/running/failed/finished)
 - promotion of the implemented local slice into Docker-first execution flow
@@ -173,8 +186,6 @@ The repo is currently best understood as a **specification-first and documentati
 - notebook Web UI execution flow with immutable notebook source semantics
 - concrete Slurm/Kubernetes submission clients and orchestration runners on top of current mapping helpers
 - validation hooks for contract compliance checks
-- implementation only after user-directed transition from spec-first write-up to build-out
-- implementation only after spec-quality clarifications close key open questions or the user explicitly overrides
 
 ## If you are modifying the repo
 
