@@ -72,6 +72,7 @@ sources:
   - sources/tests.test_mcp_infrastructure_contracts.py.md
   - sources/tests.test_infrastructure_mcp.py.md
   - sources/scripts.finalize-task.sh.md
+  - sources/scripts.regenerate-html.sh.md
   - revisions/2026-05-10-distilled-allium-spec.md
   - revisions/2026-05-10-allium-cli-build-fix.md
   - revisions/2026-05-10-allium-cli-latest-version.md

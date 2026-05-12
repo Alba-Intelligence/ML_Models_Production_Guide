@@ -57,6 +57,7 @@ sources:
   - sources/tests.test_mcp_infrastructure_contracts.py.md
   - sources/tests.test_infrastructure_mcp.py.md
   - sources/scripts.finalize-task.sh.md
+  - sources/scripts.regenerate-html.sh.md
   - queries/spec-quality-elicitation-session-01.md
 ---
 

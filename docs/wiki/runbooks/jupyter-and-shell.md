@@ -108,6 +108,12 @@ nix develop -c quarto render . --no-execute
 
 This is the canonical way to recreate the HTML docs from source; it refreshes `_docs/index.html` and `_docs/nbs/*.html`.
 
+Short helper script:
+
+```bash
+./scripts/regenerate-html.sh
+```
+
 Render only the homepage:
 
 ```bash
