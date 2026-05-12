@@ -61,20 +61,33 @@ This page mirrors and indexes the canonical notebook notes in:
 
 ## Component interaction graph
 
-```mermaid
-flowchart LR
-  UI[Notebook Web UI] --> Intake[Notebook Intake Validation]
-  Intake --> Orchestrator[Execution Orchestrator]
-  Orchestrator --> Local[Local Vertical Slice Runtime]
-  Orchestrator --> Slurm[Slurm Submission Payload]
-  Orchestrator --> K8s[Kubernetes Submission Payload]
-  Local --> MLflow[MLflow Tracking]
-  Local --> Records[Artifact/Deployment/Prediction Records]
-  Terranix[Terranix via flake/devenv] --> OpenTofu[OpenTofu JSON]
-  OpenTofu --> Infra[Provisioned Platform Surfaces]
-  Infra --> Slurm
-  Infra --> K8s
-  MLflow --> UI
+```d2
+direction: right
+
+ui: "Notebook Web UI"
+intake: "Notebook Intake Validation"
+orchestrator: "Execution Orchestrator"
+local_runtime: "Local Vertical Slice Runtime"
+slurm_payload: "Slurm Submission Payload"
+k8s_payload: "Kubernetes Submission Payload"
+mlflow: "MLflow Tracking"
+records: "Artifact/Deployment/Prediction Records"
+terranix: "Terranix via flake/devenv"
+opentofu: "OpenTofu JSON"
+infra: "Provisioned Platform Surfaces"
+
+ui -> intake
+intake -> orchestrator
+orchestrator -> local_runtime
+orchestrator -> slurm_payload
+orchestrator -> k8s_payload
+local_runtime -> mlflow
+local_runtime -> records
+terranix -> opentofu
+opentofu -> infra
+infra -> slurm_payload
+infra -> k8s_payload
+mlflow -> ui
 ```
 
 ## Highest-priority risks and controls

@@ -18,6 +18,7 @@ Top-level newcomer onboarding page for GitHub readers.
 - what the repository is right now (reference + implementation scaffold)
 - where to start reading (`docs/wiki/current-state.md`, `target-system`, constraints)
 - notebook-first workflow (`nbs/` is source of truth, `ml_deploy/` is exported output)
+- documentation diagram standard is D2
 - canonical task-finalization command (`./scripts/finalize-task.sh`)
 
 ## Practical implication

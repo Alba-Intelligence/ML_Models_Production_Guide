@@ -15,7 +15,7 @@ Canonical Quarto architecture narrative page.
 
 ## What it contains
 
-- Platform architecture framing and Mermaid diagram.
+- Platform architecture framing and D2 diagram.
 - Implementation steps, trade-offs, and security considerations.
 - Usage examples and role-specific learning paths.
 

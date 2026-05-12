@@ -8,6 +8,7 @@ reference.
 
 Read notebooks in the structure below to understand the system from
 architecture to execution details.
+Architecture diagrams across the docs are authored in D2.
 
 ## Foundations
 

@@ -111,6 +111,7 @@ sources:
   - revisions/2026-05-11-docs-freshness-and-lockfile-policy.md
   - revisions/2026-05-11-ci-enforcement-and-revision-archive-notes.md
   - revisions/2026-05-11-local-emulation-parity-helpers.md
+  - revisions/2026-05-12-d2-diagram-migration.md
 ---
 
 # Wiki index
@@ -269,6 +270,7 @@ sources:
 
 ## Revision artifacts
 
+- [revisions/2026-05-12-d2-diagram-migration.md](revisions/2026-05-12-d2-diagram-migration.md) — captures migration of active docs/spec/test diagram language from Mermaid to D2.
 - [revisions/2026-05-10-distilled-allium-spec.md](revisions/2026-05-10-distilled-allium-spec.md) — captures the first repository-wide Allium distillation baseline.
 - [revisions/2026-05-10-allium-cli-build-fix.md](revisions/2026-05-10-allium-cli-build-fix.md) — captures the flake fix for allium-cli build reliability.
 - [revisions/2026-05-10-allium-cli-latest-version.md](revisions/2026-05-10-allium-cli-latest-version.md) — captures the move from pinned allium-cli packaging to latest-version runtime resolution.

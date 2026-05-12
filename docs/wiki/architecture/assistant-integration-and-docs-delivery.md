@@ -62,7 +62,7 @@ Accepted posture:
 - optional dynamic docs services may be added later, but remain companion-only
 - docs delivery remains operationally separate from inference-serving surfaces
 - docs should be hierarchical: start with a high-level introduction, then move into architecture and implementation detail
-- Mermaid diagrams should be used where they materially improve comprehension of flows, topology, or parity
+- D2 diagrams should be used where they materially improve comprehension of flows, topology, or parity
 - implementation-relevant code and generated configuration should be visible from the published docs, not only from source-tree browsing
 
 ## Practical implication

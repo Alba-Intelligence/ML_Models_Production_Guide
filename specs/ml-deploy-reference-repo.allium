@@ -55,7 +55,7 @@ entity Repository {
     uses_community_model_flavors: Boolean
     documentation_source_format: DocumentationSourceFormat
     docs_are_hierarchical: Boolean
-    docs_use_mermaid_diagrams: Boolean
+    docs_use_d2_diagrams: Boolean
     docs_expose_python_source_in_qmd: Boolean
     nix_generates_docker_files: Boolean
     nix_generates_docker_compose_files: Boolean
@@ -92,7 +92,7 @@ entity DocumentationSeries {
     is_self_contained_for_implementation: Boolean
     has_copy_pastable_code_examples: Boolean
     has_generated_config_examples: Boolean
-    has_mermaid_diagrams_where_helpful: Boolean
+    has_d2_diagrams_where_helpful: Boolean
     has_python_source_visible_in_docs: Boolean
     audiences_covered: Set<DocumentationAudience>
     has_python_implementation_module: Boolean
@@ -202,7 +202,7 @@ rule InitializeRepositoryDefaults {
     ensures: repository.canonical_docs_source = markdown_in_git
     ensures: repository.documentation_source_format = quarto_qmd
     ensures: repository.docs_are_hierarchical = true
-    ensures: repository.docs_use_mermaid_diagrams = true
+    ensures: repository.docs_use_d2_diagrams = true
     ensures: repository.docs_expose_python_source_in_qmd = true
     ensures: repository.nix_generates_docker_files = true
     ensures: repository.nix_generates_docker_compose_files = true
@@ -334,7 +334,7 @@ rule RequireImplementationReadyNotebookSeries {
     ensures: series.is_self_contained_for_implementation = true
     ensures: series.has_copy_pastable_code_examples = true
     ensures: series.has_generated_config_examples = true
-    ensures: series.has_mermaid_diagrams_where_helpful = true
+    ensures: series.has_d2_diagrams_where_helpful = true
     ensures: series.has_python_source_visible_in_docs = true
     ensures: series.audiences_covered = {software_engineer, ml_researcher}
     ensures: series.has_python_implementation_module = true
@@ -345,7 +345,7 @@ rule RequireImplementationReadyNotebookSeries {
         -- pages alone.
         -- Start with a high-level introduction, then descend into architecture, concrete
         -- implementation details, and copy-pastable examples.
-        -- Use Mermaid diagrams where they materially improve understanding of the system,
+        -- Use D2 diagrams where they materially improve understanding of the system,
         -- especially for architecture, control/data flows, and local/production parity.
         -- Infrastructure-relevant code and configuration snippets should appear in the QMD
         -- pages in copy-pastable form rather than being discoverable only by browsing the
