@@ -1,6 +1,6 @@
 ---
 updated: 2026-05-13
-summary: Synthesized summary of the distilled repository-level Allium specification with explicit documentation self-sufficiency obligations.
+summary: Synthesized summary of the distilled repository-level Allium specification, including explicit contracts and invariants for governance/promotion safety.
 read_when:
   - You need the repo behavior expressed as a formal spec
   - You are planning spec-first changes and need the current baseline
@@ -44,6 +44,8 @@ It converts the repository's implemented shell behavior and governance decisions
 - OpenTofu configuration gate requiring Terranix-generated JSON configuration from both flake and devenv pathways.
 - Specification-first gate that blocks implementation without explicit approval.
 - Additional implementation readiness gate requiring passed spec quality unless explicitly overridden.
+- Explicit contract declarations for promotion-gate checks and MLflow safety obligations.
+- Top-level invariants asserting implementation gate correctness (`implementation_enabled` implies passed quality gate), production-stage promotion safety, and cloud MLflow safety requirements.
 - Conditional infrastructure MCP requirement: when infrastructure MCP servers are available, infrastructure interrogation must be included in the default assistant surface.
 - Infrastructure interrogation minimum coverage is now explicit and testable: IaC plans/state, Kubernetes runtime state, Lambda.ai/Slurm runtime state, cloud resource inventory, and cost/usage signals.
 - Surface declarations that make key governance, shell, and documentation triggers reachable for executable analysis.

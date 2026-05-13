@@ -2,10 +2,86 @@
 title: "ML Deploy Reference"
 ---
 
-This is the **navigation homepage** for the Quarto-first ML deployment reference.
+# Welcome to the ML Deployment Reference
 
-Read pages in the structure below to understand the system from architecture to execution details.
-Architecture diagrams across the docs are authored in Mermaid.
+This documentation provides a **self-contained, specification-driven guide** to the ML deployment platform. All diagrams, code examples, and infrastructure definitions are published directly in these pages—**no repository source browsing required**.
+
+## Reading Guide
+
+The platform documentation is organized around a **Platform Overview** with five logical subsections. Choose your entry point based on your role:
+
+### For Infrastructure & Operations Engineers
+
+Start with system components, then dive into deployment and infrastructure:
+
+
+::::::{.cell layout-align="default"}
+
+:::::{.cell-output-display}
+
+::::{}
+`<figure class=''>`{=html}
+
+:::{}
+
+<pre class="mermaid mermaid-js">graph TD
+    A[&quot;Platform Overview&lt;br/&gt;01_platform_narrative.qmd&quot;] --&gt;|System Components &amp; Roles| B[&quot;Entity Models&lt;br/&gt;Class Diagrams&quot;]
+    A --&gt;|Deployment &amp; Infrastructure| C[&quot;Local vs Cloud&lt;br/&gt;Topology Diagrams&quot;]
+    A --&gt;|Governance &amp; Safety| D[&quot;Promotion Gates&lt;br/&gt;State Machines&quot;]
+    B --&gt; E[&quot;Execution Backends&lt;br/&gt;08_execution_backends.qmd&quot;]
+    C --&gt; F[&quot;Infrastructure MCP&lt;br/&gt;14_infrastructure_mcp.qmd&quot;]
+    F --&gt; G[&quot;OpenTofu &amp; Terranix&lt;br/&gt;13_opentofu_infra.qmd&quot;]
+    D --&gt; H[&quot;Governance Gates&lt;br/&gt;17_governance_gates.qmd&quot;]
+</pre>
+:::
+`</figure>`{=html}
+::::
+:::::
+::::::
+
+**Recommended path:**
+1. [Platform Overview — System Components](01_platform_narrative.qmd#1-system-components--roles)
+2. [Platform Overview — Deployment & Infrastructure](01_platform_narrative.qmd#3-deployment--infrastructure)
+3. [Execution Backends](08_execution_backends.qmd)
+4. [Infrastructure MCP](14_infrastructure_mcp.qmd)
+5. [OpenTofu & Terranix](13_opentofu_infra.qmd)
+
+### For Data Scientists & ML Researchers
+
+Start with platform architecture, then focus on model development and promotion:
+
+
+::::::{.cell layout-align="default"}
+
+:::::{.cell-output-display}
+
+::::{}
+`<figure class=''>`{=html}
+
+:::{}
+
+<pre class="mermaid mermaid-js">graph TD
+    A[&quot;Platform Overview&lt;br/&gt;01_platform_narrative.qmd&quot;] --&gt;|Execution &amp; Data Flow| B[&quot;Workflows&lt;br/&gt;Sequence Diagrams&quot;]
+    A --&gt;|Learning Paths| C[&quot;ML Researcher Path&lt;br/&gt;Recommended Reading&quot;]
+    B --&gt; D[&quot;Vertical Slice&lt;br/&gt;06_vertical_slice.qmd&quot;]
+    D --&gt; E[&quot;Data &amp; Training&lt;br/&gt;02_data + 03_model_training&quot;]
+    E --&gt; F[&quot;MLflow Parity&lt;br/&gt;07_mlflow_parity.qmd&quot;]
+    F --&gt; G[&quot;Model Promotion&lt;br/&gt;17_governance_gates.qmd&quot;]
+</pre>
+:::
+`</figure>`{=html}
+::::
+:::::
+::::::
+
+**Recommended path:**
+1. [Platform Overview — Execution & Data Flow](01_platform_narrative.qmd#2-execution--data-flow)
+2. [Vertical Slice Reference](06_vertical_slice.qmd)
+3. [Data & Model Training](02_data.qmd) + [Model Training](03_model_training.qmd)
+4. [MLflow Parity Setup](07_mlflow_parity.qmd)
+5. [Model Promotion & Governance](17_governance_gates.qmd)
+
+---
 
 ## Foundations
 
@@ -20,6 +96,13 @@ Architecture diagrams across the docs are authored in Mermaid.
 - [Vertical slice reference](06_vertical_slice.qmd)
 - [Web UI contracts](05_webui_contracts.qmd)
 
+## Topology and operations notebooks
+
+- [MLflow parity](07_mlflow_parity.qmd)
+- [Infrastructure MCP interrogation](14_infrastructure_mcp.qmd)
+- [Execution backends](08_execution_backends.qmd)
+- [Notebook intake validation](09_notebook_intake.qmd)
+
 ## Architecture analysis
 
 - [System interaction analysis](12_system_interaction_analysis.qmd)
@@ -27,9 +110,37 @@ Architecture diagrams across the docs are authored in Mermaid.
 - [Floci AWS emulator](15_aws_emulator.qmd)
 - [Terranix infrastructure source](16_terranix_infra.qmd)
 
-## Topology and operations notebooks
+---
 
-- [MLflow parity](07_mlflow_parity.qmd)
-- [Infrastructure MCP interrogation](14_infrastructure_mcp.qmd)
-- [Execution backends](08_execution_backends.qmd)
-- [Notebook intake validation](09_notebook_intake.qmd)
+## Quick Start
+
+### Option 1: I want to understand the system (5 min)
+→ Read [Platform Overview](01_platform_narrative.qmd) sections 1–3
+
+### Option 2: I want to set up local development (15 min)
+→ [MLflow Parity](07_mlflow_parity.qmd) + [Execution Backends](08_execution_backends.qmd)
+
+### Option 3: I want to run a complete example (20 min)
+→ [Vertical Slice Reference](06_vertical_slice.qmd)
+
+### Option 4: I want to deploy to production (30 min)
+→ [OpenTofu & Terranix](13_opentofu_infra.qmd) + [Governance Gates](17_governance_gates.qmd)
+
+---
+
+## Navigation Tips
+
+- **All diagrams are in Mermaid format** — Rendered directly in the pages
+- **All code examples are copy-pastable** — No need to hunt in the repository
+- **Cross-links connect related sections** — Use them to navigate by topic
+- **Learning paths are role-specific** — Choose the path that matches your background
+
+---
+
+## Key Principles
+
+1. **Self-contained documentation**: Implement the system from these pages alone
+2. **Hierarchical structure**: Start broad (architecture), then dive deep (details)
+3. **Extensive diagramming**: Class, sequence, state machine, and topology diagrams for each subsection
+4. **Spec-driven**: All behavior is specified first, then implemented
+5. **Traceability**: MLflow links all training to promotion workflows

@@ -1,6 +1,6 @@
 ---
-updated: 2026-05-12
-summary: Quarto nbdev source page for specification-first governance gate helpers.
+updated: 2026-05-13
+summary: Quarto nbdev source page for specification-first governance gate helpers, including already-enabled phase behavior.
 read_when:
   - You need to edit implementation transition gate behavior in notebook source-of-truth form
 source_file: ../../nbs/17_governance_gates.qmd
@@ -10,7 +10,7 @@ source_file: ../../nbs/17_governance_gates.qmd
 
 ## Role
 
-Defines the notebook source-of-truth for governance gate logic that enforces explicit confirmation + spec-quality gate requirements.
+Defines the notebook source-of-truth for governance gate logic that enforces explicit confirmation + spec-quality gate requirements, while allowing no-op requests once implementation is already enabled.
 
 ## Main exported objects
 

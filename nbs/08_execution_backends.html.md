@@ -6,7 +6,7 @@ title: "Execution Backends"
 
 > nbdev source for local execution adapter and Slurm/Kubernetes mapping helpers.
 
-::: {#18efdc29 .cell export='null'}
+::: {#fe12cce5 .cell export='null'}
 ``` {.python .cell-code}
 from __future__ import annotations
 

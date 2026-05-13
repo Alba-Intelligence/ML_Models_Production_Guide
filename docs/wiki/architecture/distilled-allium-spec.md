@@ -1,6 +1,6 @@
 ---
-updated: 2026-05-11
-summary: How the repository-wide distilled Allium spec maps current behavior, implementation gates, and spec-quality constraints.
+updated: 2026-05-13
+summary: How the repository-wide distilled Allium spec maps current behavior, implementation gates, spec-quality constraints, and explicit safety invariants/contracts.
 read_when:
   - You want the quickest formal view of current repository behavior
   - You are about to update shell behavior, constraints, or wiki-maintenance rules
@@ -29,6 +29,7 @@ The spec is intended as a compact, formal baseline for current repository behavi
 5. **Spec quality readiness gating** (implementation is also gated unless spec-quality readiness is passed or explicitly overridden).
 6. **Infrastructure MCP interrogation gating** (when infra MCP servers are available, minimum interrogation coverage is required and explicit).
 7. **Documentation self-sufficiency gating** (published QMD docs must be sufficient without requiring repository source browsing).
+8. **Formal safety contracts and invariants** for promotion gates and MLflow cloud safety posture.
 
 ## Scope boundaries
 

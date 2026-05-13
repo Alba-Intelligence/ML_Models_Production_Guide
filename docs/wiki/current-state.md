@@ -143,6 +143,11 @@ As of 2026-05-11, the repository contains:
   - Promotion pipeline gate logic now exists in `ml_deploy/vertical_slice.py` (`promote_model_artifact`) with dedicated tests.
   - Spec-first implementation gating now has executable state/decision logic in `ml_deploy/governance_gates.py`.
   - Shell entry sync logic now supports explicit requests (`UV_SYNC_REQUESTED=1`) and dependency-drift checks (`uv sync --check`) in both `flake.nix` and `devenv.nix`.
+- **Phase 1.6 (2026-05-13):** Remaining weed decisions from check-mode are now implemented.
+  - Full local emulation compose now merges data plane, compute plane, and AWS emulator services (`floci`, `floci_bootstrap`) in one renderer.
+  - Governance gate behavior now allows no-op requests when repository phase is already `implementation_enabled`.
+  - Distilled Allium spec now includes explicit promotion/MLflow safety contracts and top-level invariants for implementation gating and production/cloud safety properties.
+  - Rendered Quarto docs under `_docs/nbs/*.html` are now tracked and validated against numbered source filenames (for example `00_core.qmd -> 00_core.html`).
 - **Local AWS emulator** now exists in `docker-compose.aws-emulator.yml` (Floci + bootstrap).
 - **Local emulation compute plane** now exists in `docker-compose.local-infra.yml` (K3s, Slurm-Docker).
 - **Nix/Terranix module structure** now exists in `nix/` (shared, local, cloud modules; local and cloud profiles) and is mirrored in self-contained Quarto docs pages.

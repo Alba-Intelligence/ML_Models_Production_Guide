@@ -1,6 +1,6 @@
 ---
-updated: 2026-05-12
-summary: Synthesized summary of helpers for local MLflow parity and full local-emulation compose rendering.
+updated: 2026-05-13
+summary: Synthesized summary of helpers for MLflow parity, including full local-emulation rendering with AWS emulator services.
 read_when:
   - You are wiring local MLflow infrastructure parity
   - You need compose/runtime configuration for PostgreSQL + Floci-backed MLflow
@@ -30,7 +30,7 @@ Provides Python helpers to define and bootstrap local MLflow parity posture:
 - `render_local_infra_compose_config` — compose config renderer for k3s/slurm services.
 - `render_local_aws_emulator_compose_config` — compose config renderer for Floci plus bootstrap.
 - `render_cloud_compose_config` — cloud-profile compose renderer with Traefik ingress and MLflow source validation.
-- `render_full_local_emulation_compose_config` — merges data-plane and compute-plane compose services.
+- `render_full_local_emulation_compose_config` — merges data-plane, compute-plane, and AWS emulator compose services into one full local parity config.
 - `write_local_compose_file` — writes JSON-serialized compose config.
 - `build_mlflow_server_command` / `build_mlflow_runtime_env` — local parity command/env helpers.
 - `resolve_mlflow_storage_config` / `build_mlflow_runtime_env_from_storage` — environment-driven PostgreSQL+S3 runtime configuration helpers.

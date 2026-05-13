@@ -5,7 +5,6 @@ uv.lock
 
 # nbdev generated documentation (Quarto output)
 docs/*
-_docs/
 _proc/
 nbs/_quarto.yml
 nbs/nbdev.yml

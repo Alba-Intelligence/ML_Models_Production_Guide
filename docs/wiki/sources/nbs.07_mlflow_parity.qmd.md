@@ -1,6 +1,6 @@
 ---
-updated: 2026-05-12
-summary: Synthesized summary of Quarto nbdev source-of-truth for MLflow parity and local emulation compose helpers.
+updated: 2026-05-13
+summary: Synthesized summary of Quarto nbdev source-of-truth for MLflow parity and full local-emulation compose helpers.
 read_when:
   - You are editing local MLflow parity behavior
   - You need source ownership for generated `ml_deploy/mlflow_parity.py`
@@ -16,7 +16,7 @@ Quarto-first source for local MLflow parity helpers:
   - PostgreSQL backend store URI configuration
   - S3/Floci artifact destination configuration
   - compute-plane local emulation compose generation (Floci, K3s, Slurm)
-  - merged full local-emulation compose generation
+  - merged full local-emulation compose generation (data plane + compute plane + AWS emulator)
 
 ## Export behavior
 

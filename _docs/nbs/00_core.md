@@ -1,6 +1,5 @@
----
-title: "ml_deploy"
----
+# ml_deploy
+
 
 # ml_deploy
 
@@ -8,8 +7,7 @@ title: "ml_deploy"
 
 This notebook will become the core of the ml_deploy package.
 
-::: {#72c065a0 .cell export='null'}
-``` {.python .cell-code}
+``` python
 """Top-level package for ml_deploy."""
 
 __author__ = """ML Engineer"""
@@ -26,6 +24,3 @@ def add_numbers(a: int, b: int) -> int:
     """Add two numbers and return the result."""
     return a + b
 ```
-:::
-
-

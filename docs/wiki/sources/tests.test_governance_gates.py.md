@@ -1,6 +1,6 @@
 ---
-updated: 2026-05-12
-summary: Tests for spec-first implementation transition gating decisions.
+updated: 2026-05-13
+summary: Tests for spec-first implementation transition gating decisions, including already-enabled phase behavior.
 read_when:
   - You are modifying phase transition or quality-gate behavior
 source_file: ../../tests/test_governance_gates.py
@@ -17,3 +17,4 @@ Asserts that implementation transitions are blocked without explicit confirmatio
 - blocks without explicit confirmation
 - blocks when quality gate is not passed
 - allows transition when both are satisfied
+- allows requests when phase is already `implementation_enabled` even without new confirmation

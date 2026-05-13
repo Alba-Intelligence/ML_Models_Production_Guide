@@ -123,6 +123,7 @@ sources:
   - revisions/2026-05-12-spec-drift-implementation-closure.md
   - revisions/2026-05-13-explicit-docs-self-sufficiency-requirement.md
   - revisions/2026-05-13-documentation-structure-and-diagrams-spec.md
+  - revisions/2026-05-13-weed-alignment-implementation.md
 ---
 
 # Wiki index
