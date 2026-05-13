@@ -19,7 +19,7 @@ In a real ML deployment project, this would typically involve:
 
 First, let's import the necessary libraries.
 
-::: {#d7dd7565 .cell export='null'}
+::: {#1f9b00f9 .cell export='null'}
 ``` {.python .cell-code}
 import pandas as pd
 import numpy as np
@@ -31,7 +31,7 @@ import numpy as np
 
 For demonstration purposes, we'll create a simple dataset.
 
-::: {#f1188771 .cell export='null'}
+::: {#812a5a1f .cell export='null'}
 ``` {.python .cell-code}
 # Create sample data
 data = {
@@ -52,7 +52,7 @@ print(df.head())
 
 Let's look at basic statistics.
 
-::: {#e175b5a0 .cell export='null'}
+::: {#eae80ee1 .cell export='null'}
 ``` {.python .cell-code}
 df.describe()
 ```
@@ -63,7 +63,7 @@ df.describe()
 
 It's important to check for missing values in real datasets.
 
-::: {#673166c3 .cell export='null'}
+::: {#31870133 .cell export='null'}
 ``` {.python .cell-code}
 missing_values = df.isnull().sum()
 print("Missing values per column:")
@@ -77,7 +77,7 @@ print(f"Total missing values: {missing_values.sum()}")
 
 Let's examine the distribution of our target variable.
 
-::: {#9993ff0f .cell export='null'}
+::: {#e36a2bf4 .cell export='null'}
 ``` {.python .cell-code}
 target_counts = df['target'].value_counts()
 print("Target distribution:")
@@ -91,7 +91,7 @@ print(f"\nClass balance: {target_counts[0]/len(df):.2%} negative, {target_counts
 
 Now let's prepare our data for modeling by splitting and scaling.
 
-::: {#69057695 .cell export='null'}
+::: {#1db31489 .cell export='null'}
 ``` {.python .cell-code}
 # Separate features and target
 X = df.drop('target', axis=1)
@@ -113,7 +113,7 @@ print("Test set size: " + str(X_test.shape))
 
 Many ML algorithms perform better when features are scaled.
 
-::: {#cb7d3675 .cell export='null'}
+::: {#64113963 .cell export='null'}
 ``` {.python .cell-code}
 # Initialize scaler
 from sklearn.preprocessing import StandardScaler

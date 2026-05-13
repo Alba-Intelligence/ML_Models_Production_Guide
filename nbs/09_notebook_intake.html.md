@@ -6,7 +6,7 @@ title: "Notebook Intake Validation"
 
 > nbdev source for immutable notebook intake and validation gate helpers.
 
-::: {#4a9ed522 .cell export='null'}
+::: {#a128ed4b .cell export='null'}
 ``` {.python .cell-code}
 from __future__ import annotations
 

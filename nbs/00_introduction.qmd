@@ -45,6 +45,12 @@ The repository is a specification-first, documentation-first ML deployment guide
 | CI quality gate | GitHub Actions | Export notebooks, render docs, run tests |
 | Validation | `unittest` suite | Contract, workflow, and docs freshness checks |
 
+TODO: reorder the table rows in order of importance (what is most structuring to the whoe rpoject to the least)
+TODO: Python+uv:2~Should use uv2nix as to minimise the use of environments not reproducible and/or controled by Nix.
+TODO: nbdev / qmd:2~nbdev is the way ML researcher control they workflow (along with the MLflow and/or webUI interface). qmd is aspirationally the way to control the Nix-driven architecture.
+
+TODO: The order of the description needs improving. General to specifics to show how to fit pieces together. 
+
 ## Infrastructure and topology model
 
 1. **Local emulation profile**: Docker Compose services for MLflow, PostgreSQL, Floci, Traefik, and local compute services (K3s + Slurm).

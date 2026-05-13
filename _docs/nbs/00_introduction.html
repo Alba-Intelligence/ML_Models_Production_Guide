@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.26">
+<meta name="generator" content="quarto-1.7.34">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -32,15 +32,14 @@ ul.task-list li input[type="checkbox"] {
 <meta name="quarto:offset" content="../">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-c8ad9e5dbd60b7b70b38521ab19b7da4.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-a9942a779e5d260cd589023bf668b3a8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-560687d9307305160caf0d01a763a866.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -256,17 +255,20 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
-<p>This page gives a high-level summary of the full ML deployment reference stack: platform scope, software components, infrastructure layers, and delivery workflow.</p>
+<p>This page gives a high-level summary of the full ML deployment reference stack: platform scope, software components, infrastructure layers, security/governance, and delivery workflow.</p>
 <section id="system-at-a-glance" class="level2">
 <h2 class="anchored" data-anchor-id="system-at-a-glance">System-at-a-glance</h2>
 <p>The repository is a specification-first, documentation-first ML deployment guide with executable reference modules. It combines:</p>
 <ul>
 <li><strong>Governance and specification</strong> through explicit policy gates and contract-driven workflows.</li>
+<li><strong>Centralized authorization</strong> through OIDC-backed identity and policy-driven capability validation.</li>
 <li><strong>WebUI-first operations</strong> for triggering notebook execution and monitoring run state.</li>
 <li><strong>Notebook-owned implementation modules</strong> exported through nbdev.</li>
 <li><strong>Shared notebook source repository</strong> used by both local emulation and cloud profiles.</li>
 <li><strong>Local/cloud parity</strong> for infrastructure and runtime wiring.</li>
 <li><strong>Traceable ML lifecycle</strong> through MLflow and stage-based promotion gates.</li>
+<li><strong>MLOps promotion control</strong> for Nix/Terranix/OpenTofu system-definition changes.</li>
+<li><strong>Security, observability, and cost visibility</strong> as first-class cross-cutting concerns.</li>
 </ul>
 </section>
 <section id="software-stack-summary" class="level2">
@@ -331,29 +333,49 @@ ul.task-list li input[type="checkbox"] {
 <td>Run metadata, model artifacts, and promotion traceability</td>
 </tr>
 <tr class="even">
+<td>Authorization</td>
+<td>OIDC IdP + centralized policy engine</td>
+<td>Central authority for roles, capabilities, and request validation</td>
+</tr>
+<tr class="odd">
 <td>Data lineage</td>
 <td>MLflow metadata + lineage contracts</td>
 <td>Traceability across data, training, and promoted model artifacts</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Data/artifact stores</td>
 <td>PostgreSQL + S3-compatible storage (Floci local, S3 cloud)</td>
 <td>Tracking backend and artifact persistence</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Execution backends</td>
 <td>Local + Slurm + Kubernetes adapters</td>
 <td>Route execution by target environment with local compute as a first-class option</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Infrastructure definition</td>
 <td>Nix + Terranix + OpenTofu JSON</td>
 <td>Canonical source of truth for generated Docker, Compose, and OpenTofu artifacts</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Local emulation</td>
 <td>Docker Compose + Floci + K3s + Slurm-Docker + Traefik</td>
 <td>Real local compute and data-plane environment mirroring cloud-facing contracts</td>
+</tr>
+<tr class="even">
+<td>Observability</td>
+<td>Prometheus + Grafana + MLflow + policy/audit logs</td>
+<td>Metrics, dashboards, run telemetry, and auditability</td>
+</tr>
+<tr class="odd">
+<td>Cost visibility</td>
+<td>AWS Cost Explorer + CUR + Athena + Budgets</td>
+<td>Spend reporting and attribution</td>
+</tr>
+<tr class="even">
+<td>Assistant/MCP</td>
+<td>Read-first infrastructure + docs retrieval</td>
+<td>Controlled access to canonical platform facts</td>
 </tr>
 <tr class="odd">
 <td>CI quality gate</td>
@@ -376,6 +398,9 @@ ul.task-list li input[type="checkbox"] {
 <li><strong>Generated artifacts</strong>: Nix/Terranix is the canonical source that generates Docker, Docker Compose, and OpenTofu JSON artifacts.</li>
 <li><strong>Kubeflow placement</strong>: Kubeflow Pipelines sits in the Kubernetes execution lane; it is optional and complements Airflow orchestration rather than replacing Slurm-based paths.</li>
 <li><strong>Local testing/emulation</strong>: Kubeflow can run locally on K3s for workflow testing and parity checks before cloud rollout.</li>
+<li><strong>Security and governance</strong>: OIDC-backed identity plus a centralized policy engine governs roles, capabilities, audit, and request validation across systems and subsystems.</li>
+<li><strong>MLOps promotion</strong>: model artifacts and MLOps system-definition changes both use DEV→UAT→REGRESSION→PROD promotion gates.</li>
+<li><strong>Assistant access</strong>: infrastructure and documentation assistants stay read-first, least-privilege, and auditable.</li>
 </ol>
 </section>
 <section id="lifecycle-flow" class="level2">
@@ -397,6 +422,13 @@ ul.task-list li input[type="checkbox"] {
     Runtime --&gt; Tracking["MLflow Tracking + Registry"]
     Tracking --&gt; Gates["Promotion Gates (DEV-&gt;UAT-&gt;REGRESSION-&gt;PROD)"]
     Gates --&gt; Infra["Nix/Terranix/OpenTofu + Docker Artifacts"]
+    Auth["OIDC IdP + Central Policy Engine"] --&gt; WebUI
+    Auth --&gt; Runtime
+    Auth --&gt; Infra
+    Auth --&gt; Gates
+    Observability["Prometheus + Grafana + Audit Logs"] --&gt; Tracking
+    Cost["AWS Cost Explorer + CUR + Athena + Budgets"] --&gt; Infra
+    Assistant["Read-first MCP / Docs Retrieval"] --&gt; Docs
 </pre>
 </div>
 <p></p></figure><p></p>
@@ -468,14 +500,13 @@ ul.task-list li input[type="checkbox"] {
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-      const outerScaffold = trigger.parentElement.cloneNode(true);
-      const codeEl = outerScaffold.querySelector('code');
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
         }
-      }
-      return codeEl.innerText;
+        return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
