@@ -1,6 +1,6 @@
 ---
 updated: 2026-05-14
-summary: Introductory Quarto page summarizing the full platform stack, including WebUI, shared notebook repository flow, Airflow orchestration, optional Kubeflow in the Kubernetes lane, central authorization, MLOps promotion, and canonical Nix/Terranix artifact generation.
+summary: Introductory Quarto page summarizing the full platform stack in purpose-first, top-down order, including canonical nbdev/QMD authoring, uv2nix-based Python environments, WebUI, shared notebook flow, Airflow, Kubeflow, central authorization, MLOps promotion, and Nix/Terranix artifact generation.
 read_when:
   - You need a concise overview of the entire repository stack
   - You are onboarding and want the shortest architecture/software orientation
@@ -15,10 +15,10 @@ Provides a single introduction page that summarizes the end-to-end stack before 
 
 ## What it contains
 
-- Repository posture and system-at-a-glance description.
-- Software stack table covering runtime, packaging, WebUI control plane, notebook source management, orchestration, optional Kubeflow placement, authorization, lineage, infrastructure, observability, cost, assistant access, CI, and testing.
+- Repository purpose and system-at-a-glance description.
+- Software stack table ordered from structuring choices to implementation-local concerns, covering authorization, promotion, infrastructure, authoring workflow, Python environment, docs, WebUI, orchestration, tracking, execution, stores, local emulation, observability, cost, assistant access, runtime, CI, and testing.
 - Local vs cloud topology posture summary.
-- Lifecycle flow diagram connecting shared notebook source, docs, modules, WebUI, Airflow orchestration, optional Kubeflow in the Kubernetes lane, runtime, tracking, promotion, authorization, observability, cost, and infrastructure.
+- Lifecycle flow diagram connecting purpose, shared notebook source, docs, modules, WebUI, Airflow orchestration, optional Kubeflow in the Kubernetes lane, runtime, tracking, promotion, authorization, observability, cost, and infrastructure.
 - Pointers to key follow-on pages for architecture, runtime, and governance.
 
 ## Practical implication

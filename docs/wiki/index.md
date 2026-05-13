@@ -131,6 +131,7 @@ sources:
   - revisions/2026-05-14-dual-promotion-gates-model-and-mlops.md
   - revisions/2026-05-14-security-authorization-architecture.md
   - revisions/2026-05-14-introduction-full-stack-overview.md
+  - revisions/2026-05-14-introduction-top-down-ordering.md
 ---
 
 # Wiki index
