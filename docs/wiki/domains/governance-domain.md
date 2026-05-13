@@ -17,6 +17,7 @@ sources:
 
 - security policy interpretation
 - IAM and access policy guidance
+- central role/capability authority and request validation
 - approval boundaries
 - auditability requirements
 - promotion/deployment governance checkpoints

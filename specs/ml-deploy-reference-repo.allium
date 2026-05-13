@@ -21,6 +21,29 @@ contract PromotionGateContract {
         -- Production promotion requires explicit approval and a passed regression suite.
 }
 
+contract MLOpsPromotionGateContract {
+    validate_dev_to_uat: (definition: MLOpsDefinitionArtifact) -> Boolean
+    validate_uat_to_regression: (definition: MLOpsDefinitionArtifact) -> Boolean
+    validate_regression_to_prod: (definition: MLOpsDefinitionArtifact) -> Boolean
+
+    @invariant NixIsPromotionSubject
+        -- MLOps promotion gates apply to the Nix/Terranix/OpenTofu system definition.
+
+    @invariant NoProdMLOpsWithoutApproval
+        -- Production MLOps promotion requires explicit approval and passed regression validation.
+}
+
+contract AuthorizationGovernanceContract {
+    validate_user_request: (request: UserAccessRequest) -> Boolean
+    validate_capability_boundary: (boundary: CapabilityBoundary) -> Boolean
+
+    @invariant CentralAuthorityRequired
+        -- Roles and capabilities are managed by one central authority before requests are approved.
+
+    @invariant CapabilityScopesAreExplicit
+        -- Every system and subsystem must declare its capabilities before use.
+}
+
 contract MlflowSafetyContract {
     validate_cloud_source_policy: (server: MlflowTrackingServer) -> Boolean
     validate_reverse_proxy_policy: (server: MlflowTrackingServer) -> Boolean
@@ -37,6 +60,8 @@ enum CostTool { aws_cost_explorer | aws_cur | aws_athena | aws_budgets | python_
 enum McpSurface { mlflow | observability | aws_cost_visibility | lambda_ai_usage_visibility | infrastructure_visibility | docs_and_decisions }
 enum InfrastructureInterrogationAspect { iac_plans_and_state | kubernetes_runtime_state | lambda_ai_slurm_runtime_state | cloud_resource_inventory | cost_and_usage_signals }
 enum CrossCuttingContract { security | data_lineage | experiment_traceability | model_traceability | reproducibility }
+enum AuthorizationPattern { oidc_identity_provider_plus_central_policy_engine | cloud_iam_plus_central_policy_engine | idp_managed_rbac_only }
+enum AuthorizationScopeKind { system | subsystem }
 enum DocumentationAudience { software_engineer | ml_researcher }
 enum MlflowBackendStore { sqlite | postgresql }
 enum MlflowArtifactStore { filesystem | floci | s3 }
@@ -74,6 +99,10 @@ entity Repository {
     local_emulation_verified: Boolean
     cicd_pipeline_in_scope: Boolean
     promotion_pipeline_in_scope: Boolean
+    mlops_promotion_pipeline_in_scope: Boolean
+    security_authority_required: Boolean
+    capability_catalog_required: Boolean
+    authorization_pattern: AuthorizationPattern
     lambda_ai_training_scheduler: WorkloadScheduler
     lambda_ai_inference_scheduler: WorkloadScheduler
     cicd_platform: CicdPlatform
@@ -217,6 +246,43 @@ entity ModelArtifact {
     pytorch_memory_fraction_limited: Boolean
 }
 
+entity MLOpsDefinitionArtifact {
+    stage: PromotionStage
+    promotion_approved: Boolean
+    nix_definition_changeset_recorded: Boolean
+    local_emulation_validation_passed: Boolean
+    uat_operational_checks_passed: Boolean
+    regression_suite_passed: Boolean
+    opentofu_plan_safe: Boolean
+    security_policy_checks_passed: Boolean
+    rollback_plan_verified: Boolean
+}
+
+entity AuthorizationAuthority {
+    pattern: AuthorizationPattern
+    identity_provider_present: Boolean
+    policy_engine_present: Boolean
+    roles_centrally_managed: Boolean
+    capabilities_centrally_managed: Boolean
+    request_validation_required: Boolean
+    audit_trail_required: Boolean
+}
+
+entity CapabilityBoundary {
+    scope_kind: AuthorizationScopeKind
+    scope_name: String
+    capabilities_declared: Boolean
+    authority_reviewed: Boolean
+}
+
+entity UserAccessRequest {
+    user_identifier: String
+    requested_capability: String
+    validated_by_authority: Boolean
+    validated_against_capabilities: Boolean
+    audit_trail_recorded: Boolean
+}
+
 config {
     kernel_name: String = "ml_ops"
     project_jupyter_dir: String = "jupyter"
@@ -229,6 +295,7 @@ config {
     default_mcp_scope: Set<McpSurface> = {mlflow, observability, aws_cost_visibility, lambda_ai_usage_visibility, infrastructure_visibility, docs_and_decisions}
     required_infrastructure_interrogation_aspects: Set<InfrastructureInterrogationAspect> = {iac_plans_and_state, kubernetes_runtime_state, lambda_ai_slurm_runtime_state, cloud_resource_inventory, cost_and_usage_signals}
     required_contracts: Set<CrossCuttingContract> = {security, data_lineage, experiment_traceability, model_traceability, reproducibility}
+    default_authorization_pattern: AuthorizationPattern = oidc_identity_provider_plus_central_policy_engine
 }
 
 rule InitializeRepositoryDefaults {
@@ -262,6 +329,10 @@ rule InitializeRepositoryDefaults {
     ensures: repository.local_emulation_verified = false
     ensures: repository.cicd_pipeline_in_scope = true
     ensures: repository.promotion_pipeline_in_scope = true
+    ensures: repository.mlops_promotion_pipeline_in_scope = true
+    ensures: repository.security_authority_required = true
+    ensures: repository.capability_catalog_required = true
+    ensures: repository.authorization_pattern = config.default_authorization_pattern
     ensures: repository.lambda_ai_training_scheduler = slurm
     ensures: repository.lambda_ai_inference_scheduler = kubernetes
     ensures: repository.cicd_platform = github_actions
@@ -646,6 +717,91 @@ rule RequirePromotionGateProdQualityChecks {
         -- reference holdout datasets versus the current production model.
 }
 
+rule RequireMLOpsPromotionGateDevToUat {
+    when: MLOpsDefinitionPromoted(definition, to_stage)
+
+    requires: to_stage = uat
+    requires: definition.nix_definition_changeset_recorded
+    requires: definition.local_emulation_validation_passed
+
+    ensures: definition.stage = uat
+
+    @guidance
+        -- DEV→UAT promotion for MLOps changes applies to the canonical Nix/Terranix/OpenTofu
+        -- system definition. No change may progress unless the Nix definition changeset is
+        -- recorded and local emulation validation has passed.
+}
+
+rule RequireMLOpsPromotionGateUatToRegression {
+    when: MLOpsDefinitionPromoted(definition, to_stage)
+
+    requires: to_stage = regression
+    requires: definition.uat_operational_checks_passed
+    requires: definition.opentofu_plan_safe
+
+    ensures: definition.stage = regression
+
+    @guidance
+        -- UAT→REGRESSION promotion for MLOps changes requires successful UAT operational
+        -- checks and an OpenTofu plan review with no unsafe infrastructure actions.
+}
+
+rule RequireMLOpsPromotionGateProd {
+    when: MLOpsDefinitionPromoted(definition, to_stage)
+
+    requires: to_stage = prod
+    requires: definition.regression_suite_passed
+    requires: definition.security_policy_checks_passed
+    requires: definition.rollback_plan_verified
+    requires: definition.promotion_approved
+
+    ensures: definition.stage = prod
+
+    @guidance
+        -- REGRESSION→PROD promotion for MLOps changes requires explicit approval, security
+        -- policy checks, regression validation, and a verified rollback path.
+}
+
+rule RequireCentralAuthorizationAuthority {
+    when: AuthorizationAuthorityDeclared(repository, authority)
+
+    requires: repository.security_authority_required
+
+    ensures: authority.pattern = config.default_authorization_pattern
+    ensures: authority.identity_provider_present = true
+    ensures: authority.policy_engine_present = true
+    ensures: authority.roles_centrally_managed = true
+    ensures: authority.capabilities_centrally_managed = true
+    ensures: authority.request_validation_required = true
+    ensures: authority.audit_trail_required = true
+
+    @guidance
+        -- The recommended reference posture is OIDC-backed identity plus a centralized
+        -- policy engine. The identity provider handles authentication and principal
+        -- identity; the policy engine is the single source of truth for role and
+        -- capability authorization decisions across all systems and subsystems.
+        -- Alternatives may exist, but they should not weaken central validation.
+}
+
+rule RequireCapabilityBoundaryDeclaration {
+    when: CapabilityBoundaryDeclared(repository, boundary)
+
+    requires: repository.capability_catalog_required
+
+    ensures: boundary.capabilities_declared = true
+    ensures: boundary.authority_reviewed = true
+}
+
+rule RequireUserAccessRequestsToBeValidatedCentrally {
+    when: UserAccessRequested(repository, request)
+
+    requires: repository.security_authority_required
+
+    ensures: request.validated_by_authority = true
+    ensures: request.validated_against_capabilities = true
+    ensures: request.audit_trail_recorded = true
+}
+
 invariant ImplementationEnabledRequiresSpecQualityGate {
     for repository in Repositories:
         repository.phase = implementation_enabled implies repository.spec_quality_gate_passed
@@ -665,6 +821,39 @@ invariant ProductionArtifactsRemainApprovedAndValidated {
             and artifact.pytorch_channels_last_applied
             and artifact.pytorch_memory_fraction_limited
         )
+}
+
+invariant ProductionMLOpsDefinitionsRemainApprovedAndValidated {
+    for definition in MLOpsDefinitionArtifacts:
+        definition.stage = prod implies (
+            definition.nix_definition_changeset_recorded
+            and definition.regression_suite_passed
+            and definition.security_policy_checks_passed
+            and definition.rollback_plan_verified
+            and definition.promotion_approved
+        )
+}
+
+invariant CentralAuthorizationRequirementsHold {
+    for authority in AuthorizationAuthorities:
+        authority.identity_provider_present
+        and authority.policy_engine_present
+        and authority.roles_centrally_managed
+        and authority.capabilities_centrally_managed
+        and authority.request_validation_required
+        and authority.audit_trail_required
+}
+
+invariant CapabilityBoundariesMustBeDeclared {
+    for boundary in CapabilityBoundaries:
+        boundary.capabilities_declared and boundary.authority_reviewed
+}
+
+invariant UserRequestsMustBeValidatedCentrally {
+    for request in UserAccessRequests:
+        request.validated_by_authority
+        and request.validated_against_capabilities
+        and request.audit_trail_recorded
 }
 
 invariant CloudMlflowSecurityRequirementsHold {
@@ -697,4 +886,11 @@ surface GovernanceAndDocumentationSurface {
 surface MlflowOperationsSurface {
     provides: MlflowTrackingServerDeployed(repository, server)
     provides: ModelArtifactPromoted(artifact, to_stage)
+    provides: MLOpsDefinitionPromoted(definition, to_stage)
+}
+
+surface SecurityGovernanceSurface {
+    provides: AuthorizationAuthorityDeclared(repository, authority)
+    provides: CapabilityBoundaryDeclared(repository, boundary)
+    provides: UserAccessRequested(repository, request)
 }

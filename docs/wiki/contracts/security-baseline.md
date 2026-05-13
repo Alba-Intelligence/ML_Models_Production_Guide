@@ -75,6 +75,29 @@ Each design page or implementation pattern should declare:
 - audit log destination
 - approval boundary if mutation/promotion is involved
 
+## Authorization baseline
+
+Every system and subsystem must declare:
+
+- which capabilities it exposes
+- which roles may request those capabilities
+- which central authority validates the request
+
+Accepted reference posture:
+
+- OIDC-backed identity provider for authentication
+- centralized policy engine for authorization decisions
+- capability catalogs defined per system and subsystem
+- auditable request validation for every privileged action
+
+Compatible solution families:
+
+1. OIDC IdP + centralized policy engine, with systems/subsystems publishing capabilities to the policy layer
+2. Cloud IAM federation + centralized policy engine for cloud-facing infrastructure controls
+3. IdP-managed RBAC only for smaller/internal surfaces, if the policy surface stays simple enough
+
+The first option is the recommended fit for this MLOps architecture.
+
 ## Domain implications
 
 ### Training
@@ -104,6 +127,6 @@ Each design page or implementation pattern should declare:
 
 ## Open decisions
 
-- exact IAM patterns by environment
+- exact IAM bindings by environment
 - exact secret-management stack
 - exact network segmentation model on AWS and Lambda.ai-connected workflows

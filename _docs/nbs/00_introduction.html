@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>ml_deploy</title>
+<title>Stack Introduction</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,41 +19,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -103,12 +68,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="nbs/styles.css">
-<meta property="og:title" content="ml_deploy">
+<meta property="og:title" content="Stack Introduction">
 <meta property="og:description" content="">
-<meta name="twitter:title" content="ml_deploy">
+<meta name="twitter:title" content="Stack Introduction">
 <meta name="twitter:description" content="">
 <meta name="twitter:card" content="summary">
 </head>
@@ -129,7 +97,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../nbs/00_core.html">ml_deploy</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../nbs/00_introduction.html">Stack Introduction</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -149,13 +117,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../nbs/00_introduction.html" class="sidebar-item-text sidebar-link">
+  <a href="../nbs/00_introduction.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Stack Introduction</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../nbs/00_core.html" class="sidebar-item-text sidebar-link active">
+  <a href="../nbs/00_core.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">ml_deploy</span></a>
   </div>
 </li>
@@ -253,16 +221,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#ml_deploy" id="toc-ml_deploy" class="nav-link active" data-scroll-target="#ml_deploy">ml_deploy</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
+  <ul class="collapse">
+  <li><a href="#system-at-a-glance" id="toc-system-at-a-glance" class="nav-link" data-scroll-target="#system-at-a-glance">System-at-a-glance</a></li>
+  <li><a href="#software-stack-summary" id="toc-software-stack-summary" class="nav-link" data-scroll-target="#software-stack-summary">Software stack summary</a></li>
+  <li><a href="#infrastructure-and-topology-model" id="toc-infrastructure-and-topology-model" class="nav-link" data-scroll-target="#infrastructure-and-topology-model">Infrastructure and topology model</a></li>
+  <li><a href="#lifecycle-flow" id="toc-lifecycle-flow" class="nav-link" data-scroll-target="#lifecycle-flow">Lifecycle flow</a></li>
+  <li><a href="#where-to-go-next" id="toc-where-to-go-next" class="nav-link" data-scroll-target="#where-to-go-next">Where to go next</a></li>
+  </ul></li>
   </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="00_core.md"><i class="bi bi-file-code"></i>CommonMark</a></li></ul></div></nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="00_introduction.md"><i class="bi bi-file-code"></i>CommonMark</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">ml_deploy</h1>
+<h1 class="title">Stack Introduction</h1>
 </div>
 
 
@@ -279,31 +254,166 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="ml_deploy" class="level1">
-<h1>ml_deploy</h1>
-<blockquote class="blockquote">
-<p>A Python package for ML deployment reference.</p>
-</blockquote>
-<p>This notebook will become the core of the ml_deploy package.</p>
-<div id="a2cdbcbc" class="cell" data-export="null">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Top-level package for ml_deploy."""</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>__author__ <span class="op">=</span> <span class="st">"""ML Engineer"""</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>__email__ <span class="op">=</span> <span class="st">'ml@example.com'</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>__version__ <span class="op">=</span> <span class="st">'0.1.0'</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> say_hello() <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Return a greeting message."""</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">"Hello from ml_deploy!"</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> add_numbers(a: <span class="bu">int</span>, b: <span class="bu">int</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Add two numbers and return the result."""</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> a <span class="op">+</span> b</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>This page gives a high-level summary of the full ML deployment reference stack: platform scope, software components, infrastructure layers, and delivery workflow.</p>
+<section id="system-at-a-glance" class="level2">
+<h2 class="anchored" data-anchor-id="system-at-a-glance">System-at-a-glance</h2>
+<p>The repository is a specification-first, documentation-first ML deployment guide with executable reference modules. It combines:</p>
+<ul>
+<li><strong>Governance and specification</strong> through explicit policy gates and contract-driven workflows.</li>
+<li><strong>WebUI-first operations</strong> for triggering notebook execution and monitoring run state.</li>
+<li><strong>Notebook-owned implementation modules</strong> exported through nbdev.</li>
+<li><strong>Shared notebook source repository</strong> used by both local emulation and cloud profiles.</li>
+<li><strong>Local/cloud parity</strong> for infrastructure and runtime wiring.</li>
+<li><strong>Traceable ML lifecycle</strong> through MLflow and stage-based promotion gates.</li>
+</ul>
+</section>
+<section id="software-stack-summary" class="level2">
+<h2 class="anchored" data-anchor-id="software-stack-summary">Software stack summary</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Layer</th>
+<th>Primary tools</th>
+<th>Role in this repository</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Language runtime</td>
+<td>Python 3.13</td>
+<td>Reference implementation modules and tests</td>
+</tr>
+<tr class="even">
+<td>Python environment</td>
+<td>uv, <code>.venv</code></td>
+<td>Dependency sync and reproducible local environment</td>
+</tr>
+<tr class="odd">
+<td>Package/module workflow</td>
+<td>nbdev + Quarto <code>.qmd</code></td>
+<td>Source-of-truth notebooks export Python modules and render docs</td>
+</tr>
+<tr class="even">
+<td>Documentation site</td>
+<td>Quarto website (<code>_docs</code>) + Mermaid</td>
+<td>Self-contained, publishable architecture/implementation docs</td>
+</tr>
+<tr class="odd">
+<td>Web control plane</td>
+<td>WebUI + backend contracts</td>
+<td>Primary user-facing surface for execution and monitoring</td>
+</tr>
+<tr class="even">
+<td>Notebook source management</td>
+<td>Shared notebook repository</td>
+<td>Common notebook source for both local emulation and cloud runs</td>
+</tr>
+<tr class="odd">
+<td>Workflow orchestration</td>
+<td>Airflow</td>
+<td>Pipeline and workflow orchestration distinct from scheduler execution</td>
+</tr>
+<tr class="even">
+<td>Kubernetes ML platform</td>
+<td>Kubeflow Pipelines (optional)</td>
+<td>Kubernetes-native ML pipeline layer in the K8s execution lane</td>
+</tr>
+<tr class="odd">
+<td>Experiment tracking</td>
+<td>MLflow</td>
+<td>Run metadata, model artifacts, and promotion traceability</td>
+</tr>
+<tr class="even">
+<td>Data lineage</td>
+<td>MLflow metadata + lineage contracts</td>
+<td>Traceability across data, training, and promoted model artifacts</td>
+</tr>
+<tr class="odd">
+<td>Data/artifact stores</td>
+<td>PostgreSQL + S3-compatible storage (Floci local, S3 cloud)</td>
+<td>Tracking backend and artifact persistence</td>
+</tr>
+<tr class="even">
+<td>Execution backends</td>
+<td>Local + Slurm + Kubernetes adapters</td>
+<td>Route execution by target environment with local compute as a first-class option</td>
+</tr>
+<tr class="odd">
+<td>Infrastructure definition</td>
+<td>Nix + Terranix + OpenTofu JSON</td>
+<td>Canonical source of truth for generated Docker, Compose, and OpenTofu artifacts</td>
+</tr>
+<tr class="even">
+<td>Local emulation</td>
+<td>Docker Compose + Floci + K3s + Slurm-Docker + Traefik</td>
+<td>Real local compute and data-plane environment mirroring cloud-facing contracts</td>
+</tr>
+<tr class="odd">
+<td>CI quality gate</td>
+<td>GitHub Actions</td>
+<td>Export notebooks, render docs, run tests</td>
+</tr>
+<tr class="even">
+<td>Validation</td>
+<td><code>unittest</code> suite</td>
+<td>Contract, workflow, and docs freshness checks</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="infrastructure-and-topology-model" class="level2">
+<h2 class="anchored" data-anchor-id="infrastructure-and-topology-model">Infrastructure and topology model</h2>
+<ol type="1">
+<li><strong>Local emulation profile</strong>: Docker Compose services for MLflow, PostgreSQL, Floci, Traefik, and local compute services (K3s + Slurm).</li>
+<li><strong>Cloud profile</strong>: AWS-hosted services with Traefik-fronted MLflow, PostgreSQL and S3-backed artifacts, and scheduler-integrated execution pathways.</li>
+<li><strong>Generated artifacts</strong>: Nix/Terranix is the canonical source that generates Docker, Docker Compose, and OpenTofu JSON artifacts.</li>
+<li><strong>Kubeflow placement</strong>: Kubeflow Pipelines sits in the Kubernetes execution lane; it is optional and complements Airflow orchestration rather than replacing Slurm-based paths.</li>
+<li><strong>Local testing/emulation</strong>: Kubeflow can run locally on K3s for workflow testing and parity checks before cloud rollout.</li>
+</ol>
+</section>
+<section id="lifecycle-flow" class="level2">
+<h2 class="anchored" data-anchor-id="lifecycle-flow">Lifecycle flow</h2>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    NotebookSource["Shared Notebook Repository"] --&gt; Docs["Quarto Docs (QMD)"]
+    NotebookSource --&gt; Modules["nbdev Exported Python Modules"]
+    WebUI["WebUI Control Plane"] --&gt; Runtime["Execution Backends (Local/Slurm/K8s)"]
+    Docs --&gt; WebUI
+    Modules --&gt; Runtime
+    Airflow["Airflow Orchestration"] --&gt; Runtime
+    Airflow --&gt; Kubeflow["Kubeflow Pipelines (K8s lane)"]
+    Kubeflow --&gt; Runtime
+    Runtime --&gt; Tracking["MLflow Tracking + Registry"]
+    Tracking --&gt; Gates["Promotion Gates (DEV-&gt;UAT-&gt;REGRESSION-&gt;PROD)"]
+    Gates --&gt; Infra["Nix/Terranix/OpenTofu + Docker Artifacts"]
+</pre>
 </div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+<section id="where-to-go-next" class="level2">
+<h2 class="anchored" data-anchor-id="where-to-go-next">Where to go next</h2>
+<ul>
+<li>Platform architecture narrative: <a href="../nbs/01_platform_narrative.html"><code>01_platform_narrative.qmd</code></a></li>
+<li>Runtime and orchestration modules: <a href="../nbs/07_mlflow_parity.html"><code>07_mlflow_parity.qmd</code></a>, <a href="../nbs/08_execution_backends.html"><code>08_execution_backends.qmd</code></a>, <a href="../nbs/14_infrastructure_mcp.html"><code>14_infrastructure_mcp.qmd</code></a></li>
+<li>Governance and promotion gates: <a href="../nbs/17_governance_gates.html"><code>17_governance_gates.qmd</code></a></li>
+</ul>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

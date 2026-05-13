@@ -1,6 +1,6 @@
 ---
-updated: 2026-05-13
-summary: Synthesized summary of the distilled repository-level Allium specification, including explicit contracts and invariants for governance/promotion safety.
+updated: 2026-05-14
+summary: Synthesized summary of the distilled repository-level Allium specification, including explicit model and MLOps promotion contracts plus central authorization and governance invariants.
 read_when:
   - You need the repo behavior expressed as a formal spec
   - You are planning spec-first changes and need the current baseline
@@ -28,6 +28,7 @@ It converts the repository's implemented shell behavior and governance decisions
 - `Wiki` — required memory-layer maintenance surfaces.
 - `DocumentationSeries` — series-level documentation completeness obligations for software engineers and ML researchers.
 - `OpenTofuConfiguration` — infrastructure generation obligations for Terranix/OpenTofu JSON outputs from flake and devenv.
+- `MLOpsDefinitionArtifact` — staged promotion artifact for Nix/Terranix/OpenTofu system-definition changes.
 - `ShellSession` — shell-entry, environment, and Jupyter runtime state.
 - `OperationRecord`, `WikiArtifact`, `WorkBlocked` — emitted operational outcomes.
 
@@ -45,7 +46,10 @@ It converts the repository's implemented shell behavior and governance decisions
 - Specification-first gate that blocks implementation without explicit approval.
 - Additional implementation readiness gate requiring passed spec quality unless explicitly overridden.
 - Explicit contract declarations for promotion-gate checks and MLflow safety obligations.
+- Parallel promotion-gate obligations for MLOps system definitions (Nix/Terranix/OpenTofu) across DEV→UAT→REGRESSION→PROD.
+- Central authorization governance requiring one policy authority, explicit capability boundaries, and validated user requests.
 - Top-level invariants asserting implementation gate correctness (`implementation_enabled` implies passed quality gate), production-stage promotion safety, and cloud MLflow safety requirements.
+- Top-level invariant that production MLOps definitions remain approved, regression-validated, rollback-ready, and tied to recorded Nix changesets.
 - Conditional infrastructure MCP requirement: when infrastructure MCP servers are available, infrastructure interrogation must be included in the default assistant surface.
 - Infrastructure interrogation minimum coverage is now explicit and testable: IaC plans/state, Kubernetes runtime state, Lambda.ai/Slurm runtime state, cloud resource inventory, and cost/usage signals.
 - Surface declarations that make key governance, shell, and documentation triggers reachable for executable analysis.

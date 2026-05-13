@@ -1,5 +1,5 @@
 ---
-updated: 2026-05-12
+updated: 2026-05-14
 summary: Primary router for the living wiki. Read this first, then load only the pages relevant to the task.
 read_when:
   - Starting any task in this repository
@@ -59,6 +59,7 @@ sources:
   - sources/ml_deploy.infrastructure_mcp.py.md
   - sources/ml_deploy.notebook_intake.py.md
   - sources/nbs.01_platform_narrative.qmd.md
+  - sources/nbs.00_introduction.qmd.md
   - sources/nbs.07_mlflow_parity.qmd.md
   - sources/nbs.14_infrastructure_mcp.qmd.md
   - sources/nbs.08_execution_backends.qmd.md
@@ -124,6 +125,12 @@ sources:
   - revisions/2026-05-13-explicit-docs-self-sufficiency-requirement.md
   - revisions/2026-05-13-documentation-structure-and-diagrams-spec.md
   - revisions/2026-05-13-weed-alignment-implementation.md
+  - revisions/2026-05-14-stack-introduction-page.md
+  - revisions/2026-05-14-introduction-todo-resolution.md
+  - revisions/2026-05-14-kubeflow-placement-in-introduction.md
+  - revisions/2026-05-14-dual-promotion-gates-model-and-mlops.md
+  - revisions/2026-05-14-security-authorization-architecture.md
+  - revisions/2026-05-14-introduction-full-stack-overview.md
 ---
 
 # Wiki index

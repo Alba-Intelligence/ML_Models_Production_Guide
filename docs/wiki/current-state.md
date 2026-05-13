@@ -1,5 +1,5 @@
 ---
-updated: 2026-05-13
+updated: 2026-05-14
 summary: Honest snapshot of the repository's present state, notable constraints, and likely next steps.
 read_when:
   - You need a current repo snapshot
@@ -30,10 +30,12 @@ sources:
   - architecture/distilled-allium-spec.md
   - architecture/local-emulation-stack.md
   - contracts/index.md
+  - contracts/security-baseline.md
   - domains/index.md
   - topologies/index.md
   - decisions/project-scope-and-constraints.md
   - decisions/notebook-intake-validation-and-approval.md
+  - decisions/security-authorization-architecture.md
   - sources/ml-deploy-reference-repo.allium.md
   - sources/ml_deploy.webui_contracts.py.md
   - sources/ml_deploy.execution_backends.py.md
@@ -41,6 +43,7 @@ sources:
   - sources/ml_deploy.governance_gates.py.md
   - sources/ml_deploy.notebook_intake.py.md
   - sources/nbs.07_mlflow_parity.qmd.md
+  - sources/nbs.00_introduction.qmd.md
   - sources/nbs.14_infrastructure_mcp.qmd.md
   - sources/nbs.08_execution_backends.qmd.md
   - sources/nbs.09_notebook_intake.qmd.md
@@ -92,6 +95,7 @@ As of 2026-05-11, the repository contains:
 - `nbs/08_execution_backends.qmd` as nbdev source for backend execution adapters
 - `nbs/09_notebook_intake.qmd` as nbdev source for notebook intake validation
 - `nbs/01_platform_narrative.qmd` as the canonical platform architecture narrative page
+- `nbs/00_introduction.qmd` as the stack-wide introduction page summarizing software and infrastructure layers
 - Quarto `.qmd` counterparts for all active nbdev notebooks in `nbs/` (docs rendering path)
 - runtime helper modules for MLflow parity, execution adapters, intake validation, OpenTofu infrastructure, and infrastructure MCP interrogation
 - git metadata for a repository now rebased onto `origin/main`
@@ -162,6 +166,8 @@ As of 2026-05-11, the repository contains:
 - A single end-of-task command now exists to export notebooks, render docs, and run tests: `./scripts/finalize-task.sh`.
 - A canonical platform narrative Quarto page now owns the architecture story and Mermaid diagram.
 - The rendered docs homepage is now Quarto-driven (`nbs/index.qmd`) and functions as navigation-first entrypoint.
+- The docs now include a dedicated stack introduction page (`nbs/00_introduction.qmd`) linked from homepage foundations and sidebar navigation.
+- The stack introduction page now explicitly frames the whole stack: WebUI as primary control plane, Airflow as orchestration layer, optional Kubeflow in the Kubernetes lane, shared notebook repository flow across local/cloud, central authorization, MLOps promotion gates, observability, cost visibility, and Nix/Terranix as canonical artifact-generation source.
 - Full Quarto website generation from `.qmd` sources succeeds via `nix develop -c quarto render . --no-execute`.
 - Rendered Quarto outputs are refreshed under `_docs/nbs/*.html` with `_docs/index.html` as root entrypoint; that root page now forwards to the Quarto navigation homepage at `_docs/nbs/index.html`, whose links target HTML docs, the root sidebar no longer references the retired Terraform-bootstrap page, and the stale legacy `nbs/_docs/` snapshot has been removed.
 - CI now enforces export/render/tests on pull requests and pushes, including docs freshness coverage.
@@ -175,7 +181,7 @@ As of 2026-05-11, the repository contains:
 - Contract validation is currently test-level for the local vertical slice, not yet generalized across all topologies.
 - New architecture requirements now specify MLflow PostgreSQL/S3 storage, Lambda.ai Slurm coordination/redundancy, AWS Kubernetes for non-Lambda.ai services, and Nix (flake+devenv) Terranix-generated OpenTofu JSON infrastructure workflows; OpenTofu apply orchestration remains partly documented.
 - Dual-profile (`local_emulation | cloud`) infrastructure now implemented: `docker-compose.aws-emulator.yml` (Floci), `docker-compose.local-infra.yml` (K3s + Slurm), Nix/Terranix modules in `nix/modules/` and `nix/profiles/`, and Quarto pages `nbs/13_opentofu_infra.qmd`, `nbs/15_aws_emulator.qmd`, `nbs/16_terranix_infra.qmd`.
-- Allium spec now covers MLflow storage backends (SQLite/PostgreSQL/S3-compatible local emulation), security (reverse proxy, MLFLOW_CREATE_MODEL_VERSION_SOURCE_VALIDATION_REGEX), and a DEV→UAT→REGRESSION→PROD promotion pipeline with approval gate.
+- Allium spec now covers MLflow storage backends (SQLite/PostgreSQL/S3-compatible local emulation), security (reverse proxy, MLFLOW_CREATE_MODEL_VERSION_SOURCE_VALIDATION_REGEX, central OIDC-backed authorization authority, capability catalogs, and request validation), and parallel DEV→UAT→REGRESSION→PROD promotion gates for both model artifacts and MLOps system definitions (Nix/Terranix/OpenTofu) with approval controls.
 - Five open questions formally recorded in the spec: Lambda.ai scheduling preference, bigmlflow flavor requirement, CI/CD tooling, promotion gate criteria, and PyTorch inference optimisation steps.
 - mlflow-go (`mlflow-go` server + `mlflow-go-backend` Python package) is the recommended approach for profile-switchable MLflow tracking (SQLite local, PostgreSQL cloud — no code changes required).
 - Slurm/Kubernetes paths currently emit backend-ready submission payloads, but external scheduler client integrations remain to be connected.

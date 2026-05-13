@@ -23,6 +23,7 @@ website:
     style: floating
     contents:
       - nbs/index.qmd
+      - nbs/00_introduction.qmd
       - nbs/00_core.qmd
       - nbs/01_platform_narrative.qmd
       - nbs/02_data.qmd

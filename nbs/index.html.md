@@ -85,6 +85,7 @@ Start with platform architecture, then focus on model development and promotion:
 
 ## Foundations
 
+- [Stack introduction](00_introduction.qmd)
 - [Platform narrative](01_platform_narrative.qmd)
 - [Core module baseline](00_core.qmd)
 

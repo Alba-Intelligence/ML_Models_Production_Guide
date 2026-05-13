@@ -36,6 +36,7 @@ These pages preserve durable choices that should not be rediscovered from scratc
 
 - [mlflow-storage-backends.md](mlflow-storage-backends.md) — MLflow backend store and artifact store choices per profile; reverse proxy requirement; MLFLOW_CREATE_MODEL_VERSION_SOURCE_VALIDATION_REGEX; mlflow-go parity.
 - [promotion-pipeline.md](promotion-pipeline.md) — DEV→UAT→REGRESSION→PROD model promotion stages, gate criteria, MLflow registry alignment, CI/CD integration, PyTorch optimisation gate.
+- [security-authorization-architecture.md](security-authorization-architecture.md) — central authority for roles/capabilities, capability catalogs, and request validation across the MLOps stack.
 
 ## Rule
 

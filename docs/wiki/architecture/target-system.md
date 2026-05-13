@@ -72,11 +72,13 @@ The project is not just about serving a model. It should document and demonstrat
 These are not optional features; they are architectural requirements:
 
 - security
+- OIDC-backed identity plus centralized policy-based authorization for roles/capabilities across systems and subsystems
 - data lineage
 - experiment traceability
 - model traceability
 - reproducibility
 - auditable assistant interactions where assistant automation is introduced
+- parallel DEV→UAT→REGRESSION→PROD promotion gates for both model artifacts and MLOps system-definition changes
 
 ## Audience and depth
 
