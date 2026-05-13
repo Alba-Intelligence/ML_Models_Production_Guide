@@ -8,6 +8,30 @@
 --   - runtime internals of external systems (AWS, Lambda.ai, MLflow, Prometheus, Grafana)
 --   - implementation code that does not yet exist in this repository
 
+contract PromotionGateContract {
+    validate_dev_to_uat: (artifact: ModelArtifact) -> Boolean
+    validate_uat_to_regression: (artifact: ModelArtifact) -> Boolean
+    validate_regression_to_prod: (artifact: ModelArtifact) -> Boolean
+
+    @invariant StageSpecificChecks
+        -- Each promotion stage applies only its required quality gates.
+        -- No stage transition is considered valid unless all required checks are true.
+
+    @invariant NoProdWithoutApproval
+        -- Production promotion requires explicit approval and a passed regression suite.
+}
+
+contract MlflowSafetyContract {
+    validate_cloud_source_policy: (server: MlflowTrackingServer) -> Boolean
+    validate_reverse_proxy_policy: (server: MlflowTrackingServer) -> Boolean
+
+    @invariant SourceRestrictionInCloud
+        -- Cloud deployments require model source validation to restrict model URIs.
+
+    @invariant ReverseProxyRequired
+        -- Traefik is required as the reverse proxy in all deployment profiles.
+}
+
 enum MonitoringTool { evidently | prometheus | grafana | mlflow }
 enum CostTool { aws_cost_explorer | aws_cur | aws_athena | aws_budgets | python_lambda_ai_attribution }
 enum McpSurface { mlflow | observability | aws_cost_visibility | lambda_ai_usage_visibility | infrastructure_visibility | docs_and_decisions }
@@ -620,6 +644,38 @@ rule RequirePromotionGateProdQualityChecks {
         -- https://docs.pytorch.org/tutorials/recipes/recipes/tuning_guide.html
         -- A security dependency scan must pass. The model must not regress on
         -- reference holdout datasets versus the current production model.
+}
+
+invariant ImplementationEnabledRequiresSpecQualityGate {
+    for repository in Repositories:
+        repository.phase = implementation_enabled implies repository.spec_quality_gate_passed
+}
+
+invariant ProductionArtifactsRemainApprovedAndValidated {
+    for artifact in ModelArtifacts:
+        artifact.stage = prod implies (
+            artifact.tracked_in_mlflow
+            and artifact.promotion_approved
+            and artifact.passes_regression_suite
+            and artifact.no_performance_regression
+            and artifact.security_scan_passed
+            and artifact.pytorch_compile_applied
+            and artifact.pytorch_no_grad_applied
+            and artifact.pytorch_mixed_precision_applied
+            and artifact.pytorch_channels_last_applied
+            and artifact.pytorch_memory_fraction_limited
+        )
+}
+
+invariant CloudMlflowSecurityRequirementsHold {
+    for server in MlflowTrackingServers:
+        server.deployment_profile = cloud implies (
+            server.backend_store = postgresql
+            and server.artifact_store = s3
+            and server.model_version_source_validation_enabled
+            and server.has_reverse_proxy
+            and server.reverse_proxy_tool = traefik
+        )
 }
 
 surface DeveloperShellSurface {

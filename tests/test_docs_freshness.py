@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import re
 from pathlib import Path
 import unittest
 
@@ -11,7 +10,7 @@ def _expected_output_name(qmd_path: Path) -> str:
     stem = qmd_path.stem
     if stem == "index":
         return "index.html"
-    return f"{re.sub(r'^\\d+_', '', stem)}.html"
+    return f"{stem}.html"
 
 
 class TestRenderedDocsFreshness(unittest.TestCase):

@@ -48,6 +48,8 @@ class TestMlflowParity(unittest.TestCase):
         for service_name in (
             "postgres",
             "mlflow",
+            "floci",
+            "floci_bootstrap",
             "k3s",
             "slurmctld",
             "slurmd",

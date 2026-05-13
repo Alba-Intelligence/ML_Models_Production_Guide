@@ -329,13 +329,15 @@ def render_full_local_emulation_compose_config(
     data_plane: LocalMlflowParityConfig | None = None,
     infra_plane: LocalInfrastructureParityConfig | None = None,
 ) -> dict[str, Any]:
-    """Combine data-plane and compute-plane services for full local emulation parity."""
+    """Combine data-plane, compute-plane, and AWS emulator services for full local parity."""
     data = render_local_compose_config(data_plane or LocalMlflowParityConfig())
     infra = render_local_infra_compose_config(infra_plane)
+    aws = render_local_aws_emulator_compose_config(infra_plane)
     return {
         "name": (data_plane or LocalMlflowParityConfig()).compose_project_name,
-        "services": {**data["services"], **infra["services"]},
+        "services": {**data["services"], **infra["services"], **aws["services"]},
         "networks": infra["networks"],
+        "volumes": aws["volumes"],
     }
 
 

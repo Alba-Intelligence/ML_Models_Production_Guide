@@ -29,6 +29,14 @@ def request_implementation_transition(
     explicit_user_confirmation: bool,
 ) -> GovernanceDecision:
     """Enforce spec-first phase transition gate."""
+    if state.phase == "implementation_enabled":
+        return GovernanceDecision(
+            allowed=True,
+            operation="implementation_allowed",
+            reason="already implementation_enabled",
+            next_state=state,
+        )
+
     if not explicit_user_confirmation:
         return GovernanceDecision(
             allowed=False,

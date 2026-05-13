@@ -49,6 +49,20 @@ class TestGovernanceGates(unittest.TestCase):
         self.assertEqual(decision.operation, "implementation_allowed")
         self.assertEqual(decision.next_state.phase, "implementation_enabled")
 
+    def test_allows_when_phase_already_enabled_without_confirmation(self) -> None:
+        state = RepositoryGovernanceState(
+            phase="implementation_enabled",
+            spec_quality_gate_passed=False,
+        )
+        decision = request_implementation_transition(
+            state,
+            explicit_user_confirmation=False,
+        )
+        self.assertTrue(decision.allowed)
+        self.assertEqual(decision.operation, "implementation_allowed")
+        self.assertEqual(decision.reason, "already implementation_enabled")
+        self.assertEqual(decision.next_state.phase, "implementation_enabled")
+
 
 if __name__ == "__main__":
     unittest.main()
