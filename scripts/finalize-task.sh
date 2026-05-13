@@ -30,6 +30,10 @@ if ! command -v quarto >/dev/null 2>&1; then
   export PATH="$PWD/.tools/quarto/bin:$PATH"
 fi
 
+if command -v nix >/dev/null 2>&1; then
+  python scripts/generate-docker-artifacts.py
+fi
+
 uv run nbdev-export --path nbs/
 quarto render . --to html --no-execute
 uv run python -m unittest discover -s tests -q

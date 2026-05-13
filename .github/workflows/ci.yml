@@ -26,6 +26,12 @@ jobs:
       - name: Sync dependencies
         run: uv sync
 
+      - name: Generate Docker artifacts
+        run: |
+          if command -v nix >/dev/null 2>&1; then
+            python scripts/generate-docker-artifacts.py
+          fi
+
       - name: Export nbdev modules
         run: uv run nbdev-export --path nbs/
 

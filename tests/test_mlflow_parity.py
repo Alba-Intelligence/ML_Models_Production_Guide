@@ -8,11 +8,14 @@ import tempfile
 import unittest
 
 from ml_deploy.mlflow_parity import (
+    CloudMlflowParityConfig,
     LocalInfrastructureParityConfig,
     LocalMlflowParityConfig,
+    build_cloud_mlflow_runtime_env,
     build_mlflow_runtime_env_from_storage,
     build_mlflow_runtime_env,
     build_mlflow_server_command,
+    render_cloud_compose_config,
     render_full_local_emulation_compose_config,
     render_local_compose_config,
     render_local_infra_compose_config,
@@ -51,6 +54,13 @@ class TestMlflowParity(unittest.TestCase):
         ):
             self.assertIn(service_name, compose["services"])
 
+    def test_render_cloud_compose_includes_traefik_and_mlflow_validation(self) -> None:
+        compose = render_cloud_compose_config(CloudMlflowParityConfig())
+        self.assertIn("traefik", compose["services"])
+        self.assertIn("mlflow", compose["services"])
+        mlflow_env = compose["services"]["mlflow"]["environment"]
+        self.assertIn("MLFLOW_CREATE_MODEL_VERSION_SOURCE_VALIDATION_REGEX", mlflow_env)
+
     def test_command_and_env_match_postgres_s3_posture(self) -> None:
         config = LocalMlflowParityConfig()
         command = build_mlflow_server_command(config)
@@ -88,6 +98,17 @@ class TestMlflowParity(unittest.TestCase):
         self.assertEqual(env["MLFLOW_BACKEND_STORE_URI"], "postgresql://u:p@db:5432/mlflow")
         self.assertEqual(env["MLFLOW_ARTIFACTS_DESTINATION"], "s3://mlflow-prod")
         self.assertEqual(env["MLFLOW_S3_ENDPOINT_URL"], "https://s3.internal")
+
+    def test_cloud_runtime_env_requires_source_validation_regex(self) -> None:
+        config = resolve_mlflow_storage_config(
+            {
+                "MLFLOW_BACKEND_STORE_URI": "postgresql://u:p@db:5432/mlflow",
+                "MLFLOW_ARTIFACTS_DESTINATION": "s3://mlflow-prod",
+                "MLFLOW_TRACKING_URI": "https://mlflow.internal",
+            }
+        )
+        with self.assertRaises(ValueError):
+            build_cloud_mlflow_runtime_env(config)
 
 
 if __name__ == "__main__":

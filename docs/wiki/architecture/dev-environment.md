@@ -32,7 +32,7 @@ An auxiliary `devenv.nix`/`devenv.yaml` setup is also present and now mirrors th
 - Jupyter helper runtime: `start-jupyter` uses a flake-provided Python interpreter with `ipykernel` bundled.
 - uv2nix remains configured for lockfile-derived packaging, but the dev shell no longer requires a uv2nix-built virtualenv to start.
 - The shell exports `UV_PROJECT_ENVIRONMENT="$PROJECT_ROOT/.venv"`.
-- If `pyproject.toml` exists and `.venv` is missing, the shell hook will create the venv and run `uv sync` automatically.
+- If `pyproject.toml` exists, the shell hook activates `.venv` and runs `uv sync` when either `UV_SYNC_REQUESTED=1` is set or `uv sync --check` detects dependency drift.
 - If no `pyproject.toml` exists, none of that bootstrap happens.
 
 ## Jupyter model

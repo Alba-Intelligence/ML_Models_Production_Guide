@@ -18,7 +18,7 @@ from datetime import datetime, timezone
 import json
 from pathlib import Path
 import time
-from typing import Any
+from typing import Any, Literal
 from uuid import uuid4
 
 import joblib
@@ -34,6 +34,7 @@ from sklearn.preprocessing import StandardScaler
 
 DEFAULT_FEATURES = ["feature_1", "feature_2", "feature_3"]
 DEFAULT_TARGET = "target"
+PromotionStage = Literal["dev", "uat", "regression", "prod"]
 
 
 @dataclass
@@ -203,7 +204,21 @@ def package_and_register_model(
     model_version_record = {
         "model_version_identifier": model_version_id,
         "source_artifact_identifier": artifact_id,
-        "promotion_status": "approved-local",
+        "stage": "dev",
+        "tracked_in_mlflow": True,
+        "promotion_approved": False,
+        "passes_smoke_tests": False,
+        "passes_uat_suite": False,
+        "no_data_leakage_detected": False,
+        "meets_minimum_metrics": False,
+        "passes_regression_suite": False,
+        "no_performance_regression": False,
+        "security_scan_passed": False,
+        "pytorch_compile_applied": False,
+        "pytorch_no_grad_applied": False,
+        "pytorch_mixed_precision_applied": False,
+        "pytorch_channels_last_applied": False,
+        "pytorch_memory_fraction_limited": False,
         "approval_basis": f"accuracy={outcome.accuracy:.4f}",
         "allowed_environments": ["local"],
         "rollback_predecessor": None,
@@ -221,6 +236,54 @@ def package_and_register_model(
         "model_version_path": model_version_path,
         "model_version_record": model_version_record,
     }
+
+
+def promote_model_artifact(
+    artifact: dict[str, Any],
+    to_stage: PromotionStage,
+) -> dict[str, Any]:
+    """Apply promotion gates for DEV->UAT->REGRESSION->PROD."""
+    if not artifact.get("tracked_in_mlflow", False):
+        raise ValueError("artifact must be tracked in MLflow")
+
+    if to_stage == "uat":
+        if not artifact.get("passes_smoke_tests", False):
+            raise ValueError("promotion to uat requires passes_smoke_tests")
+        artifact["stage"] = "uat"
+        return artifact
+
+    if to_stage == "regression":
+        required = (
+            "passes_uat_suite",
+            "no_data_leakage_detected",
+            "meets_minimum_metrics",
+        )
+        for key in required:
+            if not artifact.get(key, False):
+                raise ValueError(f"promotion to regression requires {key}")
+        artifact["stage"] = "regression"
+        return artifact
+
+    if to_stage == "prod":
+        if not artifact.get("promotion_approved", False):
+            raise ValueError("promotion to prod requires promotion_approved")
+        required = (
+            "passes_regression_suite",
+            "no_performance_regression",
+            "security_scan_passed",
+            "pytorch_compile_applied",
+            "pytorch_no_grad_applied",
+            "pytorch_mixed_precision_applied",
+            "pytorch_channels_last_applied",
+            "pytorch_memory_fraction_limited",
+        )
+        for key in required:
+            if not artifact.get(key, False):
+                raise ValueError(f"promotion to prod requires {key}")
+        artifact["stage"] = "prod"
+        return artifact
+
+    raise ValueError(f"unsupported stage transition target: {to_stage}")
 
 
 def create_local_deployment_record(

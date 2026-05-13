@@ -1,6 +1,6 @@
 ---
-updated: 2026-05-11
-summary: Synthesized summary of the distilled repository-level Allium specification with spec-quality, documentation-series, and infrastructure-MCP interrogation gating.
+updated: 2026-05-13
+summary: Synthesized summary of the distilled repository-level Allium specification with explicit documentation self-sufficiency obligations.
 read_when:
   - You need the repo behavior expressed as a formal spec
   - You are planning spec-first changes and need the current baseline
@@ -40,6 +40,7 @@ It converts the repository's implemented shell behavior and governance decisions
 - Jupyter kernel ensure + JupyterLab launch behavior.
 - Mandatory wiki update workflow after durable changes.
 - Notebook-series completeness gate for implementation-ready architecture documentation (steps, trade-offs, security, examples, audience coverage, and implementation/docs-module linkage).
+- Explicit requirement that published documentation must make repository source browsing unnecessary for implementation-relevant behavior and configuration.
 - OpenTofu configuration gate requiring Terranix-generated JSON configuration from both flake and devenv pathways.
 - Specification-first gate that blocks implementation without explicit approval.
 - Additional implementation readiness gate requiring passed spec quality unless explicitly overridden.

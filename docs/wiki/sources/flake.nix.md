@@ -1,5 +1,5 @@
 ---
-updated: 2026-05-11
+updated: 2026-05-12
 summary: Synthesized summary of the repository's main flake definition.
 read_when:
   - You are editing the flake
@@ -90,8 +90,10 @@ On shell entry, the flake:
 - sets `LD_LIBRARY_PATH` from the compiler runtime library
 - if `pyproject.toml` exists:
   - creates `.venv` if missing using `uv venv`
-  - runs `uv sync`
   - activates `.venv`
+  - runs `uv sync` when:
+    - `UV_SYNC_REQUESTED=1`, or
+    - `uv sync --check` reports dependency drift
 - prints Python and Git versions
 - runs `start-jupyter --ensure-only`
 

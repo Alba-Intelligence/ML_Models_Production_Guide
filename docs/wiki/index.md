@@ -43,6 +43,7 @@ sources:
   - sources/.dockerignore.md
   - sources/Dockerfile.md
   - sources/docker-compose.dev.yml.md
+  - sources/docker-compose.cloud.yml.md
   - sources/gitignore.md
   - sources/LICENSE.md
   - sources/README.md
@@ -54,6 +55,7 @@ sources:
   - sources/ml_deploy.webui_contracts.py.md
   - sources/ml_deploy.execution_backends.py.md
   - sources/ml_deploy.mlflow_parity.py.md
+  - sources/ml_deploy.governance_gates.py.md
   - sources/ml_deploy.infrastructure_mcp.py.md
   - sources/ml_deploy.notebook_intake.py.md
   - sources/nbs.01_platform_narrative.qmd.md
@@ -63,6 +65,7 @@ sources:
   - sources/nbs.09_notebook_intake.qmd.md
   - sources/nbs.12_system_interaction_analysis.qmd.md
   - sources/nbs.13_opentofu_infra.qmd.md
+  - sources/nbs.17_governance_gates.qmd.md
   - sources/nbs.index.qmd.md
   - sources/nbs.05_webui_contracts.qmd.md
   - sources/tests.test_vertical_slice.py.md
@@ -71,7 +74,12 @@ sources:
   - sources/tests.test_docs_freshness.py.md
   - sources/tests.test_mcp_infrastructure_contracts.py.md
   - sources/tests.test_infrastructure_mcp.py.md
+  - sources/tests.test_docker_artifacts_generation.py.md
+  - sources/tests.test_governance_gates.py.md
+  - sources/tests.test_promotion_pipeline.py.md
   - sources/scripts.finalize-task.sh.md
+  - sources/scripts.generate-docker-artifacts.py.md
+  - sources/nix.terranix.docker-artifacts.nix.md
   - sources/scripts.regenerate-html.sh.md
   - revisions/2026-05-10-distilled-allium-spec.md
   - revisions/2026-05-10-allium-cli-build-fix.md
@@ -112,6 +120,9 @@ sources:
   - revisions/2026-05-11-ci-enforcement-and-revision-archive-notes.md
   - revisions/2026-05-11-local-emulation-parity-helpers.md
   - revisions/2026-05-12-d2-diagram-migration.md
+  - revisions/2026-05-12-spec-drift-implementation-closure.md
+  - revisions/2026-05-13-explicit-docs-self-sufficiency-requirement.md
+  - revisions/2026-05-13-documentation-structure-and-diagrams-spec.md
 ---
 
 # Wiki index
@@ -242,6 +253,7 @@ sources:
 - [sources/.dockerignore.md](sources/.dockerignore.md) — synthesized summary of Docker build-context exclusions.
 - [sources/Dockerfile.md](sources/Dockerfile.md) — synthesized summary of the Docker-first development image.
 - [sources/docker-compose.dev.yml.md](sources/docker-compose.dev.yml.md) — synthesized summary of the Docker-first local development + MLflow parity stack.
+- [sources/docker-compose.cloud.yml.md](sources/docker-compose.cloud.yml.md) — synthesized summary of cloud-profile Traefik + MLflow compose wiring.
 - [sources/gitignore.md](sources/gitignore.md) — synthesized summary of ignored paths and tracking implications.
 - [sources/LICENSE.md](sources/LICENSE.md) — synthesized summary of the repository license and its provenance from origin.
 - [sources/README.md](sources/README.md) — synthesized summary of root newcomer-onboarding guidance.
@@ -252,6 +264,7 @@ sources:
 - [sources/ml_deploy.webui_contracts.py.md](sources/ml_deploy.webui_contracts.py.md) — synthesized summary of Web UI execution/run-visibility contract helpers.
 - [sources/ml_deploy.execution_backends.py.md](sources/ml_deploy.execution_backends.py.md) — synthesized summary of local/slurm/k8s execution adapter mappings.
 - [sources/ml_deploy.mlflow_parity.py.md](sources/ml_deploy.mlflow_parity.py.md) — synthesized summary of local MLflow parity stack helpers.
+- [sources/ml_deploy.governance_gates.py.md](sources/ml_deploy.governance_gates.py.md) — synthesized summary of executable spec-first implementation gating.
 - [sources/ml_deploy.notebook_intake.py.md](sources/ml_deploy.notebook_intake.py.md) — synthesized summary of notebook intake validation gates.
 - [sources/nbs.01_platform_narrative.qmd.md](sources/nbs.01_platform_narrative.qmd.md) — synthesized summary of the canonical platform architecture narrative Quarto page.
 - [sources/nbs.07_mlflow_parity.qmd.md](sources/nbs.07_mlflow_parity.qmd.md) — synthesized summary of Quarto nbdev source-of-truth for MLflow parity helpers.
@@ -259,6 +272,7 @@ sources:
 - [sources/nbs.09_notebook_intake.qmd.md](sources/nbs.09_notebook_intake.qmd.md) — synthesized summary of Quarto nbdev source-of-truth for notebook intake gates.
 - [sources/nbs.12_system_interaction_analysis.qmd.md](sources/nbs.12_system_interaction_analysis.qmd.md) — synthesized summary of the five-layer system interaction analysis Quarto page.
 - [sources/nbs.13_opentofu_infra.qmd.md](sources/nbs.13_opentofu_infra.qmd.md) — synthesized summary of the OpenTofu infrastructure profile Quarto page.
+- [sources/nbs.17_governance_gates.qmd.md](sources/nbs.17_governance_gates.qmd.md) — synthesized summary of Quarto nbdev source-of-truth for implementation governance gates.
 - [sources/nbs.index.qmd.md](sources/nbs.index.qmd.md) — synthesized summary of the rendered docs homepage Quarto page.
 - [sources/nbs.05_webui_contracts.qmd.md](sources/nbs.05_webui_contracts.qmd.md) — synthesized summary of Quarto nbdev source-of-truth for Web UI contracts.
 - [sources/tests.test_vertical_slice.py.md](sources/tests.test_vertical_slice.py.md) — synthesized summary of vertical-slice behavior tests.
@@ -266,11 +280,19 @@ sources:
 - [sources/tests.test_documentation_series_contracts.py.md](sources/tests.test_documentation_series_contracts.py.md) — synthesized summary of spec-propagated documentation-series completeness tests.
 - [sources/tests.test_docs_freshness.py.md](sources/tests.test_docs_freshness.py.md) — synthesized summary of docs freshness checks for Quarto-rendered HTML.
 - [sources/tests.test_mcp_infrastructure_contracts.py.md](sources/tests.test_mcp_infrastructure_contracts.py.md) — synthesized summary of spec-propagated infrastructure MCP interrogation contract tests.
+- [sources/tests.test_docker_artifacts_generation.py.md](sources/tests.test_docker_artifacts_generation.py.md) — synthesized summary of generated Docker artifact assertions.
+- [sources/tests.test_governance_gates.py.md](sources/tests.test_governance_gates.py.md) — synthesized summary of implementation-transition gate tests.
+- [sources/tests.test_promotion_pipeline.py.md](sources/tests.test_promotion_pipeline.py.md) — synthesized summary of promotion pipeline gate tests.
 - [sources/scripts.finalize-task.sh.md](sources/scripts.finalize-task.sh.md) — synthesized summary of the canonical end-of-task export/docs/tests command.
+- [sources/scripts.generate-docker-artifacts.py.md](sources/scripts.generate-docker-artifacts.py.md) — synthesized summary of Docker artifact generator script.
+- [sources/nix.terranix.docker-artifacts.nix.md](sources/nix.terranix.docker-artifacts.nix.md) — synthesized summary of Nix Terranix Docker artifact definitions.
 
 ## Revision artifacts
 
 - [revisions/2026-05-12-phase-1-implementation.md](revisions/2026-05-12-phase-1-implementation.md) — captures Phase 1 implementation: MlflowTrackingServer field addition, Traefik reverse proxy integration, and Terranix roadmap documentation.
+- [revisions/2026-05-12-spec-drift-implementation-closure.md](revisions/2026-05-12-spec-drift-implementation-closure.md) — captures implementation of weed-audit drift gaps (generation path, cloud proxy/security, promotion and governance gates, shell sync semantics).
+- [revisions/2026-05-13-explicit-docs-self-sufficiency-requirement.md](revisions/2026-05-13-explicit-docs-self-sufficiency-requirement.md) — captures explicit docs self-sufficiency requirement in the distilled Allium spec.
+- [revisions/2026-05-13-documentation-structure-and-diagrams-spec.md](revisions/2026-05-13-documentation-structure-and-diagrams-spec.md) — captures mandate for 5-subsection Platform Overview with extensive Mermaid diagrams (class, sequence, state machine, deployment topology).
 - [revisions/2026-05-12-d2-diagram-migration.md](revisions/2026-05-12-d2-diagram-migration.md) — captures migration of active docs/spec/test diagram language from Mermaid to D2.
 - [revisions/2026-05-10-distilled-allium-spec.md](revisions/2026-05-10-distilled-allium-spec.md) — captures the first repository-wide Allium distillation baseline.
 - [revisions/2026-05-10-allium-cli-build-fix.md](revisions/2026-05-10-allium-cli-build-fix.md) — captures the flake fix for allium-cli build reliability.

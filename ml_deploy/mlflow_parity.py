@@ -25,6 +25,10 @@ class LocalMlflowParityConfig:
     s3_bucket: str = "mlflow"
     mlflow_port: int = 5000
     mlflow_host: str = "0.0.0.0"
+    traefik_http_port: int = 80
+    traefik_https_port: int = 443
+    network_name: str = "ml_local"
+    mlflow_host_rule: str = "mlflow.local"
     compose_project_name: str = "mlflow-parity"
 
     @property
@@ -57,6 +61,7 @@ class MlflowStorageConfig:
     aws_access_key_id: str
     aws_secret_access_key: str
     s3_endpoint_url: str | None = None
+    model_version_source_validation_regex: str | None = None
 
 
 @dataclass(frozen=True)
@@ -94,13 +99,50 @@ class LocalInfrastructureParityConfig:
     network_name: str = "ml_local"
 
 
+@dataclass(frozen=True)
+class CloudMlflowParityConfig:
+    """Configuration for cloud profile with Traefik reverse proxy."""
+
+    postgres_user: str = "mlflow"
+    postgres_password: str = "mlflow"
+    postgres_db: str = "mlflow"
+    postgres_host: str = "postgres"
+    postgres_port: int = 5432
+    mlflow_port: int = 5000
+    traefik_http_port: int = 80
+    traefik_https_port: int = 443
+    network_name: str = "ml_cloud"
+    mlflow_host_rule: str = "mlflow.internal"
+    artifact_bucket: str = "mlflow-artifacts"
+    model_version_source_validation_regex: str = r"^s3://mlflow-artifacts/.*"
+
+
 def render_local_compose_config(config: LocalMlflowParityConfig) -> dict[str, Any]:
-    """Render a Docker Compose config for local PostgreSQL + Floci-backed MLflow."""
+    """Render a Docker Compose config for local PostgreSQL + Floci-backed MLflow with Traefik."""
     postgres_image = "postgres:16-alpine"
     mlflow_image = "ghcr.io/mlflow/mlflow:v2.14.2"
     return {
         "name": config.compose_project_name,
         "services": {
+            "traefik": {
+                "image": "traefik:v3.1.1",
+                "ports": [
+                    f"{config.traefik_http_port}:80",
+                    f"{config.traefik_https_port}:443",
+                    "8080:8080",
+                ],
+                "volumes": ["/var/run/docker.sock:/var/run/docker.sock"],
+                "networks": [config.network_name],
+                "command": [
+                    "--api.insecure=true",
+                    "--api.dashboard=true",
+                    "--entrypoints.web.address=:80",
+                    "--entrypoints.websecure.address=:443",
+                    "--providers.docker=true",
+                    "--providers.docker.exposedbydefault=false",
+                    f"--providers.docker.network={config.network_name}",
+                ],
+            },
             "postgres": {
                 "image": postgres_image,
                 "environment": {
@@ -109,6 +151,7 @@ def render_local_compose_config(config: LocalMlflowParityConfig) -> dict[str, An
                     "POSTGRES_DB": config.postgres_db,
                 },
                 "ports": [f"{config.postgres_port}:5432"],
+                "networks": [config.network_name],
                 "healthcheck": {
                     "test": ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER}"],
                     "interval": "5s",
@@ -140,9 +183,16 @@ def render_local_compose_config(config: LocalMlflowParityConfig) -> dict[str, An
                     "AWS_DEFAULT_REGION": "us-east-1",
                     "MLFLOW_S3_ENDPOINT_URL": config.s3_endpoint_url,
                 },
-                "ports": [f"{config.mlflow_port}:{config.mlflow_port}"],
+                "networks": [config.network_name],
+                "labels": {
+                    "traefik.enable": "true",
+                    "traefik.http.routers.mlflow.rule": f"Host(`{config.mlflow_host_rule}`)",
+                    "traefik.http.routers.mlflow.entrypoints": "web",
+                    "traefik.http.services.mlflow.loadbalancer.server.port": str(config.mlflow_port),
+                },
             },
         },
+        "networks": {config.network_name: {"driver": "bridge"}},
     }
 
 
@@ -236,6 +286,71 @@ def render_local_aws_emulator_compose_config(
     }
 
 
+def render_cloud_compose_config(config: CloudMlflowParityConfig | None = None) -> dict[str, Any]:
+    """Render cloud profile compose config with Traefik in front of MLflow."""
+    runtime = config or CloudMlflowParityConfig()
+    return {
+        "services": {
+            "traefik": {
+                "image": "traefik:v3.1.1",
+                "ports": [
+                    f"{runtime.traefik_http_port}:80",
+                    f"{runtime.traefik_https_port}:443",
+                ],
+                "volumes": ["/var/run/docker.sock:/var/run/docker.sock"],
+                "networks": [runtime.network_name],
+                "command": [
+                    "--entrypoints.web.address=:80",
+                    "--entrypoints.websecure.address=:443",
+                    "--providers.docker=true",
+                    "--providers.docker.exposedbydefault=false",
+                    f"--providers.docker.network={runtime.network_name}",
+                ],
+            },
+            "postgres": {
+                "image": "postgres:16-alpine",
+                "environment": {
+                    "POSTGRES_USER": runtime.postgres_user,
+                    "POSTGRES_PASSWORD": runtime.postgres_password,
+                    "POSTGRES_DB": runtime.postgres_db,
+                },
+                "ports": [f"{runtime.postgres_port}:5432"],
+                "networks": [runtime.network_name],
+            },
+            "mlflow": {
+                "image": "ghcr.io/mlflow/mlflow:v2.14.2",
+                "depends_on": {"postgres": {"condition": "service_started"}},
+                "command": [
+                    "mlflow",
+                    "server",
+                    "--host",
+                    "0.0.0.0",
+                    "--port",
+                    str(runtime.mlflow_port),
+                    "--backend-store-uri",
+                    (
+                        f"postgresql://{runtime.postgres_user}:{runtime.postgres_password}"
+                        f"@{runtime.postgres_host}:5432/{runtime.postgres_db}"
+                    ),
+                    "--artifacts-destination",
+                    f"s3://{runtime.artifact_bucket}",
+                ],
+                "environment": {
+                    "MLFLOW_CREATE_MODEL_VERSION_SOURCE_VALIDATION_REGEX": runtime.model_version_source_validation_regex,
+                },
+                "networks": [runtime.network_name],
+                "labels": {
+                    "traefik.enable": "true",
+                    "traefik.http.routers.mlflow.rule": f"Host(`{runtime.mlflow_host_rule}`)",
+                    "traefik.http.routers.mlflow.entrypoints": "websecure",
+                    "traefik.http.services.mlflow.loadbalancer.server.port": str(runtime.mlflow_port),
+                },
+            },
+        },
+        "networks": {runtime.network_name: {"driver": "bridge"}},
+    }
+
+
 def render_full_local_emulation_compose_config(
     data_plane: LocalMlflowParityConfig | None = None,
     infra_plane: LocalInfrastructureParityConfig | None = None,
@@ -299,6 +414,9 @@ def resolve_mlflow_storage_config(
         aws_access_key_id=values.get("AWS_ACCESS_KEY_ID", "test"),
         aws_secret_access_key=values.get("AWS_SECRET_ACCESS_KEY", "test"),
         s3_endpoint_url=values.get("MLFLOW_S3_ENDPOINT_URL"),
+        model_version_source_validation_regex=values.get(
+            "MLFLOW_CREATE_MODEL_VERSION_SOURCE_VALIDATION_REGEX"
+        ),
     )
 
 
@@ -313,11 +431,25 @@ def build_mlflow_runtime_env_from_storage(config: MlflowStorageConfig) -> dict[s
     }
     if config.s3_endpoint_url:
         env["MLFLOW_S3_ENDPOINT_URL"] = config.s3_endpoint_url
+    if config.model_version_source_validation_regex:
+        env["MLFLOW_CREATE_MODEL_VERSION_SOURCE_VALIDATION_REGEX"] = (
+            config.model_version_source_validation_regex
+        )
     return env
 
 
+def build_cloud_mlflow_runtime_env(config: MlflowStorageConfig) -> dict[str, str]:
+    """Build cloud-profile env vars and enforce source validation policy."""
+    if not config.model_version_source_validation_regex:
+        raise ValueError(
+            "MLFLOW_CREATE_MODEL_VERSION_SOURCE_VALIDATION_REGEX is required for cloud profile"
+        )
+    return build_mlflow_runtime_env_from_storage(config)
+
+
 # %% auto #0
-__all__ = ['LocalMlflowParityConfig', 'MlflowStorageConfig', 'MlflowTrackingServer', 'LocalInfrastructureParityConfig', 'render_local_compose_config',
-           'render_local_infra_compose_config', 'render_full_local_emulation_compose_config', 'write_local_compose_file',
-           'build_mlflow_server_command', 'build_mlflow_runtime_env', 'resolve_mlflow_storage_config',
-           'build_mlflow_runtime_env_from_storage']
+__all__ = ['LocalMlflowParityConfig', 'MlflowStorageConfig', 'MlflowTrackingServer', 'LocalInfrastructureParityConfig',
+           'CloudMlflowParityConfig', 'render_local_compose_config', 'render_local_infra_compose_config',
+           'render_local_aws_emulator_compose_config', 'render_cloud_compose_config', 'render_full_local_emulation_compose_config',
+           'write_local_compose_file', 'build_mlflow_server_command', 'build_mlflow_runtime_env',
+           'resolve_mlflow_storage_config', 'build_mlflow_runtime_env_from_storage', 'build_cloud_mlflow_runtime_env']

@@ -1,5 +1,5 @@
 ---
-updated: 2026-05-10
+updated: 2026-05-12
 summary: Synthesized summary of the local first-vertical-slice implementation module.
 read_when:
   - You are implementing or debugging EX-01/EX-02/EX-03 locally
@@ -30,6 +30,7 @@ sources:
 - `prepare_training_data` — split + scale pipeline.
 - `train_with_traceability` — MLflow-tracked training with required lineage/traceability params.
 - `package_and_register_model` — writes model/scaler bundle and artifact/model-version metadata.
+- `promote_model_artifact` — enforces DEV->UAT->REGRESSION->PROD gate checks.
 - `create_local_deployment_record` — writes deployment record JSON for local serving.
 - `predict_and_log` — local prediction helper that writes JSONL prediction logs with deployment/model linkage.
 - `execute_first_vertical_slice` — orchestration helper that runs the whole local flow.
@@ -45,5 +46,6 @@ sources:
 
 - Training records capture dataset/transformation/code/container/compute metadata.
 - Artifact records capture run origin, schemas, serving modes, and evaluation summary.
+- Model-version records now include stage/gate booleans for promotion-pipeline checks.
 - Deployment records capture model version, rollout metadata, and monitoring config reference.
 - Prediction logs capture request identifier, model version, deployment identifier, schema reference, and runtime metadata.

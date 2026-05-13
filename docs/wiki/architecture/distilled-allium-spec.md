@@ -28,6 +28,7 @@ The spec is intended as a compact, formal baseline for current repository behavi
 4. **Implementation gating** (specification-first block unless explicit confirmation is present).
 5. **Spec quality readiness gating** (implementation is also gated unless spec-quality readiness is passed or explicitly overridden).
 6. **Infrastructure MCP interrogation gating** (when infra MCP servers are available, minimum interrogation coverage is required and explicit).
+7. **Documentation self-sufficiency gating** (published QMD docs must be sufficient without requiring repository source browsing).
 
 ## Scope boundaries
 

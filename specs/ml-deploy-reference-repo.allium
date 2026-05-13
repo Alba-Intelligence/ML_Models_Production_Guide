@@ -95,9 +95,20 @@ entity DocumentationSeries {
     has_generated_config_examples: Boolean
     has_mermaid_diagrams_where_helpful: Boolean
     has_python_source_visible_in_docs: Boolean
+    makes_repository_source_browsing_unnecessary: Boolean
     audiences_covered: Set<DocumentationAudience>
     has_python_implementation_module: Boolean
     has_docs_site_module_section: Boolean
+    has_platform_overview_section: Boolean
+    has_system_components_subsection: Boolean
+    has_class_diagrams_for_entities: Boolean
+    has_execution_dataflow_subsection: Boolean
+    has_sequence_diagrams_for_flows: Boolean
+    has_deployment_infrastructure_subsection: Boolean
+    has_deployment_topology_diagrams: Boolean
+    has_governance_safety_subsection: Boolean
+    has_state_machine_diagrams: Boolean
+    has_role_specific_learning_paths_subsection: Boolean
 }
 
 enum DeploymentProfile { local_emulation | cloud }
@@ -338,11 +349,35 @@ rule RequireImplementationReadyNotebookSeries {
     ensures: series.has_generated_config_examples = true
     ensures: series.has_mermaid_diagrams_where_helpful = true
     ensures: series.has_python_source_visible_in_docs = true
+    ensures: series.makes_repository_source_browsing_unnecessary = true
     ensures: series.audiences_covered = {software_engineer, ml_researcher}
     ensures: series.has_python_implementation_module = true
     ensures: series.has_docs_site_module_section = true
+    ensures: series.has_platform_overview_section = true
+    ensures: series.has_system_components_subsection = true
+    ensures: series.has_class_diagrams_for_entities = true
+    ensures: series.has_execution_dataflow_subsection = true
+    ensures: series.has_sequence_diagrams_for_flows = true
+    ensures: series.has_deployment_infrastructure_subsection = true
+    ensures: series.has_deployment_topology_diagrams = true
+    ensures: series.has_governance_safety_subsection = true
+    ensures: series.has_state_machine_diagrams = true
+    ensures: series.has_role_specific_learning_paths_subsection = true
 
     @guidance
+        -- The documentation must be organized around a Platform Overview section with
+        -- five logical subsections, each with appropriate diagrams:
+        --
+        -- 1. System Components & Roles (class diagrams for entities, relationships, roles)
+        -- 2. Execution & Data Flow (sequence diagrams for key workflows)
+        -- 3. Deployment & Infrastructure (topology diagrams for local vs. cloud)
+        -- 4. Governance & Safety (state machines for promotion gates and phases)
+        -- 5. Learning Paths (structured by audience: software engineer, ML researcher)
+        --
+        -- Diagrams must use Mermaid and must be extensive: class diagrams for entity
+        -- models, sequence diagrams for execution flows, state machines for governance,
+        -- and deployment topology diagrams for infrastructure parity visualization.
+        --
         -- The website must be sufficient to implement the full system from the published
         -- pages alone.
         -- Start with a high-level introduction, then descend into architecture, concrete
@@ -354,6 +389,9 @@ rule RequireImplementationReadyNotebookSeries {
         -- repository folder tree.
         -- Python source that matters to implementation should be visible from the docs, even
         -- if the actual module is still generated from notebook source.
+        -- The published QMD documentation set must be sufficient on its own: an implementer
+        -- must not need to open repository source files to find required system behavior,
+        -- configuration, infrastructure definitions, or operational wiring.
 }
 
 rule RequireNixGeneratedOpenTofuConfiguration {

@@ -1,5 +1,5 @@
 ---
-updated: 2026-05-11
+updated: 2026-05-12
 summary: Synthesized summary of the auxiliary devenv shell and its mirrored notebook/docs toolchain.
 read_when:
   - You are changing devenv-based shell behavior
@@ -19,6 +19,7 @@ source_file: ../../devenv.nix
 - Provides Python-backed `start-jupyter` helper that ensures the `ml_ops` kernel.
 - Includes `nbdev` and `quarto` in the shell package set for notebook export/docs workflows.
 - Configures `uv` as the Python dependency workflow and uses `.venv` via `UV_PROJECT_ENVIRONMENT`.
+- On shell entry, activates `.venv` when `pyproject.toml` exists and runs `uv sync` on explicit request (`UV_SYNC_REQUESTED=1`) or dependency drift (`uv sync --check`).
 
 ## Practical implication
 

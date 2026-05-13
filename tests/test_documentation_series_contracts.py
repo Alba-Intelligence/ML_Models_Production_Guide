@@ -111,5 +111,72 @@ class TestDocumentationSeriesRequiredContentObligations(unittest.TestCase):
         self.assertIn("## ML researcher learning path", text)
 
 
+class TestDocumentationSelfSufficiency(unittest.TestCase):
+    """Checks that published QMD docs are self-sufficient without requiring source browsing."""
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.repo_root = Path(__file__).resolve().parents[1]
+        cls.platform_narrative = cls.repo_root / "nbs" / "01_platform_narrative.qmd"
+        cls.index_notebook = cls.repo_root / "nbs" / "index.qmd"
+        cls.vertical_slice = cls.repo_root / "nbs" / "06_vertical_slice.qmd"
+
+    @staticmethod
+    def _load_document_text(path: Path) -> str:
+        if path.suffix == ".qmd":
+            return path.read_text(encoding="utf-8")
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        chunks: list[str] = []
+        for cell in payload.get("cells", []):
+            source = cell.get("source", [])
+            if isinstance(source, list):
+                chunks.append("".join(source))
+            elif isinstance(source, str):
+                chunks.append(source)
+        return "\n".join(chunks)
+
+    def test_no_deferred_to_source_references(self) -> None:
+        """Ensure docs don't defer readers to source code."""
+        text_narrative = self._load_document_text(self.platform_narrative)
+        text_index = self._load_document_text(self.index_notebook)
+        text_vertical = self._load_document_text(self.vertical_slice)
+        all_text = text_narrative + text_index + text_vertical
+        
+        # Check that docs don't require source browsing for implementation details
+        anti_patterns = [
+            "see the source code",
+            "refer to the source",
+            "check the repository",
+            "look at the implementation",
+        ]
+        for pattern in anti_patterns:
+            self.assertNotIn(pattern.lower(), all_text.lower(),
+                           msg=f"Docs should not defer to source: '{pattern}'")
+
+    def test_vertical_slice_example_contains_runnable_code(self) -> None:
+        """Ensure the vertical slice example has complete, documented code."""
+        text = self._load_document_text(self.vertical_slice)
+        # Verify the function is defined and documented
+        self.assertIn("def execute_first_vertical_slice", text)
+        # Check that the function is documented in the notebook
+        self.assertIn("def generate_synthetic_dataset", text)
+        self.assertIn("def train_with_traceability", text)
+        self.assertIn("def package_and_register_model", text)
+
+    def test_platform_narrative_documents_all_key_modules(self) -> None:
+        """Ensure platform narrative references major components."""
+        text = self._load_document_text(self.platform_narrative)
+        # Check for key infrastructure and service references
+        key_references = [
+            "MLflow",  # Tracking system
+            "Nix",     # Infrastructure-as-code
+            "Kubernetes",  # Cloud execution platform
+            "Slurm",   # HPC execution platform
+        ]
+        for reference in key_references:
+            self.assertIn(reference, text,
+                        msg=f"Platform narrative should reference {reference}")
+
+
 if __name__ == "__main__":
     unittest.main()

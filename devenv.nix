@@ -26,6 +26,34 @@ let
     singleStep = true;
   };
 
+  devPkgs = with pkgs; [
+    git
+    quarto
+    d2
+  ];
+
+  llmPkgs = with llms; [
+    claude-code
+    copilot-cli
+    kilocode-cli
+    opencode
+    openskills
+    openspec
+    pi
+    spec-kit
+    rtk
+  ];
+
+  pythonPkgs = with pkgs.python313Packages; [
+    nbdev
+    ipykernel
+  ];
+
+  localPkgs = [
+    alliumCli
+    startJupyter
+  ];
+
   jupyterPython = pkgs.python313.withPackages (ps: [ ps.ipykernel ]);
   startJupyterPy = pkgs.writeText "start-jupyter.py" ''
     import os
@@ -99,21 +127,9 @@ in
   env.GREET = "devenv";
 
   # https://devenv.sh/packages/
-  packages =
-    (with pkgs; [
-      git
-      quarto
-      d2
-    ])
-    ++ (with pkgs.python313Packages; [ nbdev ])
-    ++ [
-      alliumCli
-      startJupyter
-    ];
+  packages = devPkgs ++ localPkgs ++ pythonPkgs ++ llmPkgs;
 
   # https://devenv.sh/languages/
-  # https://devenv.sh/languages/
-
   languages = {
     python = {
       enable = true;
@@ -154,6 +170,25 @@ in
     export UV_PROJECT_ENVIRONMENT="$PROJECT_ROOT/.venv"
     export LD_LIBRARY_PATH=${pkgs.stdenv.cc.cc.lib}/lib:$LD_LIBRARY_PATH
 
+    if [ -f pyproject.toml ]; then
+      if [ ! -x "$UV_PROJECT_ENVIRONMENT/bin/python" ]; then
+        uv venv --python ${pkgs.python313}/bin/python "$UV_PROJECT_ENVIRONMENT" >/dev/null
+      fi
+
+      . "$UV_PROJECT_ENVIRONMENT/bin/activate"
+
+      NEED_UV_SYNC=0
+      if [ "''${UV_SYNC_REQUESTED:-0}" = "1" ]; then
+        NEED_UV_SYNC=1
+      elif ! uv sync --check >/dev/null 2>&1; then
+        NEED_UV_SYNC=1
+      fi
+
+      if [ "$NEED_UV_SYNC" -eq 1 ]; then
+        uv sync >/dev/null
+      fi
+    fi
+
     git --version
     start-jupyter --ensure-only >/dev/null
     echo
@@ -162,5 +197,6 @@ in
   enterTest = ''
     echo "Running tests"
     git --version | grep --color=auto "${pkgs.git.version}"
+    echo
   '';
 }

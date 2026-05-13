@@ -29,8 +29,8 @@ What this gives you:
 On shell entry, the shell hook will:
 
 1. create `.venv` with the flake's Python if needed
-2. run `uv sync`
-3. activate `.venv`
+2. activate `.venv`
+3. run `uv sync` when dependencies drift (`uv sync --check`) or when explicitly requested (`UV_SYNC_REQUESTED=1`)
 
 This should happen automatically in normal `nix develop` entry for this repository.
 
@@ -138,9 +138,23 @@ Use the standardized finalize command:
 
 This runs:
 
-1. `nbdev-export --path nbs/`
-2. `quarto render . --to html --no-execute`
-3. `python -m unittest discover -s tests -q`
+1. `python scripts/generate-docker-artifacts.py` (if `nix` is available)
+2. `nbdev-export --path nbs/`
+3. `quarto render . --to html --no-execute`
+4. `python -m unittest discover -s tests -q`
+
+## Regenerate Docker artifacts from Nix
+
+```bash
+python scripts/generate-docker-artifacts.py
+```
+
+This rewrites:
+
+- `Dockerfile`
+- `docker-compose.dev.yml`
+- `docker-compose.aws-emulator.yml`
+- `docker-compose.cloud.yml`
 
 Docs freshness is enforced by `tests/test_docs_freshness.py`, which fails if `_docs/nbs/*.html` is older than `nbs/*.qmd`.
 

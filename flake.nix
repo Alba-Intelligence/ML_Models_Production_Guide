@@ -230,10 +230,20 @@
             if [ ! -x "$UV_PROJECT_ENVIRONMENT/bin/python" ]; then
               echo "Creating project virtualenv in $UV_PROJECT_ENVIRONMENT"
               uv venv --python ${basePython}/bin/python "$UV_PROJECT_ENVIRONMENT" >/dev/null
-              uv sync >/dev/null
             fi
 
             . "$UV_PROJECT_ENVIRONMENT/bin/activate"
+
+            NEED_UV_SYNC=0
+            if [ "''${UV_SYNC_REQUESTED:-0}" = "1" ]; then
+              NEED_UV_SYNC=1
+            elif ! uv sync --check >/dev/null 2>&1; then
+              NEED_UV_SYNC=1
+            fi
+
+            if [ "$NEED_UV_SYNC" -eq 1 ]; then
+              uv sync >/dev/null
+            fi
           fi
 
           python --version
