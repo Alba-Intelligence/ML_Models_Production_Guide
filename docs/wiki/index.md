@@ -133,6 +133,7 @@ sources:
   - revisions/2026-05-14-introduction-full-stack-overview.md
   - revisions/2026-05-14-introduction-top-down-ordering.md
   - revisions/2026-05-14-platform-interaction-lineage-security.md
+  - revisions/2026-05-14-move-detailed-entity-diagram.md
 ---
 
 # Wiki index

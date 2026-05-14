@@ -35,55 +35,9 @@ The platform's architecture is built on five core entities and their relationshi
 
 ### Entity Relationships and Responsibilities
 
-```{mermaid}
-classDiagram
-    class Repository {
-        +String name
-        +RepositoryPhase phase
-        +DeploymentProfile active_deployment_profile
-        +Boolean spec_quality_gate_passed
-        +Boolean local_emulation_verified
-    }
-    
-    class DocumentationSeries {
-        +Boolean is_complete_system_description
-        +Boolean is_hierarchically_structured
-        +Boolean makes_repository_source_browsing_unnecessary
-        +Set~DocumentationAudience~ audiences_covered
-    }
-    
-    class OpenTofuConfiguration {
-        +Boolean generated_with_terranix
-        +Boolean outputs_json_configuration
-        +Boolean supports_local_emulation
-        +Boolean supports_cloud_deployment
-    }
-    
-    class MLflowTrackingServer {
-        +String backend_store_uri
-        +String artifacts_destination
-        +ReverseProxyTool reverse_proxy_tool
-        +Boolean model_version_source_validation_enabled
-    }
-    
-    class ModelArtifact {
-        +String artifact_id
-        +PromotionStage stage
-        +Boolean tracked_in_mlflow
-        +Boolean promotion_approved
-    }
-    
-    class PromotionStage {
-        +String name
-        +Set~QualityGate~ required_gates
-    }
-    
-    Repository "1" --> "1" DocumentationSeries : provides
-    Repository "1" --> "1" OpenTofuConfiguration : generates
-    Repository "1" --> "1" MLflowTrackingServer : deploys
-    Repository "1" --> "*" ModelArtifact : tracks
-    ModelArtifact "N" --> "1" PromotionStage : transitions_to
-```
+This introduction-level narrative intentionally keeps entity relationships concise.
+For the full relationship map and responsibility-level structure, see
+[`12_system_interaction_analysis.qmd`](12_system_interaction_analysis.qmd).
 
 ### Component Interaction Overview
 

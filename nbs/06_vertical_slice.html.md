@@ -6,7 +6,7 @@ title: "First Vertical Slice (EX-01 -> EX-03)"
 
 > nbdev source for the concrete local vertical slice implementation.
 
-::: {#e0dc1f9e .cell export='null'}
+::: {#c77e09e2 .cell export='null'}
 ``` {.python .cell-code}
 from __future__ import annotations
 

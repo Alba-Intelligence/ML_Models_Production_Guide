@@ -291,7 +291,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>This notebook demonstrates how to train a simple machine learning model.</p>
 </blockquote>
 <p>We will use the data prepared in the previous notebook to train a logistic regression model.</p>
-<div id="1df6d33a" class="cell" data-export="null">
+<div id="83689474" class="cell" data-export="null">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
@@ -302,7 +302,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="load-processed-data" class="level2">
 <h2 class="anchored" data-anchor-id="load-processed-data">Load Processed Data</h2>
 <p>In a real project, we would load the data that was prepared and saved. For simplicity, we’ll regenerate the same data split as in the previous notebook.</p>
-<div id="2bd0a12d" class="cell" data-export="null">
+<div id="dbde2e9f" class="cell" data-export="null">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Regenerate the same data split for consistency</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -344,7 +344,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="model-training-with-mlflow-tracking" class="level2">
 <h2 class="anchored" data-anchor-id="model-training-with-mlflow-tracking">Model Training with MLflow Tracking</h2>
 <p>We will use MLflow to track our experiment, parameters, and metrics.</p>
-<div id="5b6bfcb2" class="cell" data-export="null">
+<div id="14484ee1" class="cell" data-export="null">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set MLflow tracking URI (optional, for local tracking)</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>mlflow.set_tracking_uri(<span class="st">"file://./mlruns"</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -386,7 +386,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="model-serialization" class="level2">
 <h2 class="anchored" data-anchor-id="model-serialization">Model Serialization</h2>
 <p>We can also save the model using joblib or pickle for later use. However, MLflow already provides a way to save and load the model. For completeness, let’s also save the scaler so we can preprocess new data the same way.</p>
-<div id="95741ce6" class="cell" data-export="null">
+<div id="a9367aa6" class="cell" data-export="null">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> joblib</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>

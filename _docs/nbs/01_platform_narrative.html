@@ -319,64 +319,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="entity-relationships-and-responsibilities" class="level3">
 <h3 class="anchored" data-anchor-id="entity-relationships-and-responsibilities">Entity Relationships and Responsibilities</h3>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">classDiagram
-    class Repository {
-        +String name
-        +RepositoryPhase phase
-        +DeploymentProfile active_deployment_profile
-        +Boolean spec_quality_gate_passed
-        +Boolean local_emulation_verified
-    }
-    
-    class DocumentationSeries {
-        +Boolean is_complete_system_description
-        +Boolean is_hierarchically_structured
-        +Boolean makes_repository_source_browsing_unnecessary
-        +Set~DocumentationAudience~ audiences_covered
-    }
-    
-    class OpenTofuConfiguration {
-        +Boolean generated_with_terranix
-        +Boolean outputs_json_configuration
-        +Boolean supports_local_emulation
-        +Boolean supports_cloud_deployment
-    }
-    
-    class MLflowTrackingServer {
-        +String backend_store_uri
-        +String artifacts_destination
-        +ReverseProxyTool reverse_proxy_tool
-        +Boolean model_version_source_validation_enabled
-    }
-    
-    class ModelArtifact {
-        +String artifact_id
-        +PromotionStage stage
-        +Boolean tracked_in_mlflow
-        +Boolean promotion_approved
-    }
-    
-    class PromotionStage {
-        +String name
-        +Set~QualityGate~ required_gates
-    }
-    
-    Repository "1" --&gt; "1" DocumentationSeries : provides
-    Repository "1" --&gt; "1" OpenTofuConfiguration : generates
-    Repository "1" --&gt; "1" MLflowTrackingServer : deploys
-    Repository "1" --&gt; "*" ModelArtifact : tracks
-    ModelArtifact "N" --&gt; "1" PromotionStage : transitions_to
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
+<p>This introduction-level narrative intentionally keeps entity relationships concise. For the full relationship map and responsibility-level structure, see <a href="../nbs/12_system_interaction_analysis.html"><code>12_system_interaction_analysis.qmd</code></a>.</p>
 </section>
 <section id="component-interaction-overview" class="level3">
 <h3 class="anchored" data-anchor-id="component-interaction-overview">Component Interaction Overview</h3>

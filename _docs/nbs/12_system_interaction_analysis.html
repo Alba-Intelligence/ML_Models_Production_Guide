@@ -68,6 +68,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="nbs/styles.css">
@@ -219,6 +222,7 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#interaction-checkpoints" id="toc-interaction-checkpoints" class="nav-link active" data-scroll-target="#interaction-checkpoints">Interaction checkpoints</a></li>
+  <li><a href="#detailed-entity-relationships-and-responsibilities" id="toc-detailed-entity-relationships-and-responsibilities" class="nav-link" data-scroll-target="#detailed-entity-relationships-and-responsibilities">Detailed entity relationships and responsibilities</a></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="12_system_interaction_analysis.md"><i class="bi bi-file-code"></i>CommonMark</a></li></ul></div></nav>
     </div>
@@ -261,6 +265,68 @@ ul.task-list li input[type="checkbox"] {
 <li>Artifact and deployment record integrity.</li>
 <li>Infrastructure parity and MCP interrogation readiness.</li>
 </ul>
+</section>
+<section id="detailed-entity-relationships-and-responsibilities" class="level2">
+<h2 class="anchored" data-anchor-id="detailed-entity-relationships-and-responsibilities">Detailed entity relationships and responsibilities</h2>
+<p>This page carries the detailed entity relationship map that was removed from the top-level narrative to keep the introduction focused.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">classDiagram
+    class Repository {
+        +String name
+        +RepositoryPhase phase
+        +DeploymentProfile active_deployment_profile
+        +Boolean spec_quality_gate_passed
+        +Boolean local_emulation_verified
+    }
+
+    class DocumentationSeries {
+        +Boolean is_complete_system_description
+        +Boolean is_hierarchically_structured
+        +Boolean makes_repository_source_browsing_unnecessary
+        +Set~DocumentationAudience~ audiences_covered
+    }
+
+    class OpenTofuConfiguration {
+        +Boolean generated_with_terranix
+        +Boolean outputs_json_configuration
+        +Boolean supports_local_emulation
+        +Boolean supports_cloud_deployment
+    }
+
+    class MLflowTrackingServer {
+        +String backend_store_uri
+        +String artifacts_destination
+        +ReverseProxyTool reverse_proxy_tool
+        +Boolean model_version_source_validation_enabled
+    }
+
+    class ModelArtifact {
+        +String artifact_id
+        +PromotionStage stage
+        +Boolean tracked_in_mlflow
+        +Boolean promotion_approved
+    }
+
+    class PromotionStage {
+        +String name
+        +Set~QualityGate~ required_gates
+    }
+
+    Repository "1" --&gt; "1" DocumentationSeries : provides
+    Repository "1" --&gt; "1" OpenTofuConfiguration : generates
+    Repository "1" --&gt; "1" MLflowTrackingServer : deploys
+    Repository "1" --&gt; "*" ModelArtifact : tracks
+    ModelArtifact "N" --&gt; "1" PromotionStage : transitions_to
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 
 
 </section>

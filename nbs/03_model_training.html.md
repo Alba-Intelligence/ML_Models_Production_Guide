@@ -8,7 +8,7 @@ title: "Model Training"
 
 We will use the data prepared in the previous notebook to train a logistic regression model.
 
-::: {#1df6d33a .cell export='null'}
+::: {#83689474 .cell export='null'}
 ``` {.python .cell-code}
 import pandas as pd
 import numpy as np
@@ -25,7 +25,7 @@ import mlflow.sklearn
 In a real project, we would load the data that was prepared and saved.
 For simplicity, we'll regenerate the same data split as in the previous notebook.
 
-::: {#2bd0a12d .cell export='null'}
+::: {#dbde2e9f .cell export='null'}
 ``` {.python .cell-code}
 # Regenerate the same data split for consistency
 import numpy as np
@@ -71,7 +71,7 @@ print(f"Test set shape: {X_test_scaled.shape}")
 
 We will use MLflow to track our experiment, parameters, and metrics.
 
-::: {#5b6bfcb2 .cell export='null'}
+::: {#14484ee1 .cell export='null'}
 ``` {.python .cell-code}
 # Set MLflow tracking URI (optional, for local tracking)
 mlflow.set_tracking_uri("file://./mlruns")
@@ -119,7 +119,7 @@ We can also save the model using joblib or pickle for later use.
 However, MLflow already provides a way to save and load the model.
 For completeness, let's also save the scaler so we can preprocess new data the same way.
 
-::: {#95741ce6 .cell export='null'}
+::: {#a9367aa6 .cell export='null'}
 ``` {.python .cell-code}
 import joblib
 import os
