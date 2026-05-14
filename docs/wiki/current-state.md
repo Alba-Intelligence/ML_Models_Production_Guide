@@ -162,6 +162,7 @@ As of 2026-05-11, the repository contains:
 - A full five-layer system interaction analysis now exists in Quarto-page and wiki forms.
 - A distilled repository-wide Allium specification now exists and is indexed in the wiki.
 - An nbdev 3 project structure has been initialized with pyproject.toml, nbs/ directory, and ml_deploy/ package placeholder.
+- `nbs/00_core.qmd` now doubles as a practical MLflow + XGBoost quickstart alongside the package scaffold.
 - Notebooks can be successfully exported to Python packages using `nbdev-export --path nbs/`.
 - A single end-of-task command now exists to export notebooks, render docs, and run tests: `./scripts/finalize-task.sh`.
 - A canonical platform narrative Quarto page now owns the architecture story and Mermaid diagram.

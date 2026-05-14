@@ -59,6 +59,7 @@ sources:
   - sources/ml_deploy.infrastructure_mcp.py.md
   - sources/ml_deploy.notebook_intake.py.md
   - sources/nbs.01_platform_narrative.qmd.md
+  - sources/nbs.00_core.qmd.md
   - sources/nbs.00_introduction.qmd.md
   - sources/nbs.07_mlflow_parity.qmd.md
   - sources/nbs.14_infrastructure_mcp.qmd.md
