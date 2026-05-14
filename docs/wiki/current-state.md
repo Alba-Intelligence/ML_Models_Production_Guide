@@ -209,6 +209,7 @@ The repo is currently best understood as a **specification-first and documentati
 - Enforce generated-artifact freshness in CI as a hard-fail path (generation drift must fail builds).
 - Connect governance and promotion gate helpers into runtime orchestration paths beyond unit tests.
 - Extend cloud profile Traefik/MLflow security wiring from compose artifacts into Terranix/OpenTofu apply-time resources.
+- Complete documentation restructuring plan (Tutorial/Reference separation)
 
 **Phase 3+ (Downstream work):**
 
@@ -227,3 +228,5 @@ The repo is currently best understood as a **specification-first and documentati
 - Changes to shell packages or startup behavior should update [architecture/dev-environment.md](architecture/dev-environment.md).
 - Changes to commands or Jupyter behavior should update [runbooks/jupyter-and-shell.md](runbooks/jupyter-and-shell.md).
 - Any new important root file should get a source summary under `docs/wiki/sources/`.
+- When working on documentation restructuring, follow the plan in `docs/wiki/plans/documentation-restructuring-plan.md`
+- Update progress as tasks are completed and report new issues discovered

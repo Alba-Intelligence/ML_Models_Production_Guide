@@ -52,6 +52,7 @@ If anything substantive changed, update all relevant parts of the wiki:
 - `docs/wiki/runbooks/` — commands and operational steps
 - `docs/wiki/decisions/` — durable decisions and rationale
 - `docs/wiki/sources/` — one synthesized page per important raw source file
+- `docs/wiki/plans/` — active project plans and tracking documents
 - `docs/wiki/revisions/` — artifacts describing significant wiki-affecting updates
 - `docs/wiki/queries/` — reusable answers worth keeping
 - `docs/wiki/archive/` — superseded or demoted pages
@@ -67,6 +68,44 @@ Each active page should ideally include:
 - links to upstream source files or wiki pages
 - concise facts, not raw dumps
 - explicit uncertainty where needed
+- progress tracking for active plans
+- completion status and next steps
+- risk assessment and dependencies
+
+## Special Instructions for Active Plans
+
+When working on active plans (found in `docs/wiki/plans/`):
+
+1. **Read the full plan first** before starting work
+2. **Update progress** as tasks are completed
+3. **Report new risks or gaps** discovered during work
+4. **Check dependencies** before starting new tasks
+5. **Update completion status** when milestones are reached
+6. **Document any deviations** from the original plan
+7. **Archive the plan** when completed
+
+### Plan Tracking Format
+
+Active plans should include:
+- Clear status indicators (🟢 COMPLETE, 🟡 IN PROGRESS, ⏳ PENDING, ❌ BLOCKED)
+- Progress checklist with completion percentages
+- Risk assessment with mitigation strategies
+- Dependencies and blocking issues
+- Next steps and milestones
+- Success criteria and quality metrics
+
+## Current Active Plans
+
+### 🟡 Documentation Restructuring Plan
+- **Location**: `docs/wiki/plans/documentation-restructuring-plan.md`
+- **Goal**: Split documentation into Tutorial and Reference sections
+- **Status**: Phase 2 (Content Restructuring) in progress
+- **Next**: Tutorial Section Creation
+- **Owner**: Emmanuel
+- **Priority**: High
+- **Deadline**: Within 2 weeks
+
+This plan addresses critical issues with unclear terminology (EX-01, EX-02, EX-03) and mixed content types that confuse users.
 
 ## Maintenance rules
 
