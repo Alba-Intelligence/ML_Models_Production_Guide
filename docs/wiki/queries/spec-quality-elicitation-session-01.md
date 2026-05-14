@@ -35,10 +35,10 @@ MLflow (PostgreSQL + S3), Lambda.ai + Slurm, AWS + Kubernetes, python-terraform,
    - What deployment states must be modeled for batch and online flows (`submitted`, `scheduled`, `running`, `succeeded`, `failed`, `rolled_back`)? → **Answered**: Batch flows include SUBMITTED, SCHEDULED, RUNNING, COMPLETED, FAILED, RETRYING, CANCELLED, TIMED_OUT. Online flows include DEPLOYING, HEALTH_CHECK, ACTIVE, DRAINING, ROLLED_BACK, FAILED. Kubernetes-specific states include PENDING, RUNNING, SUCCEEDED, FAILED, UNKNOWN.
    - What minimum observability payload is required from K8s runs (pod/job IDs, namespace, image digest, resource requests/limits)? → **Answered**: Required fields include pod_id, namespace, pod_name, container_id, image_digest, pod_status, resource allocation metrics (CPU/memory requests/limits), timing information, and optional enhancement fields. AWS CloudWatch integration and MLflow integration are also required.
 
-4. **python-terraform ownership boundary**
-   - Which infrastructure components must be generated/controlled only via `python-terraform` wrappers?
-   - Are hand-written Terraform files ever allowed, and if yes, for which exceptions?
-   - What spec artifact proves parity between generated Terraform JSON and deployed resources?
+4. **python-terraform ownership boundary** ✅ RESOLVED
+   - Which infrastructure components must be generated/controlled only via `python-terraform` wrappers? → **Answered**: ALL infrastructure components MUST be generated/controlled exclusively through Nix/Terranix/OpenTofu workflows with no exceptions for core components.
+   - Are hand-written Terraform files ever allowed, and if yes, for which exceptions? → **Answered**: NO hand-written Terraform/OpenTofu files are allowed for core infrastructure. Limited acceptable exceptions include external service dependencies, emergency hotfixes, and provider-specific native features, but only with documented justification and migration plans.
+   - What spec artifact proves parity between generated Terraform JSON and deployed resources? → **Answered**: OpenTofu state diff verification, infrastructure inventory verification, configuration hash verification, and acceptance tests demonstrating parity between generated OpenTofu JSON and deployed resources.
 
 5. **Docker-first reproducibility vs Nix helper boundary**
    - Which workflows must be reproducible from Docker alone with no Nix dependency?

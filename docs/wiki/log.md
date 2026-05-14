@@ -11,6 +11,7 @@ sources:
   - decisions/lambda-ai-slurm-contract.md
   - decisions/mlflow-postgres-s3-contract.md
   - decisions/aws-kubernetes-contract.md
+  - decisions/nix-terranix-opentofu-boundary.md
   - revisions/2026-05-09-assistant-and-docs-delivery.md
   - revisions/2026-05-09-contract-baselines.md
   - revisions/2026-05-09-origin-rebase-and-push.md
