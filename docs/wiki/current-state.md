@@ -167,6 +167,7 @@ As of 2026-05-11, the repository contains:
 - A canonical platform narrative Quarto page now owns the architecture story and Mermaid diagram.
 - The platform narrative's component-interaction overview now explicitly includes data-lineage coupling and role/capability security checks across data, modeling, execution (local/cloud), infrastructure, and promotion actions.
 - The detailed entity-relationship/responsibility class diagram was moved from the top-level platform narrative to the system interaction analysis page to keep introductory content concise.
+- The distilled Allium spec now explicitly encodes the same documentation split: interaction overviews must include lineage/security-capability coverage, and detailed entity relationship maps must live in the interaction-analysis layer rather than the introductory narrative.
 - The rendered docs homepage is now Quarto-driven (`nbs/index.qmd`) and functions as navigation-first entrypoint.
 - The docs now include a dedicated stack introduction page (`nbs/00_introduction.qmd`) linked from homepage foundations and sidebar navigation.
 - The stack introduction page now explicitly frames the whole stack in purpose-first order: canonical nbdev/QMD authorship, uv2nix-managed Python environments, WebUI as primary control plane, Airflow as orchestration layer, optional Kubeflow in the Kubernetes lane, shared notebook repository flow across local/cloud, central authorization, MLOps promotion gates, observability, cost visibility, and Nix/Terranix as canonical artifact-generation source.

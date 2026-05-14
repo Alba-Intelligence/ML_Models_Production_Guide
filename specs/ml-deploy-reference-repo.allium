@@ -162,6 +162,11 @@ entity DocumentationSeries {
     has_governance_safety_subsection: Boolean
     has_state_machine_diagrams: Boolean
     has_role_specific_learning_paths_subsection: Boolean
+    has_component_interaction_overview: Boolean
+    has_data_lineage_in_interactions: Boolean
+    has_capability_security_in_interactions: Boolean
+    keeps_platform_narrative_intro_level: Boolean
+    has_detailed_entity_relationships_in_interaction_analysis: Boolean
 }
 
 enum DeploymentProfile { local_emulation | cloud }
@@ -458,6 +463,11 @@ rule RequireImplementationReadyNotebookSeries {
     ensures: series.has_governance_safety_subsection = true
     ensures: series.has_state_machine_diagrams = true
     ensures: series.has_role_specific_learning_paths_subsection = true
+    ensures: series.has_component_interaction_overview = true
+    ensures: series.has_data_lineage_in_interactions = true
+    ensures: series.has_capability_security_in_interactions = true
+    ensures: series.keeps_platform_narrative_intro_level = true
+    ensures: series.has_detailed_entity_relationships_in_interaction_analysis = true
 
     @guidance
         -- The documentation must be organized around a Platform Overview section with
@@ -468,6 +478,12 @@ rule RequireImplementationReadyNotebookSeries {
         -- 3. Deployment & Infrastructure (topology diagrams for local vs. cloud)
         -- 4. Governance & Safety (state machines for promotion gates and phases)
         -- 5. Learning Paths (structured by audience: software engineer, ML researcher)
+        --
+        -- Platform Narrative should remain introduction-level; detailed class-level entity
+        -- relationship/responsibility maps belong in System Interaction Analysis.
+        -- Component interaction overviews must explicitly include data lineage coupling and
+        -- centralized role/capability validation across data access, model operations,
+        -- execution (local/cloud), infrastructure actions, and promotions.
         --
         -- Diagrams must use Mermaid and must be extensive: class diagrams for entity
         -- models, sequence diagrams for execution flows, state machines for governance,

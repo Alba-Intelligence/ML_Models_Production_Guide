@@ -41,6 +41,8 @@ It converts the repository's implemented shell behavior and governance decisions
 - Jupyter kernel ensure + JupyterLab launch behavior.
 - Mandatory wiki update workflow after durable changes.
 - Notebook-series completeness gate for implementation-ready architecture documentation (steps, trade-offs, security, examples, audience coverage, and implementation/docs-module linkage).
+- Documentation-series obligations now explicitly require a component interaction overview that covers both data-lineage coupling and centralized role/capability validation.
+- Documentation-series obligations now explicitly require top-level Platform Narrative content to remain introductory while detailed entity relationship/responsibility mapping lives in the system-interaction analysis layer.
 - Explicit requirement that published documentation must make repository source browsing unnecessary for implementation-relevant behavior and configuration.
 - OpenTofu configuration gate requiring Terranix-generated JSON configuration from both flake and devenv pathways.
 - Specification-first gate that blocks implementation without explicit approval.

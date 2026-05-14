@@ -134,6 +134,7 @@ sources:
   - revisions/2026-05-14-introduction-top-down-ordering.md
   - revisions/2026-05-14-platform-interaction-lineage-security.md
   - revisions/2026-05-14-move-detailed-entity-diagram.md
+  - revisions/2026-05-14-spec-alignment-platform-narrative-improvements.md
 ---
 
 # Wiki index
