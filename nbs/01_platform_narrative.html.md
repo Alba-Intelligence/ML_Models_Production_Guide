@@ -101,13 +101,15 @@ The platform's architecture is built on five core entities and their relationshi
 
 ### Component Interaction Overview
 
-The system orchestrates five interaction domains:
+The system orchestrates seven interaction domains:
 
 1. **Notebook Intake**: Immutable qmd/ipynb sources with export guards
 2. **Execution Dispatch**: Route to local, Slurm, or Kubernetes executors
 3. **MLflow Traceability**: Track params, metrics, artifacts, model versions
-4. **Artifact Management**: Package, version, and store trained models
-5. **Promotion & Governance**: Apply gates, approvals, and quality checks before production
+4. **Data Lineage**: Link datasets, transformations, features, model artifacts, and promotion events end-to-end
+5. **Artifact Management**: Package, version, and store trained models
+6. **Security & Capability Validation**: Enforce role/capability checks for data access, model operations, local/cloud execution, infrastructure changes, and promotion actions
+7. **Promotion & Governance**: Apply gates, approvals, and quality checks before production
 
 ---
 

@@ -132,6 +132,7 @@ sources:
   - revisions/2026-05-14-security-authorization-architecture.md
   - revisions/2026-05-14-introduction-full-stack-overview.md
   - revisions/2026-05-14-introduction-top-down-ordering.md
+  - revisions/2026-05-14-platform-interaction-lineage-security.md
 ---
 
 # Wiki index

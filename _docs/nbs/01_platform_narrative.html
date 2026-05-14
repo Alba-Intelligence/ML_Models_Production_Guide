@@ -380,12 +380,14 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="component-interaction-overview" class="level3">
 <h3 class="anchored" data-anchor-id="component-interaction-overview">Component Interaction Overview</h3>
-<p>The system orchestrates five interaction domains:</p>
+<p>The system orchestrates seven interaction domains:</p>
 <ol type="1">
 <li><strong>Notebook Intake</strong>: Immutable qmd/ipynb sources with export guards</li>
 <li><strong>Execution Dispatch</strong>: Route to local, Slurm, or Kubernetes executors</li>
 <li><strong>MLflow Traceability</strong>: Track params, metrics, artifacts, model versions</li>
+<li><strong>Data Lineage</strong>: Link datasets, transformations, features, model artifacts, and promotion events end-to-end</li>
 <li><strong>Artifact Management</strong>: Package, version, and store trained models</li>
+<li><strong>Security &amp; Capability Validation</strong>: Enforce role/capability checks for data access, model operations, local/cloud execution, infrastructure changes, and promotion actions</li>
 <li><strong>Promotion &amp; Governance</strong>: Apply gates, approvals, and quality checks before production</li>
 </ol>
 <hr>

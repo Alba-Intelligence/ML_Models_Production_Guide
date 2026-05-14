@@ -165,6 +165,7 @@ As of 2026-05-11, the repository contains:
 - Notebooks can be successfully exported to Python packages using `nbdev-export --path nbs/`.
 - A single end-of-task command now exists to export notebooks, render docs, and run tests: `./scripts/finalize-task.sh`.
 - A canonical platform narrative Quarto page now owns the architecture story and Mermaid diagram.
+- The platform narrative's component-interaction overview now explicitly includes data-lineage coupling and role/capability security checks across data, modeling, execution (local/cloud), infrastructure, and promotion actions.
 - The rendered docs homepage is now Quarto-driven (`nbs/index.qmd`) and functions as navigation-first entrypoint.
 - The docs now include a dedicated stack introduction page (`nbs/00_introduction.qmd`) linked from homepage foundations and sidebar navigation.
 - The stack introduction page now explicitly frames the whole stack in purpose-first order: canonical nbdev/QMD authorship, uv2nix-managed Python environments, WebUI as primary control plane, Airflow as orchestration layer, optional Kubeflow in the Kubernetes lane, shared notebook repository flow across local/cloud, central authorization, MLOps promotion gates, observability, cost visibility, and Nix/Terranix as canonical artifact-generation source.
