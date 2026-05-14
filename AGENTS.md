@@ -87,6 +87,7 @@ When working on active plans (found in `docs/wiki/plans/`):
 ### Plan Tracking Format
 
 Active plans should include:
+
 - Clear status indicators (🟢 COMPLETE, 🟡 IN PROGRESS, ⏳ PENDING, ❌ BLOCKED)
 - Progress checklist with completion percentages
 - Risk assessment with mitigation strategies
@@ -97,6 +98,7 @@ Active plans should include:
 ## Current Active Plans
 
 ### 🟡 Documentation Restructuring Plan
+
 - **Location**: `docs/wiki/plans/documentation-restructuring-plan.md`
 - **Goal**: Split documentation into Tutorial and Reference sections
 - **Status**: Phase 2 (Content Restructuring) in progress
