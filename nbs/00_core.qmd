@@ -7,34 +7,16 @@ title: "Core Package and MLflow XGBoost Quickstart"
 
 This notebook defines core package metadata and a practical MLflow + XGBoost quickstart.
 
-```{python}
-#| default_exp: ml_deploy
-```
-
-```{python}
-#| export:
-"""Top-level package for ml_deploy."""
-
-__author__ = """ML Engineer"""
-__email__ = 'ml@example.com'
-__version__ = '0.1.0'
-
-
-def say_hello() -> str:
-    """Return a greeting message."""
-    return "Hello from ml_deploy!"
-
-
-def add_numbers(a: int, b: int) -> int:
-    """Add two numbers and return the result."""
-    return a + b
-```
 
 ## MLflow + XGBoost example
 
 The example below follows the MLflow XGBoost autologging pattern and shows a complete traditional-ML flow.
 
 ```{python}
+__author__ = """ML Engineer"""
+__email__ = 'ml@example.com'
+__version__ = '0.1.0'
+
 import mlflow
 import xgboost as xgb
 from sklearn.datasets import load_diabetes
