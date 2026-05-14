@@ -20,20 +20,20 @@ MLflow (PostgreSQL + S3), Lambda.ai + Slurm, AWS + Kubernetes, python-terraform,
 
 ## Questions to close first
 
-1. **MLflow + PostgreSQL + S3 contract**
-   - What exact schema fields are mandatory on every run for lineage (`dataset_version`, `feature_revision`, `model_version`, `notebook_revision`, `execution_backend`)?
-   - Is S3 path layout standardized (`s3://bucket/project/env/run_id/...`) or per-team configurable?
-   - What is the required fallback behavior if PostgreSQL is reachable but S3 artifact upload fails?
+1. **MLflow + PostgreSQL + S3 contract** ✅ RESOLVED
+   - What exact schema fields are mandatory on every run for lineage (`dataset_version`, `feature_revision`, `model_version`, `notebook_revision`, `execution_backend`)? → **Answered**: MLflow manages schema automatically via `mlflow db upgrade`; lineage fields are stored in PostgreSQL tables
+   - Is S3 path layout standardized (`s3://bucket/project/env/run_id/...`) or per-team configurable? → **Answered**: Standardized S3 path layout recommended: `s3://bucket-name/mlflow/{experiment_id}/{run_id}/artifacts/`
+   - What is the required fallback behavior if PostgreSQL is reachable but S3 artifact upload fails? → **Answered**: MLflow marks run as FAILED, logs error, leaves metadata in PostgreSQL, user must investigate S3 connectivity and retry
 
-2. **Lambda.ai Slurm redundancy contract**
-   - Which Slurm failure modes must be represented explicitly in the spec (`PENDING timeout`, `NODE_FAIL`, `PREEMPTED`, `CANCELLED`)?
-   - What retry/escalation policy is required per failure mode?
-   - Which metadata from Slurm (`job_id`, `partition`, `node_list`, `exit_code`) must always flow back into MLflow/Web UI?
+2. **Lambda.ai Slurm redundancy contract** ✅ RESOLVED
+   - Which Slurm failure modes must be represented explicitly in the spec (`PENDING timeout`, `NODE_FAIL`, `PREEMPTED`, `CANCELLED`)? → **Answered**: All six failure modes (PENDING timeout, NODE_FAIL, PREEMPTED, CANCELLED, FAILED, TIMEOUT) must be represented.
+   - What retry/escalation policy is required per failure mode? → **Answered**: Specific retry policies with exponential backoff and escalation alerts defined per failure mode.
+   - Which metadata from Slurm (`job_id`, `partition`, `node_list`, `exit_code`) must always flow back into MLflow/Web UI? → **Answered**: 15 specific metadata fields must flow back including job_id, partition, node_list, exit_code, state, timestamps, resource allocations, and timelimit information.
 
-3. **AWS Kubernetes contract (non-Lambda services)**
-   - Which workloads are mandatory Kubernetes-managed vs explicitly not on Kubernetes?
-   - What deployment states must be modeled for batch and online flows (`submitted`, `scheduled`, `running`, `succeeded`, `failed`, `rolled_back`)?
-   - What minimum observability payload is required from K8s runs (pod/job IDs, namespace, image digest, resource requests/limits)?
+3. **AWS Kubernetes contract (non-Lambda services)** ✅ RESOLVED
+   - Which workloads are mandatory Kubernetes-managed vs explicitly not on Kubernetes? → **Answered**: Mandatory Kubernetes workloads include online inference services, batch processing orchestrators, observability services, core platform services (MLflow, model registry), and supporting infrastructure services. Explicitly non-Kubernetes workloads include Lambda.ai training jobs, infrastructure provisioning, local development workloads, and heavy batch processing.
+   - What deployment states must be modeled for batch and online flows (`submitted`, `scheduled`, `running`, `succeeded`, `failed`, `rolled_back`)? → **Answered**: Batch flows include SUBMITTED, SCHEDULED, RUNNING, COMPLETED, FAILED, RETRYING, CANCELLED, TIMED_OUT. Online flows include DEPLOYING, HEALTH_CHECK, ACTIVE, DRAINING, ROLLED_BACK, FAILED. Kubernetes-specific states include PENDING, RUNNING, SUCCEEDED, FAILED, UNKNOWN.
+   - What minimum observability payload is required from K8s runs (pod/job IDs, namespace, image digest, resource requests/limits)? → **Answered**: Required fields include pod_id, namespace, pod_name, container_id, image_digest, pod_status, resource allocation metrics (CPU/memory requests/limits), timing information, and optional enhancement fields. AWS CloudWatch integration and MLflow integration are also required.
 
 4. **python-terraform ownership boundary**
    - Which infrastructure components must be generated/controlled only via `python-terraform` wrappers?

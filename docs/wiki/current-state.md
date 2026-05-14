@@ -35,6 +35,8 @@ sources:
   - topologies/index.md
   - decisions/project-scope-and-constraints.md
   - decisions/notebook-intake-validation-and-approval.md
+  - decisions/mlflow-postgres-s3-contract.md
+  - decisions/lambda-ai-slurm-contract.md
   - decisions/security-authorization-architecture.md
   - sources/ml-deploy-reference-repo.allium.md
   - sources/ml_deploy.webui_contracts.py.md
@@ -186,7 +188,7 @@ As of 2026-05-11, the repository contains:
 - New architecture requirements now specify MLflow PostgreSQL/S3 storage, Lambda.ai Slurm coordination/redundancy, AWS Kubernetes for non-Lambda.ai services, and Nix (flake+devenv) Terranix-generated OpenTofu JSON infrastructure workflows; OpenTofu apply orchestration remains partly documented.
 - Dual-profile (`local_emulation | cloud`) infrastructure now implemented: `docker-compose.aws-emulator.yml` (Floci), `docker-compose.local-infra.yml` (K3s + Slurm), Nix/Terranix modules in `nix/modules/` and `nix/profiles/`, and Quarto pages `nbs/13_opentofu_infra.qmd`, `nbs/15_aws_emulator.qmd`, `nbs/16_terranix_infra.qmd`.
 - Allium spec now covers MLflow storage backends (SQLite/PostgreSQL/S3-compatible local emulation), security (reverse proxy, MLFLOW_CREATE_MODEL_VERSION_SOURCE_VALIDATION_REGEX, central OIDC-backed authorization authority, capability catalogs, and request validation), and parallel DEV→UAT→REGRESSION→PROD promotion gates for both model artifacts and MLOps system definitions (Nix/Terranix/OpenTofu) with approval controls.
-- Five open questions formally recorded in the spec: Lambda.ai scheduling preference, bigmlflow flavor requirement, CI/CD tooling, promotion gate criteria, and PyTorch inference optimisation steps.
+- Two open questions formally recorded in the spec: CI/CD tooling, promotion gate criteria, and PyTorch inference optimisation steps. (Lambda.ai scheduling preference, MLflow PostgreSQL+S3 contract, and AWS Kubernetes decisions resolved)
 - mlflow-go (`mlflow-go` server + `mlflow-go-backend` Python package) is the recommended approach for profile-switchable MLflow tracking (SQLite local, PostgreSQL cloud — no code changes required).
 - Slurm/Kubernetes paths currently emit backend-ready submission payloads, but external scheduler client integrations remain to be connected.
 - The distilled Allium spec currently models repository posture, shell behavior, and governance constraints; it does not yet cover any real ML implementation logic because that code still does not exist.
@@ -203,11 +205,13 @@ The repo is currently best understood as a **specification-first and documentati
 ## Most likely next additions
 
 **Phase 2 (Immediate priorities — spec-first implementation gating):**
+
 - Enforce generated-artifact freshness in CI as a hard-fail path (generation drift must fail builds).
 - Connect governance and promotion gate helpers into runtime orchestration paths beyond unit tests.
 - Extend cloud profile Traefik/MLflow security wiring from compose artifacts into Terranix/OpenTofu apply-time resources.
 
 **Phase 3+ (Downstream work):**
+
 - local replica topology that mirrors production control planes (Kubernetes/Slurm/storage) where feasible
 - deeper executable coverage for remote scheduler lifecycle states (submitted/running/failed/finished)
 - promotion of the implemented local slice into Docker-first execution flow
