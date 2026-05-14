@@ -40,20 +40,25 @@ MLflow (PostgreSQL + S3), Lambda.ai + Slurm, AWS + Kubernetes, python-terraform,
    - Are hand-written Terraform files ever allowed, and if yes, for which exceptions? → **Answered**: NO hand-written Terraform/OpenTofu files are allowed for core infrastructure. Limited acceptable exceptions include external service dependencies, emergency hotfixes, and provider-specific native features, but only with documented justification and migration plans.
    - What spec artifact proves parity between generated Terraform JSON and deployed resources? → **Answered**: OpenTofu state diff verification, infrastructure inventory verification, configuration hash verification, and acceptance tests demonstrating parity between generated OpenTofu JSON and deployed resources.
 
-5. **Docker-first reproducibility vs Nix helper boundary**
+5. **Docker-first reproducibility vs Nix helper boundary** ✅ RESOLVED
+   - Which workflows must be reproducible from Docker alone with no Nix dependency? → **Answered**: ALL workflows must be reproducible from Docker alone with no Nix dependency. Containers are built via Nix but run as standard Docker images without Nix runtime.
+   - Which Nix outputs are allowed as helper-only artifacts without becoming the canonical runtime path? → **Answered**: Nix helper artifacts include build scripts, configuration files, dependency lists, build metadata, and documentation. The canonical runtime path is always the Docker image.
+   - What acceptance test demonstrates local Docker parity with production storage/control planes? → **Answered**: Comprehensive tests verify Docker image build, push, run, inspection, and export/import capabilities without Nix dependency.
    - Which workflows must be reproducible from Docker alone with no Nix dependency?
    - Which Nix outputs are allowed as helper-only artifacts without becoming the canonical runtime path?
    - What acceptance test demonstrates local Docker parity with production storage/control planes?
 
 6. **Immutable notebook Web UI execution contract**
-   - What is the required immutable notebook reference format (`git SHA only` vs `SHA/tag/approved ref`)?
-   - Which execution parameters are allowed to vary at run time, and which are locked by notebook revision?
-   - Which exact run status timeline must be shown in Web UI for all backends?
+   - Notebook Reference Format: What constitutes an immutable notebook reference? (git commit SHA only vs git tag vs approved branch refs vs semantic version tags) How do we handle git history rewriting? What about notebook versioning strategy (sequential numbering vs semantic versioning)?
+   - Runtime Parameter Variability: Which parameters are locked by notebook revision (code version, dependencies, compute requirements) vs allowed to vary (hyperparameters, input data paths, resource scaling) vs fully dynamic (user preferences, environment-specific configs)? How do we parameterize different environments (dev/staging/prod) while maintaining immutability?
+   - Execution Status Timeline: What exact status progression must be displayed for all execution backends (Slurm, Kubernetes, local)? What are the status transitions (PENDING → SCHEDULING → RUNNING → COMPLETED/FAILED/CANCELLED)? How do we handle retries, rollbacks, and manual interventions? What are the timeout policies and how are they displayed?
+   - Web UI Integration: How do we integrate with existing MLflow/Web UI patterns? What metadata must be displayed (git commit, execution time, resource usage, parameters, outputs)? How do we handle notebook version conflicts and rollback capabilities?
 
-7. **Cross-topology security + lineage minimums**
-   - Which secrets are required to be runtime-injected only (never persisted in notebooks, logs, or MLflow params)?
-   - What identity/audit fields are mandatory on every trigger action (`actor`, `role`, `time`, `ticket/approval ref`)?
-   - Which lineage break conditions are treated as hard-stop failures?
+7. **Cross-Topology Security + Lineage Minimums**
+   - Secrets Management: Which secrets must be runtime-injected only (database credentials, API keys, encryption keys, cloud credentials) and never persisted in notebooks, logs, or MLflow params? What are the allowed secret sources (AWS Secrets Manager, HashiCorp Vault, Kubernetes secrets) and injection mechanisms (environment variables, mounted volumes, secret managers)? How do we handle secret rotation and lifecycle management?
+   - Identity and Audit Trail: What identity fields are mandatory on every action (user ID, service account, external system ID)? What role information must be captured (role name, permissions, scope)? What audit fields are required (timestamp, IP address, user agent, request ID)? How do we handle approval workflows and ticket references (JIRA ticket, GitHub PR, manual approval ID)? What are the retention policies for audit data?
+   - Lineage Break Conditions: Which conditions should trigger hard-stop failures (missing lineage fields, invalid data provenance, unauthorized parameter changes, broken dependency chains, security policy violations)? What are the validation rules for lineage completeness (data source tracking, model versioning, execution environment snapshotting)? How do we handle partial lineage vs complete lineage requirements?
+   - Cross-Topology Consistency: How do we ensure security and lineage requirements are consistently applied across all topologies (local development, distributed training, batch inference, online serving)? What are the minimum requirements for each topology? How do we handle topology-specific exceptions vs baseline requirements?
 
 ## Done criteria for this question set
 

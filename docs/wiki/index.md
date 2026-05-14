@@ -41,6 +41,7 @@ sources:
   - decisions/mlflow-postgres-s3-contract.md
   - decisions/aws-kubernetes-contract.md
   - decisions/nix-terranix-opentofu-boundary.md
+  - decisions/nix-containerization-boundary.md
   - sources/flake.nix.md
   - sources/devenv.nix.md
   - sources/flake.lock.md
