@@ -29,38 +29,29 @@ The repository is a specification-first, documentation-first ML deployment guide
 
 The stack below is ordered from the most structuring choices to the most implementation-local ones.
 
-### Infrastructure and Governance
-- **Authorization**: OIDC IdP + Policy Engine for role management
-- **Promotion Gates**: Model Artifacts + MLOps for DEV→UAT→REGRESSION→PROD approvals
-- **Infrastructure**: Nix + Terranix for Docker/Compose/OpenTofu artifacts
-
-### Development and Workflow
-- **Package/Module**: nbdev + Quarto for ML-researcher workflow
-- **Python**: uv2nix + uv for Nix-controlled dependencies
-- **Documentation**: Quarto + Mermaid for publishable architecture docs
-
-### Execution and Monitoring
-- **Web Control**: WebUI + Contracts for execution and monitoring
-- **Notebooks**: Shared Repository for local/cloud common source
-- **Orchestration**: Airflow for pipeline workflows
-- **Kubernetes**: Kubeflow (optional) for K8s ML pipeline layer
-
-### Data and Tracking
-- **Tracking**: MLflow for run metadata and models
-- **Lineage**: MLflow Metadata for data training traceability
-- **Execution**: Local/Slurm/K8s for compute routing
-- **Storage**: PostgreSQL + S3 for tracking and artifacts
-
-### Local Environment
-- **Local Emulation**: Docker + Floci + K3s for local compute
-- **Observability**: Prometheus + Grafana for metrics and telemetry
-- **Cost Visibility**: AWS Tools for spend reporting
-
-### Quality and Access
-- **Assistants**: Read-first + MCP for controlled access to facts
-- **Runtime**: Python 3.13 for implementation modules
-- **CI Gate**: GitHub Actions for export and testing
-- **Validation**: unittest suite for contract and freshness checks
+| Layer | Primary tools | Role in this repository |
+|---|---|---|
+| Authorization | OIDC IdP + centralized policy engine | Central authority for roles, capabilities, and request validation |
+| Promotion gates | Model artifacts + MLOps definitions | DEV→UAT→REGRESSION→PROD approval and validation for both product and platform changes |
+| Infrastructure definition | Nix + Terranix + OpenTofu JSON | Canonical source of truth for generated Docker, Compose, and OpenTofu artifacts |
+| Package/module workflow | nbdev + Quarto `.qmd` | Canonical ML-researcher workflow and architecture authoring surface |
+| Python environment | uv2nix + uv + `.venv` | Nix-controlled dependency sync and reproducible local environment |
+| Documentation site | Quarto website (`_docs`) + Mermaid | Self-contained, publishable architecture/implementation docs |
+| Web control plane | WebUI + backend contracts | Primary user-facing surface for execution and monitoring |
+| Notebook source management | Shared notebook repository | Common notebook source for both local emulation and cloud runs |
+| Workflow orchestration | Airflow | Pipeline and workflow orchestration distinct from scheduler execution |
+| Kubernetes ML platform | Kubeflow Pipelines (optional) | Kubernetes-native ML pipeline layer in the K8s execution lane |
+| Experiment tracking | MLflow | Run metadata, model artifacts, and promotion traceability |
+| Data lineage | MLflow metadata + lineage contracts | Traceability across data, training, and promoted model artifacts |
+| Execution backends | Local + Slurm + Kubernetes adapters | Route execution by target environment with local compute as a first-class option |
+| Data/artifact stores | PostgreSQL + S3-compatible storage (Floci local, S3 cloud) | Tracking backend and artifact persistence |
+| Local emulation | Docker Compose + Floci + K3s + Slurm-Docker + Traefik | Real local compute and data-plane environment mirroring cloud-facing contracts |
+| Observability | Prometheus + Grafana + MLflow + policy/audit logs | Metrics, dashboards, run telemetry, and auditability |
+| Cost visibility | AWS Cost Explorer + CUR + Athena + Budgets | Spend reporting and attribution |
+| Assistant/MCP | Read-first infrastructure + docs retrieval | Controlled access to canonical platform facts |
+| Language runtime | Python 3.13 | Reference implementation modules and tests |
+| CI quality gate | GitHub Actions | Export notebooks, render docs, run tests |
+| Validation | `unittest` suite | Contract, workflow, and docs freshness checks |
 
 TODO: reorder the table rows in order of importance (what is most structuring to the whoe rpoject to the least)
 TODO: Python+uv:2~Should use uv2nix as to minimise the use of environments not reproducible and/or controled by Nix.

@@ -1,0 +1,54 @@
+project:
+  type: website
+  output-dir: ../_docs/nbs
+  render:
+    - "*.qmd"
+    - "index.qmd"
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    keep-md: true
+  commonmark: default
+
+website:
+  twitter-card: true
+  open-graph: true
+  repo-actions: [issue]
+  navbar:
+    background: primary
+    search: true
+  sidebar:
+    style: floating
+    contents:
+      - index.qmd
+      - section: "Platform Overview"
+        contents:
+          - 01_01-getting_started.qmd
+          - 01_02-platform_introduction.qmd
+          - 01_03-platform_architecture.qmd
+          - 01_04-core_concepts.qmd
+      - section: "ML Development"
+        contents:
+          - 02_01-data_management.qmd
+          - 02_02-model_development.qmd
+          - 02_03-mlflow_integration.qmd
+          - 02_04-complete_workflow.qmd
+      - section: "Infrastructure & Operations"
+        contents:
+          - 03_01-infrastructure_as_code.qmd
+          - 03_02-infrastructure_management.qmd
+          - 03_03-local_development.qmd
+          - 03_04-terraniq_integration.qmd
+      - section: "System Integration & Governance"
+        contents:
+          - 04_01-execution_framework.qmd
+          - 04_02-notebook_management.qmd
+          - 04_03-api_contracts.qmd
+          - 04_04-user_interfaces.qmd
+          - 04_05-governance_framework.qmd
+      - section: "Architecture & Design"
+        contents:
+          - 05_01-system_architecture.qmd

@@ -1,0 +1,42 @@
+project:
+  type: website
+  render:
+    - "*.qmd"
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    keep-md: true
+  commonmark: default
+
+website:
+  twitter-card: true
+  open-graph: true
+  repo-actions: [issue]
+  navbar:
+    background: primary
+    search: true
+  sidebar:
+    style: floating
+    contents:
+      - index.qmd
+      - 00_core.qmd
+      - 01_platform_narrative.qmd
+      - 02_data.qmd
+      - 03_model_training.qmd
+      - 04_web_ui.qmd
+      - 05_webui_contracts.qmd
+      - 06_vertical_slice.qmd
+      - 07_mlflow_parity.qmd
+      - 14_infrastructure_mcp.qmd
+      - 08_execution_backends.qmd
+      - 09_notebook_intake.qmd
+      - 12_system_interaction_analysis.qmd
+      - 13_opentofu_infra.qmd
+      - 15_aws_emulator.qmd
+      - 16_terranix_infra.qmd
+      - 17_governance_gates.qmd
+
+metadata-files: [nbdev.yml, sidebar.yml]

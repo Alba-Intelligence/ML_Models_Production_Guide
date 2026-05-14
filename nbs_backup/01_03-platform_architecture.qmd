@@ -244,12 +244,12 @@ graph LR
 
 Local and cloud deployments must maintain parity across:
 
-### Component Parity
-
-- **Reverse Proxy**: Traefik Docker (local) vs Traefik K8s Ingress (cloud) - Same routing rules
-- **Backend Store**: PostgreSQL Docker (local) vs RDS Aurora PostgreSQL (cloud) - Same schema, connection pool
-- **Artifact Store**: Floci S3 (local) vs AWS S3 (cloud) - Same S3 API surface
-- **Compute**: Local + Docker + K3s + SLURM (local) vs EKS + Lambda.ai SLURM (cloud) - Contract-driven dispatch
+| Component | Local | Cloud | Parity Check |
+|-----------|-------|-------|-------------|
+| **Reverse Proxy** | Traefik (Docker) | Traefik Ingress (K8s) | Same routing rules |
+| **Backend Store** | PostgreSQL (Docker) | RDS Aurora PostgreSQL | Same schema, connection pool |
+| **Artifact Store** | Floci S3-compatible | AWS S3 | Same S3 API surface |
+| **Compute** | Local + Docker + K3s + SLURM emulator | EKS + Lambda.ai SLURM | Contract-driven dispatch |
 
 ---
 

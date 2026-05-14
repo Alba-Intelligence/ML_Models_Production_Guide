@@ -65,6 +65,7 @@ sources:
 #### Sync Components
 
 **1. Local Development Storage**
+
 ```yaml
 # docker-compose.dev.yml
 services:
@@ -85,6 +86,7 @@ volumes:
 ```
 
 **2. Cloud Production Storage**
+
 ```yaml
 # docker-compose.cloud.yml
 services:
@@ -122,6 +124,7 @@ services:
 ```
 
 **3. Sync Service Architecture**
+
 ```python
 # mlflow_sync_service.py
 import os
@@ -139,14 +142,14 @@ class MLflowStorageSyncService:
     """
     Service for synchronizing MLflow artifacts between local filesystem and cloud S3.
     """
-    
+
     def __init__(self, config: Dict):
         self.config = config
         self.local_root = Path(config['local_root'])
         self.s3_bucket = config['s3_bucket']
         self.s3_prefix = config.get('s3_prefix', 'mlflow')
         self.git_metadata_dir = self.local_root / '.git_sync_metadata'
-        
+
         # Initialize AWS client
         self.s3_client = boto3.client(
             's3',
@@ -154,18 +157,18 @@ class MLflowStorageSyncService:
             aws_secret_access_key=config.get('aws_secret_access_key'),
             region_name=config.get('aws_region', 'us-east-1')
         )
-        
+
         # Initialize metadata database
         self._init_metadata_db()
-        
+
         # Setup logging
         logging.basicConfig(level=logging.INFO)
         self.logger = logging.getLogger(__name__)
-    
+
     def _init_metadata_db(self):
         """Initialize metadata database for tracking sync state."""
         metadata_db = self.git_metadata_dir / 'sync_metadata.db'
-        
+
         with sqlite3.connect(metadata_db) as conn:
             conn.execute('''
                 CREATE TABLE IF NOT EXISTS sync_metadata (
@@ -179,7 +182,7 @@ class MLflowStorageSyncService:
                     conflict_resolution TEXT
                 )
             ''')
-    
+
     def get_git_commit_hash(self, artifact_path: Path) -> str:
         """Get git commit hash for artifact path."""
         try:
@@ -189,7 +192,7 @@ class MLflowStorageSyncService:
         except ImportError:
             # Fallback to file-based hash if git not available
             return self._get_file_hash(artifact_path)
-    
+
     def _get_file_hash(self, file_path: Path) -> str:
         """Get SHA256 hash of file."""
         hash_sha256 = hashlib.sha256()
@@ -197,17 +200,17 @@ class MLflowStorageSyncService:
             for chunk in iter(lambda: f.read(4096), b""):
                 hash_sha256.update(chunk)
         return hash_sha256.hexdigest()
-    
+
     def scan_local_artifacts(self) -> Dict[str, Dict]:
         """Scan local artifacts and return metadata."""
         artifacts = {}
-        
+
         for artifact_path in self.local_root.rglob('*'):
             if artifact_path.is_file():
                 relative_path = artifact_path.relative_to(self.local_root)
                 git_commit = self.get_git_commit_hash(artifact_path)
                 file_hash = self._get_file_hash(artifact_path)
-                
+
                 artifacts[str(relative_path)] = {
                     'local_path': str(artifact_path),
                     'relative_path': str(relative_path),
@@ -216,13 +219,13 @@ class MLflowStorageSyncService:
                     'size': artifact_path.stat().st_size,
                     'modified_time': datetime.fromtimestamp(artifact_path.stat().st_mtime).isoformat()
                 }
-        
+
         return artifacts
-    
+
     def scan_s3_artifacts(self) -> Dict[str, Dict]:
         """Scan S3 artifacts and return metadata."""
         artifacts = {}
-        
+
         try:
             # List all objects in S3 bucket
             paginator = self.s3_client.get_paginator('list_objects_v2')
@@ -232,7 +235,7 @@ class MLflowStorageSyncService:
                         s3_key = obj['Key']
                         if s3_key.startswith(self.s3_prefix):
                             relative_path = s3_key[len(self.s3_prefix)+1:] if s3_prefix.endswith('/') else s3_key[len(self.s3_prefix):]
-                            
+
                             artifacts[relative_path] = {
                                 's3_key': s3_key,
                                 'relative_path': relative_path,
@@ -242,25 +245,25 @@ class MLflowStorageSyncService:
                             }
         except ClientError as e:
             self.logger.error(f"Error scanning S3: {e}")
-        
+
         return artifacts
-    
+
     def detect_conflicts(self, local_artifacts: Dict, s3_artifacts: Dict) -> List[Dict]:
         """Detect conflicts between local and cloud artifacts."""
         conflicts = []
-        
+
         # Check for modified files in both locations
         all_paths = set(local_artifacts.keys()) | set(s3_artifacts.keys())
-        
+
         for path in all_paths:
             if path in local_artifacts and path in s3_artifacts:
                 local_meta = local_artifacts[path]
                 s3_meta = s3_artifacts[path]
-                
+
                 # Check if file was modified in both locations
-                if (local_meta['local_hash'] != s3_meta.get('etag', '') and 
+                if (local_meta['local_hash'] != s3_meta.get('etag', '') and
                     local_meta['git_commit'] != s3_meta.get('git_commit', '')):
-                    
+
                     conflicts.append({
                         'path': path,
                         'local_commit': local_meta['git_commit'],
@@ -271,13 +274,13 @@ class MLflowStorageSyncService:
                         's3_modified': s3_meta['last_modified'],
                         'resolution': 'pending'
                     })
-        
+
         return conflicts
-    
+
     def resolve_conflicts(self, conflicts: List[Dict], resolution_strategy: str = 'local_wins') -> List[Dict]:
         """Resolve conflicts using specified strategy."""
         resolved_conflicts = []
-        
+
         for conflict in conflicts:
             if resolution_strategy == 'local_wins':
                 # Keep local version, update cloud
@@ -295,20 +298,20 @@ class MLflowStorageSyncService:
                 # Default: local wins
                 conflict['resolution'] = 'local_wins'
                 conflict['action'] = 'update_cloud'
-            
+
             resolved_conflicts.append(conflict)
-        
+
         return resolved_conflicts
-    
+
     def sync_to_cloud(self, artifacts: Dict[str, Dict]) -> Dict[str, bool]:
         """Sync local artifacts to cloud S3."""
         results = {}
-        
+
         for relative_path, artifact_meta in artifacts.items():
             try:
                 # Upload file to S3
                 s3_key = f"{self.s3_prefix}/{relative_path}"
-                
+
                 self.s3_client.upload_file(
                     artifact_meta['local_path'],
                     self.s3_bucket,
@@ -321,7 +324,7 @@ class MLflowStorageSyncService:
                         }
                     }
                 )
-                
+
                 # Update metadata
                 self._update_sync_metadata(
                     relative_path,
@@ -329,33 +332,33 @@ class MLflowStorageSyncService:
                     artifact_meta['git_commit'],
                     artifact_meta['local_hash']
                 )
-                
+
                 results[relative_path] = True
                 self.logger.info(f"Synced {relative_path} to cloud")
-                
+
             except Exception as e:
                 results[relative_path] = False
                 self.logger.error(f"Failed to sync {relative_path}: {e}")
-        
+
         return results
-    
+
     def sync_from_cloud(self, artifacts: Dict[str, Dict]) -> Dict[str, bool]:
         """Sync cloud artifacts to local filesystem."""
         results = {}
-        
+
         for relative_path, artifact_meta in artifacts.items():
             try:
                 # Download file from S3
                 local_path = self.local_root / relative_path
                 local_path.parent.mkdir(parents=True, exist_ok=True)
-                
+
                 s3_key = artifact_meta['s3_key']
                 self.s3_client.download_file(
                     self.s3_bucket,
                     s3_key,
                     str(local_path)
                 )
-                
+
                 # Update metadata
                 self._update_sync_metadata(
                     relative_path,
@@ -363,21 +366,21 @@ class MLflowStorageSyncService:
                     artifact_meta.get('git_commit', ''),
                     artifact_meta.get('etag', '')
                 )
-                
+
                 results[relative_path] = True
                 self.logger.info(f"Synced {relative_path} from cloud")
-                
+
             except Exception as e:
                 results[relative_path] = False
                 self.logger.error(f"Failed to sync {relative_path} from cloud: {e}")
-        
+
         return results
-    
+
     def _update_sync_metadata(self, relative_path: str, s3_path: str, git_commit: str, file_hash: str):
         """Update sync metadata database."""
         with sqlite3.connect(self.git_metadata_dir / 'sync_metadata.db') as conn:
             conn.execute('''
-                INSERT OR REPLACE INTO sync_metadata 
+                INSERT OR REPLACE INTO sync_metadata
                 (local_path, s3_path, git_commit, local_hash, s3_hash, last_sync_time, sync_status, conflict_resolution)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             ''', (
@@ -390,7 +393,7 @@ class MLflowStorageSyncService:
                 'synced',
                 'none'
             ))
-    
+
     def get_sync_status(self) -> Dict:
         """Get current sync status summary."""
         with sqlite3.connect(self.git_metadata_dir / 'sync_metadata.db') as conn:
@@ -399,9 +402,9 @@ class MLflowStorageSyncService:
                 FROM sync_metadata
                 GROUP BY sync_status
             ''')
-            
+
             status_counts = dict(cursor.fetchall())
-            
+
             return {
                 'total_artifacts': sum(status_counts.values()),
                 'synced_artifacts': status_counts.get('synced', 0),
@@ -413,13 +416,14 @@ class MLflowStorageSyncService:
 #### Sync Workflow Integration
 
 **1. Local Development Workflow**
+
 ```python
 # local_dev_workflow.py
 from mlflow_sync_service import MLflowStorageSyncService
 
 class LocalDevSync:
     """Local development workflow with sync integration."""
-    
+
     def __init__(self):
         self.sync_service = MLflowStorageSyncService({
             'local_root': '/mlflow/artifacts',
@@ -429,43 +433,43 @@ class LocalDevSync:
             'aws_secret_access_key': 'local-dev-secret',
             'aws_region': 'us-east-1'
         })
-    
+
     def create_experiment(self, experiment_name: str):
         """Create experiment and sync artifacts."""
         import mlflow
-        
+
         mlflow.set_experiment(experiment_name)
-        
+
         with mlflow.start_run() as run:
             # Create some artifacts
             self.create_sample_artifacts()
-            
+
             # Sync to cloud
             local_artifacts = self.sync_service.scan_local_artifacts()
             sync_results = self.sync_service.sync_to_cloud(local_artifacts)
-            
+
             return {
                 'run_id': run.info.run_id,
                 'sync_results': sync_results,
                 'git_commit': self.sync_service.get_git_commit_hash(Path('/mlflow/artifacts'))
             }
-    
+
     def create_sample_artifacts(self):
         """Create sample artifacts for testing."""
         import matplotlib.pyplot as plt
         import pandas as pd
         import json
-        
+
         # Create plot
         plt.figure()
         plt.plot([1, 2, 3, 4])
         plt.savefig('/mlflow/artifacts/sample_plot.png')
         plt.close()
-        
+
         # Create dataset
         df = pd.DataFrame({'x': [1, 2, 3, 4], 'y': [2, 4, 6, 8]})
         df.to_csv('/mlflow/artifacts/sample_data.csv', index=False)
-        
+
         # Create metadata
         metadata = {
             'experiment': 'sample_experiment',
@@ -474,7 +478,7 @@ class LocalDevSync:
         }
         with open('/mlflow/artifacts/metadata.json', 'w') as f:
             json.dump(metadata, f)
-        
+
         # Log artifacts to MLflow
         mlflow.log_artifact('/mlflow/artifacts/sample_plot.png')
         mlflow.log_artifact('/mlflow/artifacts/sample_data.csv')
@@ -482,13 +486,14 @@ class LocalDevSync:
 ```
 
 **2. Cloud Production Workflow**
+
 ```python
 # cloud_prod_workflow.py
 from mlflow_sync_service import MLflowStorageSyncService
 
 class CloudProdSync:
     """Cloud production workflow with sync integration."""
-    
+
     def __init__(self):
         self.sync_service = MLflowStorageSyncService({
             'local_root': '/mlflow/artifacts',
@@ -498,23 +503,23 @@ class CloudProdSync:
             'aws_secret_access_key': '${AWS_SECRET_ACCESS_KEY}',
             'aws_region': '${AWS_REGION}'
         })
-    
+
     def sync_and_deploy(self, model_name: str):
         """Sync from cloud and deploy model."""
         # Scan cloud artifacts
         s3_artifacts = self.sync_service.scan_s3_artifacts()
-        
+
         # Sync from cloud
         sync_results = self.sync_service.sync_from_cloud(s3_artifacts)
-        
+
         # Deploy model
         return self.deploy_model(model_name, sync_results)
-    
+
     def deploy_model(self, model_name: str, sync_results: Dict):
         """Deploy model to production."""
         # Find latest model artifacts
         latest_artifacts = self._find_latest_artifacts(sync_results)
-        
+
         # Deploy model (simplified example)
         deployment_result = {
             'model_name': model_name,
@@ -522,11 +527,12 @@ class CloudProdSync:
             'deployment_time': datetime.now().isoformat(),
             'status': 'deployed'
         }
-        
+
         return deployment_result
 ```
 
 **3. Sync Command Line Interface**
+
 ```python
 # sync_cli.py
 import click
@@ -552,21 +558,21 @@ def sync(local_root, s3_bucket, s3_prefix, direction):
         'aws_secret_access_key': os.getenv('AWS_SECRET_ACCESS_KEY'),
         'aws_region': os.getenv('AWS_REGION', 'us-east-1')
     }
-    
+
     sync_service = MLflowStorageSyncService(config)
-    
+
     if direction in ['push', 'both']:
         print("Pushing local artifacts to cloud...")
         local_artifacts = sync_service.scan_local_artifacts()
         sync_results = sync_service.sync_to_cloud(local_artifacts)
         print(f"Push results: {sync_results}")
-    
+
     if direction in ['pull', 'both']:
         print("Pulling cloud artifacts to local...")
         s3_artifacts = sync_service.scan_s3_artifacts()
         sync_results = sync_service.sync_from_cloud(s3_artifacts)
         print(f"Pull results: {sync_results}")
-    
+
     # Show sync status
     status = sync_service.get_sync_status()
     print(f"Sync status: {status}")
@@ -582,7 +588,7 @@ def status():
         'aws_secret_access_key': os.getenv('AWS_SECRET_ACCESS_KEY'),
         'aws_region': os.getenv('AWS_REGION', 'us-east-1')
     }
-    
+
     sync_service = MLflowStorageSyncService(config)
     status = sync_service.get_sync_status()
     print(f"Sync status: {status}")
@@ -594,10 +600,11 @@ if __name__ == '__main__':
 #### Sync Configuration and Deployment
 
 **1. Nix Configuration for Sync Service**
+
 ```nix
 # nix/services/sync-service.nix
-{ 
-  pkgs, 
+{
+  pkgs,
   inputs,
   ...
 }:
@@ -605,12 +612,12 @@ if __name__ == '__main__':
 let
   sync-service = pkgs.writeShellScript "mlflow-sync" ''
     #!/bin/bash
-    
+
     # Sync service script
     export AWS_ACCESS_KEY_ID="local-dev-key"
     export AWS_SECRET_ACCESS_KEY="local-dev-secret"
     export AWS_REGION="us-east-1"
-    
+
     # Run sync
     python ${./sync_service.py} \
       --local-root /mlflow/artifacts \
@@ -618,7 +625,7 @@ let
       --s3-prefix mlflow \
       --direction both
   '';
-  
+
 in
 {
   # Service definition
@@ -626,7 +633,7 @@ in
     description = "MLflow Storage Sync Service";
     after = ["network.target"];
     wantedBy = ["multi-user.target"];
-    
+
     serviceConfig = {
       Type = "simple";
       ExecStart = "${sync-service}";
@@ -636,7 +643,7 @@ in
       Group = "mlflow";
       WorkingDirectory = "/mlflow";
     };
-    
+
     environment = {
       AWS_ACCESS_KEY_ID = "local-dev-key";
       AWS_SECRET_ACCESS_KEY = "local-dev-secret";
@@ -647,9 +654,10 @@ in
 ```
 
 **2. Docker Compose with Sync**
+
 ```yaml
 # docker-compose.sync.yml
-version: '3.8'
+version: "3.8"
 
 services:
   mlflow-local:
@@ -740,18 +748,21 @@ volumes:
 ## Implementation Notes
 
 ### Sync Service Deployment
+
 1. **Local Development**: Sync service runs as a background process
 2. **Cloud Production**: Sync service integrated into CI/CD pipeline
 3. **Monitoring**: Sync status and conflicts visible in MLflow UI
 4. **Alerting**: Alert on sync failures and conflicts
 
 ### Developer Workflow
+
 1. **Local Development**: Create experiments and artifacts normally
 2. **Sync**: Push artifacts to cloud when ready
 3. **Cloud Access**: Access artifacts from cloud for deployment
 4. **Conflict Handling**: Resolve conflicts as they arise
 
 ### Maintenance
+
 1. **Regular Sync**: Regular sync operations to keep environments in sync
 2. **Conflict Resolution**: Prompt resolution of detected conflicts
 3. **Performance Monitoring**: Monitor sync performance and optimize as needed

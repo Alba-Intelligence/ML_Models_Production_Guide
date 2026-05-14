@@ -167,6 +167,7 @@ The following scenarios MAY allow hand-written infrastructure files, but only fo
    - Experimental features that haven't stabilized in Terranix
 
 **Emergency Exception Process:**
+
 1. Document the exception and business justification
 2. Create a migration plan to return to Nix generation
 3. Schedule review and removal of the exception
@@ -212,7 +213,7 @@ def generate_nix_resource_inventory() -> Dict[str, List[str]]:
         capture_output=True, text=True
     )
     nix_output = json.loads(result.stdout)
-    
+
     # Parse Terranix module output for resource addresses
     expected_resources = []
     for module in nix_output.get("outputs", {}):
@@ -220,7 +221,7 @@ def generate_nix_resource_inventory() -> Dict[str, List[str]]:
         for resource_type in resources:
             for resource_name in resources[resource_type]:
                 expected_resources.append(f"{resource_type}.{resource_name}")
-    
+
     return {"expected_resources": expected_resources}
 
 def verify_deployment_parity() -> bool:
@@ -231,23 +232,23 @@ def verify_deployment_parity() -> bool:
         capture_output=True, text=True
     )
     deployed_state = json.loads(result.stdout)
-    
+
     # Extract deployed resources
     deployed_resources = []
     for resource in deployed_state.get("resources", []):
         deployed_resources.append(resource.get("address", ""))
-    
+
     expected_resources = generate_nix_resource_inventory()["expected_resources"]
-    
+
     # Verify parity
     missing = set(expected_resources) - set(deployed_resources)
     extra = set(deployed_resources) - set(expected_resources)
-    
+
     print(f"Expected resources: {len(expected_resources)}")
     print(f"Deployed resources: {len(deployed_resources)}")
     print(f"Missing resources: {missing}")
     print(f"Extra resources: {extra}")
-    
+
     return len(missing) == 0 and len(extra) == 0
 ```
 
@@ -255,9 +256,9 @@ def verify_deployment_parity() -> bool:
 
 ```nix
 # nix/verify.nix
-{ 
-  lib, 
-  pkgs, 
+{
+  lib,
+  pkgs,
   inputs,
   terraform,
 }:
@@ -286,7 +287,7 @@ in
     # Generate current configuration hash
     CURRENT_HASH=$(nix eval --raw --file flake.nix#cloud-infra-hash)
     STORED_HASH=${infra-hash}
-    
+
     if [ "$CURRENT_HASH" = "$STORED_HASH" ]; then
       echo "Infrastructure configuration parity verified"
       exit 0
@@ -320,27 +321,27 @@ def test_nix_terraform_parity():
         capture_output=True, text=True
     )
     assert result.returncode == 0, "Nix infrastructure build failed"
-    
+
     # Step 2: Verify generated OpenTofu JSON is valid
     with open("tf.json", "r") as f:
         infra_config = json.load(f)
-    
+
     assert "resource" in infra_config, "Generated OpenTofu missing resource section"
-    
+
     # Step 3: Apply infrastructure in dry-run mode
     result = subprocess.run(
         ["opentofu", "plan", "-out=tf.plan"],
         capture_output=True, text=True
     )
     assert result.returncode == 0, "OpenTofu plan failed"
-    
+
     # Step 4: Verify no changes detected (parity confirmed)
     with open("tf.plan", "rb") as f:
         plan_data = json.load(f)
-    
+
     resource_changes = plan_data.get("resource_changes", [])
     changes = [rc for rc in resource_changes if rc.get("change", {}).get("actions", []) != ["no-op"]]
-    
+
     assert len(changes) == 0, f"Infrastructure parity failed: {changes}"
 
 def test_emulation_vs_cloud_parity():
@@ -350,17 +351,17 @@ def test_emulation_vs_cloud_parity():
         "nix", "build", ".#local-infra"
     ], capture_output=True, text=True)
     assert result.returncode == 0
-    
+
     # Generate cloud infrastructure
     result = subprocess.run([
         "nix", "build", ".#cloud-infra"
     ], capture_output=True, text=True)
     assert result.returncode == 0
-    
+
     # Verify both produce valid OpenTofu JSON
     with open("tf.json", "r") as f:
         local_config = json.load(f)
-    
+
     # Extract and compare resource types and configurations
     # (Implementation depends on specific comparison logic)
     assert validate_infrastructure_structure(local_config)
@@ -369,6 +370,7 @@ def test_emulation_vs_cloud_parity():
 ### Implementation Guidance
 
 #### Nix Module Organization
+
 ```
 nix/
 ├── modules/
@@ -393,6 +395,7 @@ nix/
 ```
 
 #### Terranix Configuration
+
 ```nix
 # flake.nix
 {
@@ -486,6 +489,7 @@ nix/
 ## Implementation Notes
 
 ### Local Development Workflow
+
 1. Modify Nix/Terranix modules
 2. Generate OpenTofu JSON with `nix build .#cloud-infra`
 3. Test with `opentofu plan`
@@ -493,12 +497,14 @@ nix/
 5. Verify parity with acceptance tests
 
 ### CI/CD Integration
+
 1. Infrastructure changes trigger build verification
 2. Parity tests run before deployment
 3. Hash verification ensures configuration consistency
 4. Drift detection runs periodically
 
 ### Monitoring and Alerting
+
 1. Infrastructure drift alerts
 2. Configuration hash mismatch notifications
 3. Resource compliance violations

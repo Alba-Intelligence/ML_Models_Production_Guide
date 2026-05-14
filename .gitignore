@@ -5,10 +5,9 @@ uv.lock
 
 # nbdev generated documentation (Quarto output)
 docs/*
+_site/
+_docs/_site
 _proc/
-nbs/_quarto.yml
-nbs/nbdev.yml
-nbs/sidebar.yml
 **/*.html.md
 **/*.quarto_ipynb
 
@@ -128,6 +127,7 @@ devenv.local.yaml
 
 # direnv
 .direnv
+.pi-lens
 
 # pre-commit
 .pre-commit-config.yaml

@@ -31,6 +31,7 @@ sources:
 #### Nix Container Definition Requirements
 
 All containers MUST be defined using Nix modules that:
+
 1. **Eliminate Dockerfile entirely** - no .dockerfile files allowed
 2. **Use Nixpkgs dockerTools** - standard Nix container build tools
 3. **Provide multi-stage builds** - build and runtime stages separated
@@ -101,10 +102,11 @@ nix/
 #### Nix Container Definition Examples
 
 **MLflow Training Container**
+
 ```nix
 # nix/containers/mlflow/build.nix
-{ 
-  pkgs, 
+{
+  pkgs,
   inputs,
   ...
 }:
@@ -165,22 +167,22 @@ pkgs.dockerTools.buildImage {
     # Set up Python environment
     python -m pip install --no-index --find-links=${pkgs.python311Packages}/lib/python3.11/site-packages -e .
     python -m pip install --no-index --find-links=${pkgs.python311Packages}/lib/python3.11/site-packages ${pythonPkgs}
-    
+
     # Install MLflow
     pip install mlflow
-    
+
     # Create MLflow directory
     mkdir -p /app/mlflow
-    
+
     # Copy application code
     cp -r ${./app} /app/
-    
+
     # Set working directory
     cd /app
-    
+
     # Install requirements
     pip install -r requirements.txt
-    
+
     # Create MLflow configuration
     cat > mlflow-config.yaml << EOF
     tracking_uri: http://localhost:5000
@@ -226,10 +228,11 @@ pkgs.dockerTools.buildImage {
 ```
 
 **PyTorch GPU Training Container**
+
 ```nix
 # nix/containers/training/pytorch-gpu/build.nix
-{ 
-  pkgs, 
+{
+  pkgs,
   inputs,
   ...
 }:
@@ -301,39 +304,39 @@ pkgs.dockerTools.buildImage {
     # Set up Python environment
     python -m pip install --no-index --find-links=${pkgs.python311Packages}/lib/python3.11/site-packages -e .
     python -m pip install --no-index --find-links=${pkgs.python311Packages}/lib/python3.11/site-packages ${pythonPkgs}
-    
+
     # Install PyTorch with CUDA
     pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
-    
+
     # Install MLflow
     pip install mlflow
-    
+
     # Create directories
     mkdir -p /app/mlflow /app/checkpoints /app/logs
-    
+
     # Copy application code
     cp -r ${./app} /app/
-    
+
     # Set working directory
     cd /app
-    
+
     # Install requirements
     pip install -r requirements.txt
-    
+
     # Create startup script
     cat > start.sh << EOF
     #!/bin/bash
     set -e
-    
+
     # Set environment variables
     export CUDA_VISIBLE_DEVICES=\${CUDA_VISIBLE_DEVICES:-0}
     export MLFLOW_TRACKING_URI=http://localhost:5000
     export MLFLOW_DEFAULT_ARTIFACT_ROOT=/app/artifacts
-    
+
     # Start training
     python train.py --config config.yaml
     EOF
-    
+
     chmod +x start.sh
   '';
 
@@ -390,6 +393,7 @@ All workflows MUST be reproducible from Docker alone with no Nix dependency:
 5. **Container Export**: `docker save <image-name>` → export for offline use
 
 **Acceptance Test for Docker-First Reproducibility**
+
 ```python
 # tests/test_docker_first_reproducibility.py
 """
@@ -408,13 +412,13 @@ def test_nix_to_docker_build():
         "nix", "build", ".#pytorch-gpu-training"
     ], capture_output=True, text=True)
     assert result.returncode == 0, "Nix container build failed"
-    
+
     # Load the built Docker image
     result = subprocess.run([
         "docker", "load", "-i", "result"
     ], capture_output=True, text=True)
     assert result.returncode == 0, "Docker image load failed"
-    
+
     # Verify image exists
     result = subprocess.run([
         "docker", "images", "pytorch-gpu-training:latest", "--format", "{{.ID}}"
@@ -426,12 +430,12 @@ def test_container_functionality():
     """Test that container runs correctly without Nix."""
     # Run container
     result = subprocess.run([
-        "docker", "run", 
+        "docker", "run",
         "--rm",
         "pytorch-gpu-training:latest",
         "/bin/sh", "-c", "echo 'Container works'"
     ], capture_output=True, text=True, timeout=30)
-    
+
     assert result.returncode == 0, "Container execution failed"
     assert "Container works" in result.stdout, "Container output mismatch"
 
@@ -440,13 +444,13 @@ def test_container_inspection():
     result = subprocess.run([
         "docker", "inspect", "pytorch-gpu-training:latest"
     ], capture_output=True, text=True)
-    
+
     assert result.returncode == 0, "Container inspection failed"
-    
+
     # Parse JSON and verify required fields
     inspection = json.loads(result.stdout)
     container_info = inspection[0]
-    
+
     assert "Config" in container_info, "Container config missing"
     assert "Env" in container_info["Config"], "Container env vars missing"
     assert "ExposedPorts" in container_info["Config"], "Exposed ports missing"
@@ -456,30 +460,30 @@ def test_container_export_import():
     # Export container
     with tempfile.NamedTemporaryFile(suffix=".tar", delete=False) as tmp:
         export_path = tmp.name
-    
+
     result = subprocess.run([
         "docker", "save", "pytorch-gpu-training:latest", "-o", export_path
     ], capture_output=True, text=True)
     assert result.returncode == 0, "Container export failed"
-    
+
     try:
         # Remove existing image
-        subprocess.run(["docker", "rmi", "pytorch-gpu-training:latest"], 
+        subprocess.run(["docker", "rmi", "pytorch-gpu-training:latest"],
                       capture_output=True)
-        
+
         # Import container from export
         result = subprocess.run([
             "docker", "load", "-i", export_path
         ], capture_output=True, text=True)
         assert result.returncode == 0, "Container import failed"
-        
+
         # Verify image exists after import
         result = subprocess.run([
             "docker", "images", "pytorch-gpu-training:latest", "--format", "{{.ID}}"
         ], capture_output=True, text=True)
         assert result.returncode == 0, "Docker image listing failed after import"
         assert result.stdout.strip() != "", "Docker image not found after import"
-        
+
     finally:
         # Clean up
         os.unlink(export_path)
@@ -496,12 +500,14 @@ def test_container_export_import():
 5. **Documentation**: Generated documentation for container contents
 
 **Non-Canonical Nix Outputs** (helper-only, not runtime paths):
+
 - `nix-build-result.tar.gz` - Docker image archive
 - `container-metadata.json` - Container metadata
 - `build-log.txt` - Build execution log
 - `dependency-graph.json` - Package dependency graph
 
 **Canonical Runtime Path** (Docker image):
+
 - `docker.io/registry/pytorch-gpu-training:latest` - Actual runtime container
 
 ### Acceptance Criteria
@@ -567,6 +573,7 @@ def test_container_export_import():
 ## Implementation Notes
 
 ### Container Build Workflow
+
 1. Define container in Nix (`nix/containers/name/build.nix`)
 2. Build container: `nix build .#container-name`
 3. Load Docker image: `docker load -i result`
@@ -574,45 +581,47 @@ def test_container_export_import():
 5. Deploy to Kubernetes: Use standard Kubernetes deployment manifests
 
 ### CI/CD Integration
+
 ```yaml
 # .github/workflows/container-build.yml
 name: Build and Push Containers
 
 on:
   push:
-    paths: ['nix/containers/**']
+    paths: ["nix/containers/**"]
 
 jobs:
   build-containers:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    
-    - name: Set up Nix
-      uses: DeterminateSystems/nix-installer-action@main
-      with:
-        extra-channel: https://nixos.org/channels/nixos-unstable
-    
-    - name: Build containers
-      run: |
-        nix build .#mlflow-training
-        nix build .#pytorch-gpu-training
-        nix build .#model-serving
-    
-    - name: Load Docker images
-      run: |
-        docker load -i result
-        docker load -i result
-        docker load -i result
-    
-    - name: Push to registry
-      run: |
-        docker push registry/mlflow-training:latest
-        docker push registry/pytorch-gpu-training:latest
-        docker push registry/model-serving:latest
+      - uses: actions/checkout@v4
+
+      - name: Set up Nix
+        uses: DeterminateSystems/nix-installer-action@main
+        with:
+          extra-channel: https://nixos.org/channels/nixos-unstable
+
+      - name: Build containers
+        run: |
+          nix build .#mlflow-training
+          nix build .#pytorch-gpu-training
+          nix build .#model-serving
+
+      - name: Load Docker images
+        run: |
+          docker load -i result
+          docker load -i result
+          docker load -i result
+
+      - name: Push to registry
+        run: |
+          docker push registry/mlflow-training:latest
+          docker push registry/pytorch-gpu-training:latest
+          docker push registry/model-serving:latest
 ```
 
 ### Local Development
+
 ```bash
 # Build and test containers locally
 nix build .#mlflow-training
