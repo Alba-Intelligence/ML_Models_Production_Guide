@@ -1,9 +1,0 @@
-project:
-  output-dir: _docs
-
-website:
-  title: "ml_deploy"
-  site-url: "/"
-  description: "ML Deployment Reference Implementation"
-  repo-branch: main
-  repo-url: ""
