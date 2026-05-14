@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>nix/modules/shared.nix</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; }
+        h1 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        h2 { color: #34495e; margin-top: 30px; }
+        h3 { color: #5d6d7e; }
+        h4 { color: #85929e; }
+        pre { background: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; }
+        code { background: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
+        ul { margin: 10px 0; }
+        li { margin: 5px 0; }
+        a { color: #3498db; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .warning { background: #fff3cd; border: 1px solid #ffeaa7; padding: 10px; border-radius: 5px; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <p>---</p>
+<p>title: "Terranix Infrastructure Source"</p>
+<p>---</p>
+<p>
+This page mirrors the Nix/Terranix source that generates the OpenTofu inputs.</p>
+<p>It exists so the infra story is readable from the website without browsing the</p>
+<p>source tree.</p>
+<p>
+<pre><code><p>graph TD</p>
+<p>  page[nbs/16_terranix_infra.qmd] --> shared[nix/modules/shared.nix]</p>
+<p>  page --> local[nix/modules/local.nix]</p>
+<p>  page --> cloud[nix/modules/cloud.nix]</p>
+<p>  local --> terranix[Terranix]</p>
+<p>  cloud --> terranix</p>
+<p>  terranix --> json[OpenTofu JSON]</p>
+<p></code></pre></p>
+<p>
+<h2>Shared module</h2></p>
+<p>
+<pre><code><h1>nix/modules/shared.nix</h1>
+<p>{ config, lib, ... }:</p>
+<p>
+with lib;</p>
+<p>
+let</p>
+<p>  cfg = config.mlDeploy;</p>
+<p>in {</p>
+<p>  options.mlDeploy = {</p>
+<p>    profile = mkOption {</p>
+<p>      type = types.enum [ "local_emulation" "cloud" ];</p>
+<p>      description = "Active deployment profile: local_emulation or cloud.";</p>
+<p>    };</p>
+<p>
+    projectName = mkOption {</p>
+<p>      type = types.str;</p>
+<p>      default = "ml-deploy";</p>
+<p>    };</p>
+<p>
+    mlflowTrackingUri = mkOption {</p>
+<p>      type = types.str;</p>
+<p>    };</p>
+<p>
+    s3BucketArtifacts = mkOption {</p>
+<p>      type = types.str;</p>
+<p>      default = "mlflow-artifacts";</p>
+<p>    };</p>
+<p>
+    s3BucketModelRegistry = mkOption {</p>
+<p>      type = types.str;</p>
+<p>      default = "model-registry";</p>
+<p>    };</p>
+<p>
+    awsRegion = mkOption {</p>
+<p>      type = types.str;</p>
+<p>      default = "us-east-1";</p>
+<p>    };</p>
+<p>
+    awsEndpointUrl = mkOption {</p>
+<p>      type = types.nullOr types.str;</p>
+<p>      default = null;</p>
+<p>      description = "Override AWS endpoint URL (used for Floci in local_emulation profile).";</p>
+<p>    };</p>
+<p>
+    postgresHost = mkOption {</p>
+<p>      type = types.str;</p>
+<p>    };</p>
+<p>
+    postgresPort = mkOption {</p>
+<p>      type = types.int;</p>
+<p>      default = 5432;</p>
+<p>    };</p>
+<p>
+    postgresDb = mkOption {</p>
+<p>      type = types.str;</p>
+<p>      default = "mlflow";</p>
+<p>    };</p>
+<p>  };</p>
+<p>
+  config = {</p>
+<p>    resource.aws_s3_bucket."${cfg.projectName}-artifacts" = {</p>
+<p>      bucket = cfg.s3BucketArtifacts;</p>
+<p>    };</p>
+<p>
+    resource.aws_s3_bucket."${cfg.projectName}-model-registry" = {</p>
+<p>      bucket = cfg.s3BucketModelRegistry;</p>
+<p>    };</p>
+<p>
+    output.mlflow_tracking_uri = {</p>
+<p>      value = cfg.mlflowTrackingUri;</p>
+<p>    };</p>
+<p>  };</p>
+}
+<p></code></pre></p>
+<p>
+<h2>Local profile</h2></p>
+<p>
+<pre><code><h1>nix/modules/local.nix</h1>
+<p>{ config, lib, ... }:</p>
+<p>
+with lib;</p>
+<p>
+{</p>
+<p>  imports = [ ./shared.nix ];</p>
+<p>
+  config.mlDeploy = {</p>
+<p>    profile           = "local_emulation";</p>
+<p>    mlflowTrackingUri = "http://localhost:5001";</p>
+<p>    awsEndpointUrl    = "http://localhost:4566";</p>
+<p>    postgresHost      = "localhost";</p>
+<p>  };</p>
+<p>
+  config.provider.aws = {</p>
+<p>    region                      = config.mlDeploy.awsRegion;</p>
+<p>    access_key                  = "test";</p>
+<p>    secret_key                  = "test";</p>
+<p>    skip_credentials_validation = true;</p>
+<p>    skip_metadata_api_check     = true;</p>
+<p>    skip_requesting_account_id  = true;</p>
+<p>    endpoints = {</p>
+<p>      s3             = config.mlDeploy.awsEndpointUrl;</p>
+<p>      iam            = config.mlDeploy.awsEndpointUrl;</p>
+<p>      sts            = config.mlDeploy.awsEndpointUrl;</p>
+<p>      ec2            = config.mlDeploy.awsEndpointUrl;</p>
+<p>      secretsmanager = config.mlDeploy.awsEndpointUrl;</p>
+<p>      cloudwatch     = config.mlDeploy.awsEndpointUrl;</p>
+<p>      logs           = config.mlDeploy.awsEndpointUrl;</p>
+<p>    };</p>
+<p>  };</p>
+<p>
+  config.provider.kubernetes = {</p>
+<p>    config_path = "/output/kubeconfig.yaml";</p>
+<p>  };</p>
+}
+<p></code></pre></p>
+<p>
+<h2>Cloud profile</h2></p>
+<p>
+<pre><code><h1>nix/modules/cloud.nix</h1>
+<p>{ config, lib, ... }:</p>
+<p>
+with lib;</p>
+<p>
+{</p>
+<p>  imports = [ ./shared.nix ];</p>
+<p>
+  config.mlDeploy = {</p>
+<p>    profile           = "cloud";</p>
+<p>    mlflowTrackingUri = "\${var.mlflow_tracking_uri}";</p>
+<p>    awsEndpointUrl    = null;</p>
+<p>    postgresHost      = "\${var.postgres_host}";</p>
+<p>  };</p>
+<p>
+  config.provider.aws = {</p>
+<p>    region = config.mlDeploy.awsRegion;</p>
+<p>  };</p>
+}
+<p></code></pre></p>
+<p>
+<h2>Entrypoints</h2></p>
+<p>
+<pre><code><h1>nix/profiles/local.nix</h1>
+<p>{ pkgs, ... }:</p>
+<p>
+{</p>
+<p>  imports = [</p>
+<p>    ../modules/local.nix</p>
+<p>  ];</p>
+<p>
+  terraform.required_providers.aws = {</p>
+<p>    source  = "hashicorp/aws";</p>
+<p>    version = "~> 5.0";</p>
+<p>  };</p>
+<p>
+  terraform.required_providers.kubernetes = {</p>
+<p>    source  = "hashicorp/kubernetes";</p>
+<p>    version = "~> 2.0";</p>
+<p>  };</p>
+}
+<p></code></pre></p>
+<p>
+<pre><code><h1>nix/profiles/cloud.nix</h1>
+<p>{ pkgs, ... }:</p>
+<p>
+{</p>
+<p>  imports = [</p>
+<p>    ../modules/cloud.nix</p>
+<p>  ];</p>
+<p>
+  terraform.required_providers.aws = {</p>
+<p>    source  = "hashicorp/aws";</p>
+<p>    version = "~> 5.0";</p>
+<p>  };</p>
+<p>
+  terraform.required_providers.kubernetes = {</p>
+<p>    source  = "hashicorp/kubernetes";</p>
+<p>    version = "~> 2.0";</p>
+<p>  };</p>
+}
+<p></code></pre></p>
+<p>
+<h2>How to apply</h2></p>
+<p>
+Generate JSON from the profile you want, write it to <code>infra/<profile>/main.tf.json</code>,</p>
+<p>then run OpenTofu from that directory.</p>
+
+</body>
+</html>

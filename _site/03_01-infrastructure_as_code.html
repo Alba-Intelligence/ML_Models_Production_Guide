@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>nix/modules/local.nix</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; }
+        h1 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        h2 { color: #34495e; margin-top: 30px; }
+        h3 { color: #5d6d7e; }
+        h4 { color: #85929e; }
+        pre { background: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; }
+        code { background: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
+        ul { margin: 10px 0; }
+        li { margin: 5px 0; }
+        a { color: #3498db; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .warning { background: #fff3cd; border: 1px solid #ffeaa7; padding: 10px; border-radius: 5px; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <p>---</p>
+<p>title: "OpenTofu Infrastructure Profiles"</p>
+<p>---</p>
+<p>
+This page summarizes the dual-profile infrastructure posture.</p>
+<p>
+<h2>Profiles</h2></p>
+<p>
+<ul><li><strong>local_emulation</strong>: Floci + K3s + Slurm-Docker paired with MLflow/PostgreSQL.</p></li></ul>
+<p>- <strong>cloud</strong>: AWS-backed infrastructure with Kubernetes control plane and Lambda.ai integration surfaces.</p>
+<p>
+<h2>Generation model</h2></p>
+<p>
+<ul><li>Terranix modules under <code>nix/modules/</code> provide shared plus profile-specific definitions.</p></li></ul>
+<p>- Profile entrypoints under <code>nix/profiles/</code> compose modules into OpenTofu-compatible JSON.</p>
+<p>- Apply flow is profile-scoped and local-emulation validation should precede cloud rollout.</p>
+<p>
+<h2>Key outputs</h2></p>
+<p>
+<ul><li>Deployment profile identification.</p></li></ul>
+<p>- MLflow tracking URI per profile.</p>
+<p>- Storage and scheduler endpoint references required by orchestration layers.</p>
+<p>
+<h2>Copy-pasteable Terranix entrypoints</h2></p>
+<p>
+The notebook pages document the same source that lives under <code>nix/</code> so the infrastructure story can be read without directory spelunking.</p>
+<p>
+<pre><code><h1>nix/modules/local.nix</h1>
+<p>{ config, lib, ... }:</p>
+<p>
+with lib;</p>
+<p>
+{</p>
+<p>  imports = [ ./shared.nix ];</p>
+<p>
+  config.mlDeploy = {</p>
+<p>    profile           = "local_emulation";</p>
+<p>    mlflowTrackingUri = "http://localhost:5001";</p>
+<p>    awsEndpointUrl    = "http://localhost:4566";</p>
+<p>    postgresHost      = "localhost";</p>
+<p>  };</p>
+<p>
+  config.provider.aws = {</p>
+<p>    region                      = config.mlDeploy.awsRegion;</p>
+<p>    access_key                  = "test";</p>
+<p>    secret_key                  = "test";</p>
+<p>    skip_credentials_validation = true;</p>
+<p>    skip_metadata_api_check     = true;</p>
+<p>    skip_requesting_account_id  = true;</p>
+<p>    endpoints = {</p>
+<p>      s3             = config.mlDeploy.awsEndpointUrl;</p>
+<p>      iam            = config.mlDeploy.awsEndpointUrl;</p>
+<p>      sts            = config.mlDeploy.awsEndpointUrl;</p>
+<p>      ec2            = config.mlDeploy.awsEndpointUrl;</p>
+<p>      secretsmanager = config.mlDeploy.awsEndpointUrl;</p>
+<p>      cloudwatch     = config.mlDeploy.awsEndpointUrl;</p>
+<p>      logs           = config.mlDeploy.awsEndpointUrl;</p>
+<p>    };</p>
+<p>  };</p>
+}
+<p></code></pre></p>
+<p>
+<pre><code><h1>nix/modules/cloud.nix</h1>
+<p>{ config, lib, ... }:</p>
+<p>
+with lib;</p>
+<p>
+{</p>
+<p>  imports = [ ./shared.nix ];</p>
+<p>
+  config.mlDeploy = {</p>
+<p>    profile           = "cloud";</p>
+<p>    mlflowTrackingUri = "\${var.mlflow_tracking_uri}";</p>
+<p>    awsEndpointUrl    = null;</p>
+<p>    postgresHost      = "\${var.postgres_host}";</p>
+<p>  };</p>
+<p>
+  config.provider.aws = {</p>
+<p>    region = config.mlDeploy.awsRegion;</p>
+<p>  };</p>
+}
+<p></code></pre></p>
+<p>
+<pre><code><h1>nix/modules/shared.nix</h1>
+<p>{ config, lib, ... }:</p>
+<p>
+with lib;</p>
+<p>
+let</p>
+<p>  cfg = config.mlDeploy;</p>
+<p>in {</p>
+<p>  options.mlDeploy = {</p>
+<p>    profile = mkOption {</p>
+<p>      type = types.enum [ "local_emulation" "cloud" ];</p>
+<p>    };</p>
+<p>    projectName = mkOption {</p>
+<p>      type = types.str;</p>
+<p>      default = "ml-deploy";</p>
+<p>    };</p>
+<p>    mlflowTrackingUri = mkOption {</p>
+<p>      type = types.str;</p>
+<p>    };</p>
+<p>    s3BucketArtifacts = mkOption {</p>
+<p>      type = types.str;</p>
+<p>      default = "mlflow-artifacts";</p>
+<p>    };</p>
+<p>    s3BucketModelRegistry = mkOption {</p>
+<p>      type = types.str;</p>
+<p>      default = "model-registry";</p>
+<p>    };</p>
+<p>    awsRegion = mkOption {</p>
+<p>      type = types.str;</p>
+<p>      default = "us-east-1";</p>
+<p>    };</p>
+<p>    awsEndpointUrl = mkOption {</p>
+<p>      type = types.nullOr types.str;</p>
+<p>      default = null;</p>
+<p>    };</p>
+<p>    postgresHost = mkOption {</p>
+<p>      type = types.str;</p>
+<p>    };</p>
+<p>    postgresPort = mkOption {</p>
+<p>      type = types.int;</p>
+<p>      default = 5432;</p>
+<p>    };</p>
+<p>    postgresDb = mkOption {</p>
+<p>      type = types.str;</p>
+<p>      default = "mlflow";</p>
+<p>    };</p>
+<p>  };</p>
+<p>
+  config = {</p>
+<p>    resource.aws_s3_bucket."${cfg.projectName}-artifacts" = {</p>
+<p>      bucket = cfg.s3BucketArtifacts;</p>
+<p>    };</p>
+<p>
+    resource.aws_s3_bucket."${cfg.projectName}-model-registry" = {</p>
+<p>      bucket = cfg.s3BucketModelRegistry;</p>
+<p>    };</p>
+<p>
+    output.mlflow_tracking_uri = {</p>
+<p>      value = cfg.mlflowTrackingUri;</p>
+<p>    };</p>
+<p>  };</p>
+}
+<p></code></pre></p>
+
+</body>
+</html>

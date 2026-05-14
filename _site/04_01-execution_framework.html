@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Execution Backends</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; }
+        h1 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        h2 { color: #34495e; margin-top: 30px; }
+        h3 { color: #5d6d7e; }
+        h4 { color: #85929e; }
+        pre { background: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; }
+        code { background: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
+        ul { margin: 10px 0; }
+        li { margin: 5px 0; }
+        a { color: #3498db; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .warning { background: #fff3cd; border: 1px solid #ffeaa7; padding: 10px; border-radius: 5px; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <p>---</p>
+<p>title: "Execution Backends"</p>
+<p>---</p>
+<h1>Execution Backends</h1>
+<p>
+> nbdev source for local execution adapter and Slurm/Kubernetes mapping helpers.</p>
+<p>
+<pre><code><p>#| default_exp: execution_backends</p>
+<p></code></pre></p>
+<p>
+<pre><code><p>#| export:</p>
+<p>from __future__ import annotations</p>
+<p>
+from dataclasses import dataclass</p>
+<p>from datetime import datetime, timezone</p>
+<p>from pathlib import Path</p>
+<p>from typing import Any, Callable</p>
+<p>from uuid import uuid4</p>
+<p>
+from ml_deploy.mlflow_parity import resolve_mlflow_storage_config</p>
+<p>from ml_deploy.vertical_slice import execute_first_vertical_slice</p>
+<p>from ml_deploy.webui_contracts import NotebookExecutionRequest, RunVisibility, summarize_run_for_webui</p>
+
+<p>
+def _utc_now() -> str:</p>
+<p>    return datetime.now(timezone.utc).isoformat()</p>
+
+<p>
+@dataclass(frozen=True)</p>
+<p>class LocalExecutionResult:</p>
+<p>    request_id: str</p>
+<p>    run_visibility: RunVisibility</p>
+<p>    output_dir: Path</p>
+<p>    prediction_log_path: Path</p>
+
+<p>
+class LocalExecutionAdapter:</p>
+<p>    """Adapter that maps normalized web UI requests to local execution."""</p>
+<p>
+    def __init__(self, mlflow_base_url: str, runner: Callable[..., dict[str, Any]] | None = None):</p>
+<p>        self.mlflow_base_url = mlflow_base_url</p>
+<p>        self._runner = runner or execute_first_vertical_slice</p>
+<p>
+    def submit(</p>
+<p>        self,</p>
+<p>        request: NotebookExecutionRequest,</p>
+<p>        *,</p>
+<p>        work_dir: Path,</p>
+<p>        tracking_uri: str,</p>
+<p>        request_id: str | None = None,</p>
+<p>    ) -> LocalExecutionResult:</p>
+<p>        resolved_request = request.with_defaults(request_id=request_id or f"req-{uuid4().hex[:12]}")</p>
+<p>        job_spec = resolved_request.as_job_spec()</p>
+<p>
+        run_payload = self._runner(work_dir, tracking_uri=tracking_uri)</p>
+<p>        run_id = run_payload["training_outcome"].mlflow_run_id</p>
+<p>        run_summary = summarize_run_for_webui(</p>
+<p>            {</p>
+<p>                "run_id": run_id,</p>
+<p>                "status": "finished",</p>
+<p>                "started_at": _utc_now(),</p>
+<p>                "finished_at": _utc_now(),</p>
+<p>                "model_version": run_payload["packaged"]["model_version_record"][</p>
+<p>                    "model_version_identifier"</p>
+<p>                ],</p>
+<p>                "request_id": job_spec["request_id"],</p>
+<p>            },</p>
+<p>            mlflow_base_url=self.mlflow_base_url,</p>
+<p>        )</p>
+<p>
+        return LocalExecutionResult(</p>
+<p>            request_id=job_spec["request_id"],</p>
+<p>            run_visibility=run_summary,</p>
+<p>            output_dir=run_payload["output_dir"],</p>
+<p>            prediction_log_path=run_payload["prediction_log_path"],</p>
+<p>        )</p>
+
+<p>
+@dataclass(frozen=True)</p>
+<p>class BackendSubmission:</p>
+<p>    request_id: str</p>
+<p>    backend: str</p>
+<p>    status: str</p>
+<p>    submission_payload: dict[str, Any]</p>
+<p>    run_visibility: RunVisibility | None = None</p>
+<p>    prediction_log_path: Path | None = None</p>
+
+<p>
+class ExecutionOrchestrator:</p>
+<p>    """Route normalized notebook requests to local, Slurm, or Kubernetes execution backends."""</p>
+<p>
+    def __init__(self, mlflow_base_url: str, local_adapter: LocalExecutionAdapter | None = None):</p>
+<p>        self._local_adapter = local_adapter or LocalExecutionAdapter(mlflow_base_url)</p>
+<p>
+    @staticmethod</p>
+<p>    def _resolve_backend(target: str) -> str:</p>
+<p>        normalized = target.strip().lower()</p>
+<p>        if normalized in {"local", "local-replica"}:</p>
+<p>            return "local"</p>
+<p>        if normalized in {"lambda-slurm", "slurm"}:</p>
+<p>            return "slurm"</p>
+<p>        if normalized in {"aws-kubernetes", "kubernetes", "k8s"}:</p>
+<p>            return "kubernetes"</p>
+<p>        raise ValueError(f"Unsupported execution target: {target}")</p>
+<p>
+    def submit(</p>
+<p>        self,</p>
+<p>        request: NotebookExecutionRequest,</p>
+<p>        *,</p>
+<p>        work_dir: Path,</p>
+<p>        tracking_uri: str | None = None,</p>
+<p>        request_id: str | None = None,</p>
+<p>    ) -> BackendSubmission:</p>
+<p>        resolved_request = request.with_defaults(request_id=request_id or f"req-{uuid4().hex[:12]}")</p>
+<p>        job_spec = resolved_request.as_job_spec()</p>
+<p>        backend = self._resolve_backend(job_spec["target"])</p>
+<p>
+        if backend == "local":</p>
+<p>            runtime_tracking_uri = tracking_uri or resolve_mlflow_storage_config().tracking_uri</p>
+<p>            local_result = self._local_adapter.submit(</p>
+<p>                resolved_request,</p>
+<p>                work_dir=work_dir,</p>
+<p>                tracking_uri=runtime_tracking_uri,</p>
+<p>                request_id=job_spec["request_id"],</p>
+<p>            )</p>
+<p>            return BackendSubmission(</p>
+<p>                request_id=local_result.request_id,</p>
+<p>                backend=backend,</p>
+<p>                status="completed",</p>
+<p>                submission_payload=job_spec,</p>
+<p>                run_visibility=local_result.run_visibility,</p>
+<p>                prediction_log_path=local_result.prediction_log_path,</p>
+<p>            )</p>
+<p>
+        if backend == "slurm":</p>
+<p>            submission_payload = map_to_slurm_job_spec(job_spec)</p>
+<p>        else:</p>
+<p>            submission_payload = map_to_kubernetes_job_spec(job_spec)</p>
+<p>
+        return BackendSubmission(</p>
+<p>            request_id=job_spec["request_id"],</p>
+<p>            backend=backend,</p>
+<p>            status="submitted",</p>
+<p>            submission_payload=submission_payload,</p>
+<p>        )</p>
+
+<p>
+def map_to_slurm_job_spec(job_spec: dict[str, Any]) -> dict[str, Any]:</p>
+<p>    """Map normalized job spec to a Slurm submission payload."""</p>
+<p>    notebook = job_spec["notebook"]</p>
+<p>    return {</p>
+<p>        "scheduler": "slurm",</p>
+<p>        "job_name": f"nb-{job_spec['request_id']}",</p>
+<p>        "command": "python -m ml_deploy.jobs.run_notebook",</p>
+<p>        "arguments": [</p>
+<p>            f"--repository={notebook['repository']}",</p>
+<p>            f"--notebook-path={notebook['notebook_path']}",</p>
+<p>            f"--revision={notebook['revision']}",</p>
+<p>            f"--target={job_spec['target']}",</p>
+<p>            f"--config-profile={job_spec['config_profile']}",</p>
+<p>        ],</p>
+<p>        "environment": {</p>
+<p>            "REQUEST_ID": job_spec["request_id"],</p>
+<p>            "REQUESTED_BY": job_spec["requested_by"],</p>
+<p>        },</p>
+<p>    }</p>
+
+<p>
+def map_to_kubernetes_job_spec(job_spec: dict[str, Any]) -> dict[str, Any]:</p>
+<p>    """Map normalized job spec to a Kubernetes Job manifest."""</p>
+<p>    notebook = job_spec["notebook"]</p>
+<p>    return {</p>
+<p>        "apiVersion": "batch/v1",</p>
+<p>        "kind": "Job",</p>
+<p>        "metadata": {"name": f"nb-{job_spec['request_id']}"},</p>
+<p>        "spec": {</p>
+<p>            "template": {</p>
+<p>                "spec": {</p>
+<p>                    "restartPolicy": "Never",</p>
+<p>                    "containers": [</p>
+<p>                        {</p>
+<p>                            "name": "notebook-runner",</p>
+<p>                            "image": "python:3.13-slim",</p>
+<p>                            "args": [</p>
+<p>                                "python",</p>
+<p>                                "-m",</p>
+<p>                                "ml_deploy.jobs.run_notebook",</p>
+<p>                                f"--repository={notebook['repository']}",</p>
+<p>                                f"--notebook-path={notebook['notebook_path']}",</p>
+<p>                                f"--revision={notebook['revision']}",</p>
+<p>                                f"--target={job_spec['target']}",</p>
+<p>                                f"--config-profile={job_spec['config_profile']}",</p>
+<p>                            ],</p>
+<p>                            "env": [</p>
+<p>                                {"name": "REQUEST_ID", "value": job_spec["request_id"]},</p>
+<p>                                {"name": "REQUESTED_BY", "value": job_spec["requested_by"]},</p>
+<p>                            ],</p>
+<p>                        }</p>
+<p>                    ],</p>
+<p>                }</p>
+<p>            }</p>
+<p>        },</p>
+<p>    }</p>
+<p></code></pre></p>
+
+</body>
+</html>

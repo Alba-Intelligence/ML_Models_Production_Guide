@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Documentation</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; }
+        h1 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        h2 { color: #34495e; margin-top: 30px; }
+        h3 { color: #5d6d7e; }
+        h4 { color: #85929e; }
+        pre { background: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; }
+        code { background: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
+        ul { margin: 10px 0; }
+        li { margin: 5px 0; }
+        a { color: #3498db; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .warning { background: #fff3cd; border: 1px solid #ffeaa7; padding: 10px; border-radius: 5px; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <p>---</p>
+<p>title: "Floci AWS Emulator"</p>
+<p>---</p>
+<p>
+This page is the copy-pasteable source for the shared local AWS emulator.</p>
+<p>It replaces the earlier LocalStack/MinIO split and is the only local AWS</p>
+<p>emulator the repo now treats as canonical.</p>
+<p>
+<pre><code><p>graph LR</p>
+<p>  dev[docker-compose.dev.yml] --> floci[Floci]</p>
+<p>  infra[docker-compose.local-infra.yml] --> floci</p>
+<p>  floci --> bootstrap[floci_bootstrap]</p>
+<p>  bootstrap --> buckets[S3 buckets and IAM role]</p>
+<p></code></pre></p>
+<p>
+<h2>Compose file</h2></p>
+<p>
+<pre><code><p>services:</p>
+<p>  floci:</p>
+<p>    image: floci/floci:latest</p>
+<p>    container_name: ml_deploy_floci</p>
+<p>    user: root</p>
+<p>    networks:</p>
+<p>      - ml_local</p>
+<p>    ports:</p>
+<p>      - "4566:4566"</p>
+<p>    environment:</p>
+<p>      FLOCI_HOSTNAME: floci</p>
+<p>      FLOCI_STORAGE_MODE: persistent</p>
+<p>      AWS_DEFAULT_REGION: us-east-1</p>
+<p>    volumes:</p>
+<p>      - /var/run/docker.sock:/var/run/docker.sock</p>
+<p>      - floci_data:/var/lib/floci</p>
+<p>    healthcheck:</p>
+<p>      test: ["CMD", "curl", "-f", "http://localhost:4566/_localstack/health"]</p>
+<p>      interval: 15s</p>
+<p>      timeout: 10s</p>
+<p>      retries: 5</p>
+<p>      start_period: 20s</p>
+<p>
+  floci_bootstrap:</p>
+<p>    image: amazon/aws-cli:2.15.56</p>
+<p>    container_name: ml_deploy_floci_bootstrap</p>
+<p>    depends_on:</p>
+<p>      floci:</p>
+<p>        condition: service_healthy</p>
+<p>    networks:</p>
+<p>      - ml_local</p>
+<p>    environment:</p>
+<p>      AWS_ACCESS_KEY_ID: test</p>
+<p>      AWS_SECRET_ACCESS_KEY: test</p>
+<p>      AWS_DEFAULT_REGION: us-east-1</p>
+<p>      AWS_ENDPOINT_URL: http://floci:4566</p>
+<p>    entrypoint: ["/bin/sh", "-c"]</p>
+<p>    command:</p>
+<p>      - |</p>
+<p>        echo "Initialising Floci buckets and roles..."</p>
+<p>        aws s3 mb s3://mlflow-artifacts --endpoint-url=http://floci:4566 || true</p>
+<p>        aws s3 mb s3://model-registry --endpoint-url=http://floci:4566 || true</p>
+<p>        aws iam create-role \</p>
+<p>          --role-name ml-deploy-local \</p>
+<p>          --assume-role-policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"Service":"ec2.amazonaws.com"},"Action":"sts:AssumeRole"}]}' \</p>
+<p>          --endpoint-url=http://floci:4566 || true</p>
+<p>        echo "Floci init complete."</p>
+<p>
+volumes:</p>
+<p>  floci_data:</p>
+<p>
+networks:</p>
+<p>  ml_local:</p>
+<p>    name: ml_local</p>
+<p>    driver: bridge</p>
+<p></code></pre></p>
+<p>
+<h2>Run order</h2></p>
+<p>
+1. Start this file first.</p>
+<p>2. Start <code>docker-compose.dev.yml</code> for MLflow/PostgreSQL.</p>
+<p>3. Start <code>docker-compose.local-infra.yml</code> for K3s and Slurm.</p>
+
+</body>
+</html>

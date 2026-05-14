@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Core Package and MLflow XGBoost Quickstart</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; }
+        h1 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        h2 { color: #34495e; margin-top: 30px; }
+        h3 { color: #5d6d7e; }
+        h4 { color: #85929e; }
+        pre { background: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; }
+        code { background: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
+        ul { margin: 10px 0; }
+        li { margin: 5px 0; }
+        a { color: #3498db; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .warning { background: #fff3cd; border: 1px solid #ffeaa7; padding: 10px; border-radius: 5px; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <p>---</p>
+<p>title: "Core Package and MLflow XGBoost Quickstart"</p>
+<p>---</p>
+<h1>Core Package and MLflow XGBoost Quickstart</h1>
+<p>
+> Core package metadata plus a practical MLflow + XGBoost tracking example.</p>
+<p>
+This notebook defines core package metadata and a practical MLflow + XGBoost quickstart.</p>
+
+<p>
+<h2>MLflow + XGBoost example</h2></p>
+<p>
+The example below follows the MLflow XGBoost autologging pattern and shows a complete traditional-ML flow.</p>
+<p>
+<pre><code><p>__author__ = """ML Engineer"""</p>
+<p>__email__ = 'ml@example.com'</p>
+<p>__version__ = '0.1.0'</p>
+<p>
+import mlflow</p>
+<p>import xgboost as xgb</p>
+<p>from sklearn.datasets import load_diabetes</p>
+<p>from sklearn.model_selection import train_test_split</p>
+<p>
+mlflow.xgboost.autolog()</p>
+<p>
+data = load_diabetes()</p>
+<p>X_train, X_test, y_train, y_test = train_test_split(</p>
+<p>    data.data, data.target, test_size=0.2, random_state=42</p>
+)
+<p>
+dtrain = xgb.DMatrix(X_train, label=y_train)</p>
+<p>dtest = xgb.DMatrix(X_test, label=y_test)</p>
+<p>
+with mlflow.start_run(run_name="xgboost_diabetes_regressor"):</p>
+<p>    params = {</p>
+<p>        "objective": "reg:squarederror",</p>
+<p>        "max_depth": 6,</p>
+<p>        "learning_rate": 0.1,</p>
+<p>        "random_state": 42,</p>
+<p>    }</p>
+<p>
+    model = xgb.train(</p>
+<p>        params=params,</p>
+<p>        dtrain=dtrain,</p>
+<p>        num_boost_round=100,</p>
+<p>        evals=[(dtrain, "train"), (dtest, "test")],</p>
+<p>    )</p>
+<p>
+    mlflow.xgboost.log_model(</p>
+<p>        xgb_model=model,</p>
+<p>        name="model",</p>
+<p>        model_format="json",</p>
+<p>        registered_model_name="diabetes_xgboost_model",</p>
+<p>    )</p>
+<p></code></pre></p>
+
+</body>
+</html>

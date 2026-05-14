@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>First Vertical Slice (EX-01 -> EX-03)</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; }
+        h1 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        h2 { color: #34495e; margin-top: 30px; }
+        h3 { color: #5d6d7e; }
+        h4 { color: #85929e; }
+        pre { background: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; }
+        code { background: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
+        ul { margin: 10px 0; }
+        li { margin: 5px 0; }
+        a { color: #3498db; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .warning { background: #fff3cd; border: 1px solid #ffeaa7; padding: 10px; border-radius: 5px; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <p>---</p>
+<p>title: "First Vertical Slice (EX-01 -> EX-03)"</p>
+<p>---</p>
+<h1>First Vertical Slice (EX-01 -> EX-03)</h1>
+<p>
+> nbdev source for the concrete local vertical slice implementation.</p>
+<p>
+<pre><code><p>#| default_exp: vertical_slice</p>
+<p></code></pre></p>
+<p>
+<pre><code><p>#| export:</p>
+<p>from __future__ import annotations</p>
+<p>
+from dataclasses import dataclass</p>
+<p>from datetime import datetime, timezone</p>
+<p>import json</p>
+<p>from pathlib import Path</p>
+<p>import time</p>
+<p>from typing import Any, Literal</p>
+<p>from uuid import uuid4</p>
+<p>
+import joblib</p>
+<p>import mlflow</p>
+<p>import mlflow.sklearn</p>
+<p>import numpy as np</p>
+<p>import pandas as pd</p>
+<p>from sklearn.linear_model import LogisticRegression</p>
+<p>from sklearn.metrics import accuracy_score</p>
+<p>from sklearn.model_selection import train_test_split</p>
+<p>from sklearn.preprocessing import StandardScaler</p>
+
+<p>
+DEFAULT_FEATURES = ["feature_1", "feature_2", "feature_3"]</p>
+<p>DEFAULT_TARGET = "target"</p>
+<p>PromotionStage = Literal["dev", "uat", "regression", "prod"]</p>
+
+<p>
+@dataclass</p>
+<p>class TrainingOutcome:</p>
+<p>    model: LogisticRegression</p>
+<p>    scaler: StandardScaler</p>
+<p>    feature_names: list[str]</p>
+<p>    mlflow_run_id: str</p>
+<p>    accuracy: float</p>
+<p>    dataset_version: str</p>
+<p>    transformation_version: str</p>
+<p>    code_revision: str</p>
+<p>    container_revision: str</p>
+<p>    compute_context: str</p>
+
+<p>
+def _utc_now() -> str:</p>
+<p>    return datetime.now(timezone.utc).isoformat()</p>
+
+<p>
+def _write_json(path: Path, payload: dict[str, Any]) -> None:</p>
+<p>    path.parent.mkdir(parents=True, exist_ok=True)</p>
+<p>    path.write_text(json.dumps(payload, indent=2) + "\n")</p>
+
+<p>
+def _append_jsonl(path: Path, payload: dict[str, Any]) -> None:</p>
+<p>    path.parent.mkdir(parents=True, exist_ok=True)</p>
+<p>    with path.open("a", encoding="utf-8") as handle:</p>
+<p>        handle.write(json.dumps(payload) + "\n")</p>
+
+<p>
+def generate_synthetic_dataset(</p>
+<p>    n_rows: int = 200,</p>
+<p>    random_state: int = 42,</p>
+<p>    feature_names: list[str] | None = None,</p>
+<p>    target_name: str = DEFAULT_TARGET,</p>
+<p>) -> pd.DataFrame:</p>
+<p>    """Generate a deterministic binary classification dataset for local slice testing."""</p>
+<p>    names = feature_names or DEFAULT_FEATURES</p>
+<p>    rng = np.random.default_rng(random_state)</p>
+<p>    features = rng.normal(size=(n_rows, len(names)))</p>
+<p>    linear_signal = features[:, 0] + 0.5 <em> features[:, 1] - 0.25 </em> features[:, 2]</p>
+<p>    target = (linear_signal + rng.normal(scale=0.25, size=n_rows) > 0).astype(int)</p>
+<p>    frame = pd.DataFrame(features, columns=names)</p>
+<p>    frame[target_name] = target</p>
+<p>    return frame</p>
+
+<p>
+def prepare_training_data(</p>
+<p>    frame: pd.DataFrame,</p>
+<p>    feature_names: list[str] | None = None,</p>
+<p>    target_name: str = DEFAULT_TARGET,</p>
+<p>    test_size: float = 0.2,</p>
+<p>    random_state: int = 42,</p>
+<p>) -> tuple[pd.DataFrame, pd.DataFrame, pd.Series, pd.Series, StandardScaler]:</p>
+<p>    """Split and scale features for model training."""</p>
+<p>    names = feature_names or DEFAULT_FEATURES</p>
+<p>    X = frame[names]</p>
+<p>    y = frame[target_name]</p>
+<p>    X_train, X_test, y_train, y_test = train_test_split(</p>
+<p>        X, y, test_size=test_size, random_state=random_state, stratify=y</p>
+<p>    )</p>
+<p>    scaler = StandardScaler()</p>
+<p>    X_train_scaled = pd.DataFrame(</p>
+<p>        scaler.fit_transform(X_train), columns=names, index=X_train.index</p>
+<p>    )</p>
+<p>    X_test_scaled = pd.DataFrame(</p>
+<p>        scaler.transform(X_test), columns=names, index=X_test.index</p>
+<p>    )</p>
+<p>    return X_train_scaled, X_test_scaled, y_train, y_test, scaler</p>
+
+<p>
+def train_with_traceability(</p>
+<p>    X_train: pd.DataFrame,</p>
+<p>    X_test: pd.DataFrame,</p>
+<p>    y_train: pd.Series,</p>
+<p>    y_test: pd.Series,</p>
+<p>    scaler: StandardScaler,</p>
+<p>    *,</p>
+<p>    feature_names: list[str] | None = None,</p>
+<p>    tracking_uri: str,</p>
+<p>    dataset_version: str = "dataset-v1",</p>
+<p>    transformation_version: str = "transform-v1",</p>
+<p>    code_revision: str = "local-working-tree",</p>
+<p>    container_revision: str = "local-container-v1",</p>
+<p>    compute_context: str = "local-cpu",</p>
+<p>    experiment_name: str = "ml_deploy_vertical_slice",</p>
+<p>) -> TrainingOutcome:</p>
+<p>    """Train a baseline model and log required traceability metadata in MLflow."""</p>
+<p>    names = feature_names or DEFAULT_FEATURES</p>
+<p>    mlflow.set_tracking_uri(tracking_uri)</p>
+<p>    mlflow.set_experiment(experiment_name)</p>
+<p>
+    max_iter = 1000</p>
+<p>    solver = "liblinear"</p>
+<p>
+    with mlflow.start_run(run_name="ex01_local_training_traceability") as run:</p>
+<p>        mlflow.log_param("max_iter", max_iter)</p>
+<p>        mlflow.log_param("solver", solver)</p>
+<p>        mlflow.log_param("dataset_version", dataset_version)</p>
+<p>        mlflow.log_param("transformation_version", transformation_version)</p>
+<p>        mlflow.log_param("code_revision", code_revision)</p>
+<p>        mlflow.log_param("container_revision", container_revision)</p>
+<p>        mlflow.log_param("compute_context", compute_context)</p>
+<p>        mlflow.log_param("feature_names", ",".join(names))</p>
+<p>
+        model = LogisticRegression(max_iter=max_iter, solver=solver, random_state=42)</p>
+<p>        model.fit(X_train, y_train)</p>
+<p>        predictions = model.predict(X_test)</p>
+<p>        accuracy = float(accuracy_score(y_test, predictions))</p>
+<p>        mlflow.log_metric("accuracy", accuracy)</p>
+<p>        mlflow.sklearn.log_model(model, "model")</p>
+<p>
+    return TrainingOutcome(</p>
+<p>        model=model,</p>
+<p>        scaler=scaler,</p>
+<p>        feature_names=names,</p>
+<p>        mlflow_run_id=run.info.run_id,</p>
+<p>        accuracy=accuracy,</p>
+<p>        dataset_version=dataset_version,</p>
+<p>        transformation_version=transformation_version,</p>
+<p>        code_revision=code_revision,</p>
+<p>        container_revision=container_revision,</p>
+<p>        compute_context=compute_context,</p>
+<p>    )</p>
+
+<p>
+def package_and_register_model(</p>
+<p>    outcome: TrainingOutcome,</p>
+<p>    output_dir: Path,</p>
+<p>    *,</p>
+<p>    expected_input_schema_version: str = "input-schema-v1",</p>
+<p>    expected_output_schema_version: str = "output-schema-v1",</p>
+<p>    intended_serving_modes: list[str] | None = None,</p>
+<p>) -> dict[str, Any]:</p>
+<p>    """Create EX-02 artifact bundle + model-version record with required metadata."""</p>
+<p>    serving_modes = intended_serving_modes or ["batch", "online"]</p>
+<p>    artifact_id = f"artifact-{uuid4().hex[:10]}"</p>
+<p>    bundle_dir = output_dir / "artifacts" / artifact_id</p>
+<p>    bundle_dir.mkdir(parents=True, exist_ok=True)</p>
+<p>
+    model_path = bundle_dir / "model.joblib"</p>
+<p>    scaler_path = bundle_dir / "scaler.joblib"</p>
+<p>    joblib.dump(outcome.model, model_path)</p>
+<p>    joblib.dump(outcome.scaler, scaler_path)</p>
+<p>
+    artifact_metadata = {</p>
+<p>        "artifact_identifier": artifact_id,</p>
+<p>        "originating_training_run_identifier": outcome.mlflow_run_id,</p>
+<p>        "framework": "scikit-learn",</p>
+<p>        "framework_version": "sklearn-logistic-regression",</p>
+<p>        "serialization_format": "joblib",</p>
+<p>        "expected_input_schema_version": expected_input_schema_version,</p>
+<p>        "expected_output_schema_version": expected_output_schema_version,</p>
+<p>        "evaluation_summary": {"accuracy": outcome.accuracy},</p>
+<p>        "intended_serving_modes": serving_modes,</p>
+<p>        "compatibility_notes": "Local baseline logistic regression bundle.",</p>
+<p>        "storage_location": str(bundle_dir.resolve()),</p>
+<p>        "dataset_version": outcome.dataset_version,</p>
+<p>        "transformation_version": outcome.transformation_version,</p>
+<p>        "feature_names": outcome.feature_names,</p>
+<p>    }</p>
+<p>    artifact_metadata_path = bundle_dir / "artifact_metadata.json"</p>
+<p>    _write_json(artifact_metadata_path, artifact_metadata)</p>
+<p>
+    model_version_id = f"model-version-{uuid4().hex[:10]}"</p>
+<p>    model_version_record = {</p>
+<p>        "model_version_identifier": model_version_id,</p>
+<p>        "source_artifact_identifier": artifact_id,</p>
+<p>        "stage": "dev",</p>
+<p>        "tracked_in_mlflow": True,</p>
+<p>        "promotion_approved": False,</p>
+<p>        "passes_smoke_tests": False,</p>
+<p>        "passes_uat_suite": False,</p>
+<p>        "no_data_leakage_detected": False,</p>
+<p>        "meets_minimum_metrics": False,</p>
+<p>        "passes_regression_suite": False,</p>
+<p>        "no_performance_regression": False,</p>
+<p>        "security_scan_passed": False,</p>
+<p>        "pytorch_compile_applied": False,</p>
+<p>        "pytorch_no_grad_applied": False,</p>
+<p>        "pytorch_mixed_precision_applied": False,</p>
+<p>        "pytorch_channels_last_applied": False,</p>
+<p>        "pytorch_memory_fraction_limited": False,</p>
+<p>        "approval_basis": f"accuracy={outcome.accuracy:.4f}",</p>
+<p>        "allowed_environments": ["local"],</p>
+<p>        "rollback_predecessor": None,</p>
+<p>        "recorded_at": _utc_now(),</p>
+<p>    }</p>
+<p>    model_version_path = bundle_dir / "model_version.json"</p>
+<p>    _write_json(model_version_path, model_version_record)</p>
+<p>
+    return {</p>
+<p>        "bundle_dir": bundle_dir,</p>
+<p>        "model_path": model_path,</p>
+<p>        "scaler_path": scaler_path,</p>
+<p>        "artifact_metadata_path": artifact_metadata_path,</p>
+<p>        "artifact_metadata": artifact_metadata,</p>
+<p>        "model_version_path": model_version_path,</p>
+<p>        "model_version_record": model_version_record,</p>
+<p>    }</p>
+
+<p>
+def promote_model_artifact(</p>
+<p>    artifact: dict[str, Any],</p>
+<p>    to_stage: PromotionStage,</p>
+<p>) -> dict[str, Any]:</p>
+<p>    """Apply promotion gates for DEV->UAT->REGRESSION->PROD."""</p>
+<p>    if not artifact.get("tracked_in_mlflow", False):</p>
+<p>        raise ValueError("artifact must be tracked in MLflow")</p>
+<p>
+    if to_stage == "uat":</p>
+<p>        if not artifact.get("passes_smoke_tests", False):</p>
+<p>            raise ValueError("promotion to uat requires passes_smoke_tests")</p>
+<p>        artifact["stage"] = "uat"</p>
+<p>        return artifact</p>
+<p>
+    if to_stage == "regression":</p>
+<p>        required = (</p>
+<p>            "passes_uat_suite",</p>
+<p>            "no_data_leakage_detected",</p>
+<p>            "meets_minimum_metrics",</p>
+<p>        )</p>
+<p>        for key in required:</p>
+<p>            if not artifact.get(key, False):</p>
+<p>                raise ValueError(f"promotion to regression requires {key}")</p>
+<p>        artifact["stage"] = "regression"</p>
+<p>        return artifact</p>
+<p>
+    if to_stage == "prod":</p>
+<p>        if not artifact.get("promotion_approved", False):</p>
+<p>            raise ValueError("promotion to prod requires promotion_approved")</p>
+<p>        required = (</p>
+<p>            "passes_regression_suite",</p>
+<p>            "no_performance_regression",</p>
+<p>            "security_scan_passed",</p>
+<p>            "pytorch_compile_applied",</p>
+<p>            "pytorch_no_grad_applied",</p>
+<p>            "pytorch_mixed_precision_applied",</p>
+<p>            "pytorch_channels_last_applied",</p>
+<p>            "pytorch_memory_fraction_limited",</p>
+<p>        )</p>
+<p>        for key in required:</p>
+<p>            if not artifact.get(key, False):</p>
+<p>                raise ValueError(f"promotion to prod requires {key}")</p>
+<p>        artifact["stage"] = "prod"</p>
+<p>        return artifact</p>
+<p>
+    raise ValueError(f"unsupported stage transition target: {to_stage}")</p>
+
+<p>
+def create_local_deployment_record(</p>
+<p>    model_version_record: dict[str, Any], output_dir: Path</p>
+<p>) -> dict[str, Any]:</p>
+<p>    """Create EX-03 local deployment record for serving and prediction traceability."""</p>
+<p>    deployment_id = f"deployment-{uuid4().hex[:10]}"</p>
+<p>    record = {</p>
+<p>        "deployment_identifier": deployment_id,</p>
+<p>        "deployed_model_version": model_version_record["model_version_identifier"],</p>
+<p>        "target_environment": "local",</p>
+<p>        "infrastructure_revision": "local-dev-v1",</p>
+<p>        "deployment_timestamp": _utc_now(),</p>
+<p>        "deployment_actor_owner": "local-vertical-slice",</p>
+<p>        "rollout_strategy": "all-at-once",</p>
+<p>        "rollback_target": None,</p>
+<p>        "monitoring_configuration": "jsonl-prediction-log",</p>
+<p>        "approval_state": "approved-local",</p>
+<p>    }</p>
+<p>    path = output_dir / "deployment_record.json"</p>
+<p>    _write_json(path, record)</p>
+<p>    return {"deployment_record_path": path, "deployment_record": record}</p>
+
+<p>
+def predict_and_log(</p>
+<p>    bundle_dir: Path,</p>
+<p>    deployment_record_path: Path,</p>
+<p>    prediction_log_path: Path,</p>
+<p>    *,</p>
+<p>    features: dict[str, float],</p>
+<p>    request_id: str | None = None,</p>
+<p>) -> dict[str, Any]:</p>
+<p>    """Run a local prediction and emit contract-aligned prediction logs."""</p>
+<p>    artifact_metadata = json.loads((bundle_dir / "artifact_metadata.json").read_text())</p>
+<p>    model_version_record = json.loads((bundle_dir / "model_version.json").read_text())</p>
+<p>    deployment_record = json.loads(deployment_record_path.read_text())</p>
+<p>    model = joblib.load(bundle_dir / "model.joblib")</p>
+<p>    scaler = joblib.load(bundle_dir / "scaler.joblib")</p>
+<p>    feature_names = artifact_metadata["feature_names"]</p>
+<p>
+    start = time.perf_counter()</p>
+<p>    resolved_request_id = request_id or f"req-{uuid4().hex[:12]}"</p>
+<p>    row = pd.DataFrame([features], columns=feature_names)</p>
+<p>    transformed = scaler.transform(row)</p>
+<p>    prediction = int(model.predict(transformed)[0])</p>
+<p>    latency_ms = (time.perf_counter() - start) * 1000</p>
+<p>
+    log_entry = {</p>
+<p>        "timestamp": _utc_now(),</p>
+<p>        "model_version_used": model_version_record["model_version_identifier"],</p>
+<p>        "deployment_identifier": deployment_record["deployment_identifier"],</p>
+<p>        "request_identifier": resolved_request_id,</p>
+<p>        "input_schema_version_reference": artifact_metadata[</p>
+<p>            "expected_input_schema_version"</p>
+<p>        ],</p>
+<p>        "output_capture_policy": "prediction-only",</p>
+<p>        "runtime_metadata": {</p>
+<p>            "latency_ms": latency_ms,</p>
+<p>            "environment": deployment_record["target_environment"],</p>
+<p>            "service_identity": "local-nbdev-vertical-slice",</p>
+<p>        },</p>
+<p>        "traceability_link": {</p>
+<p>            "training_run_id": artifact_metadata[</p>
+<p>                "originating_training_run_identifier"</p>
+<p>            ]</p>
+<p>        },</p>
+<p>    }</p>
+<p>    _append_jsonl(prediction_log_path, log_entry)</p>
+<p>
+    return {</p>
+<p>        "request_id": resolved_request_id,</p>
+<p>        "prediction": prediction,</p>
+<p>        "model_version": model_version_record["model_version_identifier"],</p>
+<p>        "deployment_id": deployment_record["deployment_identifier"],</p>
+<p>    }</p>
+
+<p>
+def execute_first_vertical_slice(work_dir: Path, *, tracking_uri: str) -> dict[str, Any]:</p>
+<p>    """Run EX-01 -> EX-03 and return all generated records and paths."""</p>
+<p>    output_dir = work_dir / "vertical_slice"</p>
+<p>    output_dir.mkdir(parents=True, exist_ok=True)</p>
+<p>
+    dataset = generate_synthetic_dataset()</p>
+<p>    X_train, X_test, y_train, y_test, scaler = prepare_training_data(dataset)</p>
+<p>    outcome = train_with_traceability(</p>
+<p>        X_train,</p>
+<p>        X_test,</p>
+<p>        y_train,</p>
+<p>        y_test,</p>
+<p>        scaler,</p>
+<p>        tracking_uri=tracking_uri,</p>
+<p>    )</p>
+<p>    packaged = package_and_register_model(outcome, output_dir)</p>
+<p>    deployed = create_local_deployment_record(packaged["model_version_record"], output_dir)</p>
+<p>
+    prediction_log_path = output_dir / "prediction_logs.jsonl"</p>
+<p>    sample_features = dataset[DEFAULT_FEATURES].iloc[0].to_dict()</p>
+<p>
+    return {</p>
+<p>        "output_dir": output_dir,</p>
+<p>        "tracking_uri": tracking_uri,</p>
+<p>        "training_outcome": outcome,</p>
+<p>        "packaged": packaged,</p>
+<p>        "deployment": deployed,</p>
+<p>        "prediction_log_path": prediction_log_path,</p>
+<p>        "sample_features": sample_features,</p>
+<p>    }</p>
+<p></code></pre></p>
+
+</body>
+</html>

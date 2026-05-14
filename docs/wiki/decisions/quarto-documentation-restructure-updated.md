@@ -74,6 +74,7 @@ sources:
 #### New Structure: 5 Logical Sections with Hierarchical Naming
 
 **Naming Convention**: `SS_XX-DescriptiveName.qmd`
+
 - **SS**: Section number (01-05)
 - **XX**: Position within section (01, 02, 03, etc.)
 - **DescriptiveName**: Clear, descriptive name with hyphens
@@ -104,7 +105,8 @@ graph TD
     V[Section 5: Architecture & Design] --> W[05_01-system_architecture.qmd]
 ```
 
-#### Section 1: Platform Overview & Foundations (01_)
+#### Section 1: Platform Overview & Foundations (01\_)
+
 **Purpose**: High-level system introduction and conceptual foundation
 **Target Audience**: Everyone, especially new team members
 **Navigation Path**: 01_01 → 01_02 → 01_03 → 01_04
@@ -116,7 +118,8 @@ graph TD
 - `01_03-platform_architecture.qmd` (renamed from `01_platform_narrative.qmd`) - System components and relationships
 - `01_04-core_concepts.qmd` (renamed from `00_core.qmd`) - Essential terminology and patterns
 
-#### Section 2: ML Development Lifecycle (02_)
+#### Section 2: ML Development Lifecycle (02\_)
+
 **Purpose**: End-to-end ML workflow from data to deployment
 **Target Audience**: Data Scientists, ML Researchers
 **Navigation Path**: 02_01 → 02_02 → 02_03 → 02_04
@@ -128,7 +131,8 @@ graph TD
 - `02_03-mlflow_integration.qmd` (renamed from `07_mlflow_parity.qmd`) - Experiment tracking
 - `02_04-complete_workflow.qmd` (renamed from `06_vertical_slice.qmd`) - End-to-end example
 
-#### Section 3: Infrastructure & Operations (03_)
+#### Section 3: Infrastructure & Operations (03\_)
+
 **Purpose**: Infrastructure setup, deployment, and operational aspects
 **Target Audience**: Infrastructure Engineers, DevOps
 **Navigation Path**: 03_01 → 03_02 → 03_03 → 03_04
@@ -140,7 +144,8 @@ graph TD
 - `03_03-local_development.qmd` (renamed from `15_aws_emulator.qmd`) - Local development setup
 - `03_04-terraniq_integration.qmd` (renamed from `16_terranix_infra.qmd`) - Nix-based infrastructure
 
-#### Section 4: System Integration & Governance (04_)
+#### Section 4: System Integration & Governance (04\_)
+
 **Purpose**: System interfaces, APIs, and governance mechanisms
 **Target Audience**: Platform Engineers, System Architects
 **Navigation Path**: 04_01 → 04_02 → 04_03 → 04_04 → 04_05
@@ -153,7 +158,8 @@ graph TD
 - `04_04-user_interfaces.qmd` (renamed from `04_web_ui.qmd`) - Web UI components
 - `04_05-governance_framework.qmd` (renamed from `17_governance_gates.qmd`) - Safety and controls
 
-#### Section 5: Architecture & Design (05_)
+#### Section 5: Architecture & Design (05\_)
+
 **Purpose**: Deep technical architecture and design patterns
 **Target Audience**: Senior Engineers, Architects
 **Navigation Path**: 05_01
@@ -218,18 +224,21 @@ graph LR
 #### Implementation Strategy
 
 **Phase 1: Structure Creation**
+
 1. Create new `01_01-getting_started.qmd` as comprehensive navigation
 2. Use automated script `scripts/restructure_qmd_files.py` for systematic renaming
 3. Update all internal links
 4. Create section overview pages
 
 **Phase 2: Content Enhancement**
+
 1. Add navigation breadcrumbs to each file
 2. Create role-specific reading guides
 3. Add progress indicators for each section
 4. Enhance cross-references
 
 **Phase 3: User Experience**
+
 1. Add search functionality
 2. Create downloadable PDF versions
 3. Add interactive elements where beneficial
@@ -300,6 +309,7 @@ graph LR
 ## Implementation Notes
 
 ### File Migration Strategy
+
 1. Use automated script `scripts/restructure_qmd_files.py` for systematic renaming
 2. Preserve all existing content and functionality
 3. Update all internal references to new file names
@@ -308,18 +318,21 @@ graph LR
 6. Create backup before any structural changes
 
 ### Content Enhancement
+
 1. Add navigation breadcrumbs to each file
 2. Create section overview pages
 3. Add progress indicators and completion tracking
 4. Enhance cross-references and related content
 
 ### Testing and Validation
+
 1. Test navigation paths for different roles
 2. Validate cross-references work correctly
 3. Ensure search functionality remains effective
 4. Get user feedback on new structure
 
 ### Maintenance Considerations
+
 1. Document the new structure for future updates
 2. Create guidelines for adding new content
 3. Implement automation for link validation
