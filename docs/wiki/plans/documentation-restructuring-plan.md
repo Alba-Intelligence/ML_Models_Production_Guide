@@ -28,10 +28,17 @@ This plan restructures the documentation into separate Tutorial and Technical Re
 
 - **Status**: IN PROGRESS
 - **Tasks In Progress**:
-  - [ ] Task 2.1: Tutorial Section Creation
-  - [ ] Task 2.2: Reference Section Creation
-  - [ ] Task 2.3: Terminology Standardization and Explanation
-  - [ ] Task 2.4: Content Splitting and Refactoring
+  - [x] Task 2.1.1: Create `tutorials/` directory
+  - [x] Task 2.1.2: Map existing files to new structure
+  - [ ] Task 2.1.3: Split existing conceptual content into tutorial files
+  - [ ] Task 2.1.4: Write comprehensive introductions and explanations
+  - [ ] Task 2.1.5: Create progressive learning paths
+  - [ ] Task 2.2.1: Create `reference/` directory
+  - [ ] Task 2.2.2: Move technical content to reference files
+  - [ ] Task 2.3.1: Create terminology glossary in Tutorial section
+  - [ ] Task 2.3.2: Explain EX-01, EX-02, EX-03 concepts
+  - [ ] Task 2.3.3: Rename "First Vertical Slice" to appropriate technical name
+  - [ ] Task 2.4.1: Separate conceptual explanations from technical code
 
 #### ⏳ **Phase 3: Configuration and Navigation (5-7 hours)**
 

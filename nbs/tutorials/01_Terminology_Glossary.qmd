@@ -1,0 +1,264 @@
+---
+title: "ML Deploy Terminology Glossary"
+---
+
+# ML Deploy Terminology Glossary
+
+This glossary provides clear, standardized definitions for key terms used throughout the ML deployment reference documentation. Understanding these terms is essential for navigating the platform architecture and implementation patterns.
+
+## Core Concepts
+
+### EX-01: Training with Traceability
+**Definition**: A complete training workflow that captures comprehensive metadata about the training process, ensuring full reproducibility and lineage tracking.
+
+**Key Components**:
+- Model training execution
+- MLflow experiment tracking
+- Comprehensive metadata capture (dataset version, hyperparameters, environment snapshot)
+- Training artifact storage and versioning
+- Complete audit trail for reproducibility
+
+**Purpose**: Establishes the foundation for all ML workloads by ensuring every training run is fully traceable and reproducible.
+
+### EX-02: Artifact Bundling and Versioning
+**Definition**: The process of packaging trained models and associated artifacts into versioned, deployment-ready bundles with comprehensive metadata.
+
+**Key Components**:
+- Model serialization (PyTorch models, scalers, preprocessing pipelines)
+- Version registration in MLflow model registry
+- Artifact bundling (model + dependencies + metadata)
+- Semantic versioning and promotion tracking
+- Immutable artifact references
+
+**Purpose**: Creates portable, versioned model artifacts that can be reliably deployed across different environments.
+
+### EX-03: Local Deployment and Serving
+**Definition**: Local model deployment pattern using nbdev/Python for inference with comprehensive prediction logging and lineage preservation.
+
+**Key Components**:
+- Local model loading and inference
+- Prediction logging in JSONL format
+- Deployment metadata tracking
+- Local serving endpoints
+- Performance monitoring and drift detection
+
+**Purpose**: Enables local testing and validation of model artifacts in a controlled environment before production deployment.
+
+### First Vertical Slice (EX-01 → EX-02 → EX-03)
+**Definition**: The foundational implementation pattern that demonstrates the complete workflow from training to local deployment, serving as the reference implementation for understanding core ML deployment patterns.
+
+**Key Components**:
+- Complete end-to-end workflow implementation
+- Comprehensive metadata capture throughout the pipeline
+- Artifact versioning and promotion mechanisms
+- Local validation and testing capabilities
+- Reference implementation for extension patterns
+
+**Purpose**: Provides a concrete, working example of the ML deployment workflow that can be extended to more complex scenarios.
+
+## Architecture Components
+
+### Execution Backends
+**Definition**: The computational environments where ML workloads are executed, including local development, Slurm-based distributed training, and Kubernetes-managed services.
+
+**Types**:
+- **Local Execution**: Direct execution on development machine
+- **Slurm Execution**: Distributed training job orchestration
+- **Kubernetes Execution**: Containerized workload management
+
+**Purpose**: Abstracts the computational layer from the ML workflow, enabling consistent execution across different environments.
+
+### Web UI Contracts
+**Definition**: Standardized interfaces for notebook execution requests and run visibility summaries that enable immutable notebook execution without source modification.
+
+**Key Components**:
+- NotebookExecutionRequest: Structured request format
+- RunVisibility: Output sharing and access control
+- ExecutionOrchestrator: Backend routing logic
+- MLflow Integration: Run metadata and artifact linkage
+
+**Purpose**: Provides a consistent interface for triggering notebook executions and accessing results across different execution backends.
+
+### Governance Gates
+**Definition**: Implementation-phase control mechanisms that enforce specification-first development and quality requirements before allowing production-ready code changes.
+
+**Key Components**:
+- RepositoryPhase: specification_first vs implementation_enabled
+- OperationKind: implementation_blocked vs implementation_allowed
+- SpecQualityGate: Quality validation requirements
+- Transition Logic: Phase change enforcement
+
+**Purpose**: Ensures that implementation work meets quality standards and follows the proper specification-first approach.
+
+### MLflow Parity
+**Definition**: Configuration and utilities that ensure consistent MLflow behavior across local development and production environments.
+
+**Key Components**:
+- Storage Configuration: PostgreSQL/S3 backend setup
+- Tracking Configuration: URI and artifact root settings
+- Local Emulation: Floci + K3s + Slurm integration
+- Cloud Configuration: AWS-backed MLflow services
+
+**Purpose**: Provides a unified MLflow experience regardless of deployment topology.
+
+## Infrastructure Components
+
+### Nix Containerization
+**Definition**: Container definition approach using Nix dockerTools that eliminates Dockerfiles while maintaining Docker-first reproducibility.
+
+**Key Components**:
+- Nix dockerTools.buildImage: Container image construction
+- Multi-stage builds: Separated build and runtime stages
+- Immutable references: Pinned package versions
+- Layer optimization: Efficient caching and deduplication
+
+**Purpose**: Provides reproducible, versioned container images without Dockerfile dependency.
+
+### Terranix/OpenTofu
+**Definition**: Infrastructure-as-code approach using Terranix modules to generate OpenTofu JSON for AWS infrastructure provisioning.
+
+**Key Components**:
+- Terranix Modules: Shared and profile-specific definitions
+- OpenTofu JSON: Generated infrastructure configuration
+- Dual Profiles: local_emulation and cloud deployment
+- State Management: Infrastructure lifecycle management
+
+**Purpose**: Declarative infrastructure provisioning with version control and reproducibility.
+
+### Local Emulation Stack
+**Definition**: Local development environment that mirrors production control planes using Floci (AWS emulator), K3s (Kubernetes), and Slurm-Docker for compute orchestration.
+
+**Key Components**:
+- Floci: AWS service emulation
+- K3s: Lightweight Kubernetes
+- Slurm-Docker: Job orchestration
+- Service Composition: Integrated data and compute planes
+
+**Purpose**: Enables local development that closely matches production behavior without cloud dependencies.
+
+## Topologies
+
+### Local Development Topology
+**Definition**: Development environment focused on iterative model development and local validation with comprehensive traceability.
+
+**Key Components**:
+- Local execution backends
+- MLflow tracking with local storage
+- Containerized dependencies
+- Development-specific governance gates
+
+**Purpose**: Supports rapid iteration during model development while maintaining traceability and quality standards.
+
+### Distributed Training Topology
+**Definition**: Production topology for distributed model training using Lambda.ai with Slurm coordination and redundancy handling.
+
+**Key Components**:
+- Lambda.ai job submission
+- Slurm failure mode handling
+- Distributed training orchestration
+- Cross-job metadata synchronization
+
+**Purpose**: Enables scalable distributed training with fault tolerance and comprehensive job management.
+
+### Batch Inference Topology
+**Definition**: Production topology for batch inference processing with lineage preservation and cost controls.
+
+**Key Components**:
+- Batch job orchestration
+- Model artifact management
+- Output lineage tracking
+- Cost attribution and monitoring
+
+**Purpose**: Enables efficient batch processing with comprehensive lineage tracking and cost management.
+
+### Online Inference Topology
+**Definition**: Production topology for real-time model inference with deployment rollbacks, monitoring, and service health management.
+
+**Key Components**:
+- Containerized model serving
+- Deployment rollbacks
+- Service health monitoring
+- Real-time performance tracking
+
+**Purpose**: Provides reliable, production-ready online inference with comprehensive deployment controls.
+
+## Security and Governance
+
+### OIDC-backed Authorization
+**Definition**: Identity and access management system using OpenID Connect for centralized authentication and role-based access control.
+
+**Key Components**:
+- Identity providers (GitHub, Okta, etc.)
+- Role definitions and permissions
+- Access control policies
+- Audit logging and compliance
+
+**Purpose**: Ensures secure access to ML deployment resources with proper authentication and authorization.
+
+### Data Lineage
+**Definition**: Comprehensive tracking of data flow through the ML pipeline, including dataset versions, transformations, and model training lineage.
+
+**Key Components**:
+- Dataset version tracking
+- Feature engineering lineage
+- Model training metadata
+- Output artifact provenance
+
+**Purpose**: Ensures complete traceability of data through the ML lifecycle for compliance and reproducibility.
+
+### Model Traceability
+**Definition**: End-to-end tracking of model artifacts from training to deployment, including versioning, promotion, and deployment metadata.
+
+**Key Components**:
+- Model version management
+- Promotion pipeline tracking
+- Deployment metadata
+- Performance and drift monitoring
+
+**Purpose**: Ensures models can be traced from conception to production with complete metadata and version control.
+
+## Best Practices
+
+### Immutable Notebooks
+**Definition**: Notebook development approach where notebook source code remains immutable, and execution parameters are injected externally.
+
+**Key Components**:
+- Immutable notebook references (git commit SHA)
+- External parameter injection
+- Execution request/response contracts
+- Result caching and deduplication
+
+**Purpose**: Ensures notebook reproducibility while enabling parameter variation across different environments.
+
+### Docker-First Reproducibility
+**Definition**: Containerization approach where containers are built using Nix but run as standard Docker images without Nix runtime dependency.
+
+**Key Components**:
+- Nix-based container definition
+- Docker image output
+- No runtime Nix dependency
+- Standard Docker ecosystem compatibility
+
+**Purpose**: Provides reproducible container images that work with existing Docker/Kubernetes ecosystems.
+
+### Spec-First Development
+**Definition**: Development approach where specifications are defined and ratified before implementation begins, ensuring architectural consistency.
+
+**Key Components**:
+- Specification definition and ratification
+- Quality gates and validation
+- Implementation constraints
+- Architecture review processes
+
+**Purpose**: Ensures implementation work aligns with architectural requirements and quality standards.
+
+## Related Documentation
+
+- [Implementation Patterns](../reference/01_Implementation_Patterns.qmd): Detailed implementation guidance for EX-01 → EX-03 patterns
+- [API Documentation](../reference/02_API_Documentation.qmd): Technical API reference for contracts and interfaces
+- [Infrastructure Setup](../reference/03_Infrastructure_Setup.qmd): Infrastructure configuration and deployment guidance
+- [Architecture Details](../reference/04_Architecture_Details.qmd): Deep technical architecture and design decisions
+
+---
+
+*This glossary will be updated as the documentation evolves. For questions about terminology, please refer to the specific implementation patterns and architecture documentation.*

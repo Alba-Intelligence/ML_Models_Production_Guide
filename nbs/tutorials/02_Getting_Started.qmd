@@ -1,0 +1,290 @@
+---
+title: "Getting Started with ML Deploy"
+---
+
+# Getting Started with ML Deploy
+
+Welcome to the ML Deployment Reference! This guide will help you understand the platform and get started with your first ML deployment workflow.
+
+## What is ML Deploy?
+
+ML Deploy is a comprehensive reference platform for machine learning deployment, covering the complete lifecycle from model development to distributed production. It provides:
+
+- **Architecture-first guidance** with clear separation of concerns
+- **Implementation patterns** for common ML deployment scenarios
+- **Infrastructure-as-code** using Nix and Terranix/OpenTofu
+- **Comprehensive traceability** for data, models, and deployments
+- **Production-ready patterns** for distributed training, batch inference, and online serving
+
+## Target Audience
+
+This platform is designed for **ML engineers in hedge funds** who need to build reliable, traceable ML systems with strong governance and cost controls.
+
+### Primary User Types
+
+1. **Data Scientists & ML Researchers**
+   - Focus: Model development and experimentation
+   - Path: Training → Validation → Deployment
+   - Key Concerns: Reproducibility, traceability, model performance
+
+2. **MLOps Engineers**
+   - Focus: Infrastructure and deployment pipelines
+   - Path: Infrastructure → Orchestration → Monitoring
+   - Key Concerns: Scalability, reliability, observability
+
+3. **Infrastructure & Operations Engineers**
+   - Focus: Platform services and governance
+   - Path: Security → Cost → Compliance
+   - Key Concerns: Security, cost management, auditability
+
+## Platform Overview
+
+The ML Deploy platform is organized around five core components:
+
+### 1. System Components & Roles
+- **Notebook Repository**: Centralized notebook management and execution
+- **Execution Backends**: Local, Slurm, and Kubernetes compute environments
+- **MLflow Services**: Experiment tracking and model registry
+- **Infrastructure Services**: AWS and Kubernetes management
+- **Governance Framework**: Security, lineage, and quality controls
+
+### 2. Execution & Data Flow
+- **Notebook Execution**: Immutable notebook execution with external parameter injection
+- **Data Lineage**: Complete tracking from data to models to deployments
+- **Model Promotion**: DEV→UAT→REGRESSION→PROD pipeline with approval gates
+- **Cost Attribution**: Cross-platform cost tracking and optimization
+
+### 3. Deployment & Infrastructure
+- **Local Emulation**: Floci + K3s + Slurm for local development
+- **Cloud Integration**: AWS Kubernetes and Lambda.ai services
+- **Infrastructure-as-Code**: Terranix/OpenTofu for declarative provisioning
+- **Containerization**: Nix-based container definitions with Docker compatibility
+
+### 4. Security & Authorization
+- **OIDC Integration**: Centralized authentication and role-based access
+- **Capability Catalogs**: Fine-grained permission management
+- **Audit Trail**: Complete logging of all actions and decisions
+- **Secret Management**: Secure credential injection and rotation
+
+### 5. Monitoring & Observability
+- **Model Monitoring**: Drift detection, performance tracking, quality metrics
+- **Infrastructure Monitoring**: Resource utilization, service health, cost tracking
+- **Application Monitoring**: Request tracing, error tracking, performance metrics
+- **Business Metrics**: Model performance, business impact, ROI tracking
+
+## Learning Paths
+
+Choose your starting point based on your role and experience level:
+
+### For New ML Engineers (Beginner Path)
+
+1. **Core Concepts** (30 minutes)
+   - Read the [Terminology Glossary](01_Terminology_Glossary.qmd)
+   - Understand EX-01, EX-02, EX-03 patterns
+   - Get familiar with key architectural components
+
+2. **Quick Start** (1 hour)
+   - Set up your development environment
+   - Run the MLflow + XGBoost example
+   - Understand local workflow basics
+
+3. **First Vertical Slice** (2 hours)
+   - Implement EX-01 → EX-03 workflow
+   - Understand traceability and artifact management
+   - Practice local deployment and serving
+
+4. **Advanced Patterns** (4-6 hours)
+   - Explore distributed training
+   - Understand batch and online inference
+   - Learn infrastructure management
+
+### For Experienced ML Engineers (Fast Track)
+
+1. **Architecture Overview** (1 hour)
+   - Review [System Architecture](../reference/04_Architecture_Details.qmd)
+   - Understand contracts and interfaces
+   - Get familiar with governance framework
+
+2. **Implementation Patterns** (2-3 hours)
+   - Study EX-01 → EX-03 patterns
+   - Review API documentation
+   - Understand infrastructure setup
+
+3. **Production Patterns** (3-4 hours)
+   - Explore distributed training scenarios
+   - Study batch and online inference
+   - Learn monitoring and cost management
+
+### For Infrastructure Engineers (Infrastructure Path)
+
+1. **Infrastructure Overview** (1 hour)
+   - Understand Nix/Terranix approach
+   - Learn containerization strategy
+   - Review deployment topologies
+
+2. **Setup and Configuration** (2-3 hours)
+   - Configure local emulation stack
+   - Set up cloud infrastructure
+   - Understand security and networking
+
+3. **Operations and Monitoring** (2-3 hours)
+   - Learn deployment management
+   - Understand monitoring stack
+   - Practice cost optimization
+
+## Quick Start Tutorial
+
+Let's walk through a simple MLflow + XGBoost example to get you started:
+
+### Step 1: Set Up Your Environment
+
+```bash
+# Clone the repository
+git clone <repository-url>
+cd ml-deploy
+
+# Start development shell
+nix develop
+
+# Launch Jupyter
+start-jupyter
+```
+
+### Step 2: Run the MLflow Example
+
+Open the [Core Package and MLflow XGBoost Quickstart](../nbs/01_04-core_concepts.qmd) notebook and execute the XGBoost example to see:
+
+- MLflow experiment tracking
+- Model training and logging
+- Artifact management
+- Basic traceability
+
+### Step 3: Understand the First Vertical Slice
+
+Study the [Implementation Patterns](../reference/01_Implementation_Patterns.qmd) to understand:
+
+- EX-01: Training with Traceability
+- EX-02: Artifact Bundling and Versioning
+- EX-03: Local Deployment and Serving
+
+### Step 4: Explore Advanced Scenarios
+
+Once you're comfortable with the basics, explore:
+
+- [Distributed Training](../tutorials/04_Advanced_Scenarios.qmd)
+- [Batch Inference](../tutorials/04_Advanced_Scenarios.qmd)
+- [Online Serving](../tutorials/04_Advanced_Scenarios.qmd)
+
+## Key Concepts to Master
+
+### Core Patterns
+
+1. **EX-01: Training with Traceability**
+   - Complete training workflow with ML tracking
+   - Comprehensive metadata capture
+   - Reproducible execution
+
+2. **EX-02: Artifact Bundling and Versioning**
+   - Model packaging and versioning
+   - Artifact registry management
+   - Promotion tracking
+
+3. **EX-03: Local Deployment and Serving**
+   - Local model inference
+   - Prediction logging
+   - Performance validation
+
+### Infrastructure Components
+
+1. **Nix Containerization**
+   - Container definitions without Dockerfiles
+   - Reproduducible builds
+   - Docker-first compatibility
+
+2. **Terranix/OpenTofu**
+   - Infrastructure-as-code
+   - Version-controlled provisioning
+   - Multi-profile support
+
+3. **Local Emulation Stack**
+   - Floci (AWS emulator)
+   - K3s (Kubernetes)
+   - Slurm-Docker (orchestration)
+
+### Governance and Security
+
+1. **Spec-First Development**
+   - Specification before implementation
+   - Quality gates and validation
+   - Architecture consistency
+
+2. **Data Lineage**
+   - Complete data flow tracking
+   - Model training provenance
+   - Output artifact tracing
+
+3. **Cost Management**
+   - Cross-platform cost tracking
+   - Resource optimization
+   - Budget management
+
+## Next Steps
+
+After completing this getting started guide:
+
+1. **Deep Dive**: Choose your learning path based on your role
+2. **Hands-on Practice**: Implement the examples in your environment
+3. **Explore Patterns**: Study the implementation patterns in detail
+4. **Setup Infrastructure**: Configure your local or cloud environment
+5. **Join Community**: Engage with the ML Deploy community
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Environment Setup Problems**
+   - Ensure Nix shell is properly configured
+   - Check Python environment activation
+   - Verify Jupyter kernel setup
+
+2. **MLflow Connection Issues**
+   - Check MLflow tracking URI configuration
+   - Verify database connectivity
+   - Ensure proper artifact storage setup
+
+3. **Execution Problems**
+   - Check execution backend configuration
+   - Verify resource availability
+   - Review governance gate requirements
+
+### Getting Help
+
+1. **Documentation**: Check the comprehensive documentation
+2. **Examples**: Study the implementation patterns
+3. **Community**: Engage with the ML Deploy community
+4. **Support**: Report issues and request features
+
+## Resources
+
+### Documentation
+
+- [Terminology Glossary](01_Terminology_Glossary.qmd): Complete term definitions
+- [Implementation Patterns](../reference/01_Implementation_Patterns.qmd): Technical implementation guidance
+- [API Documentation](../reference/02_API_Documentation.qmd): Interface specifications
+- [Infrastructure Setup](../reference/03_Infrastructure_Setup.qmd): Configuration guides
+
+### Code Examples
+
+- [Core Package Example](../nbs/01_04-core_concepts.qmd): MLflow + XGBoost quickstart
+- [Vertical Slice Implementation](../reference/01_Implementation_Patterns.qmd): Complete workflow example
+- [API Contracts](../reference/02_API_Documentation.qmd): Interface implementations
+
+### Tools and Utilities
+
+- [Nix Shell](../architecture/dev-environment.md): Development environment setup
+- [MLflow Configuration](../reference/02_API_Documentation.qmd): MLflow setup utilities
+- [Infrastructure Tools](../reference/03_Infrastructure_Setup.qmd): Infrastructure management tools
+
+---
+
+*This getting started guide will be expanded based on user feedback and evolving platform capabilities. For questions or suggestions, please refer to the community resources.*
