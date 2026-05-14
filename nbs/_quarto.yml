@@ -4,6 +4,8 @@ project:
   render:
     - "*.qmd"
     - "index.qmd"
+    - "tutorials/*.qmd"
+    - "reference/*.qmd"
 
 format:
   html:
@@ -24,31 +26,37 @@ website:
     style: floating
     contents:
       - index.qmd
-      - section: "Platform Overview"
+      - navigation-guide.qmd
+      - reading-paths.qmd
+      - section: "📚 Tutorials"
+        contents:
+          - tutorials/01_Terminology_Glossary.qmd
+          - tutorials/02_Getting_Started.qmd
+          - tutorials/03_Concepts_and_Architecture.qmd
+          - tutorials/04_End_to_End_Workflow.qmd
+          - tutorials/05_Advanced_Scenarios.qmd
+          - tutorials/06_Migration_Guide.qmd
+      - section: "🔧 Technical Reference"
+        contents:
+          - reference/01_Implementation_Patterns.qmd
+          - reference/02_API_Documentation.qmd
+      - section: "🏗️ Original Documentation (Legacy)"
         contents:
           - 01_01-getting_started.qmd
           - 01_02-platform_introduction.qmd
           - 01_03-platform_architecture.qmd
           - 01_04-core_concepts.qmd
-      - section: "ML Development"
-        contents:
           - 02_01-data_management.qmd
           - 02_02-model_development.qmd
           - 02_03-mlflow_integration.qmd
           - 02_04-complete_workflow.qmd
-      - section: "Infrastructure & Operations"
-        contents:
           - 03_01-infrastructure_as_code.qmd
           - 03_02-infrastructure_management.qmd
           - 03_03-local_development.qmd
           - 03_04-terraniq_integration.qmd
-      - section: "System Integration & Governance"
-        contents:
           - 04_01-execution_framework.qmd
           - 04_02-notebook_management.qmd
           - 04_03-api_contracts.qmd
           - 04_04-user_interfaces.qmd
           - 04_05-governance_framework.qmd
-      - section: "Architecture & Design"
-        contents:
           - 05_01-system_architecture.qmd

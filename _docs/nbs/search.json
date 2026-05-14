@@ -900,5 +900,19 @@
       "System Integration & Governance",
       "Governance Gates"
     ]
+  },
+  {
+    "objectID": "test-config.html",
+    "href": "test-config.html",
+    "title": "Test Configuration",
+    "section": "",
+    "text": "This is a test page to verify the Quarto configuration is working correctly.\n\n✅ Quarto configuration should work\n✅ New directory structure should be recognized\n✅ CSS styling should apply\n\n\n\n\nMain Index\nNavigation Guide\nTerminology Glossary\nAPI Documentation"
+  },
+  {
+    "objectID": "test-config.html#links-test",
+    "href": "test-config.html#links-test",
+    "title": "Test Configuration",
+    "section": "",
+    "text": "Main Index\nNavigation Guide\nTerminology Glossary\nAPI Documentation"
   }
 ]
