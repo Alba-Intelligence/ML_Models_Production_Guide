@@ -507,32 +507,40 @@ architectural standards.
 - **[API Documentation](../reference/02_API_Documentation.qmd)**:
   Complete technical API reference for contracts, interfaces, and
   integration points
-- **[Infrastructure Setup](../reference/03_Infrastructure_Setup.qmd)**:
-  Infrastructure configuration, deployment procedures, and environment
-  setup
+- **[Infrastructure
+  Setup](../reference/01_Implementation_Patterns.qmd)**: Infrastructure
+  configuration, deployment procedures, and environment setup (see
+  Implementation Patterns section)
 
 ### Architecture and Design Documents
 
-- **[Architecture Overview](../reference/04_Architecture_Details.qmd)**:
-  Deep technical architecture review and design decisions
+- **[Architecture
+  Overview](../reference/01_Implementation_Patterns.qmd)**: Deep
+  technical architecture review and design decisions (see Implementation
+  Patterns section)
 - **[Security
-  Architecture](../reference/05_Security_Architecture.qmd)**: Security
-  model, threat analysis, and compliance requirements
+  Architecture](../reference/01_Implementation_Patterns.qmd)**: Security
+  model, threat analysis, and compliance requirements (see
+  Implementation Patterns section)
 - **[Performance
-  Guidelines](../reference/06_Performance_Guidelines.qmd)**: Performance
-  optimization strategies and best practices
+  Guidelines](../reference/01_Implementation_Patterns.qmd)**:
+  Performance optimization strategies and best practices (see
+  Implementation Patterns section)
 
 ### Operational Documentation
 
 - **[Deployment
-  Procedures](../reference/07_Deployment_Procedures.qmd)**: Step-by-step
-  deployment guides and operational procedures
+  Procedures](../reference/01_Implementation_Patterns.qmd)**:
+  Step-by-step deployment guides and operational procedures (see
+  Implementation Patterns section)
 - **[Monitoring and
-  Observability](../reference/08_Monitoring_Observability.qmd)**:
-  Monitoring strategies, alerting, and operational visibility
+  Observability](../reference/01_Implementation_Patterns.qmd)**:
+  Monitoring strategies, alerting, and operational visibility (see
+  Implementation Patterns section)
 - **[Troubleshooting
-  Guide](../reference/09_Troubleshooting_Guide.qmd)**: Common issues,
-  debugging procedures, and resolution strategies
+  Guide](../reference/01_Implementation_Patterns.qmd)**: Common issues,
+  debugging procedures, and resolution strategies (see Implementation
+  Patterns section)
 
 ------------------------------------------------------------------------
 
