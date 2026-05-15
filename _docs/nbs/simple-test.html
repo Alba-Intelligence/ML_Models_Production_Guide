@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Stack Introduction</title>
+<title>Simple Build Test</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -68,15 +103,12 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
-<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
-<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="styles.css">
-<meta property="og:title" content="Stack Introduction">
+<meta property="og:title" content="Simple Build Test">
 <meta property="og:description" content="">
-<meta name="twitter:title" content="Stack Introduction">
+<meta name="twitter:title" content="Simple Build Test">
 <meta name="twitter:description" content="">
 <meta name="twitter:card" content="summary">
 </head>
@@ -97,7 +129,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_01-getting_started.html">🏗️ Original Documentation (Legacy)</a></li><li class="breadcrumb-item"><a href="./01_02-platform_introduction.html">Stack Introduction</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Simple Build Test</li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -119,6 +151,12 @@ ul.task-list li input[type="checkbox"] {
   <div class="sidebar-item-container"> 
   <a href="./navigation-guide.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Navigation Guide</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reading-paths.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reading Paths</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -194,7 +232,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">🏗️ Original Documentation (Legacy)</span></a>
+ <span class="menu-text">🏗️ Full Documentation</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -208,7 +246,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./01_02-platform_introduction.html" class="sidebar-item-text sidebar-link active">
+  <a href="./01_02-platform_introduction.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Stack Introduction</span></a>
   </div>
 </li>
@@ -320,32 +358,24 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
+  <li><a href="#simple-build-test" id="toc-simple-build-test" class="nav-link active" data-scroll-target="#simple-build-test">Simple Build Test</a>
   <ul class="collapse">
-  <li><a href="#purpose" id="toc-purpose" class="nav-link" data-scroll-target="#purpose">Purpose</a></li>
-  <li><a href="#system-at-a-glance" id="toc-system-at-a-glance" class="nav-link" data-scroll-target="#system-at-a-glance">System-at-a-glance</a></li>
-  <li><a href="#software-stack-summary" id="toc-software-stack-summary" class="nav-link" data-scroll-target="#software-stack-summary">Software stack summary</a>
+  <li><a href="#test-content" id="toc-test-content" class="nav-link" data-scroll-target="#test-content">Test Content</a>
   <ul class="collapse">
-  <li><a href="#infrastructure-and-governance" id="toc-infrastructure-and-governance" class="nav-link" data-scroll-target="#infrastructure-and-governance">Infrastructure and Governance</a></li>
-  <li><a href="#development-and-workflow" id="toc-development-and-workflow" class="nav-link" data-scroll-target="#development-and-workflow">Development and Workflow</a></li>
-  <li><a href="#execution-and-monitoring" id="toc-execution-and-monitoring" class="nav-link" data-scroll-target="#execution-and-monitoring">Execution and Monitoring</a></li>
-  <li><a href="#data-and-tracking" id="toc-data-and-tracking" class="nav-link" data-scroll-target="#data-and-tracking">Data and Tracking</a></li>
-  <li><a href="#local-environment" id="toc-local-environment" class="nav-link" data-scroll-target="#local-environment">Local Environment</a></li>
-  <li><a href="#quality-and-access" id="toc-quality-and-access" class="nav-link" data-scroll-target="#quality-and-access">Quality and Access</a></li>
+  <li><a href="#list-items" id="toc-list-items" class="nav-link" data-scroll-target="#list-items">List Items</a></li>
+  <li><a href="#code-block" id="toc-code-block" class="nav-link" data-scroll-target="#code-block">Code Block</a></li>
+  <li><a href="#test-links" id="toc-test-links" class="nav-link" data-scroll-target="#test-links">Test Links</a></li>
   </ul></li>
-  <li><a href="#localcloud-topology" id="toc-localcloud-topology" class="nav-link" data-scroll-target="#localcloud-topology">Local/cloud topology</a></li>
-  <li><a href="#lifecycle-flow" id="toc-lifecycle-flow" class="nav-link" data-scroll-target="#lifecycle-flow">Lifecycle flow</a></li>
-  <li><a href="#where-to-go-next" id="toc-where-to-go-next" class="nav-link" data-scroll-target="#where-to-go-next">Where to go next</a></li>
   </ul></li>
   </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="01_02-platform_introduction.md"><i class="bi bi-file-code"></i>CommonMark</a></li></ul></div></nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="simple-test.md"><i class="bi bi-file-code"></i>CommonMark</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_01-getting_started.html">🏗️ Original Documentation (Legacy)</a></li><li class="breadcrumb-item"><a href="./01_02-platform_introduction.html">Stack Introduction</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Stack Introduction</h1>
+<h1 class="title">Simple Build Test</h1>
 </div>
 
 
@@ -362,141 +392,36 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="introduction" class="level1">
-<h1>Introduction</h1>
-<p>This page is the front door for MLOps engineers joining the project. It starts with the purpose of the repository, then builds up from the broadest architectural principles into the concrete stack and runtime topology.</p>
-<section id="purpose" class="level2">
-<h2 class="anchored" data-anchor-id="purpose">Purpose</h2>
-<p>The repository exists to guide ML engineers through a complete, specification-first MLOps reference system: how to author it, how to govern it, how to run it locally or in cloud, and how to promote both models and platform changes safely.</p>
-</section>
-<section id="system-at-a-glance" class="level2">
-<h2 class="anchored" data-anchor-id="system-at-a-glance">System-at-a-glance</h2>
-<p>The repository is a specification-first, documentation-first ML deployment guide with executable reference modules. It combines:</p>
+<section id="simple-build-test" class="level1">
+<h1>Simple Build Test</h1>
+<p>This file tests the basic Quarto build functionality without complex kernels.</p>
+<section id="test-content" class="level2">
+<h2 class="anchored" data-anchor-id="test-content">Test Content</h2>
+<p>This is a simple test to verify the build system works correctly.</p>
+<section id="list-items" class="level3">
+<h3 class="anchored" data-anchor-id="list-items">List Items</h3>
 <ul>
-<li><strong>Purpose and governance</strong> through explicit policy gates and contract-driven workflows.</li>
-<li><strong>Canonical authoring workflow</strong> through nbdev + Quarto/QMD for ML researchers and architecture writers.</li>
-<li><strong>Centralized authorization</strong> through OIDC-backed identity and policy-driven capability validation.</li>
-<li><strong>WebUI-first operations</strong> for triggering notebook execution and monitoring run state.</li>
-<li><strong>Notebook-owned implementation modules</strong> exported through nbdev.</li>
-<li><strong>Shared notebook source repository</strong> used by both local emulation and cloud profiles.</li>
-<li><strong>Local/cloud parity</strong> for infrastructure and runtime wiring.</li>
-<li><strong>Traceable ML lifecycle</strong> through MLflow and stage-based promotion gates.</li>
-<li><strong>MLOps promotion control</strong> for Nix/Terranix/OpenTofu system-definition changes.</li>
-<li><strong>Security, observability, and cost visibility</strong> as first-class cross-cutting concerns.</li>
+<li>First item</li>
+<li>Second item</li>
+<li>Third item</li>
 </ul>
 </section>
-<section id="software-stack-summary" class="level2">
-<h2 class="anchored" data-anchor-id="software-stack-summary">Software stack summary</h2>
-<p>The stack below is ordered from the most structuring choices to the most implementation-local ones.</p>
-<section id="infrastructure-and-governance" class="level3">
-<h3 class="anchored" data-anchor-id="infrastructure-and-governance">Infrastructure and Governance</h3>
+<section id="code-block" class="level3">
+<h3 class="anchored" data-anchor-id="code-block">Code Block</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Hello, World!"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="test-links" class="level3">
+<h3 class="anchored" data-anchor-id="test-links">Test Links</h3>
 <ul>
-<li><strong>Authorization</strong>: OIDC IdP + Policy Engine for role management</li>
-<li><strong>Promotion Gates</strong>: Model Artifacts + MLOps for DEV→UAT→REGRESSION→PROD approvals</li>
-<li><strong>Infrastructure</strong>: Nix + Terranix for Docker/Compose/OpenTofu artifacts</li>
+<li><a href="./index.html">Main Index</a></li>
+<li><a href="./navigation-guide.html">Navigation Guide</a></li>
+<li><a href="./reading-paths.html">Reading Paths</a></li>
 </ul>
-</section>
-<section id="development-and-workflow" class="level3">
-<h3 class="anchored" data-anchor-id="development-and-workflow">Development and Workflow</h3>
-<ul>
-<li><strong>Package/Module</strong>: nbdev + Quarto for ML-researcher workflow</li>
-<li><strong>Python</strong>: uv2nix + uv for Nix-controlled dependencies</li>
-<li><strong>Documentation</strong>: Quarto + Mermaid for publishable architecture docs</li>
-</ul>
-</section>
-<section id="execution-and-monitoring" class="level3">
-<h3 class="anchored" data-anchor-id="execution-and-monitoring">Execution and Monitoring</h3>
-<ul>
-<li><strong>Web Control</strong>: WebUI + Contracts for execution and monitoring</li>
-<li><strong>Notebooks</strong>: Shared Repository for local/cloud common source</li>
-<li><strong>Orchestration</strong>: Airflow for pipeline workflows</li>
-<li><strong>Kubernetes</strong>: Kubeflow (optional) for K8s ML pipeline layer</li>
-</ul>
-</section>
-<section id="data-and-tracking" class="level3">
-<h3 class="anchored" data-anchor-id="data-and-tracking">Data and Tracking</h3>
-<ul>
-<li><strong>Tracking</strong>: MLflow for run metadata and models</li>
-<li><strong>Lineage</strong>: MLflow Metadata for data training traceability</li>
-<li><strong>Execution</strong>: Local/Slurm/K8s for compute routing</li>
-<li><strong>Storage</strong>: PostgreSQL + S3 for tracking and artifacts</li>
-</ul>
-</section>
-<section id="local-environment" class="level3">
-<h3 class="anchored" data-anchor-id="local-environment">Local Environment</h3>
-<ul>
-<li><strong>Local Emulation</strong>: Docker + Floci + K3s for local compute</li>
-<li><strong>Observability</strong>: Prometheus + Grafana for metrics and telemetry</li>
-<li><strong>Cost Visibility</strong>: AWS Tools for spend reporting</li>
-</ul>
-</section>
-<section id="quality-and-access" class="level3">
-<h3 class="anchored" data-anchor-id="quality-and-access">Quality and Access</h3>
-<ul>
-<li><strong>Assistants</strong>: Read-first + MCP for controlled access to facts</li>
-<li><strong>Runtime</strong>: Python 3.13 for implementation modules</li>
-<li><strong>CI Gate</strong>: GitHub Actions for export and testing</li>
-<li><strong>Validation</strong>: unittest suite for contract and freshness checks</li>
-</ul>
-<p>TODO: reorder the table rows in order of importance (what is most structuring to the whoe rpoject to the least) TODO: Python+uv:2~Should use uv2nix as to minimise the use of environments not reproducible and/or controled by Nix. TODO: nbdev / qmd:2~nbdev is the way ML researcher control they workflow (along with the MLflow and/or webUI interface). qmd is aspirationally the way to control the Nix-driven architecture.</p>
-<p>TODO: The order of the description needs improving. General to specifics to show how to fit pieces together.</p>
-</section>
-</section>
-<section id="localcloud-topology" class="level2">
-<h2 class="anchored" data-anchor-id="localcloud-topology">Local/cloud topology</h2>
-<ol type="1">
-<li><strong>Local emulation profile</strong>: Docker Compose services for MLflow, PostgreSQL, Floci, Traefik, and local compute services (K3s + Slurm).</li>
-<li><strong>Cloud profile</strong>: AWS-hosted services with Traefik-fronted MLflow, PostgreSQL and S3-backed artifacts, and scheduler-integrated execution pathways.</li>
-<li><strong>Generated artifacts</strong>: Nix/Terranix is the canonical source that generates Docker, Docker Compose, and OpenTofu JSON artifacts.</li>
-<li><strong>Kubeflow placement</strong>: Kubeflow Pipelines sits in the Kubernetes execution lane; it is optional and complements Airflow orchestration rather than replacing Slurm-based paths.</li>
-<li><strong>Local testing/emulation</strong>: Kubeflow can run locally on K3s for workflow testing and parity checks before cloud rollout.</li>
-<li><strong>Security and governance</strong>: OIDC-backed identity plus a centralized policy engine governs roles, capabilities, audit, and request validation across systems and subsystems.</li>
-<li><strong>MLOps promotion</strong>: model artifacts and MLOps system-definition changes both use DEV→UAT→REGRESSION→PROD promotion gates.</li>
-<li><strong>Assistant access</strong>: infrastructure and documentation assistants stay read-first, least-privilege, and auditable.</li>
-</ol>
-</section>
-<section id="lifecycle-flow" class="level2">
-<h2 class="anchored" data-anchor-id="lifecycle-flow">Lifecycle flow</h2>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart LR
-    NotebookSource["Shared Notebook Repository"] --&gt; Docs["Quarto Docs (QMD)"]
-    NotebookSource --&gt; Modules["nbdev Exported Python Modules"]
-    WebUI["WebUI Control Plane"] --&gt; Runtime["Execution Backends (Local/Slurm/K8s)"]
-    Docs --&gt; WebUI
-    Modules --&gt; Runtime
-    Airflow["Airflow Orchestration"] --&gt; Runtime
-    Airflow --&gt; Kubeflow["Kubeflow Pipelines (K8s lane)"]
-    Kubeflow --&gt; Runtime
-    Runtime --&gt; Tracking["MLflow Tracking + Registry"]
-    Tracking --&gt; Gates["Promotion Gates (DEV-&gt;UAT-&gt;REGRESSION-&gt;PROD)"]
-    Gates --&gt; Infra["Nix/Terranix/OpenTofu + Docker Artifacts"]
-    Auth["OIDC IdP + Central Policy Engine"] --&gt; WebUI
-    Auth --&gt; Runtime
-    Auth --&gt; Infra
-    Auth --&gt; Gates
-    Observability["Prometheus + Grafana + Audit Logs"] --&gt; Tracking
-    Cost["AWS Cost Explorer + CUR + Athena + Budgets"] --&gt; Infra
-    Assistant["Read-first MCP / Docs Retrieval"] --&gt; Docs
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-</section>
-<section id="where-to-go-next" class="level2">
-<h2 class="anchored" data-anchor-id="where-to-go-next">Where to go next</h2>
-<ul>
-<li>Platform architecture narrative: <a href="./01_03-platform_architecture.html"><code>01_platform_narrative.qmd</code></a></li>
-<li>Runtime and orchestration modules: <a href="./02_03-mlflow_integration.html"><code>07_mlflow_parity.qmd</code></a>, <a href="./04_01-execution_framework.html"><code>08_execution_backends.qmd</code></a>, <a href="./03_02-infrastructure_management.html"><code>14_infrastructure_mcp.qmd</code></a></li>
-<li>Governance and promotion gates: <a href="./04_05-governance_framework.html"><code>17_governance_gates.qmd</code></a></li>
-</ul>
+<hr>
+<p><em>This test file should build without any kernel issues.</em></p>
 
 
+</section>
 </section>
 </section>
 

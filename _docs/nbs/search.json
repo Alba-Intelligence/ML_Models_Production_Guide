@@ -914,5 +914,468 @@
     "title": "Test Configuration",
     "section": "",
     "text": "Main Index\nNavigation Guide\nTerminology Glossary\nAPI Documentation"
+  },
+  {
+    "objectID": "tutorials/01_Terminology_Glossary.html",
+    "href": "tutorials/01_Terminology_Glossary.html",
+    "title": "ML Deploy Terminology Glossary",
+    "section": "",
+    "text": "This glossary provides clear, standardized definitions for key terms used throughout the ML deployment reference documentation. Understanding these terms is essential for navigating the platform architecture and implementation patterns.\n\n\n\n\nDefinition: A complete training workflow that captures comprehensive metadata about the training process, ensuring full reproducibility and lineage tracking.\nKey Components: - Model training execution - MLflow experiment tracking - Comprehensive metadata capture (dataset version, hyperparameters, environment snapshot) - Training artifact storage and versioning - Complete audit trail for reproducibility\nPurpose: Establishes the foundation for all ML workloads by ensuring every training run is fully traceable and reproducible.\n\n\n\nDefinition: The process of packaging trained models and associated artifacts into versioned, deployment-ready bundles with comprehensive metadata.\nKey Components: - Model serialization (PyTorch models, scalers, preprocessing pipelines) - Version registration in MLflow model registry - Artifact bundling (model + dependencies + metadata) - Semantic versioning and promotion tracking - Immutable artifact references\nPurpose: Creates portable, versioned model artifacts that can be reliably deployed across different environments.\n\n\n\nDefinition: Local model deployment pattern using nbdev/Python for inference with comprehensive prediction logging and lineage preservation.\nKey Components: - Local model loading and inference - Prediction logging in JSONL format - Deployment metadata tracking - Local serving endpoints - Performance monitoring and drift detection\nPurpose: Enables local testing and validation of model artifacts in a controlled environment before production deployment.\n\n\n\nDefinition: The foundational implementation pattern that demonstrates the complete workflow from training to local deployment, serving as the reference implementation for understanding core ML deployment patterns.\nKey Components: - Complete end-to-end workflow implementation - Comprehensive metadata capture throughout the pipeline - Artifact versioning and promotion mechanisms - Local validation and testing capabilities - Reference implementation for extension patterns\nPurpose: Provides a concrete, working example of the ML deployment workflow that can be extended to more complex scenarios.\n\n\n\n\n\n\nDefinition: The computational environments where ML workloads are executed, including local development, Slurm-based distributed training, and Kubernetes-managed services.\nTypes: - Local Execution: Direct execution on development machine - Slurm Execution: Distributed training job orchestration - Kubernetes Execution: Containerized workload management\nPurpose: Abstracts the computational layer from the ML workflow, enabling consistent execution across different environments.\n\n\n\nDefinition: Standardized interfaces for notebook execution requests and run visibility summaries that enable immutable notebook execution without source modification.\nKey Components: - NotebookExecutionRequest: Structured request format - RunVisibility: Output sharing and access control - ExecutionOrchestrator: Backend routing logic - MLflow Integration: Run metadata and artifact linkage\nPurpose: Provides a consistent interface for triggering notebook executions and accessing results across different execution backends.\n\n\n\nDefinition: Implementation-phase control mechanisms that enforce specification-first development and quality requirements before allowing production-ready code changes.\nKey Components: - RepositoryPhase: specification_first vs implementation_enabled - OperationKind: implementation_blocked vs implementation_allowed - SpecQualityGate: Quality validation requirements - Transition Logic: Phase change enforcement\nPurpose: Ensures that implementation work meets quality standards and follows the proper specification-first approach.\n\n\n\nDefinition: Configuration and utilities that ensure consistent MLflow behavior across local development and production environments.\nKey Components: - Storage Configuration: PostgreSQL/S3 backend setup - Tracking Configuration: URI and artifact root settings - Local Emulation: Floci + K3s + Slurm integration - Cloud Configuration: AWS-backed MLflow services\nPurpose: Provides a unified MLflow experience regardless of deployment topology.\n\n\n\n\n\n\nDefinition: Container definition approach using Nix dockerTools that eliminates Dockerfiles while maintaining Docker-first reproducibility.\nKey Components: - Nix dockerTools.buildImage: Container image construction - Multi-stage builds: Separated build and runtime stages - Immutable references: Pinned package versions - Layer optimization: Efficient caching and deduplication\nPurpose: Provides reproducible, versioned container images without Dockerfile dependency.\n\n\n\nDefinition: Infrastructure-as-code approach using Terranix modules to generate OpenTofu JSON for AWS infrastructure provisioning.\nKey Components: - Terranix Modules: Shared and profile-specific definitions - OpenTofu JSON: Generated infrastructure configuration - Dual Profiles: local_emulation and cloud deployment - State Management: Infrastructure lifecycle management\nPurpose: Declarative infrastructure provisioning with version control and reproducibility.\n\n\n\nDefinition: Local development environment that mirrors production control planes using Floci (AWS emulator), K3s (Kubernetes), and Slurm-Docker for compute orchestration.\nKey Components: - Floci: AWS service emulation - K3s: Lightweight Kubernetes - Slurm-Docker: Job orchestration - Service Composition: Integrated data and compute planes\nPurpose: Enables local development that closely matches production behavior without cloud dependencies.\n\n\n\n\n\n\nDefinition: Development environment focused on iterative model development and local validation with comprehensive traceability.\nKey Components: - Local execution backends - MLflow tracking with local storage - Containerized dependencies - Development-specific governance gates\nPurpose: Supports rapid iteration during model development while maintaining traceability and quality standards.\n\n\n\nDefinition: Production topology for distributed model training using Lambda.ai with Slurm coordination and redundancy handling.\nKey Components: - Lambda.ai job submission - Slurm failure mode handling - Distributed training orchestration - Cross-job metadata synchronization\nPurpose: Enables scalable distributed training with fault tolerance and comprehensive job management.\n\n\n\nDefinition: Production topology for batch inference processing with lineage preservation and cost controls.\nKey Components: - Batch job orchestration - Model artifact management - Output lineage tracking - Cost attribution and monitoring\nPurpose: Enables efficient batch processing with comprehensive lineage tracking and cost management.\n\n\n\nDefinition: Production topology for real-time model inference with deployment rollbacks, monitoring, and service health management.\nKey Components: - Containerized model serving - Deployment rollbacks - Service health monitoring - Real-time performance tracking\nPurpose: Provides reliable, production-ready online inference with comprehensive deployment controls.\n\n\n\n\n\n\nDefinition: Identity and access management system using OpenID Connect for centralized authentication and role-based access control.\nKey Components: - Identity providers (GitHub, Okta, etc.) - Role definitions and permissions - Access control policies - Audit logging and compliance\nPurpose: Ensures secure access to ML deployment resources with proper authentication and authorization.\n\n\n\nDefinition: Comprehensive tracking of data flow through the ML pipeline, including dataset versions, transformations, and model training lineage.\nKey Components: - Dataset version tracking - Feature engineering lineage - Model training metadata - Output artifact provenance\nPurpose: Ensures complete traceability of data through the ML lifecycle for compliance and reproducibility.\n\n\n\nDefinition: End-to-end tracking of model artifacts from training to deployment, including versioning, promotion, and deployment metadata.\nKey Components: - Model version management - Promotion pipeline tracking - Deployment metadata - Performance and drift monitoring\nPurpose: Ensures models can be traced from conception to production with complete metadata and version control.\n\n\n\n\n\n\nDefinition: Notebook development approach where notebook source code remains immutable, and execution parameters are injected externally.\nKey Components: - Immutable notebook references (git commit SHA) - External parameter injection - Execution request/response contracts - Result caching and deduplication\nPurpose: Ensures notebook reproducibility while enabling parameter variation across different environments.\n\n\n\nDefinition: Containerization approach where containers are built using Nix but run as standard Docker images without Nix runtime dependency.\nKey Components: - Nix-based container definition - Docker image output - No runtime Nix dependency - Standard Docker ecosystem compatibility\nPurpose: Provides reproducible container images that work with existing Docker/Kubernetes ecosystems.\n\n\n\nDefinition: Development approach where specifications are defined and ratified before implementation begins, ensuring architectural consistency.\nKey Components: - Specification definition and ratification - Quality gates and validation - Implementation constraints - Architecture review processes\nPurpose: Ensures implementation work aligns with architectural requirements and quality standards.\n\n\n\n\n\nImplementation Patterns: Detailed implementation guidance for EX-01 → EX-03 patterns\nAPI Documentation: Technical API reference for contracts and interfaces\nInfrastructure Setup: Infrastructure configuration and deployment guidance\nArchitecture Details: Deep technical architecture and design decisions\n\n\nThis glossary will be updated as the documentation evolves. For questions about terminology, please refer to the specific implementation patterns and architecture documentation.",
+    "crumbs": [
+      "📚 Tutorials",
+      "ML Deploy Terminology Glossary"
+    ]
+  },
+  {
+    "objectID": "tutorials/01_Terminology_Glossary.html#core-concepts",
+    "href": "tutorials/01_Terminology_Glossary.html#core-concepts",
+    "title": "ML Deploy Terminology Glossary",
+    "section": "",
+    "text": "Definition: A complete training workflow that captures comprehensive metadata about the training process, ensuring full reproducibility and lineage tracking.\nKey Components: - Model training execution - MLflow experiment tracking - Comprehensive metadata capture (dataset version, hyperparameters, environment snapshot) - Training artifact storage and versioning - Complete audit trail for reproducibility\nPurpose: Establishes the foundation for all ML workloads by ensuring every training run is fully traceable and reproducible.\n\n\n\nDefinition: The process of packaging trained models and associated artifacts into versioned, deployment-ready bundles with comprehensive metadata.\nKey Components: - Model serialization (PyTorch models, scalers, preprocessing pipelines) - Version registration in MLflow model registry - Artifact bundling (model + dependencies + metadata) - Semantic versioning and promotion tracking - Immutable artifact references\nPurpose: Creates portable, versioned model artifacts that can be reliably deployed across different environments.\n\n\n\nDefinition: Local model deployment pattern using nbdev/Python for inference with comprehensive prediction logging and lineage preservation.\nKey Components: - Local model loading and inference - Prediction logging in JSONL format - Deployment metadata tracking - Local serving endpoints - Performance monitoring and drift detection\nPurpose: Enables local testing and validation of model artifacts in a controlled environment before production deployment.\n\n\n\nDefinition: The foundational implementation pattern that demonstrates the complete workflow from training to local deployment, serving as the reference implementation for understanding core ML deployment patterns.\nKey Components: - Complete end-to-end workflow implementation - Comprehensive metadata capture throughout the pipeline - Artifact versioning and promotion mechanisms - Local validation and testing capabilities - Reference implementation for extension patterns\nPurpose: Provides a concrete, working example of the ML deployment workflow that can be extended to more complex scenarios.",
+    "crumbs": [
+      "📚 Tutorials",
+      "ML Deploy Terminology Glossary"
+    ]
+  },
+  {
+    "objectID": "tutorials/01_Terminology_Glossary.html#architecture-components",
+    "href": "tutorials/01_Terminology_Glossary.html#architecture-components",
+    "title": "ML Deploy Terminology Glossary",
+    "section": "",
+    "text": "Definition: The computational environments where ML workloads are executed, including local development, Slurm-based distributed training, and Kubernetes-managed services.\nTypes: - Local Execution: Direct execution on development machine - Slurm Execution: Distributed training job orchestration - Kubernetes Execution: Containerized workload management\nPurpose: Abstracts the computational layer from the ML workflow, enabling consistent execution across different environments.\n\n\n\nDefinition: Standardized interfaces for notebook execution requests and run visibility summaries that enable immutable notebook execution without source modification.\nKey Components: - NotebookExecutionRequest: Structured request format - RunVisibility: Output sharing and access control - ExecutionOrchestrator: Backend routing logic - MLflow Integration: Run metadata and artifact linkage\nPurpose: Provides a consistent interface for triggering notebook executions and accessing results across different execution backends.\n\n\n\nDefinition: Implementation-phase control mechanisms that enforce specification-first development and quality requirements before allowing production-ready code changes.\nKey Components: - RepositoryPhase: specification_first vs implementation_enabled - OperationKind: implementation_blocked vs implementation_allowed - SpecQualityGate: Quality validation requirements - Transition Logic: Phase change enforcement\nPurpose: Ensures that implementation work meets quality standards and follows the proper specification-first approach.\n\n\n\nDefinition: Configuration and utilities that ensure consistent MLflow behavior across local development and production environments.\nKey Components: - Storage Configuration: PostgreSQL/S3 backend setup - Tracking Configuration: URI and artifact root settings - Local Emulation: Floci + K3s + Slurm integration - Cloud Configuration: AWS-backed MLflow services\nPurpose: Provides a unified MLflow experience regardless of deployment topology.",
+    "crumbs": [
+      "📚 Tutorials",
+      "ML Deploy Terminology Glossary"
+    ]
+  },
+  {
+    "objectID": "tutorials/01_Terminology_Glossary.html#infrastructure-components",
+    "href": "tutorials/01_Terminology_Glossary.html#infrastructure-components",
+    "title": "ML Deploy Terminology Glossary",
+    "section": "",
+    "text": "Definition: Container definition approach using Nix dockerTools that eliminates Dockerfiles while maintaining Docker-first reproducibility.\nKey Components: - Nix dockerTools.buildImage: Container image construction - Multi-stage builds: Separated build and runtime stages - Immutable references: Pinned package versions - Layer optimization: Efficient caching and deduplication\nPurpose: Provides reproducible, versioned container images without Dockerfile dependency.\n\n\n\nDefinition: Infrastructure-as-code approach using Terranix modules to generate OpenTofu JSON for AWS infrastructure provisioning.\nKey Components: - Terranix Modules: Shared and profile-specific definitions - OpenTofu JSON: Generated infrastructure configuration - Dual Profiles: local_emulation and cloud deployment - State Management: Infrastructure lifecycle management\nPurpose: Declarative infrastructure provisioning with version control and reproducibility.\n\n\n\nDefinition: Local development environment that mirrors production control planes using Floci (AWS emulator), K3s (Kubernetes), and Slurm-Docker for compute orchestration.\nKey Components: - Floci: AWS service emulation - K3s: Lightweight Kubernetes - Slurm-Docker: Job orchestration - Service Composition: Integrated data and compute planes\nPurpose: Enables local development that closely matches production behavior without cloud dependencies.",
+    "crumbs": [
+      "📚 Tutorials",
+      "ML Deploy Terminology Glossary"
+    ]
+  },
+  {
+    "objectID": "tutorials/01_Terminology_Glossary.html#topologies",
+    "href": "tutorials/01_Terminology_Glossary.html#topologies",
+    "title": "ML Deploy Terminology Glossary",
+    "section": "",
+    "text": "Definition: Development environment focused on iterative model development and local validation with comprehensive traceability.\nKey Components: - Local execution backends - MLflow tracking with local storage - Containerized dependencies - Development-specific governance gates\nPurpose: Supports rapid iteration during model development while maintaining traceability and quality standards.\n\n\n\nDefinition: Production topology for distributed model training using Lambda.ai with Slurm coordination and redundancy handling.\nKey Components: - Lambda.ai job submission - Slurm failure mode handling - Distributed training orchestration - Cross-job metadata synchronization\nPurpose: Enables scalable distributed training with fault tolerance and comprehensive job management.\n\n\n\nDefinition: Production topology for batch inference processing with lineage preservation and cost controls.\nKey Components: - Batch job orchestration - Model artifact management - Output lineage tracking - Cost attribution and monitoring\nPurpose: Enables efficient batch processing with comprehensive lineage tracking and cost management.\n\n\n\nDefinition: Production topology for real-time model inference with deployment rollbacks, monitoring, and service health management.\nKey Components: - Containerized model serving - Deployment rollbacks - Service health monitoring - Real-time performance tracking\nPurpose: Provides reliable, production-ready online inference with comprehensive deployment controls.",
+    "crumbs": [
+      "📚 Tutorials",
+      "ML Deploy Terminology Glossary"
+    ]
+  },
+  {
+    "objectID": "tutorials/01_Terminology_Glossary.html#security-and-governance",
+    "href": "tutorials/01_Terminology_Glossary.html#security-and-governance",
+    "title": "ML Deploy Terminology Glossary",
+    "section": "",
+    "text": "Definition: Identity and access management system using OpenID Connect for centralized authentication and role-based access control.\nKey Components: - Identity providers (GitHub, Okta, etc.) - Role definitions and permissions - Access control policies - Audit logging and compliance\nPurpose: Ensures secure access to ML deployment resources with proper authentication and authorization.\n\n\n\nDefinition: Comprehensive tracking of data flow through the ML pipeline, including dataset versions, transformations, and model training lineage.\nKey Components: - Dataset version tracking - Feature engineering lineage - Model training metadata - Output artifact provenance\nPurpose: Ensures complete traceability of data through the ML lifecycle for compliance and reproducibility.\n\n\n\nDefinition: End-to-end tracking of model artifacts from training to deployment, including versioning, promotion, and deployment metadata.\nKey Components: - Model version management - Promotion pipeline tracking - Deployment metadata - Performance and drift monitoring\nPurpose: Ensures models can be traced from conception to production with complete metadata and version control.",
+    "crumbs": [
+      "📚 Tutorials",
+      "ML Deploy Terminology Glossary"
+    ]
+  },
+  {
+    "objectID": "tutorials/01_Terminology_Glossary.html#best-practices",
+    "href": "tutorials/01_Terminology_Glossary.html#best-practices",
+    "title": "ML Deploy Terminology Glossary",
+    "section": "",
+    "text": "Definition: Notebook development approach where notebook source code remains immutable, and execution parameters are injected externally.\nKey Components: - Immutable notebook references (git commit SHA) - External parameter injection - Execution request/response contracts - Result caching and deduplication\nPurpose: Ensures notebook reproducibility while enabling parameter variation across different environments.\n\n\n\nDefinition: Containerization approach where containers are built using Nix but run as standard Docker images without Nix runtime dependency.\nKey Components: - Nix-based container definition - Docker image output - No runtime Nix dependency - Standard Docker ecosystem compatibility\nPurpose: Provides reproducible container images that work with existing Docker/Kubernetes ecosystems.\n\n\n\nDefinition: Development approach where specifications are defined and ratified before implementation begins, ensuring architectural consistency.\nKey Components: - Specification definition and ratification - Quality gates and validation - Implementation constraints - Architecture review processes\nPurpose: Ensures implementation work aligns with architectural requirements and quality standards.",
+    "crumbs": [
+      "📚 Tutorials",
+      "ML Deploy Terminology Glossary"
+    ]
+  },
+  {
+    "objectID": "tutorials/01_Terminology_Glossary.html#related-documentation",
+    "href": "tutorials/01_Terminology_Glossary.html#related-documentation",
+    "title": "ML Deploy Terminology Glossary",
+    "section": "",
+    "text": "Implementation Patterns: Detailed implementation guidance for EX-01 → EX-03 patterns\nAPI Documentation: Technical API reference for contracts and interfaces\nInfrastructure Setup: Infrastructure configuration and deployment guidance\nArchitecture Details: Deep technical architecture and design decisions\n\n\nThis glossary will be updated as the documentation evolves. For questions about terminology, please refer to the specific implementation patterns and architecture documentation.",
+    "crumbs": [
+      "📚 Tutorials",
+      "ML Deploy Terminology Glossary"
+    ]
+  },
+  {
+    "objectID": "reference/01_Implementation_Patterns.html",
+    "href": "reference/01_Implementation_Patterns.html",
+    "title": "Implementation Patterns: EX-01 → EX-03",
+    "section": "",
+    "text": "This document provides the technical implementation details for the core ML deployment patterns that form the foundation of the ML Deploy platform. These patterns demonstrate the complete workflow from training to deployment with comprehensive traceability and quality controls.\n\n\nThe EX-01 → EX-03 implementation patterns represent the foundational workflow that covers:\n\nEX-01: Training with Traceability - Complete training workflow with MLflow tracking\nEX-02: Artifact Bundling and Versioning - Model packaging and registry management\n\nEX-03: Local Deployment and Serving - Local inference with logging and validation\n\nThis vertical slice serves as the reference implementation that can be extended to more complex scenarios including distributed training, batch inference, and online serving.\n\n\n\n┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐\n│   EX-01:        │    │   EX-02:        │    │   EX-03:        │\n│   Training      │───▶│   Artifact     │───▶│   Local         │\n│   with          │    │   Bundling     │    │   Deployment    │\n│   Traceability  │    │   and          │    │   and Serving   │\n│                 │    │   Versioning   │    │                 │\n└─────────────────┘    └─────────────────┘    └─────────────────┘\n         │                       │                       │\n         ▼                       ▼                       ▼\n┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐\n│   MLflow        │    │   MLflow        │    │   Local         │\n│   Experiment    │    │   Model         │    │   Inference     │\n│   Tracking      │    │   Registry      │    │   Engine        │\n│                 │    │                 │    │                 │\n└─────────────────┘    └─────────────────┘    └─────────────────┘\n\n\n\n\n\nEX-01 implements a complete training workflow that captures comprehensive metadata about the training process, ensuring full reproducibility and lineage tracking.\n\n\n\n\n\nfrom ml_deploy.vertical_slice import execute_first_vertical_slice\nfrom ml_deploy.mlflow_parity import resolve_mlflow_storage_config\nfrom pathlib import Path\n\n# Configure MLflow for traceability\nmlflow_config = resolve_mlflow_storage_config(profile=\"local_emulation\")\n\n# Execute training with comprehensive metadata\nresult = execute_first_vertical_slice(\n    work_dir=Path(\"/tmp/experiment\"),\n    mlflow_config=mlflow_config,\n    run_name=\"diabetes_xgboost_experiment\",\n    experiment_config={\n        \"dataset_version\": \"v1.0\",\n        \"feature_revision\": \"engineered_v2\",\n        \"hyperparameters\": {\n            \"max_depth\": 6,\n            \"learning_rate\": 0.1,\n            \"random_state\": 42\n        },\n        \"compute_requirements\": {\n            \"gpu_required\": False,\n            \"memory_gb\": 4\n        }\n    }\n)\n\n\n\nThe training process captures:\n\nDataset Metadata: Version, source, preprocessing steps\nFeature Metadata: Engineering steps, transformations, validation\nHyperparameter Tracking: All training parameters and their values\nEnvironment Snapshot: Dependencies, versions, system state\nPerformance Metrics: Loss, accuracy, validation results\nResource Usage: CPU, memory, time consumed\n\n\n\n\nimport mlflow\nimport xgboost as xgb\nfrom sklearn.datasets import load_diabetes\n\n# Start MLflow run with comprehensive tags\nwith mlflow.start_run(run_name=\"diabetes_xgboost_experiment\") as run:\n    # Set traceability tags\n    mlflow.set_tag(\"dataset_version\", \"v1.0\")\n    mlflow.set_tag(\"feature_revision\", \"engineered_v2\")\n    mlflow.set_tag(\"model_type\", \"xgboost\")\n    mlflow.set_tag(\"experiment_phase\", \"training\")\n    \n    # Log hyperparameters\n    mlflow.log_params({\n        \"max_depth\": 6,\n        \"learning_rate\": 0.1,\n        \"random_state\": 42,\n        \"objective\": \"reg:squarederror\"\n    })\n    \n    # Execute training\n    data = load_diabetes()\n    X_train, X_test, y_train, y_test = train_test_split(\n        data.data, data.target, test_size=0.2, random_state=42\n    )\n    \n    dtrain = xgb.DMatrix(X_train, label=y_train)\n    dtest = xgb.DMatrix(X_test, label=y_test)\n    \n    model = xgb.train(\n        params={\"objective\": \"reg:squarederror\", \"max_depth\": 6},\n        dtrain=dtrain,\n        num_boost_round=100,\n        evals=[(dtrain, \"train\"), (dtest, \"test\")]\n    )\n    \n    # Log model and metrics\n    mlflow.xgboost.log_model(model, \"model\")\n    mlflow.log_metrics({\"train_rmse\": 0.5, \"test_rmse\": 0.6})\n\n\n\n\n\nMandatory Tags: dataset_version, feature_revision, model_type, experiment_phase\nParameter Logging: All training parameters must be logged\nArtifact Storage: Model artifacts must be stored with proper metadata\nEnvironment Capture: Complete environment snapshot for reproducibility\n\n\n\n\n\n\n\nEX-02 implements the process of packaging trained models and associated artifacts into versioned, deployment-ready bundles with comprehensive metadata.\n\n\n\n\n\nimport json\nfrom pathlib import Path\nfrom dataclasses import dataclass\nfrom typing import Dict, Any\n\n@dataclass\nclass ModelArtifact:\n    model_path: Path\n    scaler_path: Path\n    metadata: Dict[str, Any]\n    version: str\n    creation_timestamp: str\n    \n    def to_bundle(self, bundle_dir: Path) -&gt; Path:\n        \"\"\"Create versioned model artifact bundle\"\"\"\n        bundle_dir.mkdir(parents=True, exist_ok=True)\n        \n        # Copy model and scaler files\n        model_bundle_path = bundle_dir / \"model.json\"\n        scaler_bundle_path = bundle_dir / \"scaler.pkl\"\n        \n        # Copy model artifacts\n        self.model_path.rename(model_bundle_path)\n        self.scaler_path.rename(scaler_bundle_path)\n        \n        # Create metadata file\n        metadata_path = bundle_dir / \"metadata.json\"\n        metadata = {\n            \"version\": self.version,\n            \"creation_timestamp\": self.creation_timestamp,\n            \"model_type\": self.metadata[\"model_type\"],\n            \"dataset_version\": self.metadata[\"dataset_version\"],\n            \"feature_revision\": self.metadata[\"feature_revision\"],\n            \"hyperparameters\": self.metadata[\"hyperparameters\"],\n            \"performance_metrics\": self.metadata[\"performance_metrics\"],\n            \"mlflow_run_id\": self.metadata[\"mlflow_run_id\"]\n        }\n        \n        with metadata_path.open(\"w\") as f:\n            json.dump(metadata, f, indent=2)\n        \n        return bundle_dir\n\n\n\nfrom ml_deploy.vertical_slice import register_model_artifact\n\n# Register model artifact in MLflow registry\nregistration_result = register_model_artifact(\n    artifact_bundle_path=Path(\"/tmp/model_bundle_v1.0\"),\n    model_name=\"diabetes_xgboost\",\n    model_version=\"v1.0\",\n    description=\"XGBoost model for diabetes prediction with engineered features\",\n    run_id=\"your_mlflow_run_id\"\n)\n\nprint(f\"Model registered: {registration_result.model_name}\")\nprint(f\"Version: {registration_result.model_version}\")\nprint(f\"URI: {registration_result.model_uri}\")\n\n\n\nfrom dataclasses import dataclass\nfrom typing import Literal\nfrom datetime import datetime\n\n@dataclass\nclass ModelPromotionRecord:\n    model_name: str\n    version: str\n    source_environment: Literal[\"dev\", \"uat\", \"regression\", \"prod\"]\n    target_environment: Literal[\"uat\", \"regression\", \"prod\"]\n    promotion_timestamp: datetime\n    approved_by: str\n    approval_ticket: str\n    validation_results: Dict[str, Any]\n    \n    def to_promotion_log(self) -&gt; Dict[str, Any]:\n        \"\"\"Create promotion log entry\"\"\"\n        return {\n            \"model_name\": self.model_name,\n            \"version\": self.version,\n            \"source_environment\": self.source_environment,\n            \"target_environment\": self.target_environment,\n            \"promotion_timestamp\": self.promotion_timestamp.isoformat(),\n            \"approved_by\": self.approved_by,\n            \"approval_ticket\": self.approval_ticket,\n            \"validation_results\": self.validation_results\n        }\n\n\n\n\n\nArtifact Bundling: Model + scaler + metadata + dependencies\nVersion Management: Semantic versioning with promotion tracking\nRegistry Integration: MLflow model registry for artifact management\nPromotion Pipeline: DEV→UAT→REGRESSION→PROD with approval gates\n\n\n\n\n\n\n\nEX-03 implements local model deployment using nbdev/Python for inference with comprehensive prediction logging and lineage preservation.\n\n\n\n\n\nimport pickle\nimport json\nfrom pathlib import Path\nfrom typing import Dict, Any, List\nimport pandas as pd\n\nclass LocalModelServing:\n    def __init__(self, model_bundle_path: Path):\n        \"\"\"Initialize local model serving from bundle\"\"\"\n        self.model_bundle_path = model_bundle_path\n        self.model = None\n        self.scaler = None\n        self.metadata = self._load_metadata()\n        self._load_artifacts()\n    \n    def _load_metadata(self) -&gt; Dict[str, Any]:\n        \"\"\"Load model metadata from bundle\"\"\"\n        metadata_path = self.model_bundle_path / \"metadata.json\"\n        with metadata_path.open(\"r\") as f:\n            return json.load(f)\n    \n    def _load_artifacts(self):\n        \"\"\"Load model and scaler artifacts\"\"\"\n        model_path = self.model_bundle_path / \"model.json\"\n        scaler_path = self.model_bundle_path / \"scaler.pkl\"\n        \n        # Load XGBoost model\n        import xgboost as xgb\n        self.model = xgb.Booster()\n        self.model.load_model(str(model_path))\n        \n        # Load scaler\n        with scaler_path.open(\"rb\") as f:\n            self.scaler = pickle.load(f)\n    \n    def predict(self, input_data: pd.DataFrame) -&gt; Dict[str, Any]:\n        \"\"\"Make predictions with logging\"\"\"\n        # Preprocess input data\n        processed_data = self.scaler.transform(input_data)\n        \n        # Make predictions\n        dmatrix = xgb.DMatrix(processed_data)\n        predictions = self.model.predict(dmatrix)\n        \n        # Create prediction result\n        result = {\n            \"predictions\": predictions.tolist(),\n            \"model_version\": self.metadata[\"version\"],\n            \"model_type\": self.metadata[\"model_type\"],\n            \"input_data_shape\": input_data.shape,\n            \"timestamp\": pd.Timestamp.now().isoformat()\n        }\n        \n        return result\n\n\n\nimport json\nfrom pathlib import Path\nfrom datetime import datetime\nfrom typing import Dict, Any\n\nclass PredictionLogger:\n    def __init__(self, log_dir: Path):\n        self.log_dir = log_dir\n        self.log_dir.mkdir(parents=True, exist_ok=True)\n    \n    def log_prediction(self, prediction_result: Dict[str, Any], \n                      input_metadata: Dict[str, Any]):\n        \"\"\"Log prediction with comprehensive metadata\"\"\"\n        log_entry = {\n            \"timestamp\": datetime.now().isoformat(),\n            \"prediction_result\": prediction_result,\n            \"input_metadata\": input_metadata,\n            \"model_info\": {\n                \"version\": prediction_result[\"model_version\"],\n                \"type\": prediction_result[\"model_type\"]\n            }\n        }\n        \n        # Write to JSONL log file\n        log_path = self.log_dir / \"predictions.jsonl\"\n        with log_path.open(\"a\") as f:\n            f.write(json.dumps(log_entry) + \"\\n\")\n    \n    def get_prediction_stats(self) -&gt; Dict[str, Any]:\n        \"\"\"Get prediction statistics from log\"\"\"\n        log_path = self.log_dir / \"predictions.jsonl\"\n        if not log_path.exists():\n            return {\"total_predictions\": 0}\n        \n        with log_path.open(\"r\") as f:\n            lines = f.readlines()\n        \n        return {\n            \"total_predictions\": len(lines),\n            \"date_range\": {\n                \"start\": lines[0].split('\"timestamp\":')[1].split(',')[0].strip('\"'),\n                \"end\": lines[-1].split('\"timestamp\":')[1].split(',')[0].strip('\"')\n            }\n        }\n\n\n\nfrom fastapi import FastAPI, HTTPException\nfrom pydantic import BaseModel\nimport pandas as pd\nfrom typing import List\n\n# Initialize model serving\nmodel_serving = LocalModelServing(Path(\"/tmp/model_bundle_v1.0\"))\nprediction_logger = PredictionLogger(Path(\"/tmp/prediction_logs\"))\n\napp = FastAPI(title=\"ML Deploy Local Serving\")\n\nclass PredictionRequest(BaseModel):\n    data: List[List[float]]\n    model_version: str = \"v1.0\"\n\nclass PredictionResponse(BaseModel):\n    predictions: List[float]\n    model_version: str\n    timestamp: str\n\n@app.post(\"/predict\", response_model=PredictionResponse)\nasync def predict(request: PredictionRequest):\n    \"\"\"Handle prediction requests\"\"\"\n    try:\n        # Convert input to DataFrame\n        input_df = pd.DataFrame(request.data)\n        \n        # Make predictions\n        result = model_serving.predict(input_df)\n        \n        # Log prediction\n        input_metadata = {\n            \"request_id\": \"generated_uuid\",\n            \"data_shape\": input_df.shape,\n            \"model_version\": request.model_version\n        }\n        prediction_logger.log_prediction(result, input_metadata)\n        \n        return PredictionResponse(\n            predictions=result[\"predictions\"],\n            model_version=result[\"model_version\"],\n            timestamp=result[\"timestamp\"]\n        )\n    \n    except Exception as e:\n        raise HTTPException(status_code=500, detail=str(e))\n\n\n\n\n\nLocal Serving: FastAPI-based inference endpoint\nPrediction Logging: JSONL format with comprehensive metadata\nModel Management: Efficient loading and caching of model artifacts\nPerformance Monitoring: Request/response logging and metrics\n\n\n\n\n\n\n\nfrom ml_deploy.vertical_slice import execute_first_vertical_slice\nfrom ml_deploy.vertical_slice import register_model_artifact\nfrom ml_deploy.vertical_slice import LocalModelServing\nfrom pathlib import Path\n\ndef complete_ml_workflow(work_dir: Path, experiment_config: Dict[str, Any]):\n    \"\"\"Execute complete EX-01 → EX-02 → EX-03 workflow\"\"\"\n    \n    # EX-01: Training with Traceability\n    training_result = execute_first_vertical_slice(\n        work_dir=work_dir / \"training\",\n        mlflow_config=resolve_mlflow_storage_config(),\n        run_name=\"complete_workflow_experiment\",\n        experiment_config=experiment_config\n    )\n    \n    # EX-02: Artifact Bundling and Versioning\n    model_bundle_path = register_model_artifact(\n        artifact_bundle_path=training_result.artifact_path,\n        model_name=\"workflow_model\",\n        model_version=\"v1.0\",\n        description=\"Complete workflow model\",\n        run_id=training_result.run_id\n    )\n    \n    # EX-03: Local Deployment and Serving\n    local_serving = LocalModelServing(model_bundle_path)\n    prediction_logger = PredictionLogger(work_dir / \"logs\")\n    \n    # Example prediction\n    import pandas as pd\n    test_data = pd.DataFrame([[0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]])\n    prediction_result = local_serving.predict(test_data)\n    \n    # Log prediction\n    prediction_logger.log_prediction(\n        prediction_result,\n        {\"test_run\": True, \"data_shape\": test_data.shape}\n    )\n    \n    return {\n        \"training_result\": training_result,\n        \"model_bundle\": model_bundle_path,\n        \"local_serving\": local_serving,\n        \"prediction_log\": work_dir / \"logs\"\n    }\n\n\n\nfrom typing import Optional\nfrom pathlib import Path\n\nclass WorkflowExecutor:\n    def __init__(self, work_dir: Path):\n        self.work_dir = work_dir\n        self.current_phase = \"init\"\n    \n    def execute_workflow(self, config: Dict[str, Any]) -&gt; Dict[str, Any]:\n        \"\"\"Execute complete workflow with error handling\"\"\"\n        try:\n            # Phase 1: Training\n            self.current_phase = \"training\"\n            training_result = self._execute_training(config)\n            \n            # Phase 2: Artifact Registration\n            self.current_phase = \"artifact_registration\"\n            model_bundle = self._register_artifacts(training_result)\n            \n            # Phase 3: Local Serving\n            self.current_phase = \"local_serving\"\n            serving = self._setup_local_serving(model_bundle)\n            \n            return {\n                \"success\": True,\n                \"training_result\": training_result,\n                \"model_bundle\": model_bundle,\n                \"local_serving\": serving\n            }\n            \n        except Exception as e:\n            return {\n                \"success\": False,\n                \"error\": str(e),\n                \"phase\": self.current_phase,\n                \"work_dir\": str(self.work_dir)\n            }\n    \n    def _execute_training(self, config: Dict[str, Any]):\n        \"\"\"Execute training phase\"\"\"\n        # Implementation details\n        pass\n    \n    def _register_artifacts(self, training_result):\n        \"\"\"Register model artifacts\"\"\"\n        # Implementation details\n        pass\n    \n    def _setup_local_serving(self, model_bundle):\n        \"\"\"Setup local serving\"\"\"\n        # Implementation details\n        pass\n\n\n\n\n\n\nimport pytest\nfrom pathlib import Path\nfrom ml_deploy.vertical_slice import execute_first_vertical_slice\n\ndef test_training_execution():\n    \"\"\"Test EX-01 training execution\"\"\"\n    result = execute_first_vertical_slice(\n        work_dir=Path(\"/tmp/test_training\"),\n        mlflow_config=resolve_mlflow_storage_config(),\n        run_name=\"test_experiment\",\n        experiment_config={\"test\": True}\n    )\n    \n    assert result.success\n    assert result.artifact_path.exists()\n    assert result.run_id is not None\n\ndef test_artifact_registration():\n    \"\"\"Test EX-02 artifact registration\"\"\"\n    # Test model artifact creation and registration\n    pass\n\ndef test_local_serving():\n    \"\"\"Test EX-03 local serving\"\"\"\n    # Test local model serving and prediction logging\n    pass\n\n\n\ndef test_complete_workflow():\n    \"\"\"Test complete EX-01 → EX-02 → EX-03 workflow\"\"\"\n    workflow = WorkflowExecutor(Path(\"/tmp/integration_test\"))\n    result = workflow.execute_workflow({\n        \"dataset\": \"test_data\",\n        \"model_type\": \"xgboost\",\n        \"test_run\": True\n    })\n    \n    assert result[\"success\"]\n    assert \"training_result\" in result\n    assert \"model_bundle\" in result\n    assert \"local_serving\" in result\n\n\n\n\n\n\n\nModel artifacts should be loaded on-demand\nImplement caching for frequently accessed models\nMonitor memory usage during serving\n\n\n\n\n\nOptimize model loading times\nImplement request batching for multiple predictions\nUse efficient data formats for input/output\n\n\n\n\n\nConsider model sharding for large models\nImplement horizontal scaling for serving endpoints\nMonitor resource usage and scale accordingly\n\n\n\n\n\n\n\n\nImplement access controls for model artifacts\nEncrypt sensitive model components\nMonitor unauthorized access attempts\n\n\n\n\n\nEnsure input data handling complies with privacy regulations\nImplement data anonymization where required\nAudit data access patterns\n\n\n\n\n\nMaintain complete logs of all operations\nImplement tamper-evident logging\nRegular audit of model access and usage\n\n\n\n\n\n\n\n\nTrack prediction latency and throughput\nMonitor model accuracy and drift\nTrack resource usage patterns\n\n\n\n\n\nLog prediction errors and failures\nImplement error rate monitoring\nTrack error patterns and trends\n\n\n\n\n\nMonitor model impact on business outcomes\nTrack prediction accuracy over time\nMeasure ROI of ML deployment\n\n\nThis implementation patterns document provides the technical foundation for ML deployment workflows. For specific guidance on extending these patterns to distributed training, batch inference, or online serving, refer to the respective topology documentation.",
+    "crumbs": [
+      "🔧 Technical Reference",
+      "Implementation Patterns: EX-01 → EX-03"
+    ]
+  },
+  {
+    "objectID": "reference/01_Implementation_Patterns.html#overview",
+    "href": "reference/01_Implementation_Patterns.html#overview",
+    "title": "Implementation Patterns: EX-01 → EX-03",
+    "section": "",
+    "text": "The EX-01 → EX-03 implementation patterns represent the foundational workflow that covers:\n\nEX-01: Training with Traceability - Complete training workflow with MLflow tracking\nEX-02: Artifact Bundling and Versioning - Model packaging and registry management\n\nEX-03: Local Deployment and Serving - Local inference with logging and validation\n\nThis vertical slice serves as the reference implementation that can be extended to more complex scenarios including distributed training, batch inference, and online serving.",
+    "crumbs": [
+      "🔧 Technical Reference",
+      "Implementation Patterns: EX-01 → EX-03"
+    ]
+  },
+  {
+    "objectID": "reference/01_Implementation_Patterns.html#pattern-architecture",
+    "href": "reference/01_Implementation_Patterns.html#pattern-architecture",
+    "title": "Implementation Patterns: EX-01 → EX-03",
+    "section": "",
+    "text": "┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐\n│   EX-01:        │    │   EX-02:        │    │   EX-03:        │\n│   Training      │───▶│   Artifact     │───▶│   Local         │\n│   with          │    │   Bundling     │    │   Deployment    │\n│   Traceability  │    │   and          │    │   and Serving   │\n│                 │    │   Versioning   │    │                 │\n└─────────────────┘    └─────────────────┘    └─────────────────┘\n         │                       │                       │\n         ▼                       ▼                       ▼\n┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐\n│   MLflow        │    │   MLflow        │    │   Local         │\n│   Experiment    │    │   Model         │    │   Inference     │\n│   Tracking      │    │   Registry      │    │   Engine        │\n│                 │    │                 │    │                 │\n└─────────────────┘    └─────────────────┘    └─────────────────┘",
+    "crumbs": [
+      "🔧 Technical Reference",
+      "Implementation Patterns: EX-01 → EX-03"
+    ]
+  },
+  {
+    "objectID": "reference/01_Implementation_Patterns.html#ex-01-training-with-traceability",
+    "href": "reference/01_Implementation_Patterns.html#ex-01-training-with-traceability",
+    "title": "Implementation Patterns: EX-01 → EX-03",
+    "section": "",
+    "text": "EX-01 implements a complete training workflow that captures comprehensive metadata about the training process, ensuring full reproducibility and lineage tracking.\n\n\n\n\n\nfrom ml_deploy.vertical_slice import execute_first_vertical_slice\nfrom ml_deploy.mlflow_parity import resolve_mlflow_storage_config\nfrom pathlib import Path\n\n# Configure MLflow for traceability\nmlflow_config = resolve_mlflow_storage_config(profile=\"local_emulation\")\n\n# Execute training with comprehensive metadata\nresult = execute_first_vertical_slice(\n    work_dir=Path(\"/tmp/experiment\"),\n    mlflow_config=mlflow_config,\n    run_name=\"diabetes_xgboost_experiment\",\n    experiment_config={\n        \"dataset_version\": \"v1.0\",\n        \"feature_revision\": \"engineered_v2\",\n        \"hyperparameters\": {\n            \"max_depth\": 6,\n            \"learning_rate\": 0.1,\n            \"random_state\": 42\n        },\n        \"compute_requirements\": {\n            \"gpu_required\": False,\n            \"memory_gb\": 4\n        }\n    }\n)\n\n\n\nThe training process captures:\n\nDataset Metadata: Version, source, preprocessing steps\nFeature Metadata: Engineering steps, transformations, validation\nHyperparameter Tracking: All training parameters and their values\nEnvironment Snapshot: Dependencies, versions, system state\nPerformance Metrics: Loss, accuracy, validation results\nResource Usage: CPU, memory, time consumed\n\n\n\n\nimport mlflow\nimport xgboost as xgb\nfrom sklearn.datasets import load_diabetes\n\n# Start MLflow run with comprehensive tags\nwith mlflow.start_run(run_name=\"diabetes_xgboost_experiment\") as run:\n    # Set traceability tags\n    mlflow.set_tag(\"dataset_version\", \"v1.0\")\n    mlflow.set_tag(\"feature_revision\", \"engineered_v2\")\n    mlflow.set_tag(\"model_type\", \"xgboost\")\n    mlflow.set_tag(\"experiment_phase\", \"training\")\n    \n    # Log hyperparameters\n    mlflow.log_params({\n        \"max_depth\": 6,\n        \"learning_rate\": 0.1,\n        \"random_state\": 42,\n        \"objective\": \"reg:squarederror\"\n    })\n    \n    # Execute training\n    data = load_diabetes()\n    X_train, X_test, y_train, y_test = train_test_split(\n        data.data, data.target, test_size=0.2, random_state=42\n    )\n    \n    dtrain = xgb.DMatrix(X_train, label=y_train)\n    dtest = xgb.DMatrix(X_test, label=y_test)\n    \n    model = xgb.train(\n        params={\"objective\": \"reg:squarederror\", \"max_depth\": 6},\n        dtrain=dtrain,\n        num_boost_round=100,\n        evals=[(dtrain, \"train\"), (dtest, \"test\")]\n    )\n    \n    # Log model and metrics\n    mlflow.xgboost.log_model(model, \"model\")\n    mlflow.log_metrics({\"train_rmse\": 0.5, \"test_rmse\": 0.6})\n\n\n\n\n\nMandatory Tags: dataset_version, feature_revision, model_type, experiment_phase\nParameter Logging: All training parameters must be logged\nArtifact Storage: Model artifacts must be stored with proper metadata\nEnvironment Capture: Complete environment snapshot for reproducibility",
+    "crumbs": [
+      "🔧 Technical Reference",
+      "Implementation Patterns: EX-01 → EX-03"
+    ]
+  },
+  {
+    "objectID": "reference/01_Implementation_Patterns.html#ex-02-artifact-bundling-and-versioning",
+    "href": "reference/01_Implementation_Patterns.html#ex-02-artifact-bundling-and-versioning",
+    "title": "Implementation Patterns: EX-01 → EX-03",
+    "section": "",
+    "text": "EX-02 implements the process of packaging trained models and associated artifacts into versioned, deployment-ready bundles with comprehensive metadata.\n\n\n\n\n\nimport json\nfrom pathlib import Path\nfrom dataclasses import dataclass\nfrom typing import Dict, Any\n\n@dataclass\nclass ModelArtifact:\n    model_path: Path\n    scaler_path: Path\n    metadata: Dict[str, Any]\n    version: str\n    creation_timestamp: str\n    \n    def to_bundle(self, bundle_dir: Path) -&gt; Path:\n        \"\"\"Create versioned model artifact bundle\"\"\"\n        bundle_dir.mkdir(parents=True, exist_ok=True)\n        \n        # Copy model and scaler files\n        model_bundle_path = bundle_dir / \"model.json\"\n        scaler_bundle_path = bundle_dir / \"scaler.pkl\"\n        \n        # Copy model artifacts\n        self.model_path.rename(model_bundle_path)\n        self.scaler_path.rename(scaler_bundle_path)\n        \n        # Create metadata file\n        metadata_path = bundle_dir / \"metadata.json\"\n        metadata = {\n            \"version\": self.version,\n            \"creation_timestamp\": self.creation_timestamp,\n            \"model_type\": self.metadata[\"model_type\"],\n            \"dataset_version\": self.metadata[\"dataset_version\"],\n            \"feature_revision\": self.metadata[\"feature_revision\"],\n            \"hyperparameters\": self.metadata[\"hyperparameters\"],\n            \"performance_metrics\": self.metadata[\"performance_metrics\"],\n            \"mlflow_run_id\": self.metadata[\"mlflow_run_id\"]\n        }\n        \n        with metadata_path.open(\"w\") as f:\n            json.dump(metadata, f, indent=2)\n        \n        return bundle_dir\n\n\n\nfrom ml_deploy.vertical_slice import register_model_artifact\n\n# Register model artifact in MLflow registry\nregistration_result = register_model_artifact(\n    artifact_bundle_path=Path(\"/tmp/model_bundle_v1.0\"),\n    model_name=\"diabetes_xgboost\",\n    model_version=\"v1.0\",\n    description=\"XGBoost model for diabetes prediction with engineered features\",\n    run_id=\"your_mlflow_run_id\"\n)\n\nprint(f\"Model registered: {registration_result.model_name}\")\nprint(f\"Version: {registration_result.model_version}\")\nprint(f\"URI: {registration_result.model_uri}\")\n\n\n\nfrom dataclasses import dataclass\nfrom typing import Literal\nfrom datetime import datetime\n\n@dataclass\nclass ModelPromotionRecord:\n    model_name: str\n    version: str\n    source_environment: Literal[\"dev\", \"uat\", \"regression\", \"prod\"]\n    target_environment: Literal[\"uat\", \"regression\", \"prod\"]\n    promotion_timestamp: datetime\n    approved_by: str\n    approval_ticket: str\n    validation_results: Dict[str, Any]\n    \n    def to_promotion_log(self) -&gt; Dict[str, Any]:\n        \"\"\"Create promotion log entry\"\"\"\n        return {\n            \"model_name\": self.model_name,\n            \"version\": self.version,\n            \"source_environment\": self.source_environment,\n            \"target_environment\": self.target_environment,\n            \"promotion_timestamp\": self.promotion_timestamp.isoformat(),\n            \"approved_by\": self.approved_by,\n            \"approval_ticket\": self.approval_ticket,\n            \"validation_results\": self.validation_results\n        }\n\n\n\n\n\nArtifact Bundling: Model + scaler + metadata + dependencies\nVersion Management: Semantic versioning with promotion tracking\nRegistry Integration: MLflow model registry for artifact management\nPromotion Pipeline: DEV→UAT→REGRESSION→PROD with approval gates",
+    "crumbs": [
+      "🔧 Technical Reference",
+      "Implementation Patterns: EX-01 → EX-03"
+    ]
+  },
+  {
+    "objectID": "reference/01_Implementation_Patterns.html#ex-03-local-deployment-and-serving",
+    "href": "reference/01_Implementation_Patterns.html#ex-03-local-deployment-and-serving",
+    "title": "Implementation Patterns: EX-01 → EX-03",
+    "section": "",
+    "text": "EX-03 implements local model deployment using nbdev/Python for inference with comprehensive prediction logging and lineage preservation.\n\n\n\n\n\nimport pickle\nimport json\nfrom pathlib import Path\nfrom typing import Dict, Any, List\nimport pandas as pd\n\nclass LocalModelServing:\n    def __init__(self, model_bundle_path: Path):\n        \"\"\"Initialize local model serving from bundle\"\"\"\n        self.model_bundle_path = model_bundle_path\n        self.model = None\n        self.scaler = None\n        self.metadata = self._load_metadata()\n        self._load_artifacts()\n    \n    def _load_metadata(self) -&gt; Dict[str, Any]:\n        \"\"\"Load model metadata from bundle\"\"\"\n        metadata_path = self.model_bundle_path / \"metadata.json\"\n        with metadata_path.open(\"r\") as f:\n            return json.load(f)\n    \n    def _load_artifacts(self):\n        \"\"\"Load model and scaler artifacts\"\"\"\n        model_path = self.model_bundle_path / \"model.json\"\n        scaler_path = self.model_bundle_path / \"scaler.pkl\"\n        \n        # Load XGBoost model\n        import xgboost as xgb\n        self.model = xgb.Booster()\n        self.model.load_model(str(model_path))\n        \n        # Load scaler\n        with scaler_path.open(\"rb\") as f:\n            self.scaler = pickle.load(f)\n    \n    def predict(self, input_data: pd.DataFrame) -&gt; Dict[str, Any]:\n        \"\"\"Make predictions with logging\"\"\"\n        # Preprocess input data\n        processed_data = self.scaler.transform(input_data)\n        \n        # Make predictions\n        dmatrix = xgb.DMatrix(processed_data)\n        predictions = self.model.predict(dmatrix)\n        \n        # Create prediction result\n        result = {\n            \"predictions\": predictions.tolist(),\n            \"model_version\": self.metadata[\"version\"],\n            \"model_type\": self.metadata[\"model_type\"],\n            \"input_data_shape\": input_data.shape,\n            \"timestamp\": pd.Timestamp.now().isoformat()\n        }\n        \n        return result\n\n\n\nimport json\nfrom pathlib import Path\nfrom datetime import datetime\nfrom typing import Dict, Any\n\nclass PredictionLogger:\n    def __init__(self, log_dir: Path):\n        self.log_dir = log_dir\n        self.log_dir.mkdir(parents=True, exist_ok=True)\n    \n    def log_prediction(self, prediction_result: Dict[str, Any], \n                      input_metadata: Dict[str, Any]):\n        \"\"\"Log prediction with comprehensive metadata\"\"\"\n        log_entry = {\n            \"timestamp\": datetime.now().isoformat(),\n            \"prediction_result\": prediction_result,\n            \"input_metadata\": input_metadata,\n            \"model_info\": {\n                \"version\": prediction_result[\"model_version\"],\n                \"type\": prediction_result[\"model_type\"]\n            }\n        }\n        \n        # Write to JSONL log file\n        log_path = self.log_dir / \"predictions.jsonl\"\n        with log_path.open(\"a\") as f:\n            f.write(json.dumps(log_entry) + \"\\n\")\n    \n    def get_prediction_stats(self) -&gt; Dict[str, Any]:\n        \"\"\"Get prediction statistics from log\"\"\"\n        log_path = self.log_dir / \"predictions.jsonl\"\n        if not log_path.exists():\n            return {\"total_predictions\": 0}\n        \n        with log_path.open(\"r\") as f:\n            lines = f.readlines()\n        \n        return {\n            \"total_predictions\": len(lines),\n            \"date_range\": {\n                \"start\": lines[0].split('\"timestamp\":')[1].split(',')[0].strip('\"'),\n                \"end\": lines[-1].split('\"timestamp\":')[1].split(',')[0].strip('\"')\n            }\n        }\n\n\n\nfrom fastapi import FastAPI, HTTPException\nfrom pydantic import BaseModel\nimport pandas as pd\nfrom typing import List\n\n# Initialize model serving\nmodel_serving = LocalModelServing(Path(\"/tmp/model_bundle_v1.0\"))\nprediction_logger = PredictionLogger(Path(\"/tmp/prediction_logs\"))\n\napp = FastAPI(title=\"ML Deploy Local Serving\")\n\nclass PredictionRequest(BaseModel):\n    data: List[List[float]]\n    model_version: str = \"v1.0\"\n\nclass PredictionResponse(BaseModel):\n    predictions: List[float]\n    model_version: str\n    timestamp: str\n\n@app.post(\"/predict\", response_model=PredictionResponse)\nasync def predict(request: PredictionRequest):\n    \"\"\"Handle prediction requests\"\"\"\n    try:\n        # Convert input to DataFrame\n        input_df = pd.DataFrame(request.data)\n        \n        # Make predictions\n        result = model_serving.predict(input_df)\n        \n        # Log prediction\n        input_metadata = {\n            \"request_id\": \"generated_uuid\",\n            \"data_shape\": input_df.shape,\n            \"model_version\": request.model_version\n        }\n        prediction_logger.log_prediction(result, input_metadata)\n        \n        return PredictionResponse(\n            predictions=result[\"predictions\"],\n            model_version=result[\"model_version\"],\n            timestamp=result[\"timestamp\"]\n        )\n    \n    except Exception as e:\n        raise HTTPException(status_code=500, detail=str(e))\n\n\n\n\n\nLocal Serving: FastAPI-based inference endpoint\nPrediction Logging: JSONL format with comprehensive metadata\nModel Management: Efficient loading and caching of model artifacts\nPerformance Monitoring: Request/response logging and metrics",
+    "crumbs": [
+      "🔧 Technical Reference",
+      "Implementation Patterns: EX-01 → EX-03"
+    ]
+  },
+  {
+    "objectID": "reference/01_Implementation_Patterns.html#integration-patterns",
+    "href": "reference/01_Implementation_Patterns.html#integration-patterns",
+    "title": "Implementation Patterns: EX-01 → EX-03",
+    "section": "",
+    "text": "from ml_deploy.vertical_slice import execute_first_vertical_slice\nfrom ml_deploy.vertical_slice import register_model_artifact\nfrom ml_deploy.vertical_slice import LocalModelServing\nfrom pathlib import Path\n\ndef complete_ml_workflow(work_dir: Path, experiment_config: Dict[str, Any]):\n    \"\"\"Execute complete EX-01 → EX-02 → EX-03 workflow\"\"\"\n    \n    # EX-01: Training with Traceability\n    training_result = execute_first_vertical_slice(\n        work_dir=work_dir / \"training\",\n        mlflow_config=resolve_mlflow_storage_config(),\n        run_name=\"complete_workflow_experiment\",\n        experiment_config=experiment_config\n    )\n    \n    # EX-02: Artifact Bundling and Versioning\n    model_bundle_path = register_model_artifact(\n        artifact_bundle_path=training_result.artifact_path,\n        model_name=\"workflow_model\",\n        model_version=\"v1.0\",\n        description=\"Complete workflow model\",\n        run_id=training_result.run_id\n    )\n    \n    # EX-03: Local Deployment and Serving\n    local_serving = LocalModelServing(model_bundle_path)\n    prediction_logger = PredictionLogger(work_dir / \"logs\")\n    \n    # Example prediction\n    import pandas as pd\n    test_data = pd.DataFrame([[0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]])\n    prediction_result = local_serving.predict(test_data)\n    \n    # Log prediction\n    prediction_logger.log_prediction(\n        prediction_result,\n        {\"test_run\": True, \"data_shape\": test_data.shape}\n    )\n    \n    return {\n        \"training_result\": training_result,\n        \"model_bundle\": model_bundle_path,\n        \"local_serving\": local_serving,\n        \"prediction_log\": work_dir / \"logs\"\n    }\n\n\n\nfrom typing import Optional\nfrom pathlib import Path\n\nclass WorkflowExecutor:\n    def __init__(self, work_dir: Path):\n        self.work_dir = work_dir\n        self.current_phase = \"init\"\n    \n    def execute_workflow(self, config: Dict[str, Any]) -&gt; Dict[str, Any]:\n        \"\"\"Execute complete workflow with error handling\"\"\"\n        try:\n            # Phase 1: Training\n            self.current_phase = \"training\"\n            training_result = self._execute_training(config)\n            \n            # Phase 2: Artifact Registration\n            self.current_phase = \"artifact_registration\"\n            model_bundle = self._register_artifacts(training_result)\n            \n            # Phase 3: Local Serving\n            self.current_phase = \"local_serving\"\n            serving = self._setup_local_serving(model_bundle)\n            \n            return {\n                \"success\": True,\n                \"training_result\": training_result,\n                \"model_bundle\": model_bundle,\n                \"local_serving\": serving\n            }\n            \n        except Exception as e:\n            return {\n                \"success\": False,\n                \"error\": str(e),\n                \"phase\": self.current_phase,\n                \"work_dir\": str(self.work_dir)\n            }\n    \n    def _execute_training(self, config: Dict[str, Any]):\n        \"\"\"Execute training phase\"\"\"\n        # Implementation details\n        pass\n    \n    def _register_artifacts(self, training_result):\n        \"\"\"Register model artifacts\"\"\"\n        # Implementation details\n        pass\n    \n    def _setup_local_serving(self, model_bundle):\n        \"\"\"Setup local serving\"\"\"\n        # Implementation details\n        pass",
+    "crumbs": [
+      "🔧 Technical Reference",
+      "Implementation Patterns: EX-01 → EX-03"
+    ]
+  },
+  {
+    "objectID": "reference/01_Implementation_Patterns.html#testing-and-validation",
+    "href": "reference/01_Implementation_Patterns.html#testing-and-validation",
+    "title": "Implementation Patterns: EX-01 → EX-03",
+    "section": "",
+    "text": "import pytest\nfrom pathlib import Path\nfrom ml_deploy.vertical_slice import execute_first_vertical_slice\n\ndef test_training_execution():\n    \"\"\"Test EX-01 training execution\"\"\"\n    result = execute_first_vertical_slice(\n        work_dir=Path(\"/tmp/test_training\"),\n        mlflow_config=resolve_mlflow_storage_config(),\n        run_name=\"test_experiment\",\n        experiment_config={\"test\": True}\n    )\n    \n    assert result.success\n    assert result.artifact_path.exists()\n    assert result.run_id is not None\n\ndef test_artifact_registration():\n    \"\"\"Test EX-02 artifact registration\"\"\"\n    # Test model artifact creation and registration\n    pass\n\ndef test_local_serving():\n    \"\"\"Test EX-03 local serving\"\"\"\n    # Test local model serving and prediction logging\n    pass\n\n\n\ndef test_complete_workflow():\n    \"\"\"Test complete EX-01 → EX-02 → EX-03 workflow\"\"\"\n    workflow = WorkflowExecutor(Path(\"/tmp/integration_test\"))\n    result = workflow.execute_workflow({\n        \"dataset\": \"test_data\",\n        \"model_type\": \"xgboost\",\n        \"test_run\": True\n    })\n    \n    assert result[\"success\"]\n    assert \"training_result\" in result\n    assert \"model_bundle\" in result\n    assert \"local_serving\" in result",
+    "crumbs": [
+      "🔧 Technical Reference",
+      "Implementation Patterns: EX-01 → EX-03"
+    ]
+  },
+  {
+    "objectID": "reference/01_Implementation_Patterns.html#performance-considerations",
+    "href": "reference/01_Implementation_Patterns.html#performance-considerations",
+    "title": "Implementation Patterns: EX-01 → EX-03",
+    "section": "",
+    "text": "Model artifacts should be loaded on-demand\nImplement caching for frequently accessed models\nMonitor memory usage during serving\n\n\n\n\n\nOptimize model loading times\nImplement request batching for multiple predictions\nUse efficient data formats for input/output\n\n\n\n\n\nConsider model sharding for large models\nImplement horizontal scaling for serving endpoints\nMonitor resource usage and scale accordingly",
+    "crumbs": [
+      "🔧 Technical Reference",
+      "Implementation Patterns: EX-01 → EX-03"
+    ]
+  },
+  {
+    "objectID": "reference/01_Implementation_Patterns.html#security-considerations",
+    "href": "reference/01_Implementation_Patterns.html#security-considerations",
+    "title": "Implementation Patterns: EX-01 → EX-03",
+    "section": "",
+    "text": "Implement access controls for model artifacts\nEncrypt sensitive model components\nMonitor unauthorized access attempts\n\n\n\n\n\nEnsure input data handling complies with privacy regulations\nImplement data anonymization where required\nAudit data access patterns\n\n\n\n\n\nMaintain complete logs of all operations\nImplement tamper-evident logging\nRegular audit of model access and usage",
+    "crumbs": [
+      "🔧 Technical Reference",
+      "Implementation Patterns: EX-01 → EX-03"
+    ]
+  },
+  {
+    "objectID": "reference/01_Implementation_Patterns.html#monitoring-and-observability",
+    "href": "reference/01_Implementation_Patterns.html#monitoring-and-observability",
+    "title": "Implementation Patterns: EX-01 → EX-03",
+    "section": "",
+    "text": "Track prediction latency and throughput\nMonitor model accuracy and drift\nTrack resource usage patterns\n\n\n\n\n\nLog prediction errors and failures\nImplement error rate monitoring\nTrack error patterns and trends\n\n\n\n\n\nMonitor model impact on business outcomes\nTrack prediction accuracy over time\nMeasure ROI of ML deployment\n\n\nThis implementation patterns document provides the technical foundation for ML deployment workflows. For specific guidance on extending these patterns to distributed training, batch inference, or online serving, refer to the respective topology documentation.",
+    "crumbs": [
+      "🔧 Technical Reference",
+      "Implementation Patterns: EX-01 → EX-03"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "ML Deploy Documentation",
+    "section": "",
+    "text": "Welcome to the ML Deploy documentation - a comprehensive guide for machine learning deployment with full lifecycle management.\n\n\n\nNew to ML Deploy? Start with the Getting Started Guide\nNeed specific patterns? Check the Implementation Patterns\nLooking for API details? See the API Documentation\n\n\n\n\n\n\nLearn ML Deploy through guided examples and progressive tutorials:\n\nTerminology Glossary - Understand EX-01, EX-02, EX-03 and other key terms\nGetting Started - Set up your environment and learn the basics\nConcepts and Architecture - Understand the platform architecture\nEnd-to-End Workflow - Complete EX-01→EX-02→EX-03 workflow tutorial\nAdvanced Scenarios - Distributed training, batch inference, and online serving\nMigration Guide - Migrate from other platforms\n\n\n\n\nReference documentation for implementation and integration:\n\nImplementation Patterns - Technical patterns and best practices\nAPI Documentation - Complete API reference\n\n\n\n\n\n\n\nStart here if you’re new to ML Deploy: 1. Terminology Glossary → Getting Started → Concepts and Architecture 2. End-to-End Workflow → Implementation Patterns\n\n\n\nIf you have some ML deployment experience: 1. Concepts and Architecture → End-to-End Workflow 2. Implementation Patterns → API Documentation\n\n\n\nIf you’re experienced with ML deployment: 1. API Documentation → Implementation Patterns 2. Advanced Scenarios → Migration Guide\n\n\n\n\n\n🔄 Full Lifecycle Management: From data preparation to model deployment\n🏗️ Nix-Based Infrastructure: Containerization without Docker files\n📊 Comprehensive Lineage: Complete traceability across the ML pipeline\n⚡ High Performance: Optimized for GPU training and inference\n🔒 Security-First: Built-in governance and security controls\n🌐 Multi-Environment: Dev, staging, and production deployments\n\n\n\n\n\nDocumentation: Use the search function in the sidebar\nCommunity: Join our community forum\nIssues: Report bugs or request features on GitHub\nSupport: Contact enterprise support for paid plans\n\n\nThis documentation is built with Quarto and automatically updated as the platform evolves. For the most current information, always check the latest version.",
+    "crumbs": [
+      "ML Deploy Documentation"
+    ]
+  },
+  {
+    "objectID": "index.html#quick-start",
+    "href": "index.html#quick-start",
+    "title": "ML Deploy Documentation",
+    "section": "",
+    "text": "New to ML Deploy? Start with the Getting Started Guide\nNeed specific patterns? Check the Implementation Patterns\nLooking for API details? See the API Documentation",
+    "crumbs": [
+      "ML Deploy Documentation"
+    ]
+  },
+  {
+    "objectID": "index.html#documentation-structure",
+    "href": "index.html#documentation-structure",
+    "title": "ML Deploy Documentation",
+    "section": "",
+    "text": "Learn ML Deploy through guided examples and progressive tutorials:\n\nTerminology Glossary - Understand EX-01, EX-02, EX-03 and other key terms\nGetting Started - Set up your environment and learn the basics\nConcepts and Architecture - Understand the platform architecture\nEnd-to-End Workflow - Complete EX-01→EX-02→EX-03 workflow tutorial\nAdvanced Scenarios - Distributed training, batch inference, and online serving\nMigration Guide - Migrate from other platforms\n\n\n\n\nReference documentation for implementation and integration:\n\nImplementation Patterns - Technical patterns and best practices\nAPI Documentation - Complete API reference",
+    "crumbs": [
+      "ML Deploy Documentation"
+    ]
+  },
+  {
+    "objectID": "index.html#learning-paths",
+    "href": "index.html#learning-paths",
+    "title": "ML Deploy Documentation",
+    "section": "",
+    "text": "Start here if you’re new to ML Deploy: 1. Terminology Glossary → Getting Started → Concepts and Architecture 2. End-to-End Workflow → Implementation Patterns\n\n\n\nIf you have some ML deployment experience: 1. Concepts and Architecture → End-to-End Workflow 2. Implementation Patterns → API Documentation\n\n\n\nIf you’re experienced with ML deployment: 1. API Documentation → Implementation Patterns 2. Advanced Scenarios → Migration Guide",
+    "crumbs": [
+      "ML Deploy Documentation"
+    ]
+  },
+  {
+    "objectID": "index.html#key-features",
+    "href": "index.html#key-features",
+    "title": "ML Deploy Documentation",
+    "section": "",
+    "text": "🔄 Full Lifecycle Management: From data preparation to model deployment\n🏗️ Nix-Based Infrastructure: Containerization without Docker files\n📊 Comprehensive Lineage: Complete traceability across the ML pipeline\n⚡ High Performance: Optimized for GPU training and inference\n🔒 Security-First: Built-in governance and security controls\n🌐 Multi-Environment: Dev, staging, and production deployments",
+    "crumbs": [
+      "ML Deploy Documentation"
+    ]
+  },
+  {
+    "objectID": "index.html#getting-help",
+    "href": "index.html#getting-help",
+    "title": "ML Deploy Documentation",
+    "section": "",
+    "text": "Documentation: Use the search function in the sidebar\nCommunity: Join our community forum\nIssues: Report bugs or request features on GitHub\nSupport: Contact enterprise support for paid plans\n\n\nThis documentation is built with Quarto and automatically updated as the platform evolves. For the most current information, always check the latest version.",
+    "crumbs": [
+      "ML Deploy Documentation"
+    ]
+  },
+  {
+    "objectID": "navigation-guide.html",
+    "href": "navigation-guide.html",
+    "title": "Navigation Guide",
+    "section": "",
+    "text": "This guide helps you navigate the restructured ML Deploy documentation effectively.\n\n\n\n\nML Deploy Documentation/\n├── 📚 Tutorials/                    # Learning-oriented content\n│   ├── 01_Terminology_Glossary     # Key terms and concepts\n│   ├── 02_Getting_Started          # Quick start guide\n│   ├── 03_Concepts_and_Architecture # Platform understanding\n│   ├── 04_End_to_End_Workflow       # Complete workflow tutorial\n│   ├── 05_Advanced_Scenarios       # Complex use cases\n│   └── 06_Migration_Guide          # Platform migration\n├── 🔧 Technical Reference/          # Implementation details\n│   ├── 01_Implementation_Patterns  # Code patterns and best practices\n│   └── 02_API_Documentation        # Complete API reference\n├── 🏗️ Original Documentation/      # Legacy content (being phased out)\n└── 📖 Main Index                   # This page\n\n\n\n\n\n\nGoal: Learn ML Deploy from scratch Path:\n01_Terminology_Glossary → \n02_Getting_Started → \n03_Concepts_and_Architecture → \n04_End_to_End_Workflow\nTime: 2-4 hours\n\n\n\nGoal: Understand the platform architecture and patterns Path:\n03_Concepts_and_Architecture → \n04_End_to_End_Workflow → \n01_Implementation_Patterns\nTime: 1-2 hours\n\n\n\nGoal: Integrate with ML Deploy programmatically Path:\n02_Getting_Started → \n01_Implementation_Patterns → \n02_API_Documentation\nTime: 1-3 hours\n\n\n\nGoal: Migrate from other ML deployment platforms Path:\n01_Terminology_Glossary → \n06_Migration_Guide → \n05_Advanced_Scenarios\nTime: 3-5 hours\n\n\n\n\n\n\n\nTerminology: Start with 01_Terminology_Glossary\nSetup: Follow 02_Getting_Started\nArchitecture: Study 03_Concepts_and_Architecture\nWorkflows: Practice 04_End_to_End_Workflow\nAdvanced Patterns: Explore 05_Advanced_Scenarios\nMigration: Use 06_Migration_Guide\n\n\n\n\n\nData Scientists: Focus on tutorials + implementation patterns\nML Engineers: Focus on API documentation + advanced scenarios\nDevOps Engineers: Focus on infrastructure tutorials + patterns\nPlatform Architects: Focus on architecture documentation + API docs\n\n\n\n\n\nQuick Start: 02_Getting_Started\nComplete Workflow: 04_End_to_End_Workflow\nIntegration: 01_Implementation_Patterns + 02_API_Documentation\nMigration: 06_Migration_Guide\n\n\n\n\n\n\nStart with Terminology: Understanding EX-01, EX-02, EX-03 is crucial\nFollow the Progression: Each tutorial builds on previous concepts\nPractice the Workflows: The end-to-end tutorial is hands-on\nReference the API Docs: Use the technical reference for implementation details\nExplore Advanced Scenarios: Learn complex patterns when ready\n\n\n\n\n\n\n\nUse the search bar in the top navigation\nSearch by keywords, file names, or concepts\nResults show relevant sections across all documentation\n\n\n\n\n\nNavigation breadcrumbs show your current location\nClick to navigate to parent sections\n\n\n\n\n\nEach page includes links to related concepts\nCross-references help explore connected topics\n\n\n\n\n\n\n\n\nUnderstand your ML deployment needs\nIdentify your role and expertise level\nSet aside dedicated learning time\n\n\n\n\n\nRead the terminology glossary\nComplete the getting started guide\nWork through the concepts and architecture\nPractice the end-to-end workflow\n\n\n\n\n\nStudy implementation patterns\nReview API documentation\nExplore advanced scenarios\nPlan your migration if applicable\n\n\n\n\n\n\nSearch the documentation: Use the search functionality\nCheck the glossary: For term definitions\nReview examples: In the tutorials and patterns\nJoin the community: For user support\nReport issues: For documentation improvements\n\n\nThis navigation guide is designed to help you make the most of the restructured documentation. The tutorials and reference sections work together to provide both learning and implementation support.",
+    "crumbs": [
+      "Navigation Guide"
+    ]
+  },
+  {
+    "objectID": "navigation-guide.html#documentation-map",
+    "href": "navigation-guide.html#documentation-map",
+    "title": "Navigation Guide",
+    "section": "",
+    "text": "ML Deploy Documentation/\n├── 📚 Tutorials/                    # Learning-oriented content\n│   ├── 01_Terminology_Glossary     # Key terms and concepts\n│   ├── 02_Getting_Started          # Quick start guide\n│   ├── 03_Concepts_and_Architecture # Platform understanding\n│   ├── 04_End_to_End_Workflow       # Complete workflow tutorial\n│   ├── 05_Advanced_Scenarios       # Complex use cases\n│   └── 06_Migration_Guide          # Platform migration\n├── 🔧 Technical Reference/          # Implementation details\n│   ├── 01_Implementation_Patterns  # Code patterns and best practices\n│   └── 02_API_Documentation        # Complete API reference\n├── 🏗️ Original Documentation/      # Legacy content (being phased out)\n└── 📖 Main Index                   # This page",
+    "crumbs": [
+      "Navigation Guide"
+    ]
+  },
+  {
+    "objectID": "navigation-guide.html#choose-your-path",
+    "href": "navigation-guide.html#choose-your-path",
+    "title": "Navigation Guide",
+    "section": "",
+    "text": "Goal: Learn ML Deploy from scratch Path:\n01_Terminology_Glossary → \n02_Getting_Started → \n03_Concepts_and_Architecture → \n04_End_to_End_Workflow\nTime: 2-4 hours\n\n\n\nGoal: Understand the platform architecture and patterns Path:\n03_Concepts_and_Architecture → \n04_End_to_End_Workflow → \n01_Implementation_Patterns\nTime: 1-2 hours\n\n\n\nGoal: Integrate with ML Deploy programmatically Path:\n02_Getting_Started → \n01_Implementation_Patterns → \n02_API_Documentation\nTime: 1-3 hours\n\n\n\nGoal: Migrate from other ML deployment platforms Path:\n01_Terminology_Glossary → \n06_Migration_Guide → \n05_Advanced_Scenarios\nTime: 3-5 hours",
+    "crumbs": [
+      "Navigation Guide"
+    ]
+  },
+  {
+    "objectID": "navigation-guide.html#finding-specific-information",
+    "href": "navigation-guide.html#finding-specific-information",
+    "title": "Navigation Guide",
+    "section": "",
+    "text": "Terminology: Start with 01_Terminology_Glossary\nSetup: Follow 02_Getting_Started\nArchitecture: Study 03_Concepts_and_Architecture\nWorkflows: Practice 04_End_to_End_Workflow\nAdvanced Patterns: Explore 05_Advanced_Scenarios\nMigration: Use 06_Migration_Guide\n\n\n\n\n\nData Scientists: Focus on tutorials + implementation patterns\nML Engineers: Focus on API documentation + advanced scenarios\nDevOps Engineers: Focus on infrastructure tutorials + patterns\nPlatform Architects: Focus on architecture documentation + API docs\n\n\n\n\n\nQuick Start: 02_Getting_Started\nComplete Workflow: 04_End_to_End_Workflow\nIntegration: 01_Implementation_Patterns + 02_API_Documentation\nMigration: 06_Migration_Guide",
+    "crumbs": [
+      "Navigation Guide"
+    ]
+  },
+  {
+    "objectID": "navigation-guide.html#tips-for-effective-learning",
+    "href": "navigation-guide.html#tips-for-effective-learning",
+    "title": "Navigation Guide",
+    "section": "",
+    "text": "Start with Terminology: Understanding EX-01, EX-02, EX-03 is crucial\nFollow the Progression: Each tutorial builds on previous concepts\nPractice the Workflows: The end-to-end tutorial is hands-on\nReference the API Docs: Use the technical reference for implementation details\nExplore Advanced Scenarios: Learn complex patterns when ready",
+    "crumbs": [
+      "Navigation Guide"
+    ]
+  },
+  {
+    "objectID": "navigation-guide.html#navigation-features",
+    "href": "navigation-guide.html#navigation-features",
+    "title": "Navigation Guide",
+    "section": "",
+    "text": "Use the search bar in the top navigation\nSearch by keywords, file names, or concepts\nResults show relevant sections across all documentation\n\n\n\n\n\nNavigation breadcrumbs show your current location\nClick to navigate to parent sections\n\n\n\n\n\nEach page includes links to related concepts\nCross-references help explore connected topics",
+    "crumbs": [
+      "Navigation Guide"
+    ]
+  },
+  {
+    "objectID": "navigation-guide.html#getting-started-checklist",
+    "href": "navigation-guide.html#getting-started-checklist",
+    "title": "Navigation Guide",
+    "section": "",
+    "text": "Understand your ML deployment needs\nIdentify your role and expertise level\nSet aside dedicated learning time\n\n\n\n\n\nRead the terminology glossary\nComplete the getting started guide\nWork through the concepts and architecture\nPractice the end-to-end workflow\n\n\n\n\n\nStudy implementation patterns\nReview API documentation\nExplore advanced scenarios\nPlan your migration if applicable",
+    "crumbs": [
+      "Navigation Guide"
+    ]
+  },
+  {
+    "objectID": "navigation-guide.html#need-help",
+    "href": "navigation-guide.html#need-help",
+    "title": "Navigation Guide",
+    "section": "",
+    "text": "Search the documentation: Use the search functionality\nCheck the glossary: For term definitions\nReview examples: In the tutorials and patterns\nJoin the community: For user support\nReport issues: For documentation improvements\n\n\nThis navigation guide is designed to help you make the most of the restructured documentation. The tutorials and reference sections work together to provide both learning and implementation support.",
+    "crumbs": [
+      "Navigation Guide"
+    ]
+  },
+  {
+    "objectID": "reading-paths.html",
+    "href": "reading-paths.html",
+    "title": "Reading Paths",
+    "section": "",
+    "text": "This page provides customized reading paths for different user roles and experience levels.\n\n\nFor: New users, data scientists new to ML deployment\n\n\n\nBasic Python knowledge\nUnderstanding of machine learning concepts\nFamiliarity with command line\n\n\n\n\n01_Terminology_Glossary → \n02_Getting_Started → \n03_Concepts_and_Architecture → \n04_End_to_End_Workflow\n\n\n\n\nUnderstand ML Deploy terminology (EX-01, EX-02, EX-03)\nSet up development environment\nLearn core platform concepts\nComplete a full workflow practice\n\n\n\n\n\nCan explain key platform concepts\nCan set up local development environment\nCan execute a complete ML workflow\nUnderstands platform architecture\n\n\n\n\n\nFor: ML engineers with deployment experience\n\n\n\nML deployment experience\nFamiliarity with containerization\nUnderstanding of CI/CD concepts\n\n\n\n\n03_Concepts_and_Architecture → \n04_End_to_End_Workflow → \n01_Implementation_Patterns\n\n\n\n\nUnderstand platform architecture deeply\nMaster end-to-end workflows\nLearn implementation patterns\nApply patterns to real scenarios\n\n\n\n\n\nCan architect platform solutions\nCan implement complex workflows\nUnderstands best practices\nCan troubleshoot common issues\n\n\n\n\n\nFor: Platform engineers, DevOps, system architects\n\n\n\nAdvanced ML deployment experience\nInfrastructure as code knowledge\nPlatform architecture experience\n\n\n\n\n02_API_Documentation → \n01_Implementation_Patterns → \n05_Advanced_Scenarios\n\n\n\n\nMaster API integration\nImplement complex patterns\nHandle advanced scenarios\nOptimize performance and scaling\n\n\n\n\n\nCan integrate ML Deploy APIs\nCan implement advanced patterns\nCan handle complex deployments\nCan optimize platform performance\n\n\n\n\n\nFor: Users migrating from other ML deployment platforms\n\n\n\nExperience with other ML deployment platforms\nKnowledge of current workflows\nUnderstanding of existing infrastructure\n\n\n\n\n01_Terminology_Glossary → \n06_Migration_Guide → \n05_Advanced_Scenarios\n\n\n\n\nLearn ML Deploy terminology\nUnderstand migration process\nMap existing workflows\nExplore new platform features\n\n\n\n\n\nCan map old concepts to new ones\nCan migrate existing workflows\nUnderstands platform advantages\nCan plan migration strategy\n\n\n\n\n\n\n\n02_Getting_Started → \n04_End_to_End_Workflow → \n05_Advanced_Scenarios\nTime: 2-3 hours\n\n\n\n03_Concepts_and_Architecture → \n01_Implementation_Patterns → \n02_API_Documentation\nTime: 2-4 hours\n\n\n\n03_Concepts_and_Architecture → \n01_Implementation_Patterns → \n05_Advanced_Scenarios\nTime: 2-3 hours\n\n\n\n\n\n\n02_Getting_Started\n\n\n\n02_Getting_Started → \n03_Concepts_and_Architecture\n\n\n\n02_Getting_Started → \n04_End_to_End_Workflow\n\n\n\n\n\n\n\n\n\nRead terminology glossary\nComplete getting started guide\nUnderstand platform architecture\nPractice end-to-end workflow\nReview implementation patterns\n\n\n\n\n\nStudy architecture deeply\nMaster workflows\nLearn patterns\nApply to scenarios\nTroubleshoot issues\n\n\n\n\n\nMaster API documentation\nImplement complex patterns\nHandle advanced scenarios\nOptimize performance\nContribute to platform\n\n\n\n\n\nLearn terminology\nPlan migration\nMigrate workflows\nTest new features\nOptimize new setup\n\n\n\n\n\n\n\nFollow the Order: Each path builds on previous knowledge\nPractice Hands-On: Work through examples, not just reading\nUse the Glossary: Refer to terminology when confused\nJoin Community: Ask questions and share experiences\nUpdate Skills: Regularly review as platform evolves\n\n\n\n\n\n\n\nExplore advanced scenarios\nStudy implementation patterns\nJoin community discussions\n\n\n\n\n\nDive into API documentation\nContribute to documentation\nHelp other users\n\n\n\n\n\nContribute code or documentation\nPresent at conferences\nMentor other users\n\n\n\n\n\nOptimize migration strategy\nShare migration experiences\nHelp others migrate\n\n\nThese reading paths are designed to help you get the most value from the documentation in the shortest time. Choose the path that matches your role and goals.",
+    "crumbs": [
+      "Reading Paths"
+    ]
+  },
+  {
+    "objectID": "reading-paths.html#beginner-path-2-4-hours",
+    "href": "reading-paths.html#beginner-path-2-4-hours",
+    "title": "Reading Paths",
+    "section": "",
+    "text": "For: New users, data scientists new to ML deployment\n\n\n\nBasic Python knowledge\nUnderstanding of machine learning concepts\nFamiliarity with command line\n\n\n\n\n01_Terminology_Glossary → \n02_Getting_Started → \n03_Concepts_and_Architecture → \n04_End_to_End_Workflow\n\n\n\n\nUnderstand ML Deploy terminology (EX-01, EX-02, EX-03)\nSet up development environment\nLearn core platform concepts\nComplete a full workflow practice\n\n\n\n\n\nCan explain key platform concepts\nCan set up local development environment\nCan execute a complete ML workflow\nUnderstands platform architecture",
+    "crumbs": [
+      "Reading Paths"
+    ]
+  },
+  {
+    "objectID": "reading-paths.html#intermediate-path-1-2-hours",
+    "href": "reading-paths.html#intermediate-path-1-2-hours",
+    "title": "Reading Paths",
+    "section": "",
+    "text": "For: ML engineers with deployment experience\n\n\n\nML deployment experience\nFamiliarity with containerization\nUnderstanding of CI/CD concepts\n\n\n\n\n03_Concepts_and_Architecture → \n04_End_to_End_Workflow → \n01_Implementation_Patterns\n\n\n\n\nUnderstand platform architecture deeply\nMaster end-to-end workflows\nLearn implementation patterns\nApply patterns to real scenarios\n\n\n\n\n\nCan architect platform solutions\nCan implement complex workflows\nUnderstands best practices\nCan troubleshoot common issues",
+    "crumbs": [
+      "Reading Paths"
+    ]
+  },
+  {
+    "objectID": "reading-paths.html#advanced-path-1-3-hours",
+    "href": "reading-paths.html#advanced-path-1-3-hours",
+    "title": "Reading Paths",
+    "section": "",
+    "text": "For: Platform engineers, DevOps, system architects\n\n\n\nAdvanced ML deployment experience\nInfrastructure as code knowledge\nPlatform architecture experience\n\n\n\n\n02_API_Documentation → \n01_Implementation_Patterns → \n05_Advanced_Scenarios\n\n\n\n\nMaster API integration\nImplement complex patterns\nHandle advanced scenarios\nOptimize performance and scaling\n\n\n\n\n\nCan integrate ML Deploy APIs\nCan implement advanced patterns\nCan handle complex deployments\nCan optimize platform performance",
+    "crumbs": [
+      "Reading Paths"
+    ]
+  },
+  {
+    "objectID": "reading-paths.html#migration-path-3-5-hours",
+    "href": "reading-paths.html#migration-path-3-5-hours",
+    "title": "Reading Paths",
+    "section": "",
+    "text": "For: Users migrating from other ML deployment platforms\n\n\n\nExperience with other ML deployment platforms\nKnowledge of current workflows\nUnderstanding of existing infrastructure\n\n\n\n\n01_Terminology_Glossary → \n06_Migration_Guide → \n05_Advanced_Scenarios\n\n\n\n\nLearn ML Deploy terminology\nUnderstand migration process\nMap existing workflows\nExplore new platform features\n\n\n\n\n\nCan map old concepts to new ones\nCan migrate existing workflows\nUnderstands platform advantages\nCan plan migration strategy",
+    "crumbs": [
+      "Reading Paths"
+    ]
+  },
+  {
+    "objectID": "reading-paths.html#topic-specific-paths",
+    "href": "reading-paths.html#topic-specific-paths",
+    "title": "Reading Paths",
+    "section": "",
+    "text": "02_Getting_Started → \n04_End_to_End_Workflow → \n05_Advanced_Scenarios\nTime: 2-3 hours\n\n\n\n03_Concepts_and_Architecture → \n01_Implementation_Patterns → \n02_API_Documentation\nTime: 2-4 hours\n\n\n\n03_Concepts_and_Architecture → \n01_Implementation_Patterns → \n05_Advanced_Scenarios\nTime: 2-3 hours",
+    "crumbs": [
+      "Reading Paths"
+    ]
+  },
+  {
+    "objectID": "reading-paths.html#quick-start-paths",
+    "href": "reading-paths.html#quick-start-paths",
+    "title": "Reading Paths",
+    "section": "",
+    "text": "02_Getting_Started\n\n\n\n02_Getting_Started → \n03_Concepts_and_Architecture\n\n\n\n02_Getting_Started → \n04_End_to_End_Workflow",
+    "crumbs": [
+      "Reading Paths"
+    ]
+  },
+  {
+    "objectID": "reading-paths.html#progress-tracking",
+    "href": "reading-paths.html#progress-tracking",
+    "title": "Reading Paths",
+    "section": "",
+    "text": "Read terminology glossary\nComplete getting started guide\nUnderstand platform architecture\nPractice end-to-end workflow\nReview implementation patterns\n\n\n\n\n\nStudy architecture deeply\nMaster workflows\nLearn patterns\nApply to scenarios\nTroubleshoot issues\n\n\n\n\n\nMaster API documentation\nImplement complex patterns\nHandle advanced scenarios\nOptimize performance\nContribute to platform\n\n\n\n\n\nLearn terminology\nPlan migration\nMigrate workflows\nTest new features\nOptimize new setup",
+    "crumbs": [
+      "Reading Paths"
+    ]
+  },
+  {
+    "objectID": "reading-paths.html#tips-for-success",
+    "href": "reading-paths.html#tips-for-success",
+    "title": "Reading Paths",
+    "section": "",
+    "text": "Follow the Order: Each path builds on previous knowledge\nPractice Hands-On: Work through examples, not just reading\nUse the Glossary: Refer to terminology when confused\nJoin Community: Ask questions and share experiences\nUpdate Skills: Regularly review as platform evolves",
+    "crumbs": [
+      "Reading Paths"
+    ]
+  },
+  {
+    "objectID": "reading-paths.html#next-steps-after-completion",
+    "href": "reading-paths.html#next-steps-after-completion",
+    "title": "Reading Paths",
+    "section": "",
+    "text": "Explore advanced scenarios\nStudy implementation patterns\nJoin community discussions\n\n\n\n\n\nDive into API documentation\nContribute to documentation\nHelp other users\n\n\n\n\n\nContribute code or documentation\nPresent at conferences\nMentor other users\n\n\n\n\n\nOptimize migration strategy\nShare migration experiences\nHelp others migrate\n\n\nThese reading paths are designed to help you get the most value from the documentation in the shortest time. Choose the path that matches your role and goals.",
+    "crumbs": [
+      "Reading Paths"
+    ]
+  },
+  {
+    "objectID": "simple-test.html",
+    "href": "simple-test.html",
+    "title": "Simple Build Test",
+    "section": "",
+    "text": "This file tests the basic Quarto build functionality without complex kernels.\n\n\nThis is a simple test to verify the build system works correctly.\n\n\n\nFirst item\nSecond item\nThird item\n\n\n\n\nprint(\"Hello, World!\")\n\n\n\n\nMain Index\nNavigation Guide\nReading Paths\n\n\nThis test file should build without any kernel issues."
+  },
+  {
+    "objectID": "simple-test.html#test-content",
+    "href": "simple-test.html#test-content",
+    "title": "Simple Build Test",
+    "section": "",
+    "text": "This is a simple test to verify the build system works correctly.\n\n\n\nFirst item\nSecond item\nThird item\n\n\n\n\nprint(\"Hello, World!\")\n\n\n\n\nMain Index\nNavigation Guide\nReading Paths\n\n\nThis test file should build without any kernel issues."
   }
 ]

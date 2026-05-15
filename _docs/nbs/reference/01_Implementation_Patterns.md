@@ -1,0 +1,668 @@
+# Implementation Patterns: EX-01 → EX-03
+
+
+# Implementation Patterns: EX-01 → EX-03
+
+This document provides the technical implementation details for the core
+ML deployment patterns that form the foundation of the ML Deploy
+platform. These patterns demonstrate the complete workflow from training
+to deployment with comprehensive traceability and quality controls.
+
+## Overview
+
+The EX-01 → EX-03 implementation patterns represent the foundational
+workflow that covers:
+
+1.  **EX-01**: Training with Traceability - Complete training workflow
+    with MLflow tracking
+2.  **EX-02**: Artifact Bundling and Versioning - Model packaging and
+    registry management  
+3.  **EX-03**: Local Deployment and Serving - Local inference with
+    logging and validation
+
+This vertical slice serves as the reference implementation that can be
+extended to more complex scenarios including distributed training, batch
+inference, and online serving.
+
+## Pattern Architecture
+
+    ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+    │   EX-01:        │    │   EX-02:        │    │   EX-03:        │
+    │   Training      │───▶│   Artifact     │───▶│   Local         │
+    │   with          │    │   Bundling     │    │   Deployment    │
+    │   Traceability  │    │   and          │    │   and Serving   │
+    │                 │    │   Versioning   │    │                 │
+    └─────────────────┘    └─────────────────┘    └─────────────────┘
+             │                       │                       │
+             ▼                       ▼                       ▼
+    ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+    │   MLflow        │    │   MLflow        │    │   Local         │
+    │   Experiment    │    │   Model         │    │   Inference     │
+    │   Tracking      │    │   Registry      │    │   Engine        │
+    │                 │    │                 │    │                 │
+    └─────────────────┘    └─────────────────┘    └─────────────────┘
+
+## EX-01: Training with Traceability
+
+### Pattern Definition
+
+EX-01 implements a complete training workflow that captures
+comprehensive metadata about the training process, ensuring full
+reproducibility and lineage tracking.
+
+### Key Components
+
+#### Training Execution
+
+``` python
+from ml_deploy.vertical_slice import execute_first_vertical_slice
+from ml_deploy.mlflow_parity import resolve_mlflow_storage_config
+from pathlib import Path
+
+# Configure MLflow for traceability
+mlflow_config = resolve_mlflow_storage_config(profile="local_emulation")
+
+# Execute training with comprehensive metadata
+result = execute_first_vertical_slice(
+    work_dir=Path("/tmp/experiment"),
+    mlflow_config=mlflow_config,
+    run_name="diabetes_xgboost_experiment",
+    experiment_config={
+        "dataset_version": "v1.0",
+        "feature_revision": "engineered_v2",
+        "hyperparameters": {
+            "max_depth": 6,
+            "learning_rate": 0.1,
+            "random_state": 42
+        },
+        "compute_requirements": {
+            "gpu_required": False,
+            "memory_gb": 4
+        }
+    }
+)
+```
+
+#### Metadata Capture
+
+The training process captures:
+
+- **Dataset Metadata**: Version, source, preprocessing steps
+- **Feature Metadata**: Engineering steps, transformations, validation
+- **Hyperparameter Tracking**: All training parameters and their values
+- **Environment Snapshot**: Dependencies, versions, system state
+- **Performance Metrics**: Loss, accuracy, validation results
+- **Resource Usage**: CPU, memory, time consumed
+
+#### MLflow Integration
+
+``` python
+import mlflow
+import xgboost as xgb
+from sklearn.datasets import load_diabetes
+
+# Start MLflow run with comprehensive tags
+with mlflow.start_run(run_name="diabetes_xgboost_experiment") as run:
+    # Set traceability tags
+    mlflow.set_tag("dataset_version", "v1.0")
+    mlflow.set_tag("feature_revision", "engineered_v2")
+    mlflow.set_tag("model_type", "xgboost")
+    mlflow.set_tag("experiment_phase", "training")
+    
+    # Log hyperparameters
+    mlflow.log_params({
+        "max_depth": 6,
+        "learning_rate": 0.1,
+        "random_state": 42,
+        "objective": "reg:squarederror"
+    })
+    
+    # Execute training
+    data = load_diabetes()
+    X_train, X_test, y_train, y_test = train_test_split(
+        data.data, data.target, test_size=0.2, random_state=42
+    )
+    
+    dtrain = xgb.DMatrix(X_train, label=y_train)
+    dtest = xgb.DMatrix(X_test, label=y_test)
+    
+    model = xgb.train(
+        params={"objective": "reg:squarederror", "max_depth": 6},
+        dtrain=dtrain,
+        num_boost_round=100,
+        evals=[(dtrain, "train"), (dtest, "test")]
+    )
+    
+    # Log model and metrics
+    mlflow.xgboost.log_model(model, "model")
+    mlflow.log_metrics({"train_rmse": 0.5, "test_rmse": 0.6})
+```
+
+### Requirements and Constraints
+
+- **Mandatory Tags**: `dataset_version`, `feature_revision`,
+  `model_type`, `experiment_phase`
+- **Parameter Logging**: All training parameters must be logged
+- **Artifact Storage**: Model artifacts must be stored with proper
+  metadata
+- **Environment Capture**: Complete environment snapshot for
+  reproducibility
+
+## EX-02: Artifact Bundling and Versioning
+
+### Pattern Definition
+
+EX-02 implements the process of packaging trained models and associated
+artifacts into versioned, deployment-ready bundles with comprehensive
+metadata.
+
+### Key Components
+
+#### Model Artifact Creation
+
+``` python
+import json
+from pathlib import Path
+from dataclasses import dataclass
+from typing import Dict, Any
+
+@dataclass
+class ModelArtifact:
+    model_path: Path
+    scaler_path: Path
+    metadata: Dict[str, Any]
+    version: str
+    creation_timestamp: str
+    
+    def to_bundle(self, bundle_dir: Path) -> Path:
+        """Create versioned model artifact bundle"""
+        bundle_dir.mkdir(parents=True, exist_ok=True)
+        
+        # Copy model and scaler files
+        model_bundle_path = bundle_dir / "model.json"
+        scaler_bundle_path = bundle_dir / "scaler.pkl"
+        
+        # Copy model artifacts
+        self.model_path.rename(model_bundle_path)
+        self.scaler_path.rename(scaler_bundle_path)
+        
+        # Create metadata file
+        metadata_path = bundle_dir / "metadata.json"
+        metadata = {
+            "version": self.version,
+            "creation_timestamp": self.creation_timestamp,
+            "model_type": self.metadata["model_type"],
+            "dataset_version": self.metadata["dataset_version"],
+            "feature_revision": self.metadata["feature_revision"],
+            "hyperparameters": self.metadata["hyperparameters"],
+            "performance_metrics": self.metadata["performance_metrics"],
+            "mlflow_run_id": self.metadata["mlflow_run_id"]
+        }
+        
+        with metadata_path.open("w") as f:
+            json.dump(metadata, f, indent=2)
+        
+        return bundle_dir
+```
+
+#### Version Registration
+
+``` python
+from ml_deploy.vertical_slice import register_model_artifact
+
+# Register model artifact in MLflow registry
+registration_result = register_model_artifact(
+    artifact_bundle_path=Path("/tmp/model_bundle_v1.0"),
+    model_name="diabetes_xgboost",
+    model_version="v1.0",
+    description="XGBoost model for diabetes prediction with engineered features",
+    run_id="your_mlflow_run_id"
+)
+
+print(f"Model registered: {registration_result.model_name}")
+print(f"Version: {registration_result.model_version}")
+print(f"URI: {registration_result.model_uri}")
+```
+
+#### Promotion Tracking
+
+``` python
+from dataclasses import dataclass
+from typing import Literal
+from datetime import datetime
+
+@dataclass
+class ModelPromotionRecord:
+    model_name: str
+    version: str
+    source_environment: Literal["dev", "uat", "regression", "prod"]
+    target_environment: Literal["uat", "regression", "prod"]
+    promotion_timestamp: datetime
+    approved_by: str
+    approval_ticket: str
+    validation_results: Dict[str, Any]
+    
+    def to_promotion_log(self) -> Dict[str, Any]:
+        """Create promotion log entry"""
+        return {
+            "model_name": self.model_name,
+            "version": self.version,
+            "source_environment": self.source_environment,
+            "target_environment": self.target_environment,
+            "promotion_timestamp": self.promotion_timestamp.isoformat(),
+            "approved_by": self.approved_by,
+            "approval_ticket": self.approval_ticket,
+            "validation_results": self.validation_results
+        }
+```
+
+### Requirements and Constraints
+
+- **Artifact Bundling**: Model + scaler + metadata + dependencies
+- **Version Management**: Semantic versioning with promotion tracking
+- **Registry Integration**: MLflow model registry for artifact
+  management
+- **Promotion Pipeline**: DEV→UAT→REGRESSION→PROD with approval gates
+
+## EX-03: Local Deployment and Serving
+
+### Pattern Definition
+
+EX-03 implements local model deployment using nbdev/Python for inference
+with comprehensive prediction logging and lineage preservation.
+
+### Key Components
+
+#### Model Loading and Inference
+
+``` python
+import pickle
+import json
+from pathlib import Path
+from typing import Dict, Any, List
+import pandas as pd
+
+class LocalModelServing:
+    def __init__(self, model_bundle_path: Path):
+        """Initialize local model serving from bundle"""
+        self.model_bundle_path = model_bundle_path
+        self.model = None
+        self.scaler = None
+        self.metadata = self._load_metadata()
+        self._load_artifacts()
+    
+    def _load_metadata(self) -> Dict[str, Any]:
+        """Load model metadata from bundle"""
+        metadata_path = self.model_bundle_path / "metadata.json"
+        with metadata_path.open("r") as f:
+            return json.load(f)
+    
+    def _load_artifacts(self):
+        """Load model and scaler artifacts"""
+        model_path = self.model_bundle_path / "model.json"
+        scaler_path = self.model_bundle_path / "scaler.pkl"
+        
+        # Load XGBoost model
+        import xgboost as xgb
+        self.model = xgb.Booster()
+        self.model.load_model(str(model_path))
+        
+        # Load scaler
+        with scaler_path.open("rb") as f:
+            self.scaler = pickle.load(f)
+    
+    def predict(self, input_data: pd.DataFrame) -> Dict[str, Any]:
+        """Make predictions with logging"""
+        # Preprocess input data
+        processed_data = self.scaler.transform(input_data)
+        
+        # Make predictions
+        dmatrix = xgb.DMatrix(processed_data)
+        predictions = self.model.predict(dmatrix)
+        
+        # Create prediction result
+        result = {
+            "predictions": predictions.tolist(),
+            "model_version": self.metadata["version"],
+            "model_type": self.metadata["model_type"],
+            "input_data_shape": input_data.shape,
+            "timestamp": pd.Timestamp.now().isoformat()
+        }
+        
+        return result
+```
+
+#### Prediction Logging
+
+``` python
+import json
+from pathlib import Path
+from datetime import datetime
+from typing import Dict, Any
+
+class PredictionLogger:
+    def __init__(self, log_dir: Path):
+        self.log_dir = log_dir
+        self.log_dir.mkdir(parents=True, exist_ok=True)
+    
+    def log_prediction(self, prediction_result: Dict[str, Any], 
+                      input_metadata: Dict[str, Any]):
+        """Log prediction with comprehensive metadata"""
+        log_entry = {
+            "timestamp": datetime.now().isoformat(),
+            "prediction_result": prediction_result,
+            "input_metadata": input_metadata,
+            "model_info": {
+                "version": prediction_result["model_version"],
+                "type": prediction_result["model_type"]
+            }
+        }
+        
+        # Write to JSONL log file
+        log_path = self.log_dir / "predictions.jsonl"
+        with log_path.open("a") as f:
+            f.write(json.dumps(log_entry) + "\n")
+    
+    def get_prediction_stats(self) -> Dict[str, Any]:
+        """Get prediction statistics from log"""
+        log_path = self.log_dir / "predictions.jsonl"
+        if not log_path.exists():
+            return {"total_predictions": 0}
+        
+        with log_path.open("r") as f:
+            lines = f.readlines()
+        
+        return {
+            "total_predictions": len(lines),
+            "date_range": {
+                "start": lines[0].split('"timestamp":')[1].split(',')[0].strip('"'),
+                "end": lines[-1].split('"timestamp":')[1].split(',')[0].strip('"')
+            }
+        }
+```
+
+#### Local Serving Endpoint
+
+``` python
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+import pandas as pd
+from typing import List
+
+# Initialize model serving
+model_serving = LocalModelServing(Path("/tmp/model_bundle_v1.0"))
+prediction_logger = PredictionLogger(Path("/tmp/prediction_logs"))
+
+app = FastAPI(title="ML Deploy Local Serving")
+
+class PredictionRequest(BaseModel):
+    data: List[List[float]]
+    model_version: str = "v1.0"
+
+class PredictionResponse(BaseModel):
+    predictions: List[float]
+    model_version: str
+    timestamp: str
+
+@app.post("/predict", response_model=PredictionResponse)
+async def predict(request: PredictionRequest):
+    """Handle prediction requests"""
+    try:
+        # Convert input to DataFrame
+        input_df = pd.DataFrame(request.data)
+        
+        # Make predictions
+        result = model_serving.predict(input_df)
+        
+        # Log prediction
+        input_metadata = {
+            "request_id": "generated_uuid",
+            "data_shape": input_df.shape,
+            "model_version": request.model_version
+        }
+        prediction_logger.log_prediction(result, input_metadata)
+        
+        return PredictionResponse(
+            predictions=result["predictions"],
+            model_version=result["model_version"],
+            timestamp=result["timestamp"]
+        )
+    
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+```
+
+### Requirements and Constraints
+
+- **Local Serving**: FastAPI-based inference endpoint
+- **Prediction Logging**: JSONL format with comprehensive metadata
+- **Model Management**: Efficient loading and caching of model artifacts
+- **Performance Monitoring**: Request/response logging and metrics
+
+## Integration Patterns
+
+### Complete Workflow Integration
+
+``` python
+from ml_deploy.vertical_slice import execute_first_vertical_slice
+from ml_deploy.vertical_slice import register_model_artifact
+from ml_deploy.vertical_slice import LocalModelServing
+from pathlib import Path
+
+def complete_ml_workflow(work_dir: Path, experiment_config: Dict[str, Any]):
+    """Execute complete EX-01 → EX-02 → EX-03 workflow"""
+    
+    # EX-01: Training with Traceability
+    training_result = execute_first_vertical_slice(
+        work_dir=work_dir / "training",
+        mlflow_config=resolve_mlflow_storage_config(),
+        run_name="complete_workflow_experiment",
+        experiment_config=experiment_config
+    )
+    
+    # EX-02: Artifact Bundling and Versioning
+    model_bundle_path = register_model_artifact(
+        artifact_bundle_path=training_result.artifact_path,
+        model_name="workflow_model",
+        model_version="v1.0",
+        description="Complete workflow model",
+        run_id=training_result.run_id
+    )
+    
+    # EX-03: Local Deployment and Serving
+    local_serving = LocalModelServing(model_bundle_path)
+    prediction_logger = PredictionLogger(work_dir / "logs")
+    
+    # Example prediction
+    import pandas as pd
+    test_data = pd.DataFrame([[0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]])
+    prediction_result = local_serving.predict(test_data)
+    
+    # Log prediction
+    prediction_logger.log_prediction(
+        prediction_result,
+        {"test_run": True, "data_shape": test_data.shape}
+    )
+    
+    return {
+        "training_result": training_result,
+        "model_bundle": model_bundle_path,
+        "local_serving": local_serving,
+        "prediction_log": work_dir / "logs"
+    }
+```
+
+### Error Handling and Recovery
+
+``` python
+from typing import Optional
+from pathlib import Path
+
+class WorkflowExecutor:
+    def __init__(self, work_dir: Path):
+        self.work_dir = work_dir
+        self.current_phase = "init"
+    
+    def execute_workflow(self, config: Dict[str, Any]) -> Dict[str, Any]:
+        """Execute complete workflow with error handling"""
+        try:
+            # Phase 1: Training
+            self.current_phase = "training"
+            training_result = self._execute_training(config)
+            
+            # Phase 2: Artifact Registration
+            self.current_phase = "artifact_registration"
+            model_bundle = self._register_artifacts(training_result)
+            
+            # Phase 3: Local Serving
+            self.current_phase = "local_serving"
+            serving = self._setup_local_serving(model_bundle)
+            
+            return {
+                "success": True,
+                "training_result": training_result,
+                "model_bundle": model_bundle,
+                "local_serving": serving
+            }
+            
+        except Exception as e:
+            return {
+                "success": False,
+                "error": str(e),
+                "phase": self.current_phase,
+                "work_dir": str(self.work_dir)
+            }
+    
+    def _execute_training(self, config: Dict[str, Any]):
+        """Execute training phase"""
+        # Implementation details
+        pass
+    
+    def _register_artifacts(self, training_result):
+        """Register model artifacts"""
+        # Implementation details
+        pass
+    
+    def _setup_local_serving(self, model_bundle):
+        """Setup local serving"""
+        # Implementation details
+        pass
+```
+
+## Testing and Validation
+
+### Unit Tests
+
+``` python
+import pytest
+from pathlib import Path
+from ml_deploy.vertical_slice import execute_first_vertical_slice
+
+def test_training_execution():
+    """Test EX-01 training execution"""
+    result = execute_first_vertical_slice(
+        work_dir=Path("/tmp/test_training"),
+        mlflow_config=resolve_mlflow_storage_config(),
+        run_name="test_experiment",
+        experiment_config={"test": True}
+    )
+    
+    assert result.success
+    assert result.artifact_path.exists()
+    assert result.run_id is not None
+
+def test_artifact_registration():
+    """Test EX-02 artifact registration"""
+    # Test model artifact creation and registration
+    pass
+
+def test_local_serving():
+    """Test EX-03 local serving"""
+    # Test local model serving and prediction logging
+    pass
+```
+
+### Integration Tests
+
+``` python
+def test_complete_workflow():
+    """Test complete EX-01 → EX-02 → EX-03 workflow"""
+    workflow = WorkflowExecutor(Path("/tmp/integration_test"))
+    result = workflow.execute_workflow({
+        "dataset": "test_data",
+        "model_type": "xgboost",
+        "test_run": True
+    })
+    
+    assert result["success"]
+    assert "training_result" in result
+    assert "model_bundle" in result
+    assert "local_serving" in result
+```
+
+## Performance Considerations
+
+### Memory Management
+
+- Model artifacts should be loaded on-demand
+- Implement caching for frequently accessed models
+- Monitor memory usage during serving
+
+### Latency Optimization
+
+- Optimize model loading times
+- Implement request batching for multiple predictions
+- Use efficient data formats for input/output
+
+### Scalability
+
+- Consider model sharding for large models
+- Implement horizontal scaling for serving endpoints
+- Monitor resource usage and scale accordingly
+
+## Security Considerations
+
+### Model Protection
+
+- Implement access controls for model artifacts
+- Encrypt sensitive model components
+- Monitor unauthorized access attempts
+
+### Data Privacy
+
+- Ensure input data handling complies with privacy regulations
+- Implement data anonymization where required
+- Audit data access patterns
+
+### Audit Trail
+
+- Maintain complete logs of all operations
+- Implement tamper-evident logging
+- Regular audit of model access and usage
+
+## Monitoring and Observability
+
+### Performance Metrics
+
+- Track prediction latency and throughput
+- Monitor model accuracy and drift
+- Track resource usage patterns
+
+### Error Tracking
+
+- Log prediction errors and failures
+- Implement error rate monitoring
+- Track error patterns and trends
+
+### Business Metrics
+
+- Monitor model impact on business outcomes
+- Track prediction accuracy over time
+- Measure ROI of ML deployment
+
+------------------------------------------------------------------------
+
+*This implementation patterns document provides the technical foundation
+for ML deployment workflows. For specific guidance on extending these
+patterns to distributed training, batch inference, or online serving,
+refer to the respective topology documentation.*

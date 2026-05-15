@@ -40,7 +40,7 @@ website:
         contents:
           - reference/01_Implementation_Patterns.qmd
           - reference/02_API_Documentation.qmd
-      - section: "🏗️ Original Documentation (Legacy)"
+      - section: "🏗️ Full Documentation"
         contents:
           - 01_01-getting_started.qmd
           - 01_02-platform_introduction.qmd

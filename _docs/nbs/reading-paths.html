@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>ML Deploy Reference</title>
+<title>Reading Paths</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -68,15 +68,12 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
-<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
-<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="styles.css">
-<meta property="og:title" content="ML Deploy Reference">
+<meta property="og:title" content="Reading Paths">
 <meta property="og:description" content="">
-<meta name="twitter:title" content="ML Deploy Reference">
+<meta name="twitter:title" content="Reading Paths">
 <meta name="twitter:description" content="">
 <meta name="twitter:card" content="summary">
 </head>
@@ -97,7 +94,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_01-getting_started.html">🏗️ Original Documentation (Legacy)</a></li><li class="breadcrumb-item"><a href="./01_01-getting_started.html">ML Deploy Reference</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./reading-paths.html">Reading Paths</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -119,6 +116,12 @@ ul.task-list li input[type="checkbox"] {
   <div class="sidebar-item-container"> 
   <a href="./navigation-guide.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Navigation Guide</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reading-paths.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Reading Paths</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -194,7 +197,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">🏗️ Original Documentation (Legacy)</span></a>
+ <span class="menu-text">🏗️ Full Documentation</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -202,7 +205,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./01_01-getting_started.html" class="sidebar-item-text sidebar-link active">
+  <a href="./01_01-getting_started.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">ML Deploy Reference</span></a>
   </div>
 </li>
@@ -320,36 +323,70 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#welcome-to-the-ml-deployment-reference" id="toc-welcome-to-the-ml-deployment-reference" class="nav-link active" data-scroll-target="#welcome-to-the-ml-deployment-reference">Welcome to the ML Deployment Reference</a>
+  <li><a href="#role-based-reading-paths" id="toc-role-based-reading-paths" class="nav-link active" data-scroll-target="#role-based-reading-paths">Role-Based Reading Paths</a>
   <ul class="collapse">
-  <li><a href="#reading-guide" id="toc-reading-guide" class="nav-link" data-scroll-target="#reading-guide">Reading Guide</a>
+  <li><a href="#beginner-path-2-4-hours" id="toc-beginner-path-2-4-hours" class="nav-link" data-scroll-target="#beginner-path-2-4-hours">🎯 Beginner Path (2-4 hours)</a>
   <ul class="collapse">
-  <li><a href="#for-infrastructure-operations-engineers" id="toc-for-infrastructure-operations-engineers" class="nav-link" data-scroll-target="#for-infrastructure-operations-engineers">For Infrastructure &amp; Operations Engineers</a></li>
-  <li><a href="#for-data-scientists-ml-researchers" id="toc-for-data-scientists-ml-researchers" class="nav-link" data-scroll-target="#for-data-scientists-ml-researchers">For Data Scientists &amp; ML Researchers</a></li>
+  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
+  <li><a href="#learning-path" id="toc-learning-path" class="nav-link" data-scroll-target="#learning-path">Learning Path</a></li>
+  <li><a href="#key-objectives" id="toc-key-objectives" class="nav-link" data-scroll-target="#key-objectives">Key Objectives</a></li>
+  <li><a href="#expected-outcomes" id="toc-expected-outcomes" class="nav-link" data-scroll-target="#expected-outcomes">Expected Outcomes</a></li>
   </ul></li>
-  <li><a href="#foundations" id="toc-foundations" class="nav-link" data-scroll-target="#foundations">Foundations</a></li>
-  <li><a href="#lifecycle-notebooks" id="toc-lifecycle-notebooks" class="nav-link" data-scroll-target="#lifecycle-notebooks">Lifecycle notebooks</a></li>
-  <li><a href="#topology-and-operations-notebooks" id="toc-topology-and-operations-notebooks" class="nav-link" data-scroll-target="#topology-and-operations-notebooks">Topology and operations notebooks</a></li>
-  <li><a href="#architecture-analysis" id="toc-architecture-analysis" class="nav-link" data-scroll-target="#architecture-analysis">Architecture analysis</a></li>
-  <li><a href="#quick-start" id="toc-quick-start" class="nav-link" data-scroll-target="#quick-start">Quick Start</a>
+  <li><a href="#intermediate-path-1-2-hours" id="toc-intermediate-path-1-2-hours" class="nav-link" data-scroll-target="#intermediate-path-1-2-hours">🚀 Intermediate Path (1-2 hours)</a>
   <ul class="collapse">
-  <li><a href="#option-1-i-want-to-understand-the-system-5-min" id="toc-option-1-i-want-to-understand-the-system-5-min" class="nav-link" data-scroll-target="#option-1-i-want-to-understand-the-system-5-min">Option 1: I want to understand the system (5 min)</a></li>
-  <li><a href="#option-2-i-want-to-set-up-local-development-15-min" id="toc-option-2-i-want-to-set-up-local-development-15-min" class="nav-link" data-scroll-target="#option-2-i-want-to-set-up-local-development-15-min">Option 2: I want to set up local development (15 min)</a></li>
-  <li><a href="#option-3-i-want-to-run-a-complete-example-20-min" id="toc-option-3-i-want-to-run-a-complete-example-20-min" class="nav-link" data-scroll-target="#option-3-i-want-to-run-a-complete-example-20-min">Option 3: I want to run a complete example (20 min)</a></li>
-  <li><a href="#option-4-i-want-to-deploy-to-production-30-min" id="toc-option-4-i-want-to-deploy-to-production-30-min" class="nav-link" data-scroll-target="#option-4-i-want-to-deploy-to-production-30-min">Option 4: I want to deploy to production (30 min)</a></li>
+  <li><a href="#prerequisites-1" id="toc-prerequisites-1" class="nav-link" data-scroll-target="#prerequisites-1">Prerequisites</a></li>
+  <li><a href="#learning-path-1" id="toc-learning-path-1" class="nav-link" data-scroll-target="#learning-path-1">Learning Path</a></li>
+  <li><a href="#key-objectives-1" id="toc-key-objectives-1" class="nav-link" data-scroll-target="#key-objectives-1">Key Objectives</a></li>
+  <li><a href="#expected-outcomes-1" id="toc-expected-outcomes-1" class="nav-link" data-scroll-target="#expected-outcomes-1">Expected Outcomes</a></li>
   </ul></li>
-  <li><a href="#navigation-tips" id="toc-navigation-tips" class="nav-link" data-scroll-target="#navigation-tips">Navigation Tips</a></li>
-  <li><a href="#key-principles" id="toc-key-principles" class="nav-link" data-scroll-target="#key-principles">Key Principles</a></li>
+  <li><a href="#advanced-path-1-3-hours" id="toc-advanced-path-1-3-hours" class="nav-link" data-scroll-target="#advanced-path-1-3-hours">🔧 Advanced Path (1-3 hours)</a>
+  <ul class="collapse">
+  <li><a href="#prerequisites-2" id="toc-prerequisites-2" class="nav-link" data-scroll-target="#prerequisites-2">Prerequisites</a></li>
+  <li><a href="#learning-path-2" id="toc-learning-path-2" class="nav-link" data-scroll-target="#learning-path-2">Learning Path</a></li>
+  <li><a href="#key-objectives-2" id="toc-key-objectives-2" class="nav-link" data-scroll-target="#key-objectives-2">Key Objectives</a></li>
+  <li><a href="#expected-outcomes-2" id="toc-expected-outcomes-2" class="nav-link" data-scroll-target="#expected-outcomes-2">Expected Outcomes</a></li>
+  </ul></li>
+  <li><a href="#migration-path-3-5-hours" id="toc-migration-path-3-5-hours" class="nav-link" data-scroll-target="#migration-path-3-5-hours">🔄 Migration Path (3-5 hours)</a>
+  <ul class="collapse">
+  <li><a href="#prerequisites-3" id="toc-prerequisites-3" class="nav-link" data-scroll-target="#prerequisites-3">Prerequisites</a></li>
+  <li><a href="#learning-path-3" id="toc-learning-path-3" class="nav-link" data-scroll-target="#learning-path-3">Learning Path</a></li>
+  <li><a href="#key-objectives-3" id="toc-key-objectives-3" class="nav-link" data-scroll-target="#key-objectives-3">Key Objectives</a></li>
+  <li><a href="#expected-outcomes-3" id="toc-expected-outcomes-3" class="nav-link" data-scroll-target="#expected-outcomes-3">Expected Outcomes</a></li>
+  </ul></li>
+  <li><a href="#topic-specific-paths" id="toc-topic-specific-paths" class="nav-link" data-scroll-target="#topic-specific-paths">📚 Topic-Specific Paths</a>
+  <ul class="collapse">
+  <li><a href="#data-science-focus" id="toc-data-science-focus" class="nav-link" data-scroll-target="#data-science-focus">Data Science Focus</a></li>
+  <li><a href="#engineering-focus" id="toc-engineering-focus" class="nav-link" data-scroll-target="#engineering-focus">Engineering Focus</a></li>
+  <li><a href="#operations-focus" id="toc-operations-focus" class="nav-link" data-scroll-target="#operations-focus">Operations Focus</a></li>
+  </ul></li>
+  <li><a href="#quick-start-paths" id="toc-quick-start-paths" class="nav-link" data-scroll-target="#quick-start-paths">🎯 Quick Start Paths</a>
+  <ul class="collapse">
+  <li><a href="#minutes-overview" id="toc-minutes-overview" class="nav-link" data-scroll-target="#minutes-overview">30 Minutes Overview</a></li>
+  <li><a href="#hour-deep-dive" id="toc-hour-deep-dive" class="nav-link" data-scroll-target="#hour-deep-dive">1 Hour Deep Dive</a></li>
+  <li><a href="#hours-hands-on" id="toc-hours-hands-on" class="nav-link" data-scroll-target="#hours-hands-on">2 Hours Hands-On</a></li>
+  </ul></li>
+  <li><a href="#progress-tracking" id="toc-progress-tracking" class="nav-link" data-scroll-target="#progress-tracking">📋 Progress Tracking</a>
+  <ul class="collapse">
+  <li><a href="#use-these-checklists" id="toc-use-these-checklists" class="nav-link" data-scroll-target="#use-these-checklists">Use These Checklists</a></li>
+  </ul></li>
+  <li><a href="#tips-for-success" id="toc-tips-for-success" class="nav-link" data-scroll-target="#tips-for-success">💡 Tips for Success</a></li>
+  <li><a href="#next-steps-after-completion" id="toc-next-steps-after-completion" class="nav-link" data-scroll-target="#next-steps-after-completion">🔄 Next Steps After Completion</a>
+  <ul class="collapse">
+  <li><a href="#for-beginners" id="toc-for-beginners" class="nav-link" data-scroll-target="#for-beginners">For Beginners</a></li>
+  <li><a href="#for-intermediate-users" id="toc-for-intermediate-users" class="nav-link" data-scroll-target="#for-intermediate-users">For Intermediate Users</a></li>
+  <li><a href="#for-advanced-users" id="toc-for-advanced-users" class="nav-link" data-scroll-target="#for-advanced-users">For Advanced Users</a></li>
+  <li><a href="#for-migrants" id="toc-for-migrants" class="nav-link" data-scroll-target="#for-migrants">For Migrants</a></li>
+  </ul></li>
   </ul></li>
   </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="01_01-getting_started.md"><i class="bi bi-file-code"></i>CommonMark</a></li></ul></div></nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="reading-paths.md"><i class="bi bi-file-code"></i>CommonMark</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_01-getting_started.html">🏗️ Original Documentation (Legacy)</a></li><li class="breadcrumb-item"><a href="./01_01-getting_started.html">ML Deploy Reference</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">ML Deploy Reference</h1>
+<h1 class="title">Reading Paths</h1>
 </div>
 
 
@@ -366,139 +403,289 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="welcome-to-the-ml-deployment-reference" class="level1">
-<h1>Welcome to the ML Deployment Reference</h1>
-<p>This documentation provides a <strong>self-contained, specification-driven guide</strong> to the ML deployment platform. All diagrams, code examples, and infrastructure definitions are published directly in these pages—<strong>no repository source browsing required</strong>.</p>
-<section id="reading-guide" class="level2">
-<h2 class="anchored" data-anchor-id="reading-guide">Reading Guide</h2>
-<p>The platform documentation is organized around a <strong>Platform Overview</strong> with five logical subsections. Choose your entry point based on your role:</p>
-<section id="for-infrastructure-operations-engineers" class="level3">
-<h3 class="anchored" data-anchor-id="for-infrastructure-operations-engineers">For Infrastructure &amp; Operations Engineers</h3>
-<p>Start with system components, then dive into deployment and infrastructure:</p>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">graph TD
-    A["Platform Overview&lt;br/&gt;01_platform_narrative.qmd"] --&gt;|System Components &amp; Roles| B["Entity Models&lt;br/&gt;Class Diagrams"]
-    A --&gt;|Deployment &amp; Infrastructure| C["Local vs Cloud&lt;br/&gt;Topology Diagrams"]
-    A --&gt;|Governance &amp; Safety| D["Promotion Gates&lt;br/&gt;State Machines"]
-    B --&gt; E["Execution Backends&lt;br/&gt;08_execution_backends.qmd"]
-    C --&gt; F["Infrastructure MCP&lt;br/&gt;14_infrastructure_mcp.qmd"]
-    F --&gt; G["OpenTofu &amp; Terranix&lt;br/&gt;13_opentofu_infra.qmd"]
-    D --&gt; H["Governance Gates&lt;br/&gt;17_governance_gates.qmd"]
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<p><strong>Recommended path:</strong> 1. <a href="01_platform_narrative.qmd#1-system-components--roles">Platform Overview — System Components</a> 2. <a href="01_platform_narrative.qmd#3-deployment--infrastructure">Platform Overview — Deployment &amp; Infrastructure</a> 3. <a href="./04_01-execution_framework.html">Execution Backends</a> 4. <a href="./03_02-infrastructure_management.html">Infrastructure MCP</a> 5. <a href="./03_01-infrastructure_as_code.html">OpenTofu &amp; Terranix</a></p>
-</section>
-<section id="for-data-scientists-ml-researchers" class="level3">
-<h3 class="anchored" data-anchor-id="for-data-scientists-ml-researchers">For Data Scientists &amp; ML Researchers</h3>
-<p>Start with platform architecture, then focus on model development and promotion:</p>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">graph TD
-    A["Platform Overview&lt;br/&gt;01_platform_narrative.qmd"] --&gt;|Execution &amp; Data Flow| B["Workflows&lt;br/&gt;Sequence Diagrams"]
-    A --&gt;|Learning Paths| C["ML Researcher Path&lt;br/&gt;Recommended Reading"]
-    B --&gt; D["Vertical Slice&lt;br/&gt;06_vertical_slice.qmd"]
-    D --&gt; E["Data &amp; Training&lt;br/&gt;02_data + 03_model_training"]
-    E --&gt; F["MLflow Parity&lt;br/&gt;07_mlflow_parity.qmd"]
-    F --&gt; G["Model Promotion&lt;br/&gt;17_governance_gates.qmd"]
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<p><strong>Recommended path:</strong> 1. <a href="01_platform_narrative.qmd#2-execution--data-flow">Platform Overview — Execution &amp; Data Flow</a> 2. <a href="./02_04-complete_workflow.html">Vertical Slice Reference</a> 3. <a href="./02_01-data_management.html">Data &amp; Model Training</a> + <a href="./02_02-model_development.html">Model Training</a> 4. <a href="./02_03-mlflow_integration.html">MLflow Parity Setup</a> 5. <a href="./04_05-governance_framework.html">Model Promotion &amp; Governance</a></p>
-<hr>
-</section>
-</section>
-<section id="foundations" class="level2">
-<h2 class="anchored" data-anchor-id="foundations">Foundations</h2>
+<section id="role-based-reading-paths" class="level1">
+<h1>Role-Based Reading Paths</h1>
+<p>This page provides customized reading paths for different user roles and experience levels.</p>
+<section id="beginner-path-2-4-hours" class="level2">
+<h2 class="anchored" data-anchor-id="beginner-path-2-4-hours">🎯 Beginner Path (2-4 hours)</h2>
+<p><strong>For</strong>: New users, data scientists new to ML deployment</p>
+<section id="prerequisites" class="level3">
+<h3 class="anchored" data-anchor-id="prerequisites">Prerequisites</h3>
 <ul>
-<li><a href="./01_02-platform_introduction.html">Stack introduction</a></li>
-<li><a href="./01_03-platform_architecture.html">Platform narrative</a></li>
-<li><a href="./01_04-core_concepts.html">Core module baseline</a></li>
+<li>Basic Python knowledge</li>
+<li>Understanding of machine learning concepts</li>
+<li>Familiarity with command line</li>
 </ul>
 </section>
-<section id="lifecycle-notebooks" class="level2">
-<h2 class="anchored" data-anchor-id="lifecycle-notebooks">Lifecycle notebooks</h2>
+<section id="learning-path" class="level3">
+<h3 class="anchored" data-anchor-id="learning-path">Learning Path</h3>
+<pre><code>01_Terminology_Glossary → 
+02_Getting_Started → 
+03_Concepts_and_Architecture → 
+04_End_to_End_Workflow</code></pre>
+</section>
+<section id="key-objectives" class="level3">
+<h3 class="anchored" data-anchor-id="key-objectives">Key Objectives</h3>
 <ul>
-<li><a href="./02_01-data_management.html">Data loading and exploration</a></li>
-<li><a href="./02_02-model_development.html">Model training</a></li>
-<li><a href="./04_04-user_interfaces.html">Web UI reference context</a></li>
-<li><a href="./02_04-complete_workflow.html">Vertical slice reference</a></li>
-<li><a href="./04_03-api_contracts.html">Web UI contracts</a></li>
+<li>Understand ML Deploy terminology (EX-01, EX-02, EX-03)</li>
+<li>Set up development environment</li>
+<li>Learn core platform concepts</li>
+<li>Complete a full workflow practice</li>
 </ul>
 </section>
-<section id="topology-and-operations-notebooks" class="level2">
-<h2 class="anchored" data-anchor-id="topology-and-operations-notebooks">Topology and operations notebooks</h2>
-<ul>
-<li><a href="./02_03-mlflow_integration.html">MLflow parity</a></li>
-<li><a href="./03_02-infrastructure_management.html">Infrastructure MCP interrogation</a></li>
-<li><a href="./04_01-execution_framework.html">Execution backends</a></li>
-<li><a href="./04_02-notebook_management.html">Notebook intake validation</a></li>
+<section id="expected-outcomes" class="level3">
+<h3 class="anchored" data-anchor-id="expected-outcomes">Expected Outcomes</h3>
+<ul class="task-list">
+<li><label><input type="checkbox">Can explain key platform concepts</label></li>
+<li><label><input type="checkbox">Can set up local development environment</label></li>
+<li><label><input type="checkbox">Can execute a complete ML workflow</label></li>
+<li><label><input type="checkbox">Understands platform architecture</label></li>
 </ul>
 </section>
-<section id="architecture-analysis" class="level2">
-<h2 class="anchored" data-anchor-id="architecture-analysis">Architecture analysis</h2>
+</section>
+<section id="intermediate-path-1-2-hours" class="level2">
+<h2 class="anchored" data-anchor-id="intermediate-path-1-2-hours">🚀 Intermediate Path (1-2 hours)</h2>
+<p><strong>For</strong>: ML engineers with deployment experience</p>
+<section id="prerequisites-1" class="level3">
+<h3 class="anchored" data-anchor-id="prerequisites-1">Prerequisites</h3>
 <ul>
-<li><a href="./05_01-system_architecture.html">System interaction analysis</a></li>
-<li><a href="./03_01-infrastructure_as_code.html">OpenTofu infrastructure architecture</a></li>
-<li><a href="./03_03-local_development.html">Floci AWS emulator</a></li>
-<li><a href="./03_04-terraniq_integration.html">Terranix infrastructure source</a></li>
+<li>ML deployment experience</li>
+<li>Familiarity with containerization</li>
+<li>Understanding of CI/CD concepts</li>
 </ul>
-<hr>
 </section>
-<section id="quick-start" class="level2">
-<h2 class="anchored" data-anchor-id="quick-start">Quick Start</h2>
-<section id="option-1-i-want-to-understand-the-system-5-min" class="level3">
-<h3 class="anchored" data-anchor-id="option-1-i-want-to-understand-the-system-5-min">Option 1: I want to understand the system (5 min)</h3>
-<p>→ Read <a href="./01_03-platform_architecture.html">Platform Overview</a> sections 1–3</p>
+<section id="learning-path-1" class="level3">
+<h3 class="anchored" data-anchor-id="learning-path-1">Learning Path</h3>
+<pre><code>03_Concepts_and_Architecture → 
+04_End_to_End_Workflow → 
+01_Implementation_Patterns</code></pre>
 </section>
-<section id="option-2-i-want-to-set-up-local-development-15-min" class="level3">
-<h3 class="anchored" data-anchor-id="option-2-i-want-to-set-up-local-development-15-min">Option 2: I want to set up local development (15 min)</h3>
-<p>→ <a href="./02_03-mlflow_integration.html">MLflow Parity</a> + <a href="./04_01-execution_framework.html">Execution Backends</a></p>
-</section>
-<section id="option-3-i-want-to-run-a-complete-example-20-min" class="level3">
-<h3 class="anchored" data-anchor-id="option-3-i-want-to-run-a-complete-example-20-min">Option 3: I want to run a complete example (20 min)</h3>
-<p>→ <a href="./02_04-complete_workflow.html">Vertical Slice Reference</a></p>
-</section>
-<section id="option-4-i-want-to-deploy-to-production-30-min" class="level3">
-<h3 class="anchored" data-anchor-id="option-4-i-want-to-deploy-to-production-30-min">Option 4: I want to deploy to production (30 min)</h3>
-<p>→ <a href="./03_01-infrastructure_as_code.html">OpenTofu &amp; Terranix</a> + <a href="./04_05-governance_framework.html">Governance Gates</a></p>
-<hr>
-</section>
-</section>
-<section id="navigation-tips" class="level2">
-<h2 class="anchored" data-anchor-id="navigation-tips">Navigation Tips</h2>
+<section id="key-objectives-1" class="level3">
+<h3 class="anchored" data-anchor-id="key-objectives-1">Key Objectives</h3>
 <ul>
-<li><strong>All diagrams are in Mermaid format</strong> — Rendered directly in the pages</li>
-<li><strong>All code examples are copy-pastable</strong> — No need to hunt in the repository</li>
-<li><strong>Cross-links connect related sections</strong> — Use them to navigate by topic</li>
-<li><strong>Learning paths are role-specific</strong> — Choose the path that matches your background</li>
+<li>Understand platform architecture deeply</li>
+<li>Master end-to-end workflows</li>
+<li>Learn implementation patterns</li>
+<li>Apply patterns to real scenarios</li>
 </ul>
-<hr>
 </section>
-<section id="key-principles" class="level2">
-<h2 class="anchored" data-anchor-id="key-principles">Key Principles</h2>
+<section id="expected-outcomes-1" class="level3">
+<h3 class="anchored" data-anchor-id="expected-outcomes-1">Expected Outcomes</h3>
+<ul class="task-list">
+<li><label><input type="checkbox">Can architect platform solutions</label></li>
+<li><label><input type="checkbox">Can implement complex workflows</label></li>
+<li><label><input type="checkbox">Understands best practices</label></li>
+<li><label><input type="checkbox">Can troubleshoot common issues</label></li>
+</ul>
+</section>
+</section>
+<section id="advanced-path-1-3-hours" class="level2">
+<h2 class="anchored" data-anchor-id="advanced-path-1-3-hours">🔧 Advanced Path (1-3 hours)</h2>
+<p><strong>For</strong>: Platform engineers, DevOps, system architects</p>
+<section id="prerequisites-2" class="level3">
+<h3 class="anchored" data-anchor-id="prerequisites-2">Prerequisites</h3>
+<ul>
+<li>Advanced ML deployment experience</li>
+<li>Infrastructure as code knowledge</li>
+<li>Platform architecture experience</li>
+</ul>
+</section>
+<section id="learning-path-2" class="level3">
+<h3 class="anchored" data-anchor-id="learning-path-2">Learning Path</h3>
+<pre><code>02_API_Documentation → 
+01_Implementation_Patterns → 
+05_Advanced_Scenarios</code></pre>
+</section>
+<section id="key-objectives-2" class="level3">
+<h3 class="anchored" data-anchor-id="key-objectives-2">Key Objectives</h3>
+<ul>
+<li>Master API integration</li>
+<li>Implement complex patterns</li>
+<li>Handle advanced scenarios</li>
+<li>Optimize performance and scaling</li>
+</ul>
+</section>
+<section id="expected-outcomes-2" class="level3">
+<h3 class="anchored" data-anchor-id="expected-outcomes-2">Expected Outcomes</h3>
+<ul class="task-list">
+<li><label><input type="checkbox">Can integrate ML Deploy APIs</label></li>
+<li><label><input type="checkbox">Can implement advanced patterns</label></li>
+<li><label><input type="checkbox">Can handle complex deployments</label></li>
+<li><label><input type="checkbox">Can optimize platform performance</label></li>
+</ul>
+</section>
+</section>
+<section id="migration-path-3-5-hours" class="level2">
+<h2 class="anchored" data-anchor-id="migration-path-3-5-hours">🔄 Migration Path (3-5 hours)</h2>
+<p><strong>For</strong>: Users migrating from other ML deployment platforms</p>
+<section id="prerequisites-3" class="level3">
+<h3 class="anchored" data-anchor-id="prerequisites-3">Prerequisites</h3>
+<ul>
+<li>Experience with other ML deployment platforms</li>
+<li>Knowledge of current workflows</li>
+<li>Understanding of existing infrastructure</li>
+</ul>
+</section>
+<section id="learning-path-3" class="level3">
+<h3 class="anchored" data-anchor-id="learning-path-3">Learning Path</h3>
+<pre><code>01_Terminology_Glossary → 
+06_Migration_Guide → 
+05_Advanced_Scenarios</code></pre>
+</section>
+<section id="key-objectives-3" class="level3">
+<h3 class="anchored" data-anchor-id="key-objectives-3">Key Objectives</h3>
+<ul>
+<li>Learn ML Deploy terminology</li>
+<li>Understand migration process</li>
+<li>Map existing workflows</li>
+<li>Explore new platform features</li>
+</ul>
+</section>
+<section id="expected-outcomes-3" class="level3">
+<h3 class="anchored" data-anchor-id="expected-outcomes-3">Expected Outcomes</h3>
+<ul class="task-list">
+<li><label><input type="checkbox">Can map old concepts to new ones</label></li>
+<li><label><input type="checkbox">Can migrate existing workflows</label></li>
+<li><label><input type="checkbox">Understands platform advantages</label></li>
+<li><label><input type="checkbox">Can plan migration strategy</label></li>
+</ul>
+</section>
+</section>
+<section id="topic-specific-paths" class="level2">
+<h2 class="anchored" data-anchor-id="topic-specific-paths">📚 Topic-Specific Paths</h2>
+<section id="data-science-focus" class="level3">
+<h3 class="anchored" data-anchor-id="data-science-focus">Data Science Focus</h3>
+<pre><code>02_Getting_Started → 
+04_End_to_End_Workflow → 
+05_Advanced_Scenarios</code></pre>
+<p><strong>Time</strong>: 2-3 hours</p>
+</section>
+<section id="engineering-focus" class="level3">
+<h3 class="anchored" data-anchor-id="engineering-focus">Engineering Focus</h3>
+<pre><code>03_Concepts_and_Architecture → 
+01_Implementation_Patterns → 
+02_API_Documentation</code></pre>
+<p><strong>Time</strong>: 2-4 hours</p>
+</section>
+<section id="operations-focus" class="level3">
+<h3 class="anchored" data-anchor-id="operations-focus">Operations Focus</h3>
+<pre><code>03_Concepts_and_Architecture → 
+01_Implementation_Patterns → 
+05_Advanced_Scenarios</code></pre>
+<p><strong>Time</strong>: 2-3 hours</p>
+</section>
+</section>
+<section id="quick-start-paths" class="level2">
+<h2 class="anchored" data-anchor-id="quick-start-paths">🎯 Quick Start Paths</h2>
+<section id="minutes-overview" class="level3">
+<h3 class="anchored" data-anchor-id="minutes-overview">30 Minutes Overview</h3>
+<pre><code>02_Getting_Started</code></pre>
+</section>
+<section id="hour-deep-dive" class="level3">
+<h3 class="anchored" data-anchor-id="hour-deep-dive">1 Hour Deep Dive</h3>
+<pre><code>02_Getting_Started → 
+03_Concepts_and_Architecture</code></pre>
+</section>
+<section id="hours-hands-on" class="level3">
+<h3 class="anchored" data-anchor-id="hours-hands-on">2 Hours Hands-On</h3>
+<pre><code>02_Getting_Started → 
+04_End_to_End_Workflow</code></pre>
+</section>
+</section>
+<section id="progress-tracking" class="level2">
+<h2 class="anchored" data-anchor-id="progress-tracking">📋 Progress Tracking</h2>
+<section id="use-these-checklists" class="level3">
+<h3 class="anchored" data-anchor-id="use-these-checklists">Use These Checklists</h3>
+<section id="beginner-progress" class="level4">
+<h4 class="anchored" data-anchor-id="beginner-progress">Beginner Progress</h4>
+<ul class="task-list">
+<li><label><input type="checkbox">Read terminology glossary</label></li>
+<li><label><input type="checkbox">Complete getting started guide</label></li>
+<li><label><input type="checkbox">Understand platform architecture</label></li>
+<li><label><input type="checkbox">Practice end-to-end workflow</label></li>
+<li><label><input type="checkbox">Review implementation patterns</label></li>
+</ul>
+</section>
+<section id="intermediate-progress" class="level4">
+<h4 class="anchored" data-anchor-id="intermediate-progress">Intermediate Progress</h4>
+<ul class="task-list">
+<li><label><input type="checkbox">Study architecture deeply</label></li>
+<li><label><input type="checkbox">Master workflows</label></li>
+<li><label><input type="checkbox">Learn patterns</label></li>
+<li><label><input type="checkbox">Apply to scenarios</label></li>
+<li><label><input type="checkbox">Troubleshoot issues</label></li>
+</ul>
+</section>
+<section id="advanced-progress" class="level4">
+<h4 class="anchored" data-anchor-id="advanced-progress">Advanced Progress</h4>
+<ul class="task-list">
+<li><label><input type="checkbox">Master API documentation</label></li>
+<li><label><input type="checkbox">Implement complex patterns</label></li>
+<li><label><input type="checkbox">Handle advanced scenarios</label></li>
+<li><label><input type="checkbox">Optimize performance</label></li>
+<li><label><input type="checkbox">Contribute to platform</label></li>
+</ul>
+</section>
+<section id="migration-progress" class="level4">
+<h4 class="anchored" data-anchor-id="migration-progress">Migration Progress</h4>
+<ul class="task-list">
+<li><label><input type="checkbox">Learn terminology</label></li>
+<li><label><input type="checkbox">Plan migration</label></li>
+<li><label><input type="checkbox">Migrate workflows</label></li>
+<li><label><input type="checkbox">Test new features</label></li>
+<li><label><input type="checkbox">Optimize new setup</label></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="tips-for-success" class="level2">
+<h2 class="anchored" data-anchor-id="tips-for-success">💡 Tips for Success</h2>
 <ol type="1">
-<li><strong>Self-contained documentation</strong>: Implement the system from these pages alone</li>
-<li><strong>Hierarchical structure</strong>: Start broad (architecture), then dive deep (details)</li>
-<li><strong>Extensive diagramming</strong>: Class, sequence, state machine, and topology diagrams for each subsection</li>
-<li><strong>Spec-driven</strong>: All behavior is specified first, then implemented</li>
-<li><strong>Traceability</strong>: MLflow links all training to promotion workflows</li>
+<li><strong>Follow the Order</strong>: Each path builds on previous knowledge</li>
+<li><strong>Practice Hands-On</strong>: Work through examples, not just reading</li>
+<li><strong>Use the Glossary</strong>: Refer to terminology when confused</li>
+<li><strong>Join Community</strong>: Ask questions and share experiences</li>
+<li><strong>Update Skills</strong>: Regularly review as platform evolves</li>
 </ol>
+</section>
+<section id="next-steps-after-completion" class="level2">
+<h2 class="anchored" data-anchor-id="next-steps-after-completion">🔄 Next Steps After Completion</h2>
+<section id="for-beginners" class="level3">
+<h3 class="anchored" data-anchor-id="for-beginners">For Beginners</h3>
+<ul>
+<li>Explore advanced scenarios</li>
+<li>Study implementation patterns</li>
+<li>Join community discussions</li>
+</ul>
+</section>
+<section id="for-intermediate-users" class="level3">
+<h3 class="anchored" data-anchor-id="for-intermediate-users">For Intermediate Users</h3>
+<ul>
+<li>Dive into API documentation</li>
+<li>Contribute to documentation</li>
+<li>Help other users</li>
+</ul>
+</section>
+<section id="for-advanced-users" class="level3">
+<h3 class="anchored" data-anchor-id="for-advanced-users">For Advanced Users</h3>
+<ul>
+<li>Contribute code or documentation</li>
+<li>Present at conferences</li>
+<li>Mentor other users</li>
+</ul>
+</section>
+<section id="for-migrants" class="level3">
+<h3 class="anchored" data-anchor-id="for-migrants">For Migrants</h3>
+<ul>
+<li>Optimize migration strategy</li>
+<li>Share migration experiences</li>
+<li>Help others migrate</li>
+</ul>
+<hr>
+<p><em>These reading paths are designed to help you get the most value from the documentation in the shortest time. Choose the path that matches your role and goals.</em></p>
 
 
+</section>
 </section>
 </section>
 
