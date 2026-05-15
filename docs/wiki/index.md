@@ -287,6 +287,13 @@ sources:
 - [sources/nbs.01_platform_narrative.qmd.md](sources/nbs.01_platform_narrative.qmd.md) — synthesized summary of the canonical platform architecture narrative Quarto page.
 - [sources/nbs.07_mlflow_parity.qmd.md](sources/nbs.07_mlflow_parity.qmd.md) — synthesized summary of Quarto nbdev source-of-truth for MLflow parity helpers.
 - [sources/nbs.08_execution_backends.qmd.md](sources/nbs.08_execution_backends.qmd.md) — synthesized summary of Quarto nbdev source-of-truth for execution adapters.
+- [sources/nbs.navigation-guide.qmd.md](sources/nbs.navigation-guide.qmd.md) — synthesized summary of navigation guide with comprehensive user guidance and documentation structure overview.
+- [sources/nbs.reading-paths.qmd.md](sources/nbs.reading-paths.qmd.md) — synthesized summary of reading paths guide with role-based learning paths for different user types.
+- [sources/nbs.tutorials.01_Terminology_Glossary.qmd.md](sources/nbs.tutorials.01_Terminology_Glossary.qmd.md) — synthesized summary of terminology glossary with standardized platform vocabulary and comprehensive concept definitions.
+- [sources/nbs.tutorials.02_Getting_Started.qmd.md](sources/nbs.tutorials.02_Getting_Started.qmd.md) — synthesized summary of getting started guide with structured onboarding paths and progressive learning guidance.
+- [sources/nbs.tutorials.05_Advanced_Scenarios.qmd.md](sources/nbs.tutorials.05_Advanced_Scenarios.qmd.md) — synthesized summary of advanced scenarios document with production-ready deployment patterns and complex system implementations.
+- [sources/nbs.reference.01_Implementation_Patterns.qmd.md](sources/nbs.reference.01_Implementation_Patterns.qmd.md) — synthesized summary of implementation patterns document with technical guidance and concrete code examples for core platform patterns.
+- [sources/nbs.reference.02_API_Documentation.qmd.md](sources/nbs.reference.02_API_Documentation.qmd.md) — synthesized summary of API documentation with complete interface specifications and integration guidance for platform components.
 - [sources/nbs.09_notebook_intake.qmd.md](sources/nbs.09_notebook_intake.qmd.md) — synthesized summary of Quarto nbdev source-of-truth for notebook intake gates.
 - [sources/nbs.12_system_interaction_analysis.qmd.md](sources/nbs.12_system_interaction_analysis.qmd.md) — synthesized summary of the five-layer system interaction analysis Quarto page.
 - [sources/nbs.13_opentofu_infra.qmd.md](sources/nbs.13_opentofu_infra.qmd.md) — synthesized summary of the OpenTofu infrastructure profile Quarto page.
