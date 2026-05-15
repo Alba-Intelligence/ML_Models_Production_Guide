@@ -16,7 +16,7 @@ Start with system components, then dive into deployment and infrastructure:
 
 ```{mermaid}
 graph TD
-    A["Platform Overview<br/>01_platform_narrative.qmd"] -->|System Components & Roles| B["Entity Models<br/>Class Diagrams"]
+    A["Platform Overview<br/>01_02-platform_introduction.qmd"] -->|System Components & Roles| B["Entity Models<br/>Class Diagrams"]
     A -->|Deployment & Infrastructure| C["Local vs Cloud<br/>Topology Diagrams"]
     A -->|Governance & Safety| D["Promotion Gates<br/>State Machines"]
     B --> E["Execution Backends<br/>08_execution_backends.qmd"]

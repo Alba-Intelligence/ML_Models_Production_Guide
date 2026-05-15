@@ -56,7 +56,7 @@ promotion:
 
 <img
 src="01_01-getting_started_files/figure-commonmark/mermaid-figure-2.png"
-style="width:5.51in;height:8.15in" />
+style="width:5.51in;height:8.4in" />
 
 </div>
 
@@ -65,8 +65,8 @@ style="width:5.51in;height:8.15in" />
 </div>
 
 **Recommended path:** 1. [Platform Overview — Execution & Data
-Flow](01_platform_narrative.qmd#2-execution--data-flow) 2. [Vertical
-Slice Reference](02_04-complete_workflow.qmd) 3. [Data & Model
+Flow](01_02-platform_introduction.qmd#2-execution--data-flow) 2.
+[Vertical Slice Reference](02_04-complete_workflow.qmd) 3. [Data & Model
 Training](02_01-data_management.qmd) + [Model
 Training](02_02-model_development.qmd) 4. [MLflow Parity
 Setup](02_03-mlflow_integration.qmd) 5. [Model Promotion &

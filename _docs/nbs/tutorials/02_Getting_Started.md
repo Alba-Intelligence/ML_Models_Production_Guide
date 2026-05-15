@@ -625,8 +625,9 @@ and production patterns.
 - **[Deployment
   Procedures](../reference/01_Implementation_Patterns.qmd)**:
   Step-by-step deployment guides (see Implementation Patterns section)
-- **[Troubleshooting Guide](../reference/09_Troubleshooting_Guide.md)**:
-  Common issues and resolution procedures
+- **[Troubleshooting
+  Guide](../reference/01_Implementation_Patterns.qmd)**: Common issues
+  and resolution procedures (see Implementation Patterns section)
 
 ------------------------------------------------------------------------
 
