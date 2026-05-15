@@ -1236,7 +1236,9 @@ After completing the advanced scenarios tutorial:
     - [Implementation
       Patterns](../reference/01_Implementation_Patterns.qmd)
     - [API Documentation](../reference/02_API_Documentation.qmd)
-    - [Infrastructure Setup](../reference/03_Infrastructure_Setup.qmd)
+    - [Infrastructure
+      Setup](../reference/01_Implementation_Patterns.qmd) (see
+      Implementation Patterns section)
 2.  **Set up your environment**:
     - Configure distributed training infrastructure
     - Set up batch processing pipelines

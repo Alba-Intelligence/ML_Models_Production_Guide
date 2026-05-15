@@ -38,7 +38,7 @@ Start with platform architecture, then focus on model development and promotion:
 
 ```{mermaid}
 graph TD
-    A["Platform Overview<br/>01_platform_narrative.qmd"] -->|Execution & Data Flow| B["Workflows<br/>Sequence Diagrams"]
+    A["Platform Overview<br/>01_02-platform_introduction.qmd"] -->|Execution & Data Flow| B["Workflows<br/>Sequence Diagrams"]
     A -->|Learning Paths| C["ML Researcher Path<br/>Recommended Reading"]
     B --> D["Vertical Slice<br/>06_vertical_slice.qmd"]
     D --> E["Data & Training<br/>02_data + 03_model_training"]
@@ -47,7 +47,7 @@ graph TD
 ```
 
 **Recommended path:**
-1. [Platform Overview — Execution & Data Flow](01_platform_narrative.qmd#2-execution--data-flow)
+1. [Platform Overview — Execution & Data Flow](01_02-platform_introduction.qmd#2-execution--data-flow)
 2. [Vertical Slice Reference](02_04-complete_workflow.qmd)
 3. [Data & Model Training](02_01-data_management.qmd) + [Model Training](02_02-model_development.qmd)
 4. [MLflow Parity Setup](02_03-mlflow_integration.qmd)
