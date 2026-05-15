@@ -342,6 +342,7 @@ sources:
 - [revisions/2026-05-11-mcp-infrastructure-interrogation-requirement.md](revisions/2026-05-11-mcp-infrastructure-interrogation-requirement.md) — captures the requirement, minimum interrogation aspects, and propagated tests for infrastructure MCP availability.
 - [revisions/2026-05-11-quarto-conversion-and-pruning.md](revisions/2026-05-11-quarto-conversion-and-pruning.md) — captures narrative docs conversion to Quarto pages and pruning of deprecated notebook artifacts.
 - [revisions/2026-05-11-full-system-interaction-analysis.md](revisions/2026-05-11-full-system-interaction-analysis.md) — captures the five-layer full-system component interaction analysis and notebook/wiki note expansion.
+- [revisions/2026-05-15-observability-stack-simplification.md](revisions/2026-05-15-observability-stack-simplification.md) — captures significant simplification of observability stack by replacing Prometheus/Grafana/Airflow/Kubeflow with lightweight MLflow + Floci approach while maintaining perfect local/cloud parity.
 - [revisions/2026-05-09-example-matrix.md](revisions/2026-05-09-example-matrix.md) — captures the first architecture-aligned example inventory.
 - [revisions/2026-05-09-default-stack-decisions.md](revisions/2026-05-09-default-stack-decisions.md) — captures the accepted default stack and boundary decisions.
 - [revisions/2026-05-09-topology-pages.md](revisions/2026-05-09-topology-pages.md) — captures the first pass of reference topology pages.

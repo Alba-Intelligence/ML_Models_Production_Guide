@@ -588,25 +588,26 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li><strong>Web Control</strong>: WebUI + Contracts for execution and monitoring</li>
 <li><strong>Notebooks</strong>: Shared Repository for local/cloud common source</li>
-<li><strong>Orchestration</strong>: Airflow for pipeline workflows</li>
-<li><strong>Kubernetes</strong>: Kubeflow (optional) for K8s ML pipeline layer</li>
+<li><strong>Orchestration</strong>: MLflow-native execution for workflow management</li>
+<li><strong>Kubernetes</strong>: K3s for local development with optional cloud scaling</li>
 </ul>
 </section>
 <section id="data-and-tracking" class="level3">
 <h3 class="anchored" data-anchor-id="data-and-tracking">Data and Tracking</h3>
 <ul>
-<li><strong>Tracking</strong>: MLflow for run metadata and models</li>
+<li><strong>Tracking</strong>: MLflow for experiments, models, metrics, and UI visualization</li>
 <li><strong>Lineage</strong>: MLflow Metadata for data training traceability</li>
-<li><strong>Execution</strong>: Local/Slurm/K8s for compute routing</li>
+<li><strong>Execution</strong>: Local/Slurm/Kubernetes for compute routing</li>
 <li><strong>Storage</strong>: PostgreSQL + S3 for tracking and artifacts</li>
+<li><strong>Observability</strong>: MLflow UI + CloudWatch/Floci for logs and metrics</li>
 </ul>
 </section>
 <section id="local-environment" class="level3">
 <h3 class="anchored" data-anchor-id="local-environment">Local Environment</h3>
 <ul>
 <li><strong>Local Emulation</strong>: Docker + Floci + K3s for local compute</li>
-<li><strong>Observability</strong>: Prometheus + Grafana for metrics and telemetry</li>
-<li><strong>Cost Visibility</strong>: AWS Tools for spend reporting</li>
+<li><strong>Observability</strong>: Floci-emulated AWS CloudWatch + MLflow UI for metrics and telemetry</li>
+<li><strong>Cost Visibility</strong>: Floci-emulated AWS Cost Explorer + MLflow tracking for spend reporting</li>
 </ul>
 </section>
 <section id="quality-and-access" class="level3">
@@ -640,6 +641,7 @@ ul.task-list li input[type="checkbox"] {
 <p></p><figure class="figure"><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart TD
+    Assistant["Read-first MCP / Docs Retrieval"] --&gt; Docs
     NotebookSource["Shared Notebook Repository"] --&gt; Docs["Quarto Docs (QMD)"]
     NotebookSource --&gt; Modules["nbdev Exported Python Modules"]
     WebUI["WebUI Control Plane"] --&gt; Runtime["Execution Backends (Local/Slurm/K8s)"]
@@ -655,9 +657,8 @@ ul.task-list li input[type="checkbox"] {
     Auth --&gt; Runtime
     Auth --&gt; Infra
     Auth --&gt; Gates
-    Observability["Prometheus + Grafana + Audit Logs"] --&gt; Tracking
-    Cost["AWS Cost Explorer + CUR + Athena + Budgets"] --&gt; Infra
-    Assistant["Read-first MCP / Docs Retrieval"] --&gt; Docs
+    Observability["MLflow UI + CloudWatch/Floci Logs"] --&gt; Tracking
+    Cost["AWS Cost Explorer + Floci Emulation + MLflow Tracking"] --&gt; Infra
 </pre>
 </div>
 <p></p></figure><p></p>

@@ -62,21 +62,25 @@ implementation-local ones.
 
 - **Web Control**: WebUI + Contracts for execution and monitoring
 - **Notebooks**: Shared Repository for local/cloud common source
-- **Orchestration**: Airflow for pipeline workflows
-- **Kubernetes**: Kubeflow (optional) for K8s ML pipeline layer
+- **Orchestration**: MLflow-native execution for workflow management
+- **Kubernetes**: K3s for local development with optional cloud scaling
 
 ### Data and Tracking
 
-- **Tracking**: MLflow for run metadata and models
+- **Tracking**: MLflow for experiments, models, metrics, and UI
+  visualization
 - **Lineage**: MLflow Metadata for data training traceability
-- **Execution**: Local/Slurm/K8s for compute routing
+- **Execution**: Local/Slurm/Kubernetes for compute routing
 - **Storage**: PostgreSQL + S3 for tracking and artifacts
+- **Observability**: MLflow UI + CloudWatch/Floci for logs and metrics
 
 ### Local Environment
 
 - **Local Emulation**: Docker + Floci + K3s for local compute
-- **Observability**: Prometheus + Grafana for metrics and telemetry
-- **Cost Visibility**: AWS Tools for spend reporting
+- **Observability**: Floci-emulated AWS CloudWatch + MLflow UI for
+  metrics and telemetry
+- **Cost Visibility**: Floci-emulated AWS Cost Explorer + MLflow
+  tracking for spend reporting
 
 ### Quality and Access
 
@@ -118,7 +122,7 @@ implementation-local ones.
 
 <img
 src="01_02-platform_introduction_files/figure-commonmark/mermaid-figure-1.png"
-style="width:14.57in;height:8.98in" />
+style="width:14.98in;height:8.98in" />
 
 </div>
 

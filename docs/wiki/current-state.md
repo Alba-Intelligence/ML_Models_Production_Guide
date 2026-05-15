@@ -173,7 +173,7 @@ As of 2026-05-11, the repository contains:
 - The distilled Allium spec now explicitly encodes the same documentation split: interaction overviews must include lineage/security-capability coverage, and detailed entity relationship maps must live in the interaction-analysis layer rather than the introductory narrative.
 - The rendered docs homepage is now Quarto-driven (`nbs/index.qmd`) and functions as navigation-first entrypoint.
 - The docs now include a dedicated stack introduction page (`nbs/00_introduction.qmd`) linked from homepage foundations and sidebar navigation.
-- The stack introduction page now explicitly frames the whole stack in purpose-first order: canonical nbdev/QMD authorship, uv2nix-managed Python environments, WebUI as primary control plane, Airflow as orchestration layer, optional Kubeflow in the Kubernetes lane, shared notebook repository flow across local/cloud, central authorization, MLOps promotion gates, observability, cost visibility, and Nix/Terranix as canonical artifact-generation source.
+- The stack introduction page now explicitly frames the whole stack in purpose-first order: canonical nbdev/QMD authorship, uv2nix-managed Python environments, WebUI as primary control plane, MLflow-native execution for workflow management, K3s for local development with optional cloud scaling, shared notebook repository flow across local/cloud, central authorization, MLOps promotion gates, MLflow UI + CloudWatch/Floci for observability, Floci-emulated AWS Cost Explorer + MLflow tracking for cost visibility, and Nix/Terranix as canonical artifact-generation source.
 - Full Quarto website generation from `.qmd` sources succeeds via `nix develop -c quarto render . --no-execute`.
 - Rendered Quarto outputs are refreshed under `_docs/nbs/*.html` with `_docs/index.html` as root entrypoint; that root page now forwards to the Quarto navigation homepage at `_docs/nbs/index.html`, whose links target HTML docs, the root sidebar no longer references the retired Terraform-bootstrap page, and the stale legacy `nbs/_docs/` snapshot has been removed.
 - CI now enforces export/render/tests on pull requests and pushes, including docs freshness coverage.
@@ -230,3 +230,30 @@ The repo is currently best understood as a **specification-first and documentati
 - Any new important root file should get a source summary under `docs/wiki/sources/`.
 - When working on documentation restructuring, follow the plan in `docs/wiki/plans/documentation-restructuring-plan.md`
 - Update progress as tasks are completed and report new issues discovered
+
+## Observability Stack (2026-05-15)
+
+**Lightweight MLflow + Floci Approach**: Updated observability strategy to eliminate heavyweight components while maintaining perfect local/cloud parity.
+
+### Components:
+- **MLflow UI**: Native experiment visualization and tracking
+- **MLflow Tracking**: Complete experiment metadata capture
+- **MLflow Model Registry**: Model versioning and promotion
+- **MLflow Metrics**: Performance metrics collection
+- **CloudWatch/Floci**: Application logs and audit trails (emulated locally, real in cloud)
+- **Floci-emulated AWS Cost Explorer**: Local cost visibility with MLflow tracking
+- **K3s**: Lightweight Kubernetes for local development with cloud scaling
+
+### Benefits:
+- Perfect local/cloud parity with Floci AWS emulation
+- Minimal infrastructure overhead (no Prometheus/Grafana/Airflow/Kubeflow)
+- Unified MLflow experience across environments
+- Industry-standard ML tracking capabilities
+- Cost-effective with no additional licensing requirements
+
+### Implementation:
+- Local: Floci emulates all AWS services including CloudWatch
+- Cloud: Real AWS CloudWatch services with identical MLflow API
+- Observability needs fully met through MLflow + CloudWatch/Floci stack
+
+**Note**: This represents a significant simplification from the previous Prometheus/Grafana/Airflow/Kubeflow approach, maintaining full functionality while reducing complexity.
