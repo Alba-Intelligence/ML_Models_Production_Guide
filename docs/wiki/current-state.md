@@ -38,6 +38,7 @@ sources:
   - decisions/mlflow-postgres-s3-contract.md
   - decisions/lambda-ai-slurm-contract.md
   - decisions/security-authorization-architecture.md
+  - sources/nbs.reference.03_Security_Authorization_and_Policy.qmd.md
   - sources/ml-deploy-reference-repo.allium.md
   - sources/ml_deploy.webui_contracts.py.md
   - sources/ml_deploy.execution_backends.py.md
@@ -71,6 +72,8 @@ sources:
   - sources/scripts.generate-docker-artifacts.py.md
   - sources/nix.terranix.docker-artifacts.nix.md
   - sources/scripts.regenerate-html.sh.md
+  - gaps/index.md
+  - gaps/software-stack-gaps.md
   - queries/spec-quality-elicitation-session-01.md
 ---
 
@@ -96,6 +99,7 @@ As of 2026-05-11, the repository contains:
 - `nbs/07_mlflow_parity.qmd` as nbdev source for MLflow parity helpers
 - `nbs/08_execution_backends.qmd` as nbdev source for backend execution adapters
 - `nbs/09_notebook_intake.qmd` as nbdev source for notebook intake validation
+- `nbs/reference/03_Security_Authorization_and_Policy.qmd` as nbdev source for the traditional auth/roles/policy reference posture
 - `nbs/01_platform_narrative.qmd` as the canonical platform architecture narrative page
 - `nbs/00_introduction.qmd` as the stack-wide introduction page summarizing software and infrastructure layers
 - Quarto `.qmd` counterparts for all active nbdev notebooks in `nbs/` (docs rendering path)
@@ -129,6 +133,7 @@ As of 2026-05-11, the repository contains:
 - Spec-propagated tests now also enforce infrastructure MCP scope and minimum interrogation-aspect obligations in `tests/test_mcp_infrastructure_contracts.py`.
 - The Web UI contract module is now Quarto-owned and exported from `nbs/05_webui_contracts.qmd`.
 - Execution adapter mappings now exist for local, Slurm, and Kubernetes payloads.
+- The traditional auth/roles/policy posture is now documented in `nbs/reference/03_Security_Authorization_and_Policy.qmd` and mirrored in the wiki.
 - Notebook intake validation gates now exist for immutable refs, notebook structure, and optional nbdev export checks.
 - Nix/Terranix-oriented OpenTofu infrastructure helpers and documentation now describe the platform bootstrap story, and repository Docker artifacts are generated from Nix Terranix definitions.
 - Runtime helper modules are now Quarto-owned and exported through nbdev, not maintained as hand-edited Python sources.
@@ -236,6 +241,7 @@ The repo is currently best understood as a **specification-first and documentati
 **Lightweight MLflow + Floci Approach**: Updated observability strategy to eliminate heavyweight components while maintaining perfect local/cloud parity.
 
 ### Components:
+
 - **MLflow UI**: Native experiment visualization and tracking
 - **MLflow Tracking**: Complete experiment metadata capture
 - **MLflow Model Registry**: Model versioning and promotion
@@ -245,6 +251,7 @@ The repo is currently best understood as a **specification-first and documentati
 - **K3s**: Lightweight Kubernetes for local development with cloud scaling
 
 ### Benefits:
+
 - Perfect local/cloud parity with Floci AWS emulation
 - Minimal infrastructure overhead (no Prometheus/Grafana/Airflow/Kubeflow)
 - Unified MLflow experience across environments
@@ -252,6 +259,7 @@ The repo is currently best understood as a **specification-first and documentati
 - Cost-effective with no additional licensing requirements
 
 ### Implementation:
+
 - Local: Floci emulates all AWS services including CloudWatch
 - Cloud: Real AWS CloudWatch services with identical MLflow API
 - Observability needs fully met through MLflow + CloudWatch/Floci stack

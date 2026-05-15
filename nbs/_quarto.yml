@@ -58,6 +58,7 @@ website:
         contents:
           - reference/01_Implementation_Patterns.qmd
           - reference/02_API_Documentation.qmd
+          - reference/03_Security_Authorization_and_Policy.qmd
 
       - text: "---"
       - section: "Full Documentation"

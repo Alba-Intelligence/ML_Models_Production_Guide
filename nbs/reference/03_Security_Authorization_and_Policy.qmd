@@ -1,0 +1,575 @@
+---
+title: "Security, Roles, and Policy"
+---
+
+# Security, Roles, and Policy
+
+This page defines the reference **traditional authorization posture** for the ML Deploy stack.
+
+It is intentionally conservative: the design assumes a corporate identity provider, explicit role assignments, centralized authorization, least privilege, service identities for automation, and audit trails for every privileged action.
+
+The goal is not to invent a novel auth system. The goal is to describe the standard enterprise shape that fits this repository: **OIDC-backed authentication, policy-as-code authorization, RBAC for humans, scoped service accounts for machines, and capability catalogs for every major surface**.
+
+## Why this page exists
+
+The stack already has a strong architectural frame:
+
+- notebooks remain the immutable source of truth
+- runs are triggered through a Web UI or programmatic backend
+- local, distributed, and cloud execution are distinct topologies
+- MLflow tracks experiments and model lineage
+- infrastructure is managed through Nix/Terranix/OpenTofu boundaries
+- governance gates already exist for specification-first transitions
+
+What was still missing was the **full narrative for who may do what, under which circumstances, and how that decision is enforced**.
+
+This page fills that gap for the security layer.
+
+## The reference posture
+
+The canonical posture is:
+
+1. **Authenticate identities through OIDC**.
+   - Humans sign in via a corporate identity provider.
+   - Workloads use scoped service identities or cloud federation.
+
+2. **Authorize requests centrally**.
+   - Roles are not hard-coded into each service.
+   - Capabilities are declared centrally.
+   - A policy engine decides whether a request is allowed.
+
+3. **Separate identity from authorization**.
+   - Authentication answers *who are you?*
+   - Authorization answers *what may you do here?*
+
+4. **Use policy-as-code for privileged actions**.
+   - Promotion, deployment, infra apply, data access, and security changes should all be policy-evaluated.
+
+5. **Audit every privileged action**.
+   - Every allow/deny decision should be attributable.
+   - Every sensitive action should be reconstructable after the fact.
+
+This is the architecture's “traditional auth” model: enterprise RBAC plus centralized policy enforcement, not ad-hoc per-service flags.
+
+## Mental model
+
+A request follows the same general path across the stack:
+
+1. A user or service presents an identity token.
+2. The system validates the token and resolves the principal.
+3. The policy layer maps the principal to roles and capabilities.
+4. The request context is evaluated.
+5. The enforcement point allows or denies the operation.
+6. The decision is written to audit logs.
+7. The downstream system receives only the minimum identity needed to proceed.
+
+In other words, authorization is not just a login screen. It is a **repeatable decision pipeline**.
+
+## Identity classes
+
+The stack needs to distinguish between human and machine identity.
+
+### Human identities
+
+Human identities are for people using the platform directly.
+
+Typical human principals:
+
+- ML engineer
+- researcher
+- platform engineer
+- data engineer
+- security administrator
+- auditor
+- operator
+- reviewer/approver
+
+Human identities usually authenticate through OIDC and then receive role claims or a policy lookup result.
+
+### Machine identities
+
+Machine identities are for automation, daemons, and platform services.
+
+Typical machine principals:
+
+- Web UI backend service
+- execution orchestrator
+- local execution adapter
+- Slurm submission adapter
+- Kubernetes submission adapter
+- MLflow reverse proxy
+- docs-serving process
+- CI/CD automation
+- assistant/MCP tooling
+
+Machine identities should be scoped more tightly than human identities and should never inherit broad ambient access by default.
+
+## Role model
+
+The reference RBAC model is intentionally small and understandable.
+It should be easy to answer “what does this role do?” without reading half the codebase.
+
+### Core human roles
+
+| Role | Intent | Typical powers |
+|---|---|---|
+| `SystemAdmin` | Break-glass or full platform control | All capabilities, including emergency recovery |
+| `SecurityAdmin` | Identity, audit, and policy administration | Manage roles, policies, secrets integration, audit views |
+| `PlatformAdmin` | Platform operation and environment administration | Manage environments, deployment targets, runtime settings |
+| `DataAdmin` | Data and lineage stewardship | Manage datasets, schemas, lineage, quality, access approvals |
+| `ProjectAdmin` | Project-level control | Approve project workflows, manage runs, promote artifacts |
+| `Developer` | Build and test workflows | Create runs, inspect results, work in non-production scopes |
+| `Analyst` | Read and analyze outputs | View experiments, models, runs, and predictions |
+| `Viewer` | Read-only visibility | Read public or permitted summaries |
+| `Auditor` | Compliance and evidence review | Read logs, policy decisions, and historical traces |
+
+### Machine/service roles
+
+Machine identities are usually not “roles” in the human sense. They are **service principals with scoped capabilities**.
+
+Examples:
+
+| Service principal | Purpose | Scope |
+|---|---|---|
+| `webui-backend` | Serves request normalization and run submission | Notebook execution requests, read-only metadata, no broad infra control |
+| `mlflow-proxy` | Fronts MLflow with auth enforcement | MLflow read/write as explicitly configured |
+| `execution-local` | Runs local slice jobs | Local execution only |
+| `execution-slurm-submit` | Submits Slurm jobs | Submit and monitor jobs, not arbitrary cluster admin |
+| `execution-k8s-submit` | Submits Kubernetes jobs | Create/manage approved jobs only |
+| `docs-server` | Serves docs content | Read-only docs serving |
+| `ci-runner` | Continuous integration automation | Narrow repo and build permissions |
+| `mcp-readonly` | Assistant-readable operational tooling | Read-only unless explicitly elevated |
+
+## Capability catalogs
+
+Roles are useful, but the system becomes much clearer when the policy layer also names capabilities.
+
+A capability catalog is the canonical list of actions a subsystem exposes.
+Each system and subsystem should publish its own catalog.
+
+### Example capability families
+
+#### Data
+
+- `data.read`
+- `data.create`
+- `data.update`
+- `data.delete`
+- `data.lineage.read`
+- `data.quality.read`
+- `data.quality.manage`
+- `dataset.promote`
+
+#### Training and experiments
+
+- `experiment.read`
+- `experiment.create`
+- `experiment.update`
+- `run.submit`
+- `run.cancel`
+- `run.read`
+- `checkpoint.read`
+- `checkpoint.manage`
+
+#### Artifacts and registry
+
+- `model.read`
+- `model.create`
+- `model.update`
+- `model.promote`
+- `model.rollback`
+- `registry.read`
+- `registry.write`
+- `registry.admin`
+
+#### Serving
+
+- `serving.read`
+- `serving.deploy`
+- `serving.rollback`
+- `serving.invoke`
+- `serving.scale`
+- `serving.manage`
+
+#### Infrastructure
+
+- `infra.read`
+- `infra.plan`
+- `infra.apply`
+- `infra.destroy`
+- `infra.audit`
+- `infra.secrets.manage`
+
+#### Observability
+
+- `observability.read`
+- `logs.read`
+- `metrics.read`
+- `traces.read`
+- `alerts.manage`
+- `dashboards.manage`
+
+#### Governance and policy
+
+- `policy.read`
+- `policy.update`
+- `approval.grant`
+- `approval.reject`
+- `audit.read`
+- `audit.export`
+- `security.manage`
+
+#### Cost and finance
+
+- `cost.read`
+- `cost.export`
+- `budget.manage`
+- `chargeback.read`
+- `chargeback.manage`
+
+#### Notebook Web UI
+
+- `notebook.read`
+- `notebook.execute.local`
+- `notebook.execute.slurm`
+- `notebook.execute.k8s`
+- `notebook.approve`
+- `notebook.manage`
+
+### Why capabilities matter
+
+Roles describe *who* a person or service is.
+Capabilities describe *what* the platform permits.
+
+The policy engine should usually evaluate both:
+
+- principal role
+- explicit capability
+- requested resource
+- environment
+- approval state
+- sensitivity label
+- topology
+- request provenance
+
+That combination gives a much more durable model than “admin vs non-admin”.
+
+## Role-to-capability shape
+
+The reference mapping is intentionally coarse.
+It should be flexible enough for implementation details, but strict enough to avoid ambiguity.
+
+| Role | Typical allowed capabilities |
+|---|---|
+| `SystemAdmin` | everything, including break-glass recovery |
+| `SecurityAdmin` | `security.manage`, `policy.update`, `audit.read`, `audit.export`, identity and secret integration |
+| `PlatformAdmin` | `infra.read`, `infra.plan`, `infra.apply`, `serving.manage`, `observability.manage` |
+| `DataAdmin` | `data.*`, `dataset.promote`, `data.lineage.read`, `data.quality.manage` |
+| `ProjectAdmin` | `experiment.*`, `run.*`, `model.promote`, `notebook.approve`, selected infra and serving approvals |
+| `Developer` | `experiment.create`, `run.submit`, `run.read`, `model.create`, `model.read`, `notebook.read`, `notebook.execute.local` |
+| `Analyst` | `experiment.read`, `run.read`, `model.read`, `serving.invoke`, `cost.read`, `observability.read` |
+| `Viewer` | read-only variants of the above |
+| `Auditor` | `audit.read`, `audit.export`, read-only visibility into decisions and supporting evidence |
+
+The exact mapping should be environment-aware and resource-aware, but the principle should remain stable.
+
+## Policy dimensions
+
+A traditional RBAC system becomes useful when it is paired with explicit policy dimensions.
+
+### 1. Identity
+Who is requesting the action?
+
+- user subject
+- service principal
+- group membership
+- role assignment
+- session freshness
+
+### 2. Resource
+What is being requested?
+
+- notebook revision
+- MLflow run or experiment
+- model version
+- dataset
+- infrastructure stack
+- policy document
+- audit record
+- cost report
+
+### 3. Action
+What is the principal trying to do?
+
+- read
+- create
+- update
+- delete
+- execute
+- promote
+- deploy
+- rollback
+- approve
+- export
+
+### 4. Environment
+Where will the action happen?
+
+- local
+- dev
+- uat
+- regression
+- prod
+- Slurm
+- Kubernetes
+- AWS control plane
+- docs surface
+
+### 5. Sensitivity
+How sensitive is the resource or action?
+
+- public
+- internal
+- confidential
+- restricted
+
+### 6. Approval state
+Has the action already passed the required gate?
+
+- none required
+- approval required
+- approved
+- rejected
+- break-glass only
+
+### 7. Provenance
+What is the source of the request?
+
+- notebook commit SHA
+- approved-ref
+- tagged release
+- CI job
+- operator session
+- assistant session
+
+A real policy engine should evaluate these dimensions together.
+
+## Canonical enforcement points
+
+The policy model is only useful if the stack has clear places to enforce it.
+
+### Web UI and backend API
+
+The Web UI is the most visible enforcement point for human users.
+It should:
+
+- authenticate through the corporate IdP
+- resolve roles and capabilities
+- refuse unauthorized notebook execution requests
+- include notebook revision and target environment in the policy context
+- log every decision and run submission
+
+### MLflow reverse proxy
+
+MLflow is useful for tracking, but it should not be treated as a free-for-all endpoint.
+The reverse proxy should:
+
+- authenticate the user
+- inject the user identity into downstream requests
+- restrict registry and experiment actions by role
+- preserve audit context
+- avoid exposing internal data to unauthenticated clients
+
+### Execution orchestrator
+
+The orchestrator should enforce request-level policy before submission.
+It should check:
+
+- whether the user may submit the requested topology
+- whether the notebook revision is approved
+- whether the environment is allowed for that role
+- whether the requested resources exceed the user's limits
+
+### Slurm and Kubernetes submitters
+
+The backend adapters should use service identities with narrow scope.
+They should not accept arbitrary user authority.
+They should only submit jobs that already passed policy checks upstream.
+
+### Infrastructure apply path
+
+Terraform/OpenTofu-style operations must be gated more tightly than ordinary execution.
+The apply path should require:
+
+- elevated role
+- explicit approval or change window
+- audit trail
+- environment-scoped credentials
+- review of plan output when applicable
+
+### Assistant/MCP tooling
+
+Assistant integration should be read-only by default.
+Write-capable operations must require:
+
+- explicit user confirmation
+- a bounded capability
+- audit logging
+- clear identity attribution
+
+## Reference policy examples
+
+### Notebook execution
+
+A developer may:
+
+- read the notebook catalog
+- execute approved notebooks in local or dev environments
+- inspect results for their project
+
+A developer may not:
+
+- execute arbitrary prod jobs
+- change policy
+- promote to prod without approval
+- access restricted datasets without explicit grant
+
+### Model promotion
+
+A project admin may:
+
+- review candidate artifacts
+- approve promotion between bounded stages
+- trigger deployment steps where permitted
+
+A project admin may not:
+
+- bypass lineage checks
+- promote an unapproved notebook revision
+- grant themselves unrestricted infrastructure access
+
+### Infrastructure change
+
+A platform admin may:
+
+- plan and apply approved environment changes
+- manage runtime wiring and network policies
+
+A platform admin may not:
+
+- silently modify production secrets
+- bypass audit logging
+- destroy critical environments without explicit break-glass procedure
+
+### Audit review
+
+An auditor may:
+
+- read the full decision trail
+- inspect who approved what and when
+- export evidence for compliance reviews
+
+An auditor may not:
+
+- mutate system state
+- approve their own requests
+- escalate into administrative control
+
+## Request lifecycle narrative
+
+A typical request should feel boring, deterministic, and auditable.
+
+1. The user authenticates through OIDC.
+2. The UI receives a token or session.
+3. The user selects a notebook revision and target environment.
+4. The backend normalizes the request into a canonical job spec.
+5. The policy engine evaluates the request.
+6. If allowed, the orchestrator submits to the correct backend.
+7. The backend uses its own service identity to perform the action.
+8. MLflow records the run and its lineage links.
+9. The audit sink records the identity, policy version, decision, and request context.
+
+That same narrative applies whether the target is local, Slurm, Kubernetes, or a promotion workflow.
+
+## Deny conditions
+
+The default answer is “no” unless the policy says yes.
+
+Common deny cases:
+
+- missing authentication
+- token expired or invalid
+- role not present
+- capability not granted
+- notebook revision not approved
+- target environment not allowed
+- requested resource exceeds quota
+- approval missing
+- resource classification too sensitive
+- request provenance is insufficient
+- policy engine unavailable and the action is not on an explicitly defined fail-open path
+
+Every deny should be explainable in human language.
+
+## Human and service separation
+
+A useful security design keeps human intent separate from service execution.
+
+Humans should:
+
+- request actions
+- approve actions
+- review outcomes
+- investigate logs
+
+Services should:
+
+- execute bounded tasks
+- carry only the authority they need
+- never impersonate a human user outside the policy model
+
+This separation makes audit, least privilege, and failure recovery much easier.
+
+## Environment posture
+
+The same role should not automatically mean the same power everywhere.
+
+A typical posture is:
+
+- **local/dev**: broad read/write for development convenience, but still policy-checked
+- **uat/regression**: tighter controls, approval-aware promotion tests
+- **prod**: strongest restrictions, explicit approvals, audited mutation paths only
+
+The policy layer should always know which environment is in scope.
+
+## What this page is not
+
+This page is not an implementation claim.
+It is the reference posture.
+
+It does **not** mean the repository currently has a complete auth system.
+The repository still needs:
+
+- actual IdP integration
+- actual policy engine wiring
+- actual role provisioning
+- actual service-account plumbing
+- actual audit sinks
+- actual enforcement in the execution paths
+
+Those items remain part of the implementation roadmap and gap analysis.
+
+## Summary
+
+The stack's security model should be:
+
+- OIDC for identity
+- RBAC for human intent
+- service principals for automation
+- central policy for authorization
+- capability catalogs per subsystem
+- least privilege by default
+- environment-aware enforcement
+- audit trails for every privileged action
+
+That is the traditional, durable shape that best fits this repository.

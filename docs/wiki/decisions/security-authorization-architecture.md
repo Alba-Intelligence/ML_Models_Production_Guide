@@ -34,5 +34,6 @@ That means:
 ## Upstream contract
 
 - `docs/wiki/contracts/security-baseline.md`
+- `docs/wiki/sources/nbs.reference.03_Security_Authorization_and_Policy.qmd.md`
 - `specs/ml-deploy-reference-repo.allium`
 
