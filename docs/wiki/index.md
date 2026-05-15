@@ -294,6 +294,11 @@ sources:
 - [sources/nbs.tutorials.05_Advanced_Scenarios.qmd.md](sources/nbs.tutorials.05_Advanced_Scenarios.qmd.md) — synthesized summary of advanced scenarios document with production-ready deployment patterns and complex system implementations.
 - [sources/nbs.reference.01_Implementation_Patterns.qmd.md](sources/nbs.reference.01_Implementation_Patterns.qmd.md) — synthesized summary of implementation patterns document with technical guidance and concrete code examples for core platform patterns.
 - [sources/nbs.reference.02_API_Documentation.qmd.md](sources/nbs.reference.02_API_Documentation.qmd.md) — synthesized summary of API documentation with complete interface specifications and integration guidance for platform components.
+- [sources/nbs.01_04-core_concepts.qmd.md](sources/nbs.01_04-core_concepts.qmd.md) — synthesized summary of core concepts document with platform architectural principles and fundamental design decisions.
+- [sources/nbs.03_01-infrastructure_as_code.qmd.md](sources/nbs.03_01-infrastructure_as_code.qmd.md) — synthesized summary of infrastructure as code document with Nix/Terranix configuration and deployment guidance.
+- [sources/nbs.04_01-execution_framework.qmd.md](sources/nbs.04_01-execution_framework.qmd.md) — synthesized summary of execution framework document with multi-backend job management and resource allocation strategies.
+- [sources/nbs.05_01-system_architecture.qmd.md](sources/nbs.05_01-system_architecture.qmd.md) — synthesized summary of system architecture document with comprehensive architectural patterns and component relationships.
+- [sources/nbs.99_DOCUMENTATION_RESTRUCTURING_PLAN.qmd.md](sources/nbs.99_DOCUMENTATION_RESTRUCTURING_PLAN.qmd.md) — synthesized summary of documentation restructuring plan with strategic roadmap for documentation transformation and quality improvement.
 - [sources/nbs.09_notebook_intake.qmd.md](sources/nbs.09_notebook_intake.qmd.md) — synthesized summary of Quarto nbdev source-of-truth for notebook intake gates.
 - [sources/nbs.12_system_interaction_analysis.qmd.md](sources/nbs.12_system_interaction_analysis.qmd.md) — synthesized summary of the five-layer system interaction analysis Quarto page.
 - [sources/nbs.13_opentofu_infra.qmd.md](sources/nbs.13_opentofu_infra.qmd.md) — synthesized summary of the OpenTofu infrastructure profile Quarto page.
