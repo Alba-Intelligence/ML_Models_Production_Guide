@@ -85,17 +85,6 @@ implementation-local ones.
 - **CI Gate**: GitHub Actions for export and testing
 - **Validation**: unittest suite for contract and freshness checks
 
-TODO: reorder the table rows in order of importance (what is most
-structuring to the whoe rpoject to the least) TODO: Python+uv:2~Should
-use uv2nix as to minimise the use of environments not reproducible
-and/or controled by Nix. TODO: nbdev / qmd:2~nbdev is the way ML
-researcher control they workflow (along with the MLflow and/or webUI
-interface). qmd is aspirationally the way to control the Nix-driven
-architecture.
-
-TODO: The order of the description needs improving. General to specifics
-to show how to fit pieces together.
-
 ## Local/cloud topology
 
 1.  **Local emulation profile**: Docker Compose services for MLflow,
@@ -129,7 +118,7 @@ to show how to fit pieces together.
 
 <img
 src="01_02-platform_introduction_files/figure-commonmark/mermaid-figure-1.png"
-style="width:22.18in;height:6.35in" />
+style="width:14.57in;height:8.98in" />
 
 </div>
 

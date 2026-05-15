@@ -1,7 +1,7 @@
 # ML Deploy Documentation
 
 
-# ML Deploy Documentation
+# Welcome
 
 Welcome to the ML Deploy documentation - a comprehensive guide for
 machine learning deployment with full lifecycle management. This

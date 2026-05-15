@@ -27,7 +27,7 @@ infrastructure:
 
 <img
 src="01_01-getting_started_files/figure-commonmark/mermaid-figure-1.png"
-style="width:9.31in;height:5.48in" />
+style="width:9.31in;height:5.73in" />
 
 </div>
 

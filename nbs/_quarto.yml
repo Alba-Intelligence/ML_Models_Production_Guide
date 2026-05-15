@@ -9,28 +9,41 @@ project:
 
 execute:
   enabled: false
+  freeze: true
 
 format:
   html:
-    theme: cosmo
+    # theme: cosmo
+    # theme: lumen
+    # theme: lux
+    theme:
+      light: sandstone
+      dark: slate
     css: styles.css
     toc: true
     keep-md: true
   commonmark: default
 
 website:
-  twitter-card: true
+  page-navigation: true
   open-graph: true
-  repo-actions: [issue]
+
+  twitter-card: true
+
   navbar:
     background: primary
     search: true
+
   sidebar:
-    style: floating
+    # style: floating
+    style: docked
+    border: true
     contents:
       - index.qmd
       - navigation-guide.qmd
       - reading-paths.qmd
+
+      - text: "---"
       - section: "Tutorials"
         contents:
           - tutorials/01_Terminology_Glossary.qmd
@@ -39,10 +52,14 @@ website:
           - tutorials/04_End_to_End_Workflow.qmd
           - tutorials/05_Advanced_Scenarios.qmd
           - tutorials/06_Migration_Guide.qmd
+
+      - text: "---"
       - section: "Technical Reference"
         contents:
           - reference/01_Implementation_Patterns.qmd
           - reference/02_API_Documentation.qmd
+
+      - text: "---"
       - section: "Full Documentation"
         contents:
           - 01_01-getting_started.qmd
@@ -63,3 +80,16 @@ website:
           - 04_04-user_interfaces.qmd
           - 04_05-governance_framework.qmd
           - 05_01-system_architecture.qmd
+
+  repo-url: https://github.com/alba-intelligence/ml_deploy
+  repo-actions: [edit, source, issue]
+
+  page-footer:
+    border: true
+    background: light
+    left: "Copyright 2026, Alba Intelligence Ltd. All rights reserved."
+    right:
+      - icon: github
+        href: https://github.com/alba-intelligence/ml_deploy
+      - icon: envelop
+        href: mailto:alba.intelligence@gmail.com
