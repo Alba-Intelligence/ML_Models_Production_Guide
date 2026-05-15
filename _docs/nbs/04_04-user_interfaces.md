@@ -1,0 +1,133 @@
+# Notebook Repository Web UI
+
+
+# Notebook Repository Web UI
+
+This notebook describes the design for a centralized notebook repository
+web UI that enables engineers to browse, select, and trigger notebook
+executions across environments while keeping notebooks as the immutable
+source of truth.
+
+------------------------------------------------------------------------
+
+## Purpose
+
+Provide a centralized interface for ML engineers to interact with
+versioned notebooks, trigger executions across different environments
+(local replica, Lambda.ai Slurm, AWS Kubernetes), and monitor
+results—while preserving notebooks as the immutable source of truth.
+
+## Scope and Non-Goals
+
+### In Scope
+
+- Browsing and searching versioned notebooks from the repository
+- Executing notebooks with environment-specific configuration injection
+- Triggering runs against local replica architecture for
+  development/testing
+- Promoting successful runs to production environments (Lambda.ai Slurm,
+  AWS Kubernetes)
+- Viewing execution results linked to MLflow tracking
+- Launching MCP-powered monitoring and analysis tools from execution
+  results
+- Role-based access control for notebook access and execution triggering
+
+### Out of Scope
+
+- Editing notebooks through the UI (notebooks remain source of truth in
+  Git)
+- Storing execution parameters within notebooks themselves
+- Duplicating MLflow tracking functionality (links to existing MLflow
+  UI)
+- Long-term notebook storage (uses Git as source of truth)
+
+## Upstream Dependencies
+
+- Git repository containing nbdev notebooks (source of truth)
+- MLflow tracking server (for execution results and model lineage)
+- Local replica architecture (Slurm-like scheduler, K8s, Floci-backed
+  S3, PostgreSQL)
+- Production infrastructure (Lambda.ai Slurm, AWS Kubernetes, S3, RDS)
+- MCP server ecosystem (for monitoring/analysis tooling)
+- Authentication/authorization system (for role-based access)
+
+## Domain Ownership
+
+- **Primary**: ML Engineering / Platform Team
+- **Secondary**: DevOps / Infrastructure Team (for environment
+  provisioning)
+- **Tertiary**: Data Science Leadership (for oversight and governance)
+
+## Contracts Consumed
+
+- **From Git**: Immutable notebook versions via commit references
+- **From MLflow**: Run metadata, metrics, artifacts, and model registry
+  entries
+- **From Environment APIs**: Job submission/status interfaces (Slurm,
+  K8s)
+- **From MCP**: Monitoring and analysis capabilities triggered from
+  execution results
+
+## Contracts Produced
+
+- **Execution Triggers**: Standardized job specifications for each
+  target environment
+- **Configuration Injection**: Environment-specific parameters passed to
+  notebook execution
+- **Result Links**: References to MLflow runs, artifacts, and model
+  versions
+- **MCP Invocations**: Context for launching assistant-assisted
+  monitoring workflows
+
+## Topology Relevance
+
+- **Local Development**: Primary interface for triggering runs against
+  local replica
+- **Environment Promotion**: Gateway for moving validated runs to
+  production
+- **Production Monitoring**: Launchpad for MCP-assisted analysis of
+  production executions
+- **Governance**: Audit trail of who triggered what, when, and with
+  which configuration
+
+## Operational/Security/Lineage Implications
+
+- **Immutability Guarantee**: Notebooks cannot be altered through the
+  UI; changes must go through Git
+- **Execution Traceability**: Every run links back to exact notebook
+  version + execution config
+- **Environment Parity**: Same notebook runs against local replica and
+  production (with config differences)
+- **Secret Management**: Execution credentials/tokens injected securely
+  at runtime, never stored
+- **Role-Based Execution**: Different roles may have access to different
+  environments or notebook sets
+- **Cost Attribution**: Executions tagged with user/project for cost
+  governance visibility
+
+## Open Questions and Deferred Decisions
+
+1.  **Repository Implementation**: Git-based (with webhook triggers)
+    vs. object storage + metadata DB for notebook storage?
+2.  **Execution Configuration**: Should we use dedicated config files
+    (YAML/JSON) or environment variables for parameter injection?
+3.  **Approval Workflows**: Should production executions require
+    approval gates, and if so, how implemented?
+4.  **Notebook Versioning**: Should we support branching/merging
+    workflows for experimental notebook changes?
+5.  **UI Technology Stack**: What framework/library should we use for
+    the web interface (Streamlit, Gradio, custom React/Vue)?
+
+## Recommended Implementation Approach
+
+1.  Start with a simple prototype that lists notebooks from Git and
+    allows manual execution triggering
+2.  Add environment selection (local replica vs. production targets)
+3.  Implement configuration injection mechanism (external YAML/JSON
+    files)
+4.  Link execution results to MLflow runs
+5.  Add role-based access control
+6.  Integrate MCP tool launching from execution results
+7.  Implement approval workflows for production promotions
+8.  Add advanced features like notebook diffing, version comparison, and
+    branching

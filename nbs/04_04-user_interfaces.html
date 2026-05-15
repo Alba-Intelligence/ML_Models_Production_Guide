@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="quarto-1.8.26" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+
+<title>Notebook Repository Web UI</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+<!-- htmldependencies:E3FAD763 -->
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+        <div class="quarto-navbar-tools tools-end">
+</div>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn"
+      data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" 
+      aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation"
+      onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <h1 class="quarto-secondary-nav-title no-breadcrumbs"></h1>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" role="link"
+        aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation"
+        onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">ML Deploy Documentation</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="/navigation-guide.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Navigation Guide</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="/reading-paths.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reading Paths</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1"  role="navigation" aria-expanded="true">
+ <span class="menu-text">Tutorials</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="/tutorials/01_Terminology_Glossary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">ML Deploy Terminology Glossary</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="/tutorials/02_Getting_Started.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Getting Started with ML Deploy</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="/tutorials/03_Concepts_and_Architecture.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Core Concepts and Architecture</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="/tutorials/04_End_to_End_Workflow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">End-to-End ML Workflow</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="/tutorials/05_Advanced_Scenarios.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Advanced ML Scenarios</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="/tutorials/06_Migration_Guide.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Migration Guide</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2"  role="navigation" aria-expanded="true">
+ <span class="menu-text">Technical Reference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="/reference/01_Implementation_Patterns.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Implementation Patterns: EX-01 → EX-03</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="/reference/02_API_Documentation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">API Documentation</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3"  role="navigation" aria-expanded="true">
+ <span class="menu-text">Full Documentation</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="/01_01-getting_started.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">ML Deploy Reference</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="/01_02-platform_introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Stack Introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="/01_03-platform_architecture.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Platform Narrative</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="/01_04-core_concepts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Core Package and MLflow XGBoost Quickstart</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="/02_01-data_management.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Loading and Exploration</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="/02_02-model_development.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Model Training</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="/02_03-mlflow_integration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">MLflow Parity Helpers</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="/02_04-complete_workflow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">First Vertical Slice (EX-01 -> EX-03)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="/03_01-infrastructure_as_code.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">OpenTofu Infrastructure Profiles</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="/03_02-infrastructure_management.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Infrastructure MCP Interrogation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="/03_03-local_development.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Floci AWS Emulator</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="/03_04-terraniq_integration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Terranix Infrastructure Source</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="/04_01-execution_framework.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Execution Backends</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="/04_02-notebook_management.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Notebook Intake Validation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="/04_03-api_contracts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Web UI Backend Contracts</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="/04_04-user_interfaces.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Notebook Repository Web UI</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="/04_05-governance_framework.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Governance Gates</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="/05_01-system_architecture.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">System Interaction Analysis</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" ></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <div id="quarto-toc-target"></div>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Notebook Repository Web UI</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+<nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#notebook-repository-web-ui" id="toc-notebook-repository-web-ui">Notebook Repository Web UI</a>
+  <ul>
+  <li><a href="#purpose" id="toc-purpose">Purpose</a></li>
+  <li><a href="#scope-and-non-goals" id="toc-scope-and-non-goals">Scope and Non-Goals</a>
+  <ul>
+  <li><a href="#in-scope" id="toc-in-scope">In Scope</a></li>
+  <li><a href="#out-of-scope" id="toc-out-of-scope">Out of Scope</a></li>
+  </ul></li>
+  <li><a href="#upstream-dependencies" id="toc-upstream-dependencies">Upstream Dependencies</a></li>
+  <li><a href="#domain-ownership" id="toc-domain-ownership">Domain Ownership</a></li>
+  <li><a href="#contracts-consumed" id="toc-contracts-consumed">Contracts Consumed</a></li>
+  <li><a href="#contracts-produced" id="toc-contracts-produced">Contracts Produced</a></li>
+  <li><a href="#topology-relevance" id="toc-topology-relevance">Topology Relevance</a></li>
+  <li><a href="#operationalsecuritylineage-implications" id="toc-operationalsecuritylineage-implications">Operational/Security/Lineage Implications</a></li>
+  <li><a href="#open-questions-and-deferred-decisions" id="toc-open-questions-and-deferred-decisions">Open Questions and Deferred Decisions</a></li>
+  <li><a href="#recommended-implementation-approach" id="toc-recommended-implementation-approach">Recommended Implementation Approach</a></li>
+  </ul></li>
+  </ul>
+</nav>
+<section id="notebook-repository-web-ui" class="level1">
+<h1>Notebook Repository Web UI</h1>
+<p>This notebook describes the design for a centralized notebook repository web UI that enables engineers to browse, select, and trigger notebook executions across environments while keeping notebooks as the immutable source of truth.</p>
+<hr />
+<section id="purpose" class="level2">
+<h2>Purpose</h2>
+<p>Provide a centralized interface for ML engineers to interact with versioned notebooks, trigger executions across different environments (local replica, Lambda.ai Slurm, AWS Kubernetes), and monitor results—while preserving notebooks as the immutable source of truth.</p>
+</section>
+<section id="scope-and-non-goals" class="level2">
+<h2>Scope and Non-Goals</h2>
+<section id="in-scope" class="level3">
+<h3>In Scope</h3>
+<ul>
+<li>Browsing and searching versioned notebooks from the repository</li>
+<li>Executing notebooks with environment-specific configuration injection</li>
+<li>Triggering runs against local replica architecture for development/testing</li>
+<li>Promoting successful runs to production environments (Lambda.ai Slurm, AWS Kubernetes)</li>
+<li>Viewing execution results linked to MLflow tracking</li>
+<li>Launching MCP-powered monitoring and analysis tools from execution results</li>
+<li>Role-based access control for notebook access and execution triggering</li>
+</ul>
+</section>
+<section id="out-of-scope" class="level3">
+<h3>Out of Scope</h3>
+<ul>
+<li>Editing notebooks through the UI (notebooks remain source of truth in Git)</li>
+<li>Storing execution parameters within notebooks themselves</li>
+<li>Duplicating MLflow tracking functionality (links to existing MLflow UI)</li>
+<li>Long-term notebook storage (uses Git as source of truth)</li>
+</ul>
+</section>
+</section>
+<section id="upstream-dependencies" class="level2">
+<h2>Upstream Dependencies</h2>
+<ul>
+<li>Git repository containing nbdev notebooks (source of truth)</li>
+<li>MLflow tracking server (for execution results and model lineage)</li>
+<li>Local replica architecture (Slurm-like scheduler, K8s, Floci-backed S3, PostgreSQL)</li>
+<li>Production infrastructure (Lambda.ai Slurm, AWS Kubernetes, S3, RDS)</li>
+<li>MCP server ecosystem (for monitoring/analysis tooling)</li>
+<li>Authentication/authorization system (for role-based access)</li>
+</ul>
+</section>
+<section id="domain-ownership" class="level2">
+<h2>Domain Ownership</h2>
+<ul>
+<li><strong>Primary</strong>: ML Engineering / Platform Team</li>
+<li><strong>Secondary</strong>: DevOps / Infrastructure Team (for environment provisioning)</li>
+<li><strong>Tertiary</strong>: Data Science Leadership (for oversight and governance)</li>
+</ul>
+</section>
+<section id="contracts-consumed" class="level2">
+<h2>Contracts Consumed</h2>
+<ul>
+<li><strong>From Git</strong>: Immutable notebook versions via commit references</li>
+<li><strong>From MLflow</strong>: Run metadata, metrics, artifacts, and model registry entries</li>
+<li><strong>From Environment APIs</strong>: Job submission/status interfaces (Slurm, K8s)</li>
+<li><strong>From MCP</strong>: Monitoring and analysis capabilities triggered from execution results</li>
+</ul>
+</section>
+<section id="contracts-produced" class="level2">
+<h2>Contracts Produced</h2>
+<ul>
+<li><strong>Execution Triggers</strong>: Standardized job specifications for each target environment</li>
+<li><strong>Configuration Injection</strong>: Environment-specific parameters passed to notebook execution</li>
+<li><strong>Result Links</strong>: References to MLflow runs, artifacts, and model versions</li>
+<li><strong>MCP Invocations</strong>: Context for launching assistant-assisted monitoring workflows</li>
+</ul>
+</section>
+<section id="topology-relevance" class="level2">
+<h2>Topology Relevance</h2>
+<ul>
+<li><strong>Local Development</strong>: Primary interface for triggering runs against local replica</li>
+<li><strong>Environment Promotion</strong>: Gateway for moving validated runs to production</li>
+<li><strong>Production Monitoring</strong>: Launchpad for MCP-assisted analysis of production executions</li>
+<li><strong>Governance</strong>: Audit trail of who triggered what, when, and with which configuration</li>
+</ul>
+</section>
+<section id="operationalsecuritylineage-implications" class="level2">
+<h2>Operational/Security/Lineage Implications</h2>
+<ul>
+<li><strong>Immutability Guarantee</strong>: Notebooks cannot be altered through the UI; changes must go through Git</li>
+<li><strong>Execution Traceability</strong>: Every run links back to exact notebook version + execution config</li>
+<li><strong>Environment Parity</strong>: Same notebook runs against local replica and production (with config differences)</li>
+<li><strong>Secret Management</strong>: Execution credentials/tokens injected securely at runtime, never stored</li>
+<li><strong>Role-Based Execution</strong>: Different roles may have access to different environments or notebook sets</li>
+<li><strong>Cost Attribution</strong>: Executions tagged with user/project for cost governance visibility</li>
+</ul>
+</section>
+<section id="open-questions-and-deferred-decisions" class="level2">
+<h2>Open Questions and Deferred Decisions</h2>
+<ol type="1">
+<li><strong>Repository Implementation</strong>: Git-based (with webhook triggers) vs. object storage + metadata DB for notebook storage?</li>
+<li><strong>Execution Configuration</strong>: Should we use dedicated config files (YAML/JSON) or environment variables for parameter injection?</li>
+<li><strong>Approval Workflows</strong>: Should production executions require approval gates, and if so, how implemented?</li>
+<li><strong>Notebook Versioning</strong>: Should we support branching/merging workflows for experimental notebook changes?</li>
+<li><strong>UI Technology Stack</strong>: What framework/library should we use for the web interface (Streamlit, Gradio, custom React/Vue)?</li>
+</ol>
+</section>
+<section id="recommended-implementation-approach" class="level2">
+<h2>Recommended Implementation Approach</h2>
+<ol type="1">
+<li>Start with a simple prototype that lists notebooks from Git and allows manual execution triggering</li>
+<li>Add environment selection (local replica vs. production targets)</li>
+<li>Implement configuration injection mechanism (external YAML/JSON files)</li>
+<li>Link execution results to MLflow runs</li>
+<li>Add role-based access control</li>
+<li>Integrate MCP tool launching from execution results</li>
+<li>Implement approval workflows for production promotions</li>
+<li>Add advanced features like notebook diffing, version comparison, and branching</li>
+</ol>
+<div id="quarto-navigation-envelope" class="hidden">
+<p><span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyLXRpdGxl">Notebook Repository Web UI</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1uYXZiYXItdGl0bGU=">Notebook Repository Web UI</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1uZXh0">Governance Gates</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1wcmV2">Web UI Backend Contracts</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyOi9pbmRleC5odG1sTUwtRGVwbG95LURvY3VtZW50YXRpb24=">ML Deploy Documentation</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyOi9uYXZpZ2F0aW9uLWd1aWRlLmh0bWxOYXZpZ2F0aW9uLUd1aWRl">Navigation Guide</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyOi9yZWFkaW5nLXBhdGhzLmh0bWxSZWFkaW5nLVBhdGhz">Reading Paths</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyOnF1YXJ0by1zaWRlYmFyLXNlY3Rpb24tMQ==">Tutorials</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyOi90dXRvcmlhbHMvMDFfVGVybWlub2xvZ3lfR2xvc3NhcnkuaHRtbE1MLURlcGxveS1UZXJtaW5vbG9neS1HbG9zc2FyeQ==">ML Deploy Terminology Glossary</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyOi90dXRvcmlhbHMvMDJfR2V0dGluZ19TdGFydGVkLmh0bWxHZXR0aW5nLVN0YXJ0ZWQtd2l0aC1NTC1EZXBsb3k=">Getting Started with ML Deploy</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyOi90dXRvcmlhbHMvMDNfQ29uY2VwdHNfYW5kX0FyY2hpdGVjdHVyZS5odG1sQ29yZS1Db25jZXB0cy1hbmQtQXJjaGl0ZWN0dXJl">Core Concepts and Architecture</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyOi90dXRvcmlhbHMvMDRfRW5kX3RvX0VuZF9Xb3JrZmxvdy5odG1sRW5kLXRvLUVuZC1NTC1Xb3JrZmxvdw==">End-to-End ML Workflow</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyOi90dXRvcmlhbHMvMDVfQWR2YW5jZWRfU2NlbmFyaW9zLmh0bWxBZHZhbmNlZC1NTC1TY2VuYXJpb3M=">Advanced ML Scenarios</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyOi90dXRvcmlhbHMvMDZfTWlncmF0aW9uX0d1aWRlLmh0bWxNaWdyYXRpb24tR3VpZGU=">Migration Guide</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyOnF1YXJ0by1zaWRlYmFyLXNlY3Rpb24tMg==">Technical Reference</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyOi9yZWZlcmVuY2UvMDFfSW1wbGVtZW50YXRpb25fUGF0dGVybnMuaHRtbEltcGxlbWVudGF0aW9uLVBhdHRlcm5zOi1FWC0wMS3ihpItRVgtMDM=">Implementation Patterns: EX-01 → EX-03</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyOi9yZWZlcmVuY2UvMDJfQVBJX0RvY3VtZW50YXRpb24uaHRtbEFQSS1Eb2N1bWVudGF0aW9u">API Documentation</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyOnF1YXJ0by1zaWRlYmFyLXNlY3Rpb24tMw==">Full Documentation</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyOi8wMV8wMS1nZXR0aW5nX3N0YXJ0ZWQuaHRtbE1MLURlcGxveS1SZWZlcmVuY2U=">ML Deploy Reference</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyOi8wMV8wMi1wbGF0Zm9ybV9pbnRyb2R1Y3Rpb24uaHRtbFN0YWNrLUludHJvZHVjdGlvbg==">Stack Introduction</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyOi8wMV8wMy1wbGF0Zm9ybV9hcmNoaXRlY3R1cmUuaHRtbFBsYXRmb3JtLU5hcnJhdGl2ZQ==">Platform Narrative</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyOi8wMV8wNC1jb3JlX2NvbmNlcHRzLmh0bWxDb3JlLVBhY2thZ2UtYW5kLU1MZmxvdy1YR0Jvb3N0LVF1aWNrc3RhcnQ=">Core Package and MLflow XGBoost Quickstart</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyOi8wMl8wMS1kYXRhX21hbmFnZW1lbnQuaHRtbERhdGEtTG9hZGluZy1hbmQtRXhwbG9yYXRpb24=">Data Loading and Exploration</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyOi8wMl8wMi1tb2RlbF9kZXZlbG9wbWVudC5odG1sTW9kZWwtVHJhaW5pbmc=">Model Training</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyOi8wMl8wMy1tbGZsb3dfaW50ZWdyYXRpb24uaHRtbE1MZmxvdy1QYXJpdHktSGVscGVycw==">MLflow Parity Helpers</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyOi8wMl8wNC1jb21wbGV0ZV93b3JrZmxvdy5odG1sRmlyc3QtVmVydGljYWwtU2xpY2UtKEVYLTAxLS0+LUVYLTAzKQ==">First Vertical Slice (EX-01 -&gt; EX-03)</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyOi8wM18wMS1pbmZyYXN0cnVjdHVyZV9hc19jb2RlLmh0bWxPcGVuVG9mdS1JbmZyYXN0cnVjdHVyZS1Qcm9maWxlcw==">OpenTofu Infrastructure Profiles</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyOi8wM18wMi1pbmZyYXN0cnVjdHVyZV9tYW5hZ2VtZW50Lmh0bWxJbmZyYXN0cnVjdHVyZS1NQ1AtSW50ZXJyb2dhdGlvbg==">Infrastructure MCP Interrogation</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyOi8wM18wMy1sb2NhbF9kZXZlbG9wbWVudC5odG1sRmxvY2ktQVdTLUVtdWxhdG9y">Floci AWS Emulator</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyOi8wM18wNC10ZXJyYW5pcV9pbnRlZ3JhdGlvbi5odG1sVGVycmFuaXgtSW5mcmFzdHJ1Y3R1cmUtU291cmNl">Terranix Infrastructure Source</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyOi8wNF8wMS1leGVjdXRpb25fZnJhbWV3b3JrLmh0bWxFeGVjdXRpb24tQmFja2VuZHM=">Execution Backends</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyOi8wNF8wMi1ub3RlYm9va19tYW5hZ2VtZW50Lmh0bWxOb3RlYm9vay1JbnRha2UtVmFsaWRhdGlvbg==">Notebook Intake Validation</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyOi8wNF8wMy1hcGlfY29udHJhY3RzLmh0bWxXZWItVUktQmFja2VuZC1Db250cmFjdHM=">Web UI Backend Contracts</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyOi8wNF8wNC11c2VyX2ludGVyZmFjZXMuaHRtbE5vdGVib29rLVJlcG9zaXRvcnktV2ViLVVJ">Notebook Repository Web UI</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyOi8wNF8wNS1nb3Zlcm5hbmNlX2ZyYW1ld29yay5odG1sR292ZXJuYW5jZS1HYXRlcw==">Governance Gates</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyOi8wNV8wMS1zeXN0ZW1fYXJjaGl0ZWN0dXJlLmh0bWxTeXN0ZW0tSW50ZXJhY3Rpb24tQW5hbHlzaXM=">System Interaction Analysis</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWJyZWFkY3J1bWJzLUZ1bGwtRG9jdW1lbnRhdGlvbg==">Full Documentation</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWJyZWFkY3J1bWJzLU5vdGVib29rLVJlcG9zaXRvcnktV2ViLVVJ">Notebook Repository Web UI</span></p>
+</div>
+<div id="quarto-meta-markdown" class="hidden">
+<p><span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLW1ldGF0aXRsZQ==">Notebook Repository Web UI</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLXR3aXR0ZXJjYXJkdGl0bGU=">Notebook Repository Web UI</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLW9nY2FyZHRpdGxl">Notebook Repository Web UI</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLXR3aXR0ZXJjYXJkZGVzYw=="></span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLW9nY2FyZGRkZXNj"></span></p>
+</div>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id = "quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+</body>
+
+</html>

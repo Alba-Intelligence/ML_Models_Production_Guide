@@ -7,6 +7,9 @@ project:
     - "tutorials/*.qmd"
     - "reference/*.qmd"
 
+execute:
+  enabled: false
+
 format:
   html:
     theme: cosmo
@@ -28,7 +31,7 @@ website:
       - index.qmd
       - navigation-guide.qmd
       - reading-paths.qmd
-      - section: "📚 Tutorials"
+      - section: "Tutorials"
         contents:
           - tutorials/01_Terminology_Glossary.qmd
           - tutorials/02_Getting_Started.qmd
@@ -36,11 +39,11 @@ website:
           - tutorials/04_End_to_End_Workflow.qmd
           - tutorials/05_Advanced_Scenarios.qmd
           - tutorials/06_Migration_Guide.qmd
-      - section: "🔧 Technical Reference"
+      - section: "Technical Reference"
         contents:
           - reference/01_Implementation_Patterns.qmd
           - reference/02_API_Documentation.qmd
-      - section: "🏗️ Full Documentation"
+      - section: "Full Documentation"
         contents:
           - 01_01-getting_started.qmd
           - 01_02-platform_introduction.qmd

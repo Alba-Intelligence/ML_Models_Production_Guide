@@ -93,5 +93,6 @@ Provide a centralized interface for ML engineers to interact with versioned note
 8. Add advanced features like notebook diffing, version comparison, and branching
 
 ```{python}
+#| eval: false
 #| default_exp: ml_deploy.web_ui
 ```

@@ -6,10 +6,12 @@ title: "Notebook Intake Validation"
 > nbdev source for immutable notebook intake and validation gate helpers.
 
 ```{python}
+#| eval: false
 #| default_exp: notebook_intake
 ```
 
 ```{python}
+#| eval: false
 #| export:
 from __future__ import annotations
 

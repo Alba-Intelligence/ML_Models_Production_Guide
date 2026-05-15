@@ -1,6 +1,9 @@
 ---
 title: "Model Training"
 ---
+
+This section will be expanded to show how a single notebook can be used to train a model, log metrics and parameters with MLflow, and save the trained model for later use. This will be executed as part of the vertical slice reference in `02_04-complete_workflow.qmd` to demonstrate how the training step fits into the overall workflow.
+
 # Model Training
 
 > This notebook demonstrates how to train a simple machine learning model.
@@ -8,10 +11,12 @@ title: "Model Training"
 We will use the data prepared in the previous notebook to train a logistic regression model.
 
 ```{python}
+#| eval: false
 #| default_exp: ml_deploy.training
 ```
 
 ```{python}
+#| eval: false
 #| export:
 import pandas as pd
 import numpy as np
@@ -27,6 +32,7 @@ In a real project, we would load the data that was prepared and saved.
 For simplicity, we'll regenerate the same data split as in the previous notebook.
 
 ```{python}
+#| eval: false
 #| export:
 # Regenerate the same data split for consistency
 import numpy as np
@@ -71,8 +77,8 @@ print(f"Test set shape: {X_test_scaled.shape}")
 We will use MLflow to track our experiment, parameters, and metrics.
 
 ```{python}
-#| export:
 #| eval: false
+#| export:
 # Set MLflow tracking URI (optional, for local tracking)
 mlflow.set_tracking_uri("file://./mlruns")
 
@@ -86,23 +92,23 @@ with mlflow.start_run(run_name="logistic_regression_baseline") as run:
     solver = 'liblinear'
     mlflow.log_param("max_iter", max_iter)
     mlflow.log_param("solver", solver)
-    
+
     # Create and train model
     model = LogisticRegression(max_iter=max_iter, solver=solver, random_state=42)
     model.fit(X_train_scaled, y_train)
-    
+
     # Make predictions
     y_pred = model.predict(X_test_scaled)
-    
+
     # Calculate metrics
     accuracy = accuracy_score(y_test, y_pred)
-    
+
     # Log metrics
     mlflow.log_metric("accuracy", accuracy)
-    
+
     # Log the model
     mlflow.sklearn.log_model(model, "model")
-    
+
     # Print results
     print(f"Accuracy: {accuracy:.4f}")
     print("\nClassification Report:")
@@ -118,8 +124,8 @@ However, MLflow already provides a way to save and load the model.
 For completeness, let's also save the scaler so we can preprocess new data the same way.
 
 ```{python}
-#| export:
 #| eval: false
+#| export:
 import joblib
 import os
 

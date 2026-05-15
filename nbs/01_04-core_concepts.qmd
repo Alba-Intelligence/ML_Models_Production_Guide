@@ -13,6 +13,7 @@ This notebook defines core package metadata and a practical MLflow + XGBoost qui
 The example below follows the MLflow XGBoost autologging pattern and shows a complete traditional-ML flow.
 
 ```{python}
+#| eval: false
 __author__ = """ML Engineer"""
 __email__ = 'ml@example.com'
 __version__ = '0.1.0'

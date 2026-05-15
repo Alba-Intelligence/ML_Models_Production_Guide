@@ -6,10 +6,12 @@ title: "MLflow Parity Helpers"
 > nbdev source for local MLflow parity stack helpers (PostgreSQL + Floci-backed S3-compatible artifacts).
 
 ```{python}
+#| eval: false
 #| default_exp: mlflow_parity
 ```
 
 ```{python}
+#| eval: false
 #| export:
 from __future__ import annotations
 
@@ -71,7 +73,7 @@ class MlflowStorageConfig:
 @dataclass(frozen=True)
 class MlflowTrackingServer:
     """MLflow tracking server configuration per spec requirements.
-    
+
     Implements entity from spec (line 157-165):
     - backend_store: enum {sqlite, postgresql}
     - artifact_store: enum {filesystem, floci, s3}

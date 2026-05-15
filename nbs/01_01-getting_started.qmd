@@ -26,8 +26,8 @@ graph TD
 ```
 
 **Recommended path:**
-1. [Platform Overview — System Components](01_platform_narrative.qmd#1-system-components--roles)
-2. [Platform Overview — Deployment & Infrastructure](01_platform_narrative.qmd#3-deployment--infrastructure)
+1. [Platform Overview — System Components](01_03-platform_architecture.qmd#1-system-components--roles)
+2. [Platform Overview — Deployment & Infrastructure](01_03-platform_architecture.qmd#3-deployment--infrastructure)
 3. [Execution Backends](04_01-execution_framework.qmd)
 4. [Infrastructure MCP](03_02-infrastructure_management.qmd)
 5. [OpenTofu & Terranix](03_01-infrastructure_as_code.qmd)

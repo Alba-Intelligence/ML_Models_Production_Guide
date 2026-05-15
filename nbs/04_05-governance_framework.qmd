@@ -6,10 +6,12 @@ title: "Governance Gates"
 > nbdev source for specification-phase implementation gating helpers.
 
 ```{python}
+#| eval: false
 #| default_exp: governance_gates
 ```
 
 ```{python}
+#| eval: false
 #| export:
 from __future__ import annotations
 

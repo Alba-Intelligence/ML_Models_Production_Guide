@@ -1,0 +1,389 @@
+# First Vertical Slice (EX-01 -\> EX-03)
+
+
+# First Vertical Slice (EX-01 -\> EX-03)
+
+> nbdev source for the concrete local vertical slice implementation.
+
+``` python
+from __future__ import annotations
+
+from dataclasses import dataclass
+from datetime import datetime, timezone
+import json
+from pathlib import Path
+import time
+from typing import Any, Literal
+from uuid import uuid4
+
+import joblib
+import mlflow
+import mlflow.sklearn
+import numpy as np
+import pandas as pd
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+
+
+DEFAULT_FEATURES = ["feature_1", "feature_2", "feature_3"]
+DEFAULT_TARGET = "target"
+PromotionStage = Literal["dev", "uat", "regression", "prod"]
+
+
+@dataclass
+class TrainingOutcome:
+    model: LogisticRegression
+    scaler: StandardScaler
+    feature_names: list[str]
+    mlflow_run_id: str
+    accuracy: float
+    dataset_version: str
+    transformation_version: str
+    code_revision: str
+    container_revision: str
+    compute_context: str
+
+
+def _utc_now() -> str:
+    return datetime.now(timezone.utc).isoformat()
+
+
+def _write_json(path: Path, payload: dict[str, Any]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(payload, indent=2) + "\n")
+
+
+def _append_jsonl(path: Path, payload: dict[str, Any]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("a", encoding="utf-8") as handle:
+        handle.write(json.dumps(payload) + "\n")
+
+
+def generate_synthetic_dataset(
+    n_rows: int = 200,
+    random_state: int = 42,
+    feature_names: list[str] | None = None,
+    target_name: str = DEFAULT_TARGET,
+) -> pd.DataFrame:
+    """Generate a deterministic binary classification dataset for local slice testing."""
+    names = feature_names or DEFAULT_FEATURES
+    rng = np.random.default_rng(random_state)
+    features = rng.normal(size=(n_rows, len(names)))
+    linear_signal = features[:, 0] + 0.5 * features[:, 1] - 0.25 * features[:, 2]
+    target = (linear_signal + rng.normal(scale=0.25, size=n_rows) > 0).astype(int)
+    frame = pd.DataFrame(features, columns=names)
+    frame[target_name] = target
+    return frame
+
+
+def prepare_training_data(
+    frame: pd.DataFrame,
+    feature_names: list[str] | None = None,
+    target_name: str = DEFAULT_TARGET,
+    test_size: float = 0.2,
+    random_state: int = 42,
+) -> tuple[pd.DataFrame, pd.DataFrame, pd.Series, pd.Series, StandardScaler]:
+    """Split and scale features for model training."""
+    names = feature_names or DEFAULT_FEATURES
+    X = frame[names]
+    y = frame[target_name]
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=test_size, random_state=random_state, stratify=y
+    )
+    scaler = StandardScaler()
+    X_train_scaled = pd.DataFrame(
+        scaler.fit_transform(X_train), columns=names, index=X_train.index
+    )
+    X_test_scaled = pd.DataFrame(
+        scaler.transform(X_test), columns=names, index=X_test.index
+    )
+    return X_train_scaled, X_test_scaled, y_train, y_test, scaler
+
+
+def train_with_traceability(
+    X_train: pd.DataFrame,
+    X_test: pd.DataFrame,
+    y_train: pd.Series,
+    y_test: pd.Series,
+    scaler: StandardScaler,
+    *,
+    feature_names: list[str] | None = None,
+    tracking_uri: str,
+    dataset_version: str = "dataset-v1",
+    transformation_version: str = "transform-v1",
+    code_revision: str = "local-working-tree",
+    container_revision: str = "local-container-v1",
+    compute_context: str = "local-cpu",
+    experiment_name: str = "ml_deploy_vertical_slice",
+) -> TrainingOutcome:
+    """Train a baseline model and log required traceability metadata in MLflow."""
+    names = feature_names or DEFAULT_FEATURES
+    mlflow.set_tracking_uri(tracking_uri)
+    mlflow.set_experiment(experiment_name)
+
+    max_iter = 1000
+    solver = "liblinear"
+
+    with mlflow.start_run(run_name="ex01_local_training_traceability") as run:
+        mlflow.log_param("max_iter", max_iter)
+        mlflow.log_param("solver", solver)
+        mlflow.log_param("dataset_version", dataset_version)
+        mlflow.log_param("transformation_version", transformation_version)
+        mlflow.log_param("code_revision", code_revision)
+        mlflow.log_param("container_revision", container_revision)
+        mlflow.log_param("compute_context", compute_context)
+        mlflow.log_param("feature_names", ",".join(names))
+
+        model = LogisticRegression(max_iter=max_iter, solver=solver, random_state=42)
+        model.fit(X_train, y_train)
+        predictions = model.predict(X_test)
+        accuracy = float(accuracy_score(y_test, predictions))
+        mlflow.log_metric("accuracy", accuracy)
+        mlflow.sklearn.log_model(model, "model")
+
+    return TrainingOutcome(
+        model=model,
+        scaler=scaler,
+        feature_names=names,
+        mlflow_run_id=run.info.run_id,
+        accuracy=accuracy,
+        dataset_version=dataset_version,
+        transformation_version=transformation_version,
+        code_revision=code_revision,
+        container_revision=container_revision,
+        compute_context=compute_context,
+    )
+
+
+def package_and_register_model(
+    outcome: TrainingOutcome,
+    output_dir: Path,
+    *,
+    expected_input_schema_version: str = "input-schema-v1",
+    expected_output_schema_version: str = "output-schema-v1",
+    intended_serving_modes: list[str] | None = None,
+) -> dict[str, Any]:
+    """Create EX-02 artifact bundle + model-version record with required metadata."""
+    serving_modes = intended_serving_modes or ["batch", "online"]
+    artifact_id = f"artifact-{uuid4().hex[:10]}"
+    bundle_dir = output_dir / "artifacts" / artifact_id
+    bundle_dir.mkdir(parents=True, exist_ok=True)
+
+    model_path = bundle_dir / "model.joblib"
+    scaler_path = bundle_dir / "scaler.joblib"
+    joblib.dump(outcome.model, model_path)
+    joblib.dump(outcome.scaler, scaler_path)
+
+    artifact_metadata = {
+        "artifact_identifier": artifact_id,
+        "originating_training_run_identifier": outcome.mlflow_run_id,
+        "framework": "scikit-learn",
+        "framework_version": "sklearn-logistic-regression",
+        "serialization_format": "joblib",
+        "expected_input_schema_version": expected_input_schema_version,
+        "expected_output_schema_version": expected_output_schema_version,
+        "evaluation_summary": {"accuracy": outcome.accuracy},
+        "intended_serving_modes": serving_modes,
+        "compatibility_notes": "Local baseline logistic regression bundle.",
+        "storage_location": str(bundle_dir.resolve()),
+        "dataset_version": outcome.dataset_version,
+        "transformation_version": outcome.transformation_version,
+        "feature_names": outcome.feature_names,
+    }
+    artifact_metadata_path = bundle_dir / "artifact_metadata.json"
+    _write_json(artifact_metadata_path, artifact_metadata)
+
+    model_version_id = f"model-version-{uuid4().hex[:10]}"
+    model_version_record = {
+        "model_version_identifier": model_version_id,
+        "source_artifact_identifier": artifact_id,
+        "stage": "dev",
+        "tracked_in_mlflow": True,
+        "promotion_approved": False,
+        "passes_smoke_tests": False,
+        "passes_uat_suite": False,
+        "no_data_leakage_detected": False,
+        "meets_minimum_metrics": False,
+        "passes_regression_suite": False,
+        "no_performance_regression": False,
+        "security_scan_passed": False,
+        "pytorch_compile_applied": False,
+        "pytorch_no_grad_applied": False,
+        "pytorch_mixed_precision_applied": False,
+        "pytorch_channels_last_applied": False,
+        "pytorch_memory_fraction_limited": False,
+        "approval_basis": f"accuracy={outcome.accuracy:.4f}",
+        "allowed_environments": ["local"],
+        "rollback_predecessor": None,
+        "recorded_at": _utc_now(),
+    }
+    model_version_path = bundle_dir / "model_version.json"
+    _write_json(model_version_path, model_version_record)
+
+    return {
+        "bundle_dir": bundle_dir,
+        "model_path": model_path,
+        "scaler_path": scaler_path,
+        "artifact_metadata_path": artifact_metadata_path,
+        "artifact_metadata": artifact_metadata,
+        "model_version_path": model_version_path,
+        "model_version_record": model_version_record,
+    }
+
+
+def promote_model_artifact(
+    artifact: dict[str, Any],
+    to_stage: PromotionStage,
+) -> dict[str, Any]:
+    """Apply promotion gates for DEV->UAT->REGRESSION->PROD."""
+    if not artifact.get("tracked_in_mlflow", False):
+        raise ValueError("artifact must be tracked in MLflow")
+
+    if to_stage == "uat":
+        if not artifact.get("passes_smoke_tests", False):
+            raise ValueError("promotion to uat requires passes_smoke_tests")
+        artifact["stage"] = "uat"
+        return artifact
+
+    if to_stage == "regression":
+        required = (
+            "passes_uat_suite",
+            "no_data_leakage_detected",
+            "meets_minimum_metrics",
+        )
+        for key in required:
+            if not artifact.get(key, False):
+                raise ValueError(f"promotion to regression requires {key}")
+        artifact["stage"] = "regression"
+        return artifact
+
+    if to_stage == "prod":
+        if not artifact.get("promotion_approved", False):
+            raise ValueError("promotion to prod requires promotion_approved")
+        required = (
+            "passes_regression_suite",
+            "no_performance_regression",
+            "security_scan_passed",
+            "pytorch_compile_applied",
+            "pytorch_no_grad_applied",
+            "pytorch_mixed_precision_applied",
+            "pytorch_channels_last_applied",
+            "pytorch_memory_fraction_limited",
+        )
+        for key in required:
+            if not artifact.get(key, False):
+                raise ValueError(f"promotion to prod requires {key}")
+        artifact["stage"] = "prod"
+        return artifact
+
+    raise ValueError(f"unsupported stage transition target: {to_stage}")
+
+
+def create_local_deployment_record(
+    model_version_record: dict[str, Any], output_dir: Path
+) -> dict[str, Any]:
+    """Create EX-03 local deployment record for serving and prediction traceability."""
+    deployment_id = f"deployment-{uuid4().hex[:10]}"
+    record = {
+        "deployment_identifier": deployment_id,
+        "deployed_model_version": model_version_record["model_version_identifier"],
+        "target_environment": "local",
+        "infrastructure_revision": "local-dev-v1",
+        "deployment_timestamp": _utc_now(),
+        "deployment_actor_owner": "local-vertical-slice",
+        "rollout_strategy": "all-at-once",
+        "rollback_target": None,
+        "monitoring_configuration": "jsonl-prediction-log",
+        "approval_state": "approved-local",
+    }
+    path = output_dir / "deployment_record.json"
+    _write_json(path, record)
+    return {"deployment_record_path": path, "deployment_record": record}
+
+
+def predict_and_log(
+    bundle_dir: Path,
+    deployment_record_path: Path,
+    prediction_log_path: Path,
+    *,
+    features: dict[str, float],
+    request_id: str | None = None,
+) -> dict[str, Any]:
+    """Run a local prediction and emit contract-aligned prediction logs."""
+    artifact_metadata = json.loads((bundle_dir / "artifact_metadata.json").read_text())
+    model_version_record = json.loads((bundle_dir / "model_version.json").read_text())
+    deployment_record = json.loads(deployment_record_path.read_text())
+    model = joblib.load(bundle_dir / "model.joblib")
+    scaler = joblib.load(bundle_dir / "scaler.joblib")
+    feature_names = artifact_metadata["feature_names"]
+
+    start = time.perf_counter()
+    resolved_request_id = request_id or f"req-{uuid4().hex[:12]}"
+    row = pd.DataFrame([features], columns=feature_names)
+    transformed = scaler.transform(row)
+    prediction = int(model.predict(transformed)[0])
+    latency_ms = (time.perf_counter() - start) * 1000
+
+    log_entry = {
+        "timestamp": _utc_now(),
+        "model_version_used": model_version_record["model_version_identifier"],
+        "deployment_identifier": deployment_record["deployment_identifier"],
+        "request_identifier": resolved_request_id,
+        "input_schema_version_reference": artifact_metadata[
+            "expected_input_schema_version"
+        ],
+        "output_capture_policy": "prediction-only",
+        "runtime_metadata": {
+            "latency_ms": latency_ms,
+            "environment": deployment_record["target_environment"],
+            "service_identity": "local-nbdev-vertical-slice",
+        },
+        "traceability_link": {
+            "training_run_id": artifact_metadata[
+                "originating_training_run_identifier"
+            ]
+        },
+    }
+    _append_jsonl(prediction_log_path, log_entry)
+
+    return {
+        "request_id": resolved_request_id,
+        "prediction": prediction,
+        "model_version": model_version_record["model_version_identifier"],
+        "deployment_id": deployment_record["deployment_identifier"],
+    }
+
+
+def execute_first_vertical_slice(work_dir: Path, *, tracking_uri: str) -> dict[str, Any]:
+    """Run EX-01 -> EX-03 and return all generated records and paths."""
+    output_dir = work_dir / "vertical_slice"
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    dataset = generate_synthetic_dataset()
+    X_train, X_test, y_train, y_test, scaler = prepare_training_data(dataset)
+    outcome = train_with_traceability(
+        X_train,
+        X_test,
+        y_train,
+        y_test,
+        scaler,
+        tracking_uri=tracking_uri,
+    )
+    packaged = package_and_register_model(outcome, output_dir)
+    deployed = create_local_deployment_record(packaged["model_version_record"], output_dir)
+
+    prediction_log_path = output_dir / "prediction_logs.jsonl"
+    sample_features = dataset[DEFAULT_FEATURES].iloc[0].to_dict()
+
+    return {
+        "output_dir": output_dir,
+        "tracking_uri": tracking_uri,
+        "training_outcome": outcome,
+        "packaged": packaged,
+        "deployment": deployed,
+        "prediction_log_path": prediction_log_path,
+        "sample_features": sample_features,
+    }
+```

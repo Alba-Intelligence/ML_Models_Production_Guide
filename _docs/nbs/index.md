@@ -4,25 +4,89 @@
 # ML Deploy Documentation
 
 Welcome to the ML Deploy documentation - a comprehensive guide for
-machine learning deployment with full lifecycle management.
+machine learning deployment with full lifecycle management. This
+documentation represents a permanent work-in-progress, continuously
+evolving to reflect the latest platform capabilities and best practices.
 
-## Quick Start
+The ML Deploy platform is distinguished by several key features that
+address the complex challenges of modern machine learning deployment: -
+**Full Lifecycle Management**: Comprehensive coverage from data
+preparation and model training through deployment and monitoring,
+ensuring complete management of the ML pipeline - **Nix-Based
+Infrastructure**: Reproducible infrastructure as code utilizing Nix
+capabilities to generate containers without Docker files while
+automatically producing Terraform and OpenTofu configurations for cloud
+deployment - **Comprehensive Lineage**: Complete traceability across all
+ML pipeline stages, enabling full auditability and reproducibility of
+data and model transformations - **Security-First Architecture**:
+Built-in governance frameworks and security controls designed to meet
+enterprise requirements while maintaining development flexibility -
+**Multi-Environment Support**: Seamless deployment across development,
+staging, and production environments with consistent tooling and process
+parity between local and cloud platforms
 
-- **New to ML Deploy?** Start with the [Getting Started
-  Guide](tutorials/02_Getting_Started.qmd)
-- **Need specific patterns?** Check the [Implementation
-  Patterns](reference/01_Implementation_Patterns.qmd)
-- **Looking for API details?** See the [API
-  Documentation](reference/02_API_Documentation.qmd)
+The platform architecture is organized into five key component areas,
+each serving specific functions within the ML deployment ecosystem:
+
+- **ML Training / Inference**:
+  - *Notebook First*: ML Researchers send their notebooks unchanged to
+    the platform, which extracts metadata and executes them in a
+    controlled environment
+  - *Libraries*: Focused on Python-only stack
+  - *MLflow*: For experiment tracking and model registry
+- **Data**:
+  - *Data Catalog*: For managing and discovering data assets
+  - *Data Lineage*: For tracking data transformations and dependencies
+  - *Logging & Monitoring*: For observability of data and model
+    performance
+- **Orchestration**:
+  - *Kubeflow*: For workflow orchestration and pipeline management
+  - *Airflow*: For scheduling and monitoring workflows
+- **Backends**:
+  - *Cloud*: For scalable production deployments: compute resources on
+    [Lambda.ai](https://lambda.ai/) distributed with Slurm, all other
+    tools hosted on AWS
+  - *Local*: For development and testing: Compute resources on
+    [Lambda.ai](https://lambda.ai/) distributed with Slurm, all other
+    tools on [Floci](https://floci.io/) replicating AWS services locally
+- **Configuration**:
+  - *Nix*: Nix-only for reproducible builds and environment management
+  - *uv2nix*: For generating Nix expressions from uv project definitions
+  - *Containers*: For local emulation and cloud deployment, generated
+    from Nix definitions (no docker files)
+  - *Terranix*: For generating Terraform configurations from Nix
+    definitions
+  - *Opentofu*: For infrastructure provisioning and management
+
+## Quick Start Guide
+
+This section provides entry points to the documentation based on your
+specific needs and experience level:
+
+- **For New Users**: Begin with the [Getting Started
+  Guide](tutorials/02_Getting_Started.qmd) to establish foundational
+  knowledge and configure your development environment
+- **For Implementation Reference**: Consult the [Implementation
+  Patterns](reference/01_Implementation_Patterns.qmd) for technical
+  patterns and best practices when implementing specific functionality
+- **For API Integration**: Review the [API
+  Documentation](reference/02_API_Documentation.qmd) for complete API
+  reference and integration examples
+
+For detailed explanations of EX-01, EX-02, and EX-03 vertical slices,
+refer to the [Terminology
+Glossary](tutorials/01_Terminology_Glossary.qmd).
 
 ## Documentation Structure
 
-### 📚 Tutorials
+### Learning Path: Tutorials
 
-Learn ML Deploy through guided examples and progressive tutorials:
+The tutorials section provides structured, progressive learning through
+guided examples and hands-on exercises. Each tutorial builds upon
+previous concepts to ensure comprehensive understanding:
 
 1.  **[Terminology Glossary](tutorials/01_Terminology_Glossary.qmd)** -
-    Understand EX-01, EX-02, EX-03 and other key terms
+    Understand EX-01, EX-02, EX-03 vertical slices and other key terms
 2.  **[Getting Started](tutorials/02_Getting_Started.qmd)** - Set up
     your environment and learn the basics
 3.  **[Concepts and
@@ -35,9 +99,12 @@ Learn ML Deploy through guided examples and progressive tutorials:
 6.  **[Migration Guide](tutorials/06_Migration_Guide.qmd)** - Migrate
     from other platforms
 
-### 🔧 Technical Reference
+### Technical Reference Documentation
 
-Reference documentation for implementation and integration:
+The reference section provides comprehensive technical documentation for
+implementation, integration, and advanced usage scenarios. These
+documents serve as authoritative sources for technical specifications
+and implementation details:
 
 1.  **[Implementation
     Patterns](reference/01_Implementation_Patterns.qmd)** - Technical
@@ -47,39 +114,52 @@ Reference documentation for implementation and integration:
 
 ## Learning Paths
 
-### For Beginners
+### Beginner Learning Path
 
-Start here if you’re new to ML Deploy: 1. Terminology Glossary → Getting
-Started → Concepts and Architecture 2. End-to-End Workflow →
-Implementation Patterns
+For users new to ML deployment or the ML Deploy platform, follow this
+sequential path to build foundational knowledge:
 
-### For Intermediate Users
+1.  **Terminology Glossary → Getting Started → Concepts and
+    Architecture**: Establish vocabulary and basic platform
+    understanding
+2.  **End-to-End Workflow → Implementation Patterns**: Gain practical
+    experience through complete workflow implementation
 
-If you have some ML deployment experience: 1. Concepts and Architecture
-→ End-to-End Workflow 2. Implementation Patterns → API Documentation
+### Intermediate Learning Path
 
-### For Advanced Users
+For users with existing ML deployment experience who are new to the ML
+Deploy platform:
 
-If you’re experienced with ML deployment: 1. API Documentation →
-Implementation Patterns 2. Advanced Scenarios → Migration Guide
+1.  **Concepts and Architecture → End-to-End Workflow**: Understand
+    platform architecture and apply it through practical implementation
+2.  **Implementation Patterns → API Documentation**: Learn specific
+    implementation patterns and integrate with platform APIs
 
-## Key Features
+### Advanced Learning Path
 
-- **🔄 Full Lifecycle Management**: From data preparation to model
-  deployment
-- **🏗️ Nix-Based Infrastructure**: Containerization without Docker files
-- **📊 Comprehensive Lineage**: Complete traceability across the ML
-  pipeline
-- **⚡ High Performance**: Optimized for GPU training and inference
-- **🔒 Security-First**: Built-in governance and security controls
-- **🌐 Multi-Environment**: Dev, staging, and production deployments
+For experienced ML deployment professionals and platform architects:
 
-## Getting Help
+1.  **API Documentation → Implementation Patterns**: Deep dive into
+    platform APIs and master advanced implementation patterns
+2.  **Advanced Scenarios → Migration Guide**: Explore complex deployment
+    scenarios and plan platform migrations
 
-- **Documentation**: Use the search function in the sidebar
-- **Community**: Join our community forum
-- **Issues**: Report bugs or request features on GitHub
-- **Support**: Contact enterprise support for paid plans
+## Support and Resources
+
+Multiple resources are available to assist users at different experience
+levels and for various types of support needs:
+
+- **Documentation Search**: Utilize the search function in the sidebar
+  to quickly locate specific topics and documentation sections
+- **Community Forum**: Engage with other ML Deploy users and community
+  members to share experiences and seek advice
+- **Issue Tracking**: Report bugs, request features, or contribute
+  improvements through the GitHub issue tracking system
+- **Enterprise Support**: Contact the dedicated support team for paid
+  plans to receive priority assistance and personalized guidance
+
+For the most current information and updates, always refer to the latest
+version of this documentation.
 
 ------------------------------------------------------------------------
 

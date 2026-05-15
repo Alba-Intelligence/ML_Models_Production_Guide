@@ -127,7 +127,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">📚 Tutorials</span></a>
+ <span class="menu-text">Tutorials</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -174,7 +174,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">🔧 Technical Reference</span></a>
+ <span class="menu-text">Technical Reference</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -197,7 +197,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">🏗️ Full Documentation</span></a>
+ <span class="menu-text">Full Documentation</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -325,20 +325,19 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#ml-deploy-documentation" id="toc-ml-deploy-documentation" class="nav-link active" data-scroll-target="#ml-deploy-documentation">ML Deploy Documentation</a>
   <ul class="collapse">
-  <li><a href="#quick-start" id="toc-quick-start" class="nav-link" data-scroll-target="#quick-start">Quick Start</a></li>
+  <li><a href="#quick-start-guide" id="toc-quick-start-guide" class="nav-link" data-scroll-target="#quick-start-guide">Quick Start Guide</a></li>
   <li><a href="#documentation-structure" id="toc-documentation-structure" class="nav-link" data-scroll-target="#documentation-structure">Documentation Structure</a>
   <ul class="collapse">
-  <li><a href="#tutorials" id="toc-tutorials" class="nav-link" data-scroll-target="#tutorials">📚 Tutorials</a></li>
-  <li><a href="#technical-reference" id="toc-technical-reference" class="nav-link" data-scroll-target="#technical-reference">🔧 Technical Reference</a></li>
+  <li><a href="#learning-path-tutorials" id="toc-learning-path-tutorials" class="nav-link" data-scroll-target="#learning-path-tutorials">Learning Path: Tutorials</a></li>
+  <li><a href="#technical-reference-documentation" id="toc-technical-reference-documentation" class="nav-link" data-scroll-target="#technical-reference-documentation">Technical Reference Documentation</a></li>
   </ul></li>
   <li><a href="#learning-paths" id="toc-learning-paths" class="nav-link" data-scroll-target="#learning-paths">Learning Paths</a>
   <ul class="collapse">
-  <li><a href="#for-beginners" id="toc-for-beginners" class="nav-link" data-scroll-target="#for-beginners">For Beginners</a></li>
-  <li><a href="#for-intermediate-users" id="toc-for-intermediate-users" class="nav-link" data-scroll-target="#for-intermediate-users">For Intermediate Users</a></li>
-  <li><a href="#for-advanced-users" id="toc-for-advanced-users" class="nav-link" data-scroll-target="#for-advanced-users">For Advanced Users</a></li>
+  <li><a href="#beginner-learning-path" id="toc-beginner-learning-path" class="nav-link" data-scroll-target="#beginner-learning-path">Beginner Learning Path</a></li>
+  <li><a href="#intermediate-learning-path" id="toc-intermediate-learning-path" class="nav-link" data-scroll-target="#intermediate-learning-path">Intermediate Learning Path</a></li>
+  <li><a href="#advanced-learning-path" id="toc-advanced-learning-path" class="nav-link" data-scroll-target="#advanced-learning-path">Advanced Learning Path</a></li>
   </ul></li>
-  <li><a href="#key-features" id="toc-key-features" class="nav-link" data-scroll-target="#key-features">Key Features</a></li>
-  <li><a href="#getting-help" id="toc-getting-help" class="nav-link" data-scroll-target="#getting-help">Getting Help</a></li>
+  <li><a href="#support-and-resources" id="toc-support-and-resources" class="nav-link" data-scroll-target="#support-and-resources">Support and Resources</a></li>
   </ul></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="index.md"><i class="bi bi-file-code"></i>CommonMark</a></li></ul></div></nav>
@@ -367,22 +366,58 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="ml-deploy-documentation" class="level1">
 <h1>ML Deploy Documentation</h1>
-<p>Welcome to the ML Deploy documentation - a comprehensive guide for machine learning deployment with full lifecycle management.</p>
-<section id="quick-start" class="level2">
-<h2 class="anchored" data-anchor-id="quick-start">Quick Start</h2>
+<p>Welcome to the ML Deploy documentation - a comprehensive guide for machine learning deployment with full lifecycle management. This documentation represents a permanent work-in-progress, continuously evolving to reflect the latest platform capabilities and best practices.</p>
+<p>The ML Deploy platform is distinguished by several key features that address the complex challenges of modern machine learning deployment: - <strong>Full Lifecycle Management</strong>: Comprehensive coverage from data preparation and model training through deployment and monitoring, ensuring complete management of the ML pipeline - <strong>Nix-Based Infrastructure</strong>: Reproducible infrastructure as code utilizing Nix capabilities to generate containers without Docker files while automatically producing Terraform and OpenTofu configurations for cloud deployment - <strong>Comprehensive Lineage</strong>: Complete traceability across all ML pipeline stages, enabling full auditability and reproducibility of data and model transformations - <strong>Security-First Architecture</strong>: Built-in governance frameworks and security controls designed to meet enterprise requirements while maintaining development flexibility - <strong>Multi-Environment Support</strong>: Seamless deployment across development, staging, and production environments with consistent tooling and process parity between local and cloud platforms</p>
+<p>The platform architecture is organized into five key component areas, each serving specific functions within the ML deployment ecosystem:</p>
 <ul>
-<li><strong>New to ML Deploy?</strong> Start with the <a href="./tutorials/02_Getting_Started.html">Getting Started Guide</a></li>
-<li><strong>Need specific patterns?</strong> Check the <a href="./reference/01_Implementation_Patterns.html">Implementation Patterns</a></li>
-<li><strong>Looking for API details?</strong> See the <a href="./reference/02_API_Documentation.html">API Documentation</a></li>
+<li><strong>ML Training / Inference</strong>:
+<ul>
+<li><em>Notebook First</em>: ML Researchers send their notebooks unchanged to the platform, which extracts metadata and executes them in a controlled environment</li>
+<li><em>Libraries</em>: Focused on Python-only stack</li>
+<li><em>MLflow</em>: For experiment tracking and model registry</li>
+</ul></li>
+<li><strong>Data</strong>:
+<ul>
+<li><em>Data Catalog</em>: For managing and discovering data assets</li>
+<li><em>Data Lineage</em>: For tracking data transformations and dependencies</li>
+<li><em>Logging &amp; Monitoring</em>: For observability of data and model performance</li>
+</ul></li>
+<li><strong>Orchestration</strong>:
+<ul>
+<li><em>Kubeflow</em>: For workflow orchestration and pipeline management</li>
+<li><em>Airflow</em>: For scheduling and monitoring workflows</li>
+</ul></li>
+<li><strong>Backends</strong>:
+<ul>
+<li><em>Cloud</em>: For scalable production deployments: compute resources on <a href="https://lambda.ai/">Lambda.ai</a> distributed with Slurm, all other tools hosted on AWS</li>
+<li><em>Local</em>: For development and testing: Compute resources on <a href="https://lambda.ai/">Lambda.ai</a> distributed with Slurm, all other tools on <a href="https://floci.io/">Floci</a> replicating AWS services locally</li>
+</ul></li>
+<li><strong>Configuration</strong>:
+<ul>
+<li><em>Nix</em>: Nix-only for reproducible builds and environment management</li>
+<li><em>uv2nix</em>: For generating Nix expressions from uv project definitions</li>
+<li><em>Containers</em>: For local emulation and cloud deployment, generated from Nix definitions (no docker files)</li>
+<li><em>Terranix</em>: For generating Terraform configurations from Nix definitions</li>
+<li><em>Opentofu</em>: For infrastructure provisioning and management</li>
+</ul></li>
 </ul>
+<section id="quick-start-guide" class="level2">
+<h2 class="anchored" data-anchor-id="quick-start-guide">Quick Start Guide</h2>
+<p>This section provides entry points to the documentation based on your specific needs and experience level:</p>
+<ul>
+<li><strong>For New Users</strong>: Begin with the <a href="./tutorials/02_Getting_Started.html">Getting Started Guide</a> to establish foundational knowledge and configure your development environment</li>
+<li><strong>For Implementation Reference</strong>: Consult the <a href="./reference/01_Implementation_Patterns.html">Implementation Patterns</a> for technical patterns and best practices when implementing specific functionality</li>
+<li><strong>For API Integration</strong>: Review the <a href="./reference/02_API_Documentation.html">API Documentation</a> for complete API reference and integration examples</li>
+</ul>
+<p>For detailed explanations of EX-01, EX-02, and EX-03 vertical slices, refer to the <a href="./tutorials/01_Terminology_Glossary.html">Terminology Glossary</a>.</p>
 </section>
 <section id="documentation-structure" class="level2">
 <h2 class="anchored" data-anchor-id="documentation-structure">Documentation Structure</h2>
-<section id="tutorials" class="level3">
-<h3 class="anchored" data-anchor-id="tutorials">📚 Tutorials</h3>
-<p>Learn ML Deploy through guided examples and progressive tutorials:</p>
+<section id="learning-path-tutorials" class="level3">
+<h3 class="anchored" data-anchor-id="learning-path-tutorials">Learning Path: Tutorials</h3>
+<p>The tutorials section provides structured, progressive learning through guided examples and hands-on exercises. Each tutorial builds upon previous concepts to ensure comprehensive understanding:</p>
 <ol type="1">
-<li><strong><a href="./tutorials/01_Terminology_Glossary.html">Terminology Glossary</a></strong> - Understand EX-01, EX-02, EX-03 and other key terms</li>
+<li><strong><a href="./tutorials/01_Terminology_Glossary.html">Terminology Glossary</a></strong> - Understand EX-01, EX-02, EX-03 vertical slices and other key terms</li>
 <li><strong><a href="./tutorials/02_Getting_Started.html">Getting Started</a></strong> - Set up your environment and learn the basics</li>
 <li><strong><a href="./tutorials/03_Concepts_and_Architecture.html">Concepts and Architecture</a></strong> - Understand the platform architecture</li>
 <li><strong><a href="./tutorials/04_End_to_End_Workflow.html">End-to-End Workflow</a></strong> - Complete EX-01→EX-02→EX-03 workflow tutorial</li>
@@ -390,9 +425,9 @@ ul.task-list li input[type="checkbox"] {
 <li><strong><a href="./tutorials/06_Migration_Guide.html">Migration Guide</a></strong> - Migrate from other platforms</li>
 </ol>
 </section>
-<section id="technical-reference" class="level3">
-<h3 class="anchored" data-anchor-id="technical-reference">🔧 Technical Reference</h3>
-<p>Reference documentation for implementation and integration:</p>
+<section id="technical-reference-documentation" class="level3">
+<h3 class="anchored" data-anchor-id="technical-reference-documentation">Technical Reference Documentation</h3>
+<p>The reference section provides comprehensive technical documentation for implementation, integration, and advanced usage scenarios. These documents serve as authoritative sources for technical specifications and implementation details:</p>
 <ol type="1">
 <li><strong><a href="./reference/01_Implementation_Patterns.html">Implementation Patterns</a></strong> - Technical patterns and best practices</li>
 <li><strong><a href="./reference/02_API_Documentation.html">API Documentation</a></strong> - Complete API reference</li>
@@ -401,38 +436,41 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="learning-paths" class="level2">
 <h2 class="anchored" data-anchor-id="learning-paths">Learning Paths</h2>
-<section id="for-beginners" class="level3">
-<h3 class="anchored" data-anchor-id="for-beginners">For Beginners</h3>
-<p>Start here if you’re new to ML Deploy: 1. Terminology Glossary → Getting Started → Concepts and Architecture 2. End-to-End Workflow → Implementation Patterns</p>
+<section id="beginner-learning-path" class="level3">
+<h3 class="anchored" data-anchor-id="beginner-learning-path">Beginner Learning Path</h3>
+<p>For users new to ML deployment or the ML Deploy platform, follow this sequential path to build foundational knowledge:</p>
+<ol type="1">
+<li><strong>Terminology Glossary → Getting Started → Concepts and Architecture</strong>: Establish vocabulary and basic platform understanding</li>
+<li><strong>End-to-End Workflow → Implementation Patterns</strong>: Gain practical experience through complete workflow implementation</li>
+</ol>
 </section>
-<section id="for-intermediate-users" class="level3">
-<h3 class="anchored" data-anchor-id="for-intermediate-users">For Intermediate Users</h3>
-<p>If you have some ML deployment experience: 1. Concepts and Architecture → End-to-End Workflow 2. Implementation Patterns → API Documentation</p>
+<section id="intermediate-learning-path" class="level3">
+<h3 class="anchored" data-anchor-id="intermediate-learning-path">Intermediate Learning Path</h3>
+<p>For users with existing ML deployment experience who are new to the ML Deploy platform:</p>
+<ol type="1">
+<li><strong>Concepts and Architecture → End-to-End Workflow</strong>: Understand platform architecture and apply it through practical implementation</li>
+<li><strong>Implementation Patterns → API Documentation</strong>: Learn specific implementation patterns and integrate with platform APIs</li>
+</ol>
 </section>
-<section id="for-advanced-users" class="level3">
-<h3 class="anchored" data-anchor-id="for-advanced-users">For Advanced Users</h3>
-<p>If you’re experienced with ML deployment: 1. API Documentation → Implementation Patterns 2. Advanced Scenarios → Migration Guide</p>
+<section id="advanced-learning-path" class="level3">
+<h3 class="anchored" data-anchor-id="advanced-learning-path">Advanced Learning Path</h3>
+<p>For experienced ML deployment professionals and platform architects:</p>
+<ol type="1">
+<li><strong>API Documentation → Implementation Patterns</strong>: Deep dive into platform APIs and master advanced implementation patterns</li>
+<li><strong>Advanced Scenarios → Migration Guide</strong>: Explore complex deployment scenarios and plan platform migrations</li>
+</ol>
 </section>
 </section>
-<section id="key-features" class="level2">
-<h2 class="anchored" data-anchor-id="key-features">Key Features</h2>
+<section id="support-and-resources" class="level2">
+<h2 class="anchored" data-anchor-id="support-and-resources">Support and Resources</h2>
+<p>Multiple resources are available to assist users at different experience levels and for various types of support needs:</p>
 <ul>
-<li><strong>🔄 Full Lifecycle Management</strong>: From data preparation to model deployment</li>
-<li><strong>🏗️ Nix-Based Infrastructure</strong>: Containerization without Docker files</li>
-<li><strong>📊 Comprehensive Lineage</strong>: Complete traceability across the ML pipeline</li>
-<li><strong>⚡ High Performance</strong>: Optimized for GPU training and inference</li>
-<li><strong>🔒 Security-First</strong>: Built-in governance and security controls</li>
-<li><strong>🌐 Multi-Environment</strong>: Dev, staging, and production deployments</li>
+<li><strong>Documentation Search</strong>: Utilize the search function in the sidebar to quickly locate specific topics and documentation sections</li>
+<li><strong>Community Forum</strong>: Engage with other ML Deploy users and community members to share experiences and seek advice</li>
+<li><strong>Issue Tracking</strong>: Report bugs, request features, or contribute improvements through the GitHub issue tracking system</li>
+<li><strong>Enterprise Support</strong>: Contact the dedicated support team for paid plans to receive priority assistance and personalized guidance</li>
 </ul>
-</section>
-<section id="getting-help" class="level2">
-<h2 class="anchored" data-anchor-id="getting-help">Getting Help</h2>
-<ul>
-<li><strong>Documentation</strong>: Use the search function in the sidebar</li>
-<li><strong>Community</strong>: Join our community forum</li>
-<li><strong>Issues</strong>: Report bugs or request features on GitHub</li>
-<li><strong>Support</strong>: Contact enterprise support for paid plans</li>
-</ul>
+<p>For the most current information and updates, always refer to the latest version of this documentation.</p>
 <hr>
 <p><em>This documentation is built with Quarto and automatically updated as the platform evolves. For the most current information, always check the latest version.</em></p>
 
