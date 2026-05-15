@@ -299,6 +299,11 @@ sources:
 - [sources/nbs.04_01-execution_framework.qmd.md](sources/nbs.04_01-execution_framework.qmd.md) — synthesized summary of execution framework document with multi-backend job management and resource allocation strategies.
 - [sources/nbs.05_01-system_architecture.qmd.md](sources/nbs.05_01-system_architecture.qmd.md) — synthesized summary of system architecture document with comprehensive architectural patterns and component relationships.
 - [sources/nbs.99_DOCUMENTATION_RESTRUCTURING_PLAN.qmd.md](sources/nbs.99_DOCUMENTATION_RESTRUCTURING_PLAN.qmd.md) — synthesized summary of documentation restructuring plan with strategic roadmap for documentation transformation and quality improvement.
+- [sources/nbs.01_01-getting_started.qmd.md](sources/nbs.01_01-getting_started.qmd.md) — synthesized summary of getting started document with comprehensive onboarding guidance and initial platform setup instructions.
+- [sources/nbs.01_02-platform_introduction.qmd.md](sources/nbs.01_02-platform_introduction.qmd.md) — synthesized summary of platform introduction document with comprehensive platform overview and value proposition.
+- [sources/nbs.01_03-platform_architecture.qmd.md](sources/nbs.01_03-platform_architecture.qmd.md) — synthesized summary of platform architecture document with detailed technical architecture and component relationships.
+- [sources/nbs.02_04-complete_workflow.qmd.md](sources/nbs.02_04-complete_workflow.qmd.md) — synthesized summary of complete workflow document with end-to-end ML workflow lifecycle and best practices.
+- [sources/nbs.04_03-api_contracts.qmd.md](sources/nbs.04_03-api_contracts.qmd.md) — synthesized summary of API contracts document with comprehensive interface specifications and integration guidelines.
 - [sources/nbs.09_notebook_intake.qmd.md](sources/nbs.09_notebook_intake.qmd.md) — synthesized summary of Quarto nbdev source-of-truth for notebook intake gates.
 - [sources/nbs.12_system_interaction_analysis.qmd.md](sources/nbs.12_system_interaction_analysis.qmd.md) — synthesized summary of the five-layer system interaction analysis Quarto page.
 - [sources/nbs.13_opentofu_infra.qmd.md](sources/nbs.13_opentofu_infra.qmd.md) — synthesized summary of the OpenTofu infrastructure profile Quarto page.
