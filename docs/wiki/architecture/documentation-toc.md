@@ -17,6 +17,8 @@ sources:
 This is the **ratified TOC** for the specification-first phase.
 Treat it as canonical for documentation and architecture-aligned example placement.
 
+**The canonical user-facing documentation is now maintained in Sphinx `.rst` files under `docs/sphinx/source/` and organized by logical sections. See `index.rst` for the current ToC.**
+
 ## TOC design rules
 
 - Start with a high-level introduction before any deep implementation pages.
