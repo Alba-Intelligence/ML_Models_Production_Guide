@@ -1,43 +1,24 @@
----
-updated: 2026-05-14
-summary: Primary router for the living wiki. Read this first, then load only the pages relevant to the task.
-read_when:
-  - Starting any task in this repository
-  - You need to find the smallest useful context set
-sources:
-  - overview.md
-  - current-state.md
-  - architecture/dev-environment.md
-  - architecture/target-system.md
-  - architecture/top-down-planning.md
-  - architecture/reference-architecture-skeleton.md
-  - architecture/documentation-toc.md
-  - architecture/assistant-integration-and-docs-delivery.md
-  - architecture/notebook-repository-web-ui.md
-  - architecture/full-system-interaction-analysis.md
-  - architecture/local-emulation-stack.md
-  - architecture/webui-backend-contract.md
-  - architecture/example-matrix.md
-  - architecture/first-vertical-slice.md
-  - architecture/distilled-allium-spec.md
-  - contracts/index.md
-  - domains/index.md
-  - topologies/index.md
-  - runbooks/jupyter-and-shell.md
-  - runbooks/mlflow-tracking-postgres-s3-parity.md
-  - decisions/index.md
-  - decisions/repository-shape.md
-  - decisions/project-scope-and-constraints.md
-  - decisions/monitoring-stack-decision.md
-  - decisions/cost-monitoring-stack-decision.md
-  - decisions/docker-nix-boundary-decision.md
-  - decisions/mcp-default-scope-decision.md
-  - decisions/infrastructure-mcp-server-inventory.md
-  - decisions/documentation-delivery-decision.md
-  - decisions/notebook-intake-validation-and-approval.md
-  - decisions/mlflow-storage-backends.md
-  - decisions/promotion-pipeline.md
-  - decisions/lambda-ai-slurm-contract.md
+# ML Deploy Wiki Index
+
+This wiki is the curated knowledge layer for the ML Deploy project.
+
+**Canonical documentation is now maintained in Sphinx `.rst` files under `docs/sphinx/source/` and organized by logical sections:**
+
+- Introduction and Overview
+- Infrastructure and Integration
+- Governance and Security
+- User Interfaces
+- Example Workflows
+- Analysis and Reading Paths
+- Comprehensive Test
+
+See [`docs/sphinx/source/index.rst`](../sphinx/source/index.rst) for the canonical ToC. For architecture, design, and rationale, see the pages under `docs/wiki/architecture/`.
+
+**How to use this wiki:**
+- Start here for project orientation and navigation.
+- Use the Sphinx docs for all reference and user-facing documentation.
+- Use the wiki for architecture, rationale, and decision history.
+
   - decisions/mlflow-postgres-s3-contract.md
   - decisions/aws-kubernetes-contract.md
   - decisions/nix-terranix-opentofu-boundary.md
@@ -182,7 +163,7 @@ sources:
 | Finalize a task with publishable docs                                | [runbooks/jupyter-and-shell.md](runbooks/jupyter-and-shell.md), [sources/scripts.finalize-task.sh.md](sources/scripts.finalize-task.sh.md)                                                                                                                                                                                                                                                                                                                                                                                                                                   |
 | Understand git tracking, ignored files, or private-doc conventions   | [sources/gitignore.md](sources/gitignore.md), [current-state.md](current-state.md)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | Understand durable repo conventions and why the repo is still sparse | [decisions/repository-shape.md](decisions/repository-shape.md), [current-state.md](current-state.md)                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| See what changed in the wiki recently                                | [log.md](log.md), [revisions/2026-05-16-traditional-auth-roles-policy.md](revisions/2026-05-16-traditional-auth-roles-policy.md), [revisions/2026-05-10-allium-cli-latest-version.md](revisions/2026-05-10-allium-cli-latest-version.md), [revisions/2026-05-10-uv2nix-dev-shell-fix.md](revisions/2026-05-10-uv2nix-dev-shell-fix.md)                                                                                                                                                                                                                                                                                                                                                       |
+| See what changed in the wiki recently                                | [log.md](log.md), [revisions/2026-05-16-aws-floci-aligned-implementation-path.md](revisions/2026-05-16-aws-floci-aligned-implementation-path.md), [revisions/2026-05-16-docs-compaction-line-limit.md](revisions/2026-05-16-docs-compaction-line-limit.md), [revisions/2026-05-16-traditional-auth-roles-policy.md](revisions/2026-05-16-traditional-auth-roles-policy.md)                                                                                                                                                                                                   |
 
 ## Core pages
 
@@ -260,6 +241,7 @@ sources:
 - [decisions/mcp-default-scope-decision.md](decisions/mcp-default-scope-decision.md) — accepted default MCP scope.
 - [decisions/infrastructure-mcp-server-inventory.md](decisions/infrastructure-mcp-server-inventory.md) — required infrastructure MCP interrogation coverage and server inventory defaults.
 - [decisions/documentation-delivery-decision.md](decisions/documentation-delivery-decision.md) — accepted docs-delivery posture.
+- [decisions/aws-floci-aligned-implementation-path.md](decisions/aws-floci-aligned-implementation-path.md) — AWS-native / Floci-parity preference for the biggest remaining gaps.
 - [decisions/notebook-intake-validation-and-approval.md](decisions/notebook-intake-validation-and-approval.md) — accepted intake gates for immutable executable notebook revisions.
 - [decisions/mlflow-storage-backends.md](decisions/mlflow-storage-backends.md) — MLflow backend store and artifact store per profile; reverse proxy; MLFLOW_CREATE_MODEL_VERSION_SOURCE_VALIDATION_REGEX; mlflow-go parity.
 - [decisions/promotion-pipeline.md](decisions/promotion-pipeline.md) — DEV→UAT→REGRESSION→PROD pipeline, gate criteria, MLflow registry alignment, CI/CD integration.
@@ -369,7 +351,7 @@ sources:
 - [revisions/2026-05-09-decision-records-role.md](revisions/2026-05-09-decision-records-role.md) — captures how decision records should complement the top-down architecture.
 - [revisions/2026-05-09-origin-rebase-and-push.md](revisions/2026-05-09-origin-rebase-and-push.md) — captures rebasing onto origin and incorporating the remote license file.
 - [revisions/2026-05-09-contract-baselines.md](revisions/2026-05-09-contract-baselines.md) — captures the first cross-cutting contract pages.
-- [revisions/2026-05-09-assistant-and-docs-delivery.md](revisions/2026-05-09-assistant-and-docs-delivery.md) — captures the MCP assistant and FastAPI docs-delivery proposals.
+- [revisions/2026-05-09-assistant-and-docs-delivery.md](revisions/2026-05-09-assistant-and-docs-delivery.md) — captures the MCP assistant and docs-delivery proposals.
 - [revisions/2026-05-09-architecture-skeleton-and-toc.md](revisions/2026-05-09-architecture-skeleton-and-toc.md) — captures the first proposed architecture skeleton and documentation TOC.
 - [revisions/2026-05-09-planning-direction.md](revisions/2026-05-09-planning-direction.md) — captures the agreed audience, production scope, and top-down planning guidance.
 - [revisions/2026-05-09-project-purpose.md](revisions/2026-05-09-project-purpose.md) — captures the agreed project purpose and constraints.
