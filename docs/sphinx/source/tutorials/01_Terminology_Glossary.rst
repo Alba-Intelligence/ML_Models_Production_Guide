@@ -318,19 +318,19 @@ This comprehensive glossary provides standardized definitions for key terms and 
 ## Related Documentation and References
 
 ### Core Implementation Documents
-- **[Implementation Patterns](../reference/01_Implementation_Patterns.qmd)**: Detailed implementation guidance and code examples for EX-01 → EX-03 patterns
-- **[API Documentation](../reference/02_API_Documentation.qmd)**: Complete technical API reference for contracts, interfaces, and integration points
-- **[Infrastructure Setup](../reference/01_Implementation_Patterns.qmd)**: Infrastructure configuration, deployment procedures, and environment setup (see Implementation Patterns section)
+- **[Implementation Patterns](../reference/01_Implementation_Patterns.rst)**: Detailed implementation guidance and code examples for EX-01 → EX-03 patterns
+- **[API Documentation](../reference/02_API_Documentation.rst)**: Complete technical API reference for contracts, interfaces, and integration points
+- **[Infrastructure Setup](../reference/01_Implementation_Patterns.rst)**: Infrastructure configuration, deployment procedures, and environment setup (see Implementation Patterns section)
 
 ### Architecture and Design Documents
-- **[Architecture Overview](../reference/01_Implementation_Patterns.qmd)**: Deep technical architecture review and design decisions (see Implementation Patterns section)
-- **[Security Architecture](../reference/01_Implementation_Patterns.qmd)**: Security model, threat analysis, and compliance requirements (see Implementation Patterns section)
-- **[Performance Guidelines](../reference/01_Implementation_Patterns.qmd)**: Performance optimization strategies and best practices (see Implementation Patterns section)
+- **[Architecture Overview](../reference/01_Implementation_Patterns.rst)**: Deep technical architecture review and design decisions (see Implementation Patterns section)
+- **[Security Architecture](../reference/01_Implementation_Patterns.rst)**: Security model, threat analysis, and compliance requirements (see Implementation Patterns section)
+- **[Performance Guidelines](../reference/01_Implementation_Patterns.rst)**: Performance optimization strategies and best practices (see Implementation Patterns section)
 
 ### Operational Documentation
-- **[Deployment Procedures](../reference/01_Implementation_Patterns.qmd)**: Step-by-step deployment guides and operational procedures (see Implementation Patterns section)
-- **[Monitoring and Observability](../reference/01_Implementation_Patterns.qmd)**: Monitoring strategies, alerting, and operational visibility (see Implementation Patterns section)
-- **[Troubleshooting Guide](../reference/01_Implementation_Patterns.qmd)**: Common issues, debugging procedures, and resolution strategies (see Implementation Patterns section)
+- **[Deployment Procedures](../reference/01_Implementation_Patterns.rst)**: Step-by-step deployment guides and operational procedures (see Implementation Patterns section)
+- **[Monitoring and Observability](../reference/01_Implementation_Patterns.rst)**: Monitoring strategies, alerting, and operational visibility (see Implementation Patterns section)
+- **[Troubleshooting Guide](../reference/01_Implementation_Patterns.rst)**: Common issues, debugging procedures, and resolution strategies (see Implementation Patterns section)
 
 ---
 

@@ -9,7 +9,7 @@ It explains the major layers and the main contracts without duplicating the deta
 
 For the detailed entity map and relationship view, see:
 
-- `12_system_interaction_analysis.qmd`
+- `12_system_interaction_analysis.rst`
 - `docs/wiki/architecture/full-system-interaction-analysis.md`
 
 ## What the platform is
@@ -96,10 +96,10 @@ The stack is deliberately conservative about mutation.
 
 Use this page as the front door, then move to:
 
-- `nbs/tutorials/03_Concepts_and_Architecture.qmd` for the conceptual spine
-- `nbs/tutorials/04_End_to_End_Workflow.qmd` for the complete slice
-- `nbs/reference/01_Implementation_Patterns.qmd` for the slice mechanics
-- `nbs/reference/03_Security_Authorization_and_Policy.qmd` for auth and policy
+- `nbs/tutorials/03_Concepts_and_Architecture.rst` for the conceptual spine
+- `nbs/tutorials/04_End_to_End_Workflow.rst` for the complete slice
+- `nbs/reference/01_Implementation_Patterns.rst` for the slice mechanics
+- `nbs/reference/03_Security_Authorization_and_Policy.rst` for auth and policy
 
 ## Practical rule
 

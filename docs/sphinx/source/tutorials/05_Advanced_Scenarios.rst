@@ -189,10 +189,10 @@ That usually means:
 
 When tackling a more advanced scenario, read in this order:
 
-1. `nbs/tutorials/03_Concepts_and_Architecture.qmd`
-2. `nbs/reference/01_Implementation_Patterns.qmd`
-3. `nbs/reference/02_API_Documentation.qmd`
-4. `nbs/reference/03_Security_Authorization_and_Policy.qmd`
+1. `nbs/tutorials/03_Concepts_and_Architecture.rst`
+2. `nbs/reference/01_Implementation_Patterns.rst`
+3. `nbs/reference/02_API_Documentation.rst`
+4. `nbs/reference/03_Security_Authorization_and_Policy.rst`
 5. the relevant wiki decision or gap page
 
 ## Practical summary

@@ -150,7 +150,7 @@ A workflow step should fail rather than guess if:
 
 ## Related docs
 
-- `nbs/tutorials/03_Concepts_and_Architecture.qmd`
-- `nbs/reference/01_Implementation_Patterns.qmd`
-- `nbs/reference/02_API_Documentation.qmd`
+- `nbs/tutorials/03_Concepts_and_Architecture.rst`
+- `nbs/reference/01_Implementation_Patterns.rst`
+- `nbs/reference/02_API_Documentation.rst`
 - `docs/wiki/architecture/first-vertical-slice.md`

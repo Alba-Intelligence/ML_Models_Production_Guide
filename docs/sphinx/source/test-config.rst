@@ -12,7 +12,7 @@ This is a test page to verify the Quarto configuration is working correctly.
 
 ## Links Test
 
-- [Main Index](index.qmd)
-- [Navigation Guide](navigation-guide.qmd)
-- [Terminology Glossary](tutorials/01_Terminology_Glossary.qmd)
-- [API Documentation](reference/02_API_Documentation.qmd)
+- [Main Index](index.rst)
+- [Navigation Guide](navigation-guide.rst)
+- [Terminology Glossary](tutorials/01_Terminology_Glossary.rst)
+- [API Documentation](reference/02_API_Documentation.rst)

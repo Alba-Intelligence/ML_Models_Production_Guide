@@ -150,7 +150,7 @@ The platform provides multiple learning paths tailored to different experience l
 
 #### Phase 1: Foundational Knowledge (1.5 hours)
 **Objective**: Establish core understanding of platform concepts and terminology
-- **Terminology Mastery**: Complete the [Terminology Glossary](01_Terminology_Glossary.qmd) to understand EX-01, EX-02, EX-03 patterns
+- **Terminology Mastery**: Complete the [Terminology Glossary](01_Terminology_Glossary.rst) to understand EX-01, EX-02, EX-03 patterns
 - **Architecture Overview**: Study the core architectural components and their relationships
 - **Platform Philosophy**: Understand the design principles and governance approach
 
@@ -196,7 +196,7 @@ The platform provides multiple learning paths tailored to different experience l
 
 #### Phase 1: Architecture Deep Dive (1.5 hours)
 **Objective**: Comprehensive understanding of platform architecture and interfaces
-- **System Architecture**: Review detailed [Architecture Overview](../reference/01_Implementation_Patterns.qmd) (see Implementation Patterns section)
+- **System Architecture**: Review detailed [Architecture Overview](../reference/01_Implementation_Patterns.rst) (see Implementation Patterns section)
 - **Contract Systems**: Understand execution contracts and interface specifications
 - **Governance Framework**: Study security, compliance, and operational controls
 
@@ -296,7 +296,7 @@ start-jupyter
 This example demonstrates the fundamental ML Deploy capabilities including experiment tracking, model training, and basic metadata capture.
 
 #### Execution Steps
-1. Navigate to the [Core Package and MLflow XGBoost Quickstart](../reference/01_Implementation_Patterns.qmd) notebook (see Implementation Patterns section)
+1. Navigate to the [Core Package and MLflow XGBoost Quickstart](../reference/01_Implementation_Patterns.rst) notebook (see Implementation Patterns section)
 2. Execute the XGBoost training example
 3. Observe MLflow experiment tracking behavior
 4. Review captured metadata and artifacts
@@ -445,19 +445,19 @@ This phase expands understanding to more complex deployment scenarios and produc
 ## Related Documentation
 
 ### Core Implementation Documents
-- **[Terminology Glossary](01_Terminology_Glossary.qmd)**: Complete definitions and explanations of platform terminology
-- **[Implementation Patterns](../reference/01_Implementation_Patterns.qmd)**: Detailed implementation guidance and code examples
-- **[API Documentation](../reference/02_API_Documentation.qmd)**: Complete technical API reference and integration guides
+- **[Terminology Glossary](01_Terminology_Glossary.rst)**: Complete definitions and explanations of platform terminology
+- **[Implementation Patterns](../reference/01_Implementation_Patterns.rst)**: Detailed implementation guidance and code examples
+- **[API Documentation](../reference/02_API_Documentation.rst)**: Complete technical API reference and integration guides
 
 ### Architecture and Design Documents
-- **[System Architecture](../reference/01_Implementation_Patterns.qmd)**: Detailed architecture review and design decisions (see Implementation Patterns section)
-- **[Infrastructure Setup](../reference/01_Implementation_Patterns.qmd)**: Infrastructure configuration and deployment procedures (see Implementation Patterns section)
-- **[Security Architecture](../reference/01_Implementation_Patterns.qmd)**: Security model and compliance requirements (see Implementation Patterns section)
+- **[System Architecture](../reference/01_Implementation_Patterns.rst)**: Detailed architecture review and design decisions (see Implementation Patterns section)
+- **[Infrastructure Setup](../reference/01_Implementation_Patterns.rst)**: Infrastructure configuration and deployment procedures (see Implementation Patterns section)
+- **[Security Architecture](../reference/01_Implementation_Patterns.rst)**: Security model and compliance requirements (see Implementation Patterns section)
 
 ### Operational Documentation
-- **[Monitoring and Observability](../reference/01_Implementation_Patterns.qmd)**: Monitoring strategies and operational procedures (see Implementation Patterns section)
-- **[Deployment Procedures](../reference/01_Implementation_Patterns.qmd)**: Step-by-step deployment guides (see Implementation Patterns section)
-- **[Troubleshooting Guide](../reference/01_Implementation_Patterns.qmd)**: Common issues and resolution procedures (see Implementation Patterns section)
+- **[Monitoring and Observability](../reference/01_Implementation_Patterns.rst)**: Monitoring strategies and operational procedures (see Implementation Patterns section)
+- **[Deployment Procedures](../reference/01_Implementation_Patterns.rst)**: Step-by-step deployment guides (see Implementation Patterns section)
+- **[Troubleshooting Guide](../reference/01_Implementation_Patterns.rst)**: Common issues and resolution procedures (see Implementation Patterns section)
 
 ---
 

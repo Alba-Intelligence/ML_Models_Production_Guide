@@ -325,4 +325,4 @@ The stack's security model should remain:
 - `docs/wiki/contracts/security-baseline.md`
 - `docs/wiki/decisions/security-authorization-architecture.md`
 - `docs/wiki/gaps/software-stack-gaps.md`
-- `docs/wiki/sources/nbs.reference.03_Security_Authorization_and_Policy.qmd.md`
+- `docs/wiki/sources/nbs.reference.03_Security_Authorization_and_Policy.rst.md`

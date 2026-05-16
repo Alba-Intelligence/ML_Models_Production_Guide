@@ -100,6 +100,6 @@ flowchart TD
 
 ## Where to go next
 
-- Platform architecture narrative: [`01_platform_narrative.qmd`](01_03-platform_architecture.qmd)
-- Runtime and orchestration modules: [`07_mlflow_parity.qmd`](02_03-mlflow_integration.qmd), [`08_execution_backends.qmd`](04_01-execution_framework.qmd), [`14_infrastructure_mcp.qmd`](03_02-infrastructure_management.qmd)
-- Governance and promotion gates: [`17_governance_gates.qmd`](04_05-governance_framework.qmd)
+- Platform architecture narrative: [`01_platform_narrative.rst`](01_03-platform_architecture.rst)
+- Runtime and orchestration modules: [`07_mlflow_parity.rst`](02_03-mlflow_integration.rst), [`08_execution_backends.rst`](04_01-execution_framework.rst), [`14_infrastructure_mcp.rst`](03_02-infrastructure_management.rst)
+- Governance and promotion gates: [`17_governance_gates.rst`](04_05-governance_framework.rst)

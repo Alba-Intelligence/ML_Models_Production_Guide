@@ -108,10 +108,10 @@ Use this tutorial when you need the big picture.
 
 Then move to:
 
-- `nbs/tutorials/04_End_to_End_Workflow.qmd` for the full slice
-- `nbs/reference/01_Implementation_Patterns.qmd` for the slice mechanics
-- `nbs/reference/02_API_Documentation.qmd` for contract shapes
-- `nbs/reference/03_Security_Authorization_and_Policy.qmd` for roles and policy
+- `nbs/tutorials/04_End_to_End_Workflow.rst` for the full slice
+- `nbs/reference/01_Implementation_Patterns.rst` for the slice mechanics
+- `nbs/reference/02_API_Documentation.rst` for contract shapes
+- `nbs/reference/03_Security_Authorization_and_Policy.rst` for roles and policy
 
 ## Practical takeaway
 

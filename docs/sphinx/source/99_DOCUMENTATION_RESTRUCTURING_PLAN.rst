@@ -56,23 +56,23 @@ This plan restructures the documentation into separate Tutorial and Technical Re
 ### Tutorial Section (`tutorials/`)
 Learning-focused content for different audience types:
 
-#### `tutorials/01_Getting_Started.qmd`
+#### `tutorials/01_Getting_Started.rst`
 - **Purpose**: Quick start guide for new users
 - **Content**: Platform overview, setup, first run, basic concepts
 - **Audience**: All new users
 
-#### `tutorials/02_Concepts_and_Architecture.qmd`  
+#### `tutorials/02_Concepts_and_Architecture.rst`  
 - **Purpose**: High-level understanding of the system
 - **Content**: Platform components, ML workflow, key concepts
 - **Key Addition**: EX-01, EX-02, EX-03 explanations
 - **Audience**: ML Engineers, Platform Engineers
 
-#### `tutorials/03_End_to_End_Workflow.qmd`
+#### `tutorials/03_End_to_End_Workflow.rst`
 - **Purpose**: Step-by-step tutorial with explanations
 - **Content**: Complete example from data to deployment
 - **Audience**: Developers implementing workflows
 
-#### `tutorials/04_Advanced_Scenarios.qmd`
+#### `tutorials/04_Advanced_Scenarios.rst`
 - **Purpose**: Advanced use cases and patterns
 - **Content**: Multi-model workflows, cloud deployment, monitoring
 - **Audience**: Experienced users
@@ -80,26 +80,26 @@ Learning-focused content for different audience types:
 ### Reference Section (`reference/`)
 Technical implementation details:
 
-#### `reference/01_Implementation_Patterns.qmd`
+#### `reference/01_Implementation_Patterns.rst`
 - **Purpose**: Technical implementation patterns
 - **Content**: EX-01, EX-02, EX-03 detailed implementation
-- **Rename from**: `nbs/02_04-complete_workflow.qmd`
+- **Rename from**: `nbs/02_04-complete_workflow.rst`
 - **New Title**: "Implementation Patterns: EX-01 → EX-03"
 
-#### `reference/02_API_Documentation.qmd`
+#### `reference/02_API_Documentation.rst`
 - **Purpose**: Complete API reference
 - **Content**: All exported functions, classes, methods
-- **From**: `nbs/04_03-api_contracts.qmd`
+- **From**: `nbs/04_03-api_contracts.rst`
 
-#### `reference/03_Infrastructure_Setup.qmd`
+#### `reference/03_Infrastructure_Setup.rst`
 - **Purpose**: Technical infrastructure setup
 - **Content**: Local/cloud deployment, infrastructure as code
-- **From**: `nbs/03_01-03_04.qmd`
+- **From**: `nbs/03_01-03_04.rst`
 
-#### `reference/04_Architecture_Details.qmd`
+#### `reference/04_Architecture_Details.rst`
 - **Purpose**: Deep technical architecture
 - **Content**: System design, performance, security
-- **From**: `nbs/05_01-system_architecture.qmd`
+- **From**: `nbs/05_01-system_architecture.rst`
 
 ## ⚠️ Critical Issues to Address
 

@@ -46,10 +46,10 @@ The platform architecture is organized into five key component areas, each servi
 This section provides entry points to the documentation based on your specific needs and experience level:
 
 - **For New Users**: Begin with the [Getting Started Guide](tutorials/02_Getting_Started.rst) to establish foundational knowledge and configure your development environment
-- **For Implementation Reference**: Consult the [Implementation Patterns](reference/01_Implementation_Patterns.qmd) for technical patterns and best practices when implementing specific functionality
-- **For API Integration**: Review the [API Documentation](reference/02_API_Documentation.qmd) for complete API reference and integration examples
+- **For Implementation Reference**: Consult the [Implementation Patterns](reference/01_Implementation_Patterns.rst) for technical patterns and best practices when implementing specific functionality
+- **For API Integration**: Review the [API Documentation](reference/02_API_Documentation.rst) for complete API reference and integration examples
 
-For detailed explanations of EX-01, EX-02, and EX-03 vertical slices, refer to the [Terminology Glossary](tutorials/01_Terminology_Glossary.qmd).
+For detailed explanations of EX-01, EX-02, and EX-03 vertical slices, refer to the [Terminology Glossary](tutorials/01_Terminology_Glossary.rst).
 
 ## Documentation Structure
 

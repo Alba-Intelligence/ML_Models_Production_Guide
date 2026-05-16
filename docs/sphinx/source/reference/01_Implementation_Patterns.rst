@@ -190,7 +190,7 @@ Those topics live in the other reference pages and wiki contracts.
 
 ## Related pages
 
-- `nbs/reference/02_API_Documentation.qmd`
-- `nbs/reference/03_Security_Authorization_and_Policy.qmd`
+- `nbs/reference/02_API_Documentation.rst`
+- `nbs/reference/03_Security_Authorization_and_Policy.rst`
 - `docs/wiki/architecture/first-vertical-slice.md`
 - `docs/wiki/contracts/index.md`

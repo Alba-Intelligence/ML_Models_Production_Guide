@@ -2,7 +2,7 @@
 title: "Model Training"
 ---
 
-This section will be expanded to show how a single notebook can be used to train a model, log metrics and parameters with MLflow, and save the trained model for later use. This will be executed as part of the vertical slice reference in `02_04-complete_workflow.qmd` to demonstrate how the training step fits into the overall workflow.
+This section will be expanded to show how a single notebook can be used to train a model, log metrics and parameters with MLflow, and save the trained model for later use. This will be executed as part of the vertical slice reference in `02_04-complete_workflow.rst` to demonstrate how the training step fits into the overall workflow.
 
 # Model Training
 

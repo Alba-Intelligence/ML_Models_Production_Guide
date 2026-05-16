@@ -227,7 +227,7 @@ Policy-relevant inputs commonly include:
 - request provenance
 - approval status
 
-See `nbs/reference/03_Security_Authorization_and_Policy.qmd` for the canonical reference posture.
+See `nbs/reference/03_Security_Authorization_and_Policy.rst` for the canonical reference posture.
 
 ## Example usage pattern
 

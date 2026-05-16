@@ -128,9 +128,9 @@ When migrating, these source files are the most useful anchors:
 - `ml_deploy/webui_contracts.py`
 - `ml_deploy/execution_backends.py`
 - `ml_deploy/governance_gates.py`
-- `nbs/reference/01_Implementation_Patterns.qmd`
-- `nbs/reference/02_API_Documentation.qmd`
-- `nbs/reference/03_Security_Authorization_and_Policy.qmd`
+- `nbs/reference/01_Implementation_Patterns.rst`
+- `nbs/reference/02_API_Documentation.rst`
+- `nbs/reference/03_Security_Authorization_and_Policy.rst`
 
 ## When to stop migrating
 
