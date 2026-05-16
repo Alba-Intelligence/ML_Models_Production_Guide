@@ -21,9 +21,9 @@ Code Block
 
 Test Links
 ----------
-- Main Index (index.qmd)
-- Navigation Guide (navigation-guide.qmd)
-- Reading Paths (reading-paths.qmd)
+- Main Index (index.rst)
+- Navigation Guide (navigation-guide.rst)
+- Reading Paths (reading-paths.rst)
 
 ---
 This test file should build without any kernel issues.

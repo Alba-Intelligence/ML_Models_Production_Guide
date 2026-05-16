@@ -6,7 +6,7 @@ This page mirrors the Nix/Terranix source that generates the OpenTofu inputs. It
 .. code-block:: mermaid
 
    graph TD
-     page[nbs/16_terranix_infra.qmd] --> shared[nix/modules/shared.nix]
+     page[16_terranix_infra.rst] --> shared[nix/modules/shared.nix]
      page --> local[nix/modules/local.nix]
      page --> cloud[nix/modules/cloud.nix]
      local --> terranix[Terranix]
