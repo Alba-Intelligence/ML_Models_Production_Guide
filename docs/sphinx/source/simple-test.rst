@@ -1,29 +1,30 @@
-Simple Build Test
-=================
+---
+title: "Simple Build Test"
+---
+
+# Simple Build Test
 
 This file tests the basic Quarto build functionality without complex kernels.
 
-Test Content
-------------
+## Test Content
+
 This is a simple test to verify the build system works correctly.
 
-List Items
-----------
+### List Items
 - First item
 - Second item
 - Third item
 
-Code Block
-----------
-.. code-block:: python
+### Code Block
+```python
+print("Hello, World!")
+```
 
-   print("Hello, World!")
-
-Test Links
-----------
-- Main Index (index.rst)
-- Navigation Guide (navigation-guide.rst)
-- Reading Paths (reading-paths.rst)
+### Test Links
+- [Main Index](index.qmd)
+- [Navigation Guide](navigation-guide.qmd)
+- [Reading Paths](reading-paths.qmd)
 
 ---
-This test file should build without any kernel issues.
+
+*This test file should build without any kernel issues.*

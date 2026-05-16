@@ -1,10 +1,13 @@
-Comprehensive Build Test
-=======================
+---
+title: "Comprehensive Build Test"
+---
+
+# Comprehensive Build Test
 
 This page tests the Quarto build system functionality.
 
-Build System Test
------------------
+## Build System Test
+
 ### Test 1: Individual File Building
 - [ ] Test tutorial files build individually
 - [ ] Test reference files build individually
@@ -20,27 +23,27 @@ Build System Test
 - [ ] Validate CSS application
 - [ ] Validate JavaScript functionality
 
-Content Test
-------------
+## Content Test
+
 ### Tutorial Content
-- [ ] 01_Terminology_Glossary.rst
-- [ ] 02_Getting_Started.rst
-- [ ] 03_Concepts_and_Architecture.rst
-- [ ] 04_End_to_End_Workflow.rst
-- [ ] 05_Advanced_Scenarios.rst
-- [ ] 06_Migration_Guide.rst
+- [ ] 01_Terminology_Glossary.qmd
+- [ ] 02_Getting_Started.qmd
+- [ ] 03_Concepts_and_Architecture.qmd
+- [ ] 04_End_to_End_Workflow.qmd
+- [ ] 05_Advanced_Scenarios.qmd
+- [ ] 06_Migration_Guide.qmd
 
 ### Reference Content
-- [ ] 01_Implementation_Patterns.rst
-- [ ] 02_API_Documentation.rst
+- [ ] 01_Implementation_Patterns.qmd
+- [ ] 02_API_Documentation.qmd
 
 ### Navigation Content
-- [ ] index.rst
-- [ ] navigation-guide.rst
-- [ ] reading-paths.rst
+- [ ] index.qmd
+- [ ] navigation-guide.qmd
+- [ ] reading-paths.qmd
 
-Link Validation Test
--------------------
+## Link Validation Test
+
 ### Internal Links
 - [ ] Links between tutorial files
 - [ ] Links between reference files
@@ -52,8 +55,8 @@ Link Validation Test
 - [ ] Documentation links
 - [ ] Social media links
 
-Performance Test
-----------------
+## Performance Test
+
 ### Build Time
 - [ ] Individual file build time
 - [ ] Full site build time
@@ -66,4 +69,5 @@ Performance Test
 - [ ] Image assets size
 
 ---
+
 *This test page will be used to validate the complete build system.*

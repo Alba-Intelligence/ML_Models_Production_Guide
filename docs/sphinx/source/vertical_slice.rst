@@ -1,4 +1,7 @@
-Vertical Slice
-==============
+---
+title: "Vertical Slice"
+---
 
-This document describes a complete vertical slice example, including runnable code and traceability. (Stub)
+# Vertical Slice
+
+This document will describe a complete vertical slice example, including runnable code and traceability. (Stub)

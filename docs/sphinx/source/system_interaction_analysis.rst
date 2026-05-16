@@ -1,4 +1,7 @@
-System Interaction Analysis
-==========================
+---
+title: "System Interaction Analysis"
+---
 
-This document provides a detailed analysis of system interactions, entity maps, and security lineage. (Stub)
+# System Interaction Analysis
+
+This document will provide a detailed analysis of system interactions, entity maps, and security lineage. (Stub)

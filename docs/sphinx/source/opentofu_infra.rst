@@ -1,4 +1,7 @@
-OpenTofu Infrastructure
-======================
+---
+title: "OpenTofu Infrastructure"
+---
 
-This document describes the OpenTofu-based infrastructure provisioning and management. (Stub)
+# OpenTofu Infrastructure
+
+This document will describe the OpenTofu-based infrastructure provisioning and management. (Stub)
