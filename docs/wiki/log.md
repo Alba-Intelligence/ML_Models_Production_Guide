@@ -38,6 +38,32 @@ sources:
   - revisions/2026-05-11-readme-newcomer-onboarding.md
   - revisions/2026-05-11-mermaid-syntax-error-resolution.md
   - revisions/2026-05-11-notebook-escaped-newline-cleanup.md
+  - revisions/2026-05-16-exhaustive-qmd-to-rst-migration.md
+
+# Revision: 2026-05-16 exhaustive qmd-to-rst migration
+
+## Trigger
+
+User requested an exhaustive, professional migration of all Quarto `.qmd` documentation to Sphinx `.rst` files, with a logical, complete ToC and all content accessible in the Sphinx site.
+
+## What changed
+
+- Audited all `.qmd` files in `nbs/` and subfolders.
+- Ensured every `.qmd` has a `.rst` equivalent in `docs/sphinx/source/`.
+- Updated Sphinx ToC and section index files for logical structure and completeness.
+- Systematically replaced all `.qmd` references in `.rst` files (including diagrams and navigation) with `.rst`.
+- Verified Sphinx HTML build and navigation.
+- No `.qmd` files were deleted or modified.
+- All changes tracked in git.
+
+## Outcome
+
+- All `.qmd` files are now represented in Sphinx.
+- Navigation and ToC are exhaustive and logical.
+- Sphinx HTML build is successful and all content is accessible.
+- No `.qmd` references remain in Sphinx docs.
+- Wiki, README, and ToC are up to date.
+
   - revisions/2026-05-11-index-mermaid-hardening.md
   - revisions/2026-05-11-notebook-presentation-restructure.md
   - revisions/2026-05-11-allium-doc-series-completeness.md
