@@ -2,7 +2,8 @@
 title: "Platform Narrative"
 ---
 
-# Platform Overview
+Platform Overview
+=================
 
 This page is the compact overview of the ML Deploy platform.
 It explains the major layers and the main contracts without duplicating the detailed interaction analysis.

@@ -1,43 +1,47 @@
----
-title: "OpenTofu Infrastructure Profiles"
----
+OpenTofu Infrastructure Profiles
+===============================
 
 This page summarizes the dual-profile infrastructure posture.
 
-## Profiles
+Profiles
+--------
 
 - **local_emulation**: Floci + K3s + Slurm-Docker paired with MLflow/PostgreSQL.
 - **cloud**: AWS-backed infrastructure with Kubernetes control plane and Lambda.ai integration surfaces.
 
-## Generation model
+Generation model
+----------------
 
-- Terranix modules under `nix/modules/` provide shared plus profile-specific definitions.
-- Profile entrypoints under `nix/profiles/` compose modules into OpenTofu-compatible JSON.
+- Terranix modules under ``nix/modules/`` provide shared plus profile-specific definitions.
+- Profile entrypoints under ``nix/profiles/`` compose modules into OpenTofu-compatible JSON.
 - Apply flow is profile-scoped and local-emulation validation should precede cloud rollout.
 
-## Key outputs
+Key outputs
+-----------
 
 - Deployment profile identification.
 - MLflow tracking URI per profile.
 - Storage and scheduler endpoint references required by orchestration layers.
 
-## Copy-pasteable Terranix entrypoints
+Copy-pasteable Terranix entrypoints
+-----------------------------------
 
-The notebook pages document the same source that lives under `nix/` so the infrastructure story can be read without directory spelunking.
+The notebook pages document the same source that lives under ``nix/`` so the infrastructure story can be read without directory spelunking.
 
-```nix
-# nix/modules/local.nix
-{ config, lib, ... }:
+.. code-block:: nix
 
-with lib;
+   # nix/modules/local.nix
+   { config, lib, ... }:
 
-{
-  imports = [ ./shared.nix ];
+   with lib;
 
-  config.mlDeploy = {
-    profile           = "local_emulation";
-    mlflowTrackingUri = "http://localhost:5001";
-    awsEndpointUrl    = "http://localhost:4566";
+   {
+     imports = [ ./shared.nix ];
+
+     config.mlDeploy = {
+       profile           = "local_emulation";
+       mlflowTrackingUri = "http://localhost:5001";
+       awsEndpointUrl    = "http://localhost:4566";
     postgresHost      = "localhost";
   };
 

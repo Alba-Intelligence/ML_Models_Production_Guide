@@ -1,42 +1,41 @@
----
-title: "Terranix Infrastructure Source"
----
+Terranix Infrastructure Source
+=============================
 
-This page mirrors the Nix/Terranix source that generates the OpenTofu inputs.
-It exists so the infra story is readable from the website without browsing the
-source tree.
+This page mirrors the Nix/Terranix source that generates the OpenTofu inputs. It exists so the infra story is readable from the website without browsing the source tree.
 
-```{mermaid}
-graph TD
-  page[nbs/16_terranix_infra.rst] --> shared[nix/modules/shared.nix]
-  page --> local[nix/modules/local.nix]
-  page --> cloud[nix/modules/cloud.nix]
-  local --> terranix[Terranix]
-  cloud --> terranix
-  terranix --> json[OpenTofu JSON]
-```
+.. mermaid::
 
-## Shared module
+   graph TD
+     page[nbs/16_terranix_infra.rst] --> shared[nix/modules/shared.nix]
+     page --> local[nix/modules/local.nix]
+     page --> cloud[nix/modules/cloud.nix]
+     local --> terranix[Terranix]
+     cloud --> terranix
+     terranix --> json[OpenTofu JSON]
 
-```nix
-# nix/modules/shared.nix
-{ config, lib, ... }:
+Shared module
+-------------
 
-with lib;
+.. code-block:: nix
 
-let
-  cfg = config.mlDeploy;
-in {
-  options.mlDeploy = {
-    profile = mkOption {
-      type = types.enum [ "local_emulation" "cloud" ];
-      description = "Active deployment profile: local_emulation or cloud.";
-    };
+   # nix/modules/shared.nix
+   { config, lib, ... }:
 
-    projectName = mkOption {
-      type = types.str;
-      default = "ml-deploy";
-    };
+   with lib;
+
+   let
+     cfg = config.mlDeploy;
+   in {
+     options.mlDeploy = {
+       profile = mkOption {
+         type = types.enum [ "local_emulation" "cloud" ];
+         description = "Active deployment profile: local_emulation or cloud.";
+       };
+
+       projectName = mkOption {
+         type = types.str;
+         default = "ml-deploy";
+       };
 
     mlflowTrackingUri = mkOption {
       type = types.str;

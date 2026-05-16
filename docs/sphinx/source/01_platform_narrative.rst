@@ -1,8 +1,5 @@
----
-title: "Platform Narrative"
----
-
-# Platform Narrative
+Platform Narrative
+==================
 
 ## Platform architecture
 
