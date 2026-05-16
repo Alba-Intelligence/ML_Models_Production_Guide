@@ -5,6 +5,8 @@ uv.lock
 
 # nbdev generated documentation (Quarto output)
 docs/*
+!docs/sphinx/
+!docs/sphinx/source/
 _site/
 _docs/_site
 _proc/
