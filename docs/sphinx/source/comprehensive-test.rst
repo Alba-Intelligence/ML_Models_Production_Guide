@@ -23,21 +23,21 @@ Build System Test
 Content Test
 ------------
 ### Tutorial Content
-- [ ] 01_Terminology_Glossary.qmd
-- [ ] 02_Getting_Started.qmd
-- [ ] 03_Concepts_and_Architecture.qmd
-- [ ] 04_End_to_End_Workflow.qmd
-- [ ] 05_Advanced_Scenarios.qmd
-- [ ] 06_Migration_Guide.qmd
+- [ ] 01_Terminology_Glossary.rst
+- [ ] 02_Getting_Started.rst
+- [ ] 03_Concepts_and_Architecture.rst
+- [ ] 04_End_to_End_Workflow.rst
+- [ ] 05_Advanced_Scenarios.rst
+- [ ] 06_Migration_Guide.rst
 
 ### Reference Content
-- [ ] 01_Implementation_Patterns.qmd
-- [ ] 02_API_Documentation.qmd
+- [ ] 01_Implementation_Patterns.rst
+- [ ] 02_API_Documentation.rst
 
 ### Navigation Content
-- [ ] index.qmd
-- [ ] navigation-guide.qmd
-- [ ] reading-paths.qmd
+- [ ] index.rst
+- [ ] navigation-guide.rst
+- [ ] reading-paths.rst
 
 Link Validation Test
 -------------------
