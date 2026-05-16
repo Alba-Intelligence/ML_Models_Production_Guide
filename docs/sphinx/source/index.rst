@@ -1,85 +1,152 @@
-.. ML Deploy Reference documentation master file, created by
-   sphinx-quickstart on Sat May 16 20:36:26 2026.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+---
+title: "ML Deploy Documentation"
+---
 
-ML Deploy Documentation
-=======================
+# Welcome
 
-Welcome to the ML Deploy documentation—a comprehensive guide for machine learning deployment with full lifecycle management. This documentation is a permanent work-in-progress, continuously evolving to reflect the latest platform capabilities and best practices.
+Welcome to the ML Deploy documentation - a comprehensive guide for machine learning deployment with full lifecycle management. This documentation represents a permanent work-in-progress, continuously evolving to reflect the latest platform capabilities and best practices.
 
-Key Features
-------------
+The ML Deploy platform is distinguished by several key features that address the complex challenges of modern machine learning deployment:
 - **Full Lifecycle Management**: Comprehensive coverage from data preparation and model training through deployment and monitoring, ensuring complete management of the ML pipeline
 - **Nix-Based Infrastructure**: Reproducible infrastructure as code utilizing Nix capabilities to generate containers without Docker files while automatically producing Terraform and OpenTofu configurations for cloud deployment
 - **Comprehensive Lineage**: Complete traceability across all ML pipeline stages, enabling full auditability and reproducibility of data and model transformations
 - **Security-First Architecture**: Built-in governance frameworks and security controls designed to meet enterprise requirements while maintaining development flexibility
 - **Multi-Environment Support**: Seamless deployment across development, staging, and production environments with consistent tooling and process parity between local and cloud platforms
 
-Platform Architecture
----------------------
 The platform architecture is organized into five key component areas, each serving specific functions within the ML deployment ecosystem:
 
 - **ML Training / Inference**:
-  - Notebook First: ML Researchers send their notebooks unchanged to the platform, which extracts metadata and executes them in a controlled environment
-  - Libraries: Focused on Python-only stack
-  - MLflow: For experiment tracking and model registry
+  - _Notebook First_: ML Researchers send their notebooks unchanged to the platform, which extracts metadata and executes them in a controlled environment
+  - _Libraries_: Focused on Python-only stack
+  - _MLflow_: For experiment tracking and model registry
+
 - **Data**:
-  - Data Catalog: For managing and discovering data assets
-  - Data Lineage: For tracking data transformations and dependencies
-  - Logging & Monitoring: For observability of data and model performance
+  - _Data Catalog_: For managing and discovering data assets
+  - _Data Lineage_: For tracking data transformations and dependencies
+  - _Logging & Monitoring_: For observability of data and model performance
+
 - **Orchestration**:
-  - Kubeflow: For workflow orchestration and pipeline management
-  - Airflow: For scheduling and monitoring workflows
+  - _Kubeflow_: For workflow orchestration and pipeline management
+  - _Airflow_: For scheduling and monitoring workflows
+
 - **Backends**:
-  - Cloud: For scalable production deployments: compute resources on Lambda.ai distributed with Slurm, all other tools hosted on AWS
-  - Local: For development and testing: Compute resources on Lambda.ai distributed with Slurm, all other tools on Floci replicating AWS services locally
+  - _Cloud_: For scalable production deployments: compute resources on [Lambda.ai](https://lambda.ai/) distributed with Slurm, all other tools hosted on AWS
+  - _Local_: For development and testing: Compute resources on [Lambda.ai](https://lambda.ai/) distributed with Slurm, all other tools on [Floci](https://floci.io/) replicating AWS services locally
+
 - **Configuration**:
-  - Nix: Nix-only for reproducible builds and environment management
-  - uv2nix: For generating Nix expressions from uv project definitions
-  - Containers: For local emulation and cloud deployment, generated from Nix definitions (no docker files)
-  - Terranix: For generating Terraform configurations from Nix definitions
+  - _Nix_: Nix-only for reproducible builds and environment management
+  - _uv2nix_: For generating Nix expressions from uv project definitions
+  - _Containers_: For local emulation and cloud deployment, generated from Nix definitions (no docker files)
+  - _Terranix_: For generating Terraform configurations from Nix definitions
+  - _Opentofu_: For infrastructure provisioning and management
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
 
-   Introduction and Overview
-   ------------------------
-   01_05-platform_narrative
-   01_04-core_concepts
-   01_03-platform_architecture
+## Quick Start Guide
 
-   Infrastructure and Integration
-   -----------------------------
-   03_04-terraniq_integration
-   opentofu_infra
+This section provides entry points to the documentation based on your specific needs and experience level:
 
-   Governance and Security
-   ----------------------
-   04_05-governance_framework
-   17_governance_gates
+- **For New Users**: Begin with the [Getting Started Guide](tutorials/02_Getting_Started.rst) to establish foundational knowledge and configure your development environment
+- **For Implementation Reference**: Consult the [Implementation Patterns](reference/01_Implementation_Patterns.qmd) for technical patterns and best practices when implementing specific functionality
+- **For API Integration**: Review the [API Documentation](reference/02_API_Documentation.qmd) for complete API reference and integration examples
 
-   User Interfaces
-   ---------------
-   04_04-user_interfaces
+For detailed explanations of EX-01, EX-02, and EX-03 vertical slices, refer to the [Terminology Glossary](tutorials/01_Terminology_Glossary.qmd).
 
-   Example Workflows
-   -----------------
-   06_vertical_slice
-   vertical_slice
-   07_mlflow_parity
+## Documentation Structure
 
-   Analysis and Reading Paths
-   -------------------------
-   system_interaction_analysis
-   reading-paths
+### System Components & Roles
 
-   Comprehensive Test
-   ------------------
-   comprehensive-test
+See [Platform Narrative](01_platform_narrative.rst#system-components--roles) for a detailed breakdown of all major system components and roles.
 
-   simple-test
-   opentofu_infra
-   reference/index
-   tutorials/index
+### Execution & Data Flow
+
+See [Platform Narrative](01_platform_narrative.rst#execution--data-flow) for a detailed description of execution and data flow in the platform.
+
+### Lifecycle notebooks
+
+See [Platform Narrative](01_platform_narrative.rst#lifecycle-notebooks) for an overview of lifecycle notebooks and their role in the platform.
+
+### Topology and operations notebooks
+
+See [Platform Narrative](01_platform_narrative.rst#topology-and-operations-notebooks) for details on topology and operations notebooks.
+
+[Vertical slice reference](06_vertical_slice.rst)
+
+### Deployment & Infrastructure
+
+See [Platform Narrative](01_platform_narrative.rst#deployment--infrastructure) for deployment models, infrastructure parity, and provisioning workflows.
+
+[Execution backends](08_execution_backends.rst)
+
+### Governance & Safety
+
+See [Platform Narrative](01_platform_narrative.rst#governance--safety) for governance, safety, and policy enforcement mechanisms.
+
+### Learning Paths
+
+See [Platform Narrative](01_platform_narrative.rst#learning-paths) for role-specific learning paths and diagrams for ML Researchers, Infrastructure & Operations Engineers, and Platform Architects.
+
+#### Learning Path Diagrams
+
+- **Data Scientists & ML Researchers**
+  
+  ![ML Researcher Learning Path Diagram](https://placehold.co/600x400?text=ML+Researcher+Learning+Path)
+
+- **Infrastructure & Operations Engineers**
+  
+  ![Infra & Ops Learning Path Diagram](https://placehold.co/600x400?text=Infra+%26+Ops+Learning+Path)
+
+### Learning Path: Tutorials
+
+The tutorials section provides structured, progressive learning through guided examples and hands-on exercises. Each tutorial builds upon previous concepts to ensure comprehensive understanding:
+
+1. **[Terminology Glossary](tutorials/01_Terminology_Glossary.rst)** - Understand EX-01, EX-02, EX-03 vertical slices and other key terms
+2. **[Getting Started](tutorials/02_Getting_Started.rst)** - Set up your environment and learn the basics
+3. **[Concepts and Architecture](tutorials/03_Concepts_and_Architecture.rst)** - Understand the platform architecture
+4. **[End-to-End Workflow](tutorials/04_End_to_End_Workflow.rst)** - Complete EX-01→EX-02→EX-03 workflow tutorial
+5. **[Advanced Scenarios](tutorials/05_Advanced_Scenarios.rst)** - Distributed training, batch inference, and online serving
+6. **[Migration Guide](tutorials/06_Migration_Guide.rst)** - Migrate from other platforms
+
+### Technical Reference Documentation
+
+The reference section provides comprehensive technical documentation for implementation, integration, and advanced usage scenarios. These documents serve as authoritative sources for technical specifications and implementation details:
+
+1. **[Implementation Patterns](reference/01_Implementation_Patterns.rst)** - Technical patterns and best practices
+2. **[API Documentation](reference/02_API_Documentation.rst)** - Complete API reference
+
+## Learning Paths
+
+### Beginner Learning Path
+
+For users new to ML deployment or the ML Deploy platform, follow this sequential path to build foundational knowledge:
+
+1. **Terminology Glossary → Getting Started → Concepts and Architecture**: Establish vocabulary and basic platform understanding
+2. **End-to-End Workflow → Implementation Patterns**: Gain practical experience through complete workflow implementation
+
+### Intermediate Learning Path
+
+For users with existing ML deployment experience who are new to the ML Deploy platform:
+
+1. **Concepts and Architecture → End-to-End Workflow**: Understand platform architecture and apply it through practical implementation
+2. **Implementation Patterns → API Documentation**: Learn specific implementation patterns and integrate with platform APIs
+
+### Advanced Learning Path
+
+For experienced ML deployment professionals and platform architects:
+
+1. **API Documentation → Implementation Patterns**: Deep dive into platform APIs and master advanced implementation patterns
+2. **Advanced Scenarios → Migration Guide**: Explore complex deployment scenarios and plan platform migrations
+
+## Support and Resources
+
+Multiple resources are available to assist users at different experience levels and for various types of support needs:
+
+- **Documentation Search**: Utilize the search function in the sidebar to quickly locate specific topics and documentation sections
+- **Community Forum**: Engage with other ML Deploy users and community members to share experiences and seek advice
+- **Issue Tracking**: Report bugs, request features, or contribute improvements through the GitHub issue tracking system
+- **Enterprise Support**: Contact the dedicated support team for paid plans to receive priority assistance and personalized guidance
+
+For the most current information and updates, always refer to the latest version of this documentation.
+
+---
+
+*This documentation is built with Quarto and automatically updated as the platform evolves. For the most current information, always check the latest version.*
