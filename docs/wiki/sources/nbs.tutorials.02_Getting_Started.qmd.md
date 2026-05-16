@@ -42,16 +42,19 @@ The getting started guide includes:
 ## Learning Path Structure
 
 ### Foundational Path (New Users)
+
 - **Duration**: 6-8 hours
 - **Focus**: Core concepts, environment setup, basic implementation
 - **Key Activities**: Terminology learning, environment configuration, basic workflow execution
 
 ### Professional Path (Experienced Users)
-- **Duration**: 4-6 hours  
+
+- **Duration**: 4-6 hours
 - **Focus**: Architecture deep dive, implementation patterns, production patterns
 - **Key Activities**: Architecture review, API integration, infrastructure setup
 
 ### Infrastructure Path (Infrastructure Engineers)
+
 - **Duration**: 5-7 hours
 - **Focus**: Infrastructure components, configuration, operations
 - **Key Activities**: Environment setup, deployment management, monitoring

@@ -18,6 +18,8 @@ Provide a single storage posture for both local replica and production-style flo
 
 - MLflow backend store on PostgreSQL
 - MLflow artifacts on S3-compatible object storage (Floci locally, S3 in AWS)
+- local and cloud should share the same logical MLflow shape
+- MLflow is the interim storage/traceability layer for metrics, logs, and run-linked outputs until a proper datalake is defined later
 
 ## Local replica baseline
 
@@ -49,5 +51,5 @@ Provide a single storage posture for both local replica and production-style flo
 
 ## Notes
 
-- Local MLflow file-store mode is acceptable only for quick tests; parity work should use PostgreSQL + S3-compatible storage.
+- Local-only file-store mode is not part of the reference path; parity work should use PostgreSQL + S3-compatible storage.
 - Terraform provisioning should be initiated from Python workflows (`python-terraform`) and not by ad-hoc hand-written `.tf` expansion where avoidable.

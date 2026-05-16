@@ -365,7 +365,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./tutorials/05_Advanced_Scenarios.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Advanced ML Scenarios</span></a>
+ <span class="menu-text">Advanced Scenarios</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -396,6 +396,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="sidebar-item-container"> 
   <a href="./reference/02_API_Documentation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">API Documentation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reference/03_Security_Authorization_and_Policy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Security, Roles, and Policy</span></a>
   </div>
 </li>
       </ul>
@@ -570,7 +576,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>This notebook demonstrates how to train a simple machine learning model.</p>
 </blockquote>
 <p>We will use the data prepared in the previous notebook to train a logistic regression model.</p>
-<div id="2f36aed0" class="cell" data-export="null">
+<div id="55aaf5a4" class="cell" data-export="null">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
@@ -581,7 +587,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="load-processed-data" class="level2">
 <h2 class="anchored" data-anchor-id="load-processed-data">Load Processed Data</h2>
 <p>In a real project, we would load the data that was prepared and saved. For simplicity, we’ll regenerate the same data split as in the previous notebook.</p>
-<div id="bf6a5f29" class="cell" data-export="null">
+<div id="ed2e1819" class="cell" data-export="null">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Regenerate the same data split for consistency</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -623,7 +629,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="model-training-with-mlflow-tracking" class="level2">
 <h2 class="anchored" data-anchor-id="model-training-with-mlflow-tracking">Model Training with MLflow Tracking</h2>
 <p>We will use MLflow to track our experiment, parameters, and metrics.</p>
-<div id="218633ca" class="cell" data-export="null">
+<div id="65aa4959" class="cell" data-export="null">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set MLflow tracking URI (optional, for local tracking)</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>mlflow.set_tracking_uri(<span class="st">"file://./mlruns"</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -665,7 +671,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="model-serialization" class="level2">
 <h2 class="anchored" data-anchor-id="model-serialization">Model Serialization</h2>
 <p>We can also save the model using joblib or pickle for later use. However, MLflow already provides a way to save and load the model. For completeness, let’s also save the scaler so we can preprocess new data the same way.</p>
-<div id="8027dbbb" class="cell" data-export="null">
+<div id="9ae1144c" class="cell" data-export="null">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> joblib</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -684,7 +690,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="summary" class="level2">
 <h2 class="anchored" data-anchor-id="summary">Summary</h2>
 <p>In this notebook, we’ve: 1. Loaded and prepared the data (same as in the previous notebook) 2. Trained a logistic regression model 3. Tracked the experiment with MLflow (parameters, metrics, and model) 4. Evaluated the model on the test set 5. Saved the model and scaler for later use</p>
-<p>The next steps would be to: - Package the model for deployment - Create a serving API (e.g., with FastAPI or another framework) - Set up monitoring for the deployed model</p>
+<p>The next steps would be to: - Package the model for deployment - Create a serving API using the stack’s chosen Python web layer - Set up monitoring for the deployed model</p>
 <hr>
 <p><em>This notebook exports functions and variables that can be used in other notebooks.</em></p>
 

@@ -43,30 +43,35 @@ The system architecture document includes:
 ## Architectural Layers
 
 ### Infrastructure Layer
+
 - **Containerization**: Nix-based containerization with dockerTools
 - **Orchestration**: Kubernetes-based resource management
 - **Storage**: Persistent storage and data management
 - **Networking**: Network configuration and security
 
 ### Execution Layer
+
 - **Job Management**: Complete job lifecycle management
 - **Resource Allocation**: Intelligent resource allocation and management
 - **Monitoring**: Comprehensive execution monitoring and logging
 - **Error Handling**: Robust error handling and recovery mechanisms
 
 ### Platform Layer
+
 - **API Layer**: Comprehensive REST API for platform capabilities
 - **Service Layer**: Platform service implementation and management
 - **Integration Layer**: Integration with external systems and services
 - **Security Layer**: Security and access control implementation
 
 ### Application Layer
+
 - **ML Workflows**: ML workflow management and execution
 - **Model Management**: Model lifecycle management and deployment
 - **Data Management**: Data pipeline and transformation management
 - **Monitoring**: Application-level monitoring and observability
 
 ### User Interface Layer
+
 - **Web UI**: Web-based user interface for platform interaction
 - **API Clients**: Client libraries for programmatic access
 - **CLI Tools**: Command-line interface for platform management
@@ -75,18 +80,21 @@ The system architecture document includes:
 ## Integration Patterns
 
 ### Component Integration
+
 - **API Integration**: RESTful API integration between components
 - **Event-Driven**: Event-driven architecture for real-time processing
 - **Data Streaming**: Data streaming and transformation pipelines
 - **Service Discovery**: Service discovery and load balancing
 
 ### Data Flow
+
 - **Data Ingestion**: Data ingestion and validation pipelines
 - **Data Processing**: Data processing and transformation workflows
 - **Model Training**: Model training and experiment management
 - **Model Deployment**: Model deployment and serving infrastructure
 
 ### Communication Patterns
+
 - **Synchronous**: Request/response communication patterns
 - **Asynchronous**: Event-driven and message-based communication
 - **Batch Processing**: Batch-oriented data processing workflows

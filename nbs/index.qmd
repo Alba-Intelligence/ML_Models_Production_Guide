@@ -53,6 +53,48 @@ For detailed explanations of EX-01, EX-02, and EX-03 vertical slices, refer to t
 
 ## Documentation Structure
 
+### System Components & Roles
+
+See [Platform Narrative](01_platform_narrative.qmd#system-components--roles) for a detailed breakdown of all major system components and roles.
+
+### Execution & Data Flow
+
+See [Platform Narrative](01_platform_narrative.qmd#execution--data-flow) for a detailed description of execution and data flow in the platform.
+
+### Lifecycle notebooks
+
+See [Platform Narrative](01_platform_narrative.qmd#lifecycle-notebooks) for an overview of lifecycle notebooks and their role in the platform.
+
+### Topology and operations notebooks
+
+See [Platform Narrative](01_platform_narrative.qmd#topology-and-operations-notebooks) for details on topology and operations notebooks.
+
+[Vertical slice reference](06_vertical_slice.qmd)
+
+### Deployment & Infrastructure
+
+See [Platform Narrative](01_platform_narrative.qmd#deployment--infrastructure) for deployment models, infrastructure parity, and provisioning workflows.
+
+[Execution backends](08_execution_backends.qmd)
+
+### Governance & Safety
+
+See [Platform Narrative](01_platform_narrative.qmd#governance--safety) for governance, safety, and policy enforcement mechanisms.
+
+### Learning Paths
+
+See [Platform Narrative](01_platform_narrative.qmd#learning-paths) for role-specific learning paths and diagrams for ML Researchers, Infrastructure & Operations Engineers, and Platform Architects.
+
+#### Learning Path Diagrams
+
+- **Data Scientists & ML Researchers**
+  
+  ![ML Researcher Learning Path Diagram](https://placehold.co/600x400?text=ML+Researcher+Learning+Path)
+
+- **Infrastructure & Operations Engineers**
+  
+  ![Infra & Ops Learning Path Diagram](https://placehold.co/600x400?text=Infra+%26+Ops+Learning+Path)
+
 ### Learning Path: Tutorials
 
 The tutorials section provides structured, progressive learning through guided examples and hands-on exercises. Each tutorial builds upon previous concepts to ensure comprehensive understanding:

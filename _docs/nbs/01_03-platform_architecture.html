@@ -74,9 +74,6 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
-<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
-<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="styles.css">
@@ -333,7 +330,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./tutorials/05_Advanced_Scenarios.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Advanced ML Scenarios</span></a>
+ <span class="menu-text">Advanced Scenarios</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -364,6 +361,12 @@ ul.task-list li input[type="checkbox"] {
   <div class="sidebar-item-container"> 
   <a href="./reference/02_API_Documentation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">API Documentation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reference/03_Security_Authorization_and_Policy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Security, Roles, and Policy</span></a>
   </div>
 </li>
       </ul>
@@ -500,45 +503,15 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#platform-overview" id="toc-platform-overview" class="nav-link active" data-scroll-target="#platform-overview">Platform Overview</a>
   <ul class="collapse">
-  <li><a href="#platform-architecture" id="toc-platform-architecture" class="nav-link" data-scroll-target="#platform-architecture">Platform architecture</a></li>
-  <li><a href="#system-components-roles" id="toc-system-components-roles" class="nav-link" data-scroll-target="#system-components-roles">1. System Components &amp; Roles</a>
-  <ul class="collapse">
-  <li><a href="#core-entities" id="toc-core-entities" class="nav-link" data-scroll-target="#core-entities">Core Entities</a></li>
-  <li><a href="#entity-relationships-and-responsibilities" id="toc-entity-relationships-and-responsibilities" class="nav-link" data-scroll-target="#entity-relationships-and-responsibilities">Entity Relationships and Responsibilities</a></li>
-  <li><a href="#component-interaction-overview" id="toc-component-interaction-overview" class="nav-link" data-scroll-target="#component-interaction-overview">Component Interaction Overview</a></li>
-  </ul></li>
-  <li><a href="#execution-data-flow" id="toc-execution-data-flow" class="nav-link" data-scroll-target="#execution-data-flow">2. Execution &amp; Data Flow</a>
-  <ul class="collapse">
-  <li><a href="#key-workflows" id="toc-key-workflows" class="nav-link" data-scroll-target="#key-workflows">Key Workflows</a></li>
-  <li><a href="#state-machines" id="toc-state-machines" class="nav-link" data-scroll-target="#state-machines">State Machines</a></li>
-  </ul></li>
-  <li><a href="#deployment-infrastructure" id="toc-deployment-infrastructure" class="nav-link" data-scroll-target="#deployment-infrastructure">3. Deployment &amp; Infrastructure</a>
-  <ul class="collapse">
-  <li><a href="#local-emulation-stack" id="toc-local-emulation-stack" class="nav-link" data-scroll-target="#local-emulation-stack">Local Emulation Stack</a></li>
-  <li><a href="#cloud-deployment-topology" id="toc-cloud-deployment-topology" class="nav-link" data-scroll-target="#cloud-deployment-topology">Cloud Deployment Topology</a></li>
-  <li><a href="#infrastructure-parity-constraints" id="toc-infrastructure-parity-constraints" class="nav-link" data-scroll-target="#infrastructure-parity-constraints">Infrastructure Parity Constraints</a></li>
-  <li><a href="#component-parity" id="toc-component-parity" class="nav-link" data-scroll-target="#component-parity">Component Parity</a></li>
-  </ul></li>
-  <li><a href="#governance-safety" id="toc-governance-safety" class="nav-link" data-scroll-target="#governance-safety">4. Governance &amp; Safety</a>
-  <ul class="collapse">
-  <li><a href="#promotion-gate-architecture" id="toc-promotion-gate-architecture" class="nav-link" data-scroll-target="#promotion-gate-architecture">Promotion Gate Architecture</a></li>
-  <li><a href="#spec-first-governance" id="toc-spec-first-governance" class="nav-link" data-scroll-target="#spec-first-governance">Spec-First Governance</a></li>
-  </ul></li>
-  <li><a href="#learning-paths" id="toc-learning-paths" class="nav-link" data-scroll-target="#learning-paths">5. Learning Paths</a>
-  <ul class="collapse">
-  <li><a href="#software-engineer-learning-path" id="toc-software-engineer-learning-path" class="nav-link" data-scroll-target="#software-engineer-learning-path">Software Engineer Learning Path</a></li>
-  <li><a href="#ml-researcher-learning-path" id="toc-ml-researcher-learning-path" class="nav-link" data-scroll-target="#ml-researcher-learning-path">ML Researcher Learning Path</a></li>
-  </ul></li>
-  <li><a href="#implementation-steps" id="toc-implementation-steps" class="nav-link" data-scroll-target="#implementation-steps">Implementation steps</a></li>
-  <li><a href="#trade-offs" id="toc-trade-offs" class="nav-link" data-scroll-target="#trade-offs">Trade-offs</a></li>
-  <li><a href="#security-considerations" id="toc-security-considerations" class="nav-link" data-scroll-target="#security-considerations">Security considerations</a></li>
-  <li><a href="#examples-of-use" id="toc-examples-of-use" class="nav-link" data-scroll-target="#examples-of-use">Examples of use</a></li>
-  <li><a href="#software-engineer-learning-path-1" id="toc-software-engineer-learning-path-1" class="nav-link" data-scroll-target="#software-engineer-learning-path-1">Software engineer learning path</a></li>
-  <li><a href="#ml-researcher-learning-path-1" id="toc-ml-researcher-learning-path-1" class="nav-link" data-scroll-target="#ml-researcher-learning-path-1">ML researcher learning path</a></li>
-  <li><a href="#cross-cutting-concepts" id="toc-cross-cutting-concepts" class="nav-link" data-scroll-target="#cross-cutting-concepts">Cross-Cutting Concepts</a>
-  <ul class="collapse">
-  <li><a href="#high-level-introduction" id="toc-high-level-introduction" class="nav-link" data-scroll-target="#high-level-introduction">High-Level Introduction</a></li>
-  </ul></li>
+  <li><a href="#what-the-platform-is" id="toc-what-the-platform-is" class="nav-link" data-scroll-target="#what-the-platform-is">What the platform is</a></li>
+  <li><a href="#core-layers" id="toc-core-layers" class="nav-link" data-scroll-target="#core-layers">Core layers</a></li>
+  <li><a href="#core-entities" id="toc-core-entities" class="nav-link" data-scroll-target="#core-entities">Core entities</a></li>
+  <li><a href="#execution-flow" id="toc-execution-flow" class="nav-link" data-scroll-target="#execution-flow">Execution flow</a></li>
+  <li><a href="#contract-checkpoints" id="toc-contract-checkpoints" class="nav-link" data-scroll-target="#contract-checkpoints">Contract checkpoints</a></li>
+  <li><a href="#topology-view" id="toc-topology-view" class="nav-link" data-scroll-target="#topology-view">Topology view</a></li>
+  <li><a href="#governance-view" id="toc-governance-view" class="nav-link" data-scroll-target="#governance-view">Governance view</a></li>
+  <li><a href="#learning-path" id="toc-learning-path" class="nav-link" data-scroll-target="#learning-path">Learning path</a></li>
+  <li><a href="#practical-rule" id="toc-practical-rule" class="nav-link" data-scroll-target="#practical-rule">Practical rule</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/alba-intelligence/ml_deploy/edit/main/01_03-platform_architecture.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/alba-intelligence/ml_deploy/blob/main/01_03-platform_architecture.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/alba-intelligence/ml_deploy/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div><div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="01_03-platform_architecture.md"><i class="bi bi-file-code"></i>CommonMark</a></li></ul></div></nav>
@@ -568,615 +541,110 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="platform-overview" class="level1">
 <h1>Platform Overview</h1>
-<p>The ML model deployment platform provides a specification-first, notebook-driven foundation for training, promotion, and infrastructure-as-code governance. The system prioritizes self-contained documentation, traceability through MLflow, and local-to-cloud parity for infrastructure and operations.</p>
-<section id="platform-architecture" class="level2">
-<h2 class="anchored" data-anchor-id="platform-architecture">Platform architecture</h2>
-<p>The platform is organized into five core domains:</p>
-<ol type="1">
-<li><strong>System Components &amp; Roles</strong> — Core entities (Repository, DocumentationSeries, MLflow, OpenTofu) and their relationships</li>
-<li><strong>Execution &amp; Data Flow</strong> — Workflows (notebook execution, model promotion, artifact tracking) and state machines</li>
-<li><strong>Deployment &amp; Infrastructure</strong> — Local emulation and cloud topology with parity constraints</li>
-<li><strong>Governance &amp; Safety</strong> — Promotion gates and spec-first safety controls</li>
-<li><strong>Learning Paths</strong> — Role-specific reading guides for engineers and researchers</li>
-</ol>
-<p>See detailed breakdowns below.</p>
-<hr>
-</section>
-<section id="system-components-roles" class="level2">
-<h2 class="anchored" data-anchor-id="system-components-roles">1. System Components &amp; Roles</h2>
-<section id="core-entities" class="level3">
-<h3 class="anchored" data-anchor-id="core-entities">Core Entities</h3>
-<p>The platform’s architecture is built on five core entities and their relationships:</p>
+<p>This page is the compact overview of the ML Deploy platform. It explains the major layers and the main contracts without duplicating the detailed interaction analysis.</p>
+<p>For the detailed entity map and relationship view, see:</p>
 <ul>
-<li><strong>Repository</strong>: The root scope; manages phases (specification_first vs.&nbsp;implementation_enabled), tracks deployment profiles, and orchestrates CI/CD.</li>
-<li><strong>DocumentationSeries</strong>: Self-contained, hierarchical docs that serve as the source of truth for system behavior.</li>
-<li><strong>OpenTofuConfiguration</strong>: Infrastructure-as-code generated by Nix/Terranix; supports both local emulation and cloud deployment profiles.</li>
-<li><strong>MLflowTrackingServer</strong>: Centralized model and experiment tracking with PostgreSQL backend and S3/Floci artifact store.</li>
-<li><strong>ModelArtifact</strong>: Versioned model packages with promotion gates (DEV → UAT → REGRESSION → PROD).</li>
-<li><strong>PromotionStage</strong>: Discrete approval and quality gate levels for production safety.</li>
+<li><code>12_system_interaction_analysis.qmd</code></li>
+<li><code>docs/wiki/architecture/full-system-interaction-analysis.md</code></li>
+</ul>
+<section id="what-the-platform-is" class="level2">
+<h2 class="anchored" data-anchor-id="what-the-platform-is">What the platform is</h2>
+<p>The repository is a specification-first, notebook-driven reference for ML deployment. It emphasizes:</p>
+<ul>
+<li>immutable notebook source-of-truth</li>
+<li>MLflow-linked traceability</li>
+<li>local/cloud parity</li>
+<li>contract-first execution</li>
+<li>explicit security and approval boundaries</li>
 </ul>
 </section>
-<section id="entity-relationships-and-responsibilities" class="level3">
-<h3 class="anchored" data-anchor-id="entity-relationships-and-responsibilities">Entity Relationships and Responsibilities</h3>
-<p>This introduction-level narrative intentionally keeps entity relationships concise. For the full relationship map and responsibility-level structure, see <a href="./05_01-system_architecture.html"><code>12_system_interaction_analysis.qmd</code></a>.</p>
-</section>
-<section id="component-interaction-overview" class="level3">
-<h3 class="anchored" data-anchor-id="component-interaction-overview">Component Interaction Overview</h3>
-<p>The system orchestrates seven interaction domains:</p>
+<section id="core-layers" class="level2">
+<h2 class="anchored" data-anchor-id="core-layers">Core layers</h2>
+<p>The platform is easiest to understand in five layers:</p>
 <ol type="1">
-<li><strong>Notebook Intake</strong>: Immutable qmd/ipynb sources with export guards</li>
-<li><strong>Execution Dispatch</strong>: Route to local, Slurm, or Kubernetes executors</li>
-<li><strong>MLflow Traceability</strong>: Track params, metrics, artifacts, model versions</li>
-<li><strong>Data Lineage</strong>: Link datasets, transformations, features, model artifacts, and promotion events end-to-end</li>
-<li><strong>Artifact Management</strong>: Package, version, and store trained models</li>
-<li><strong>Security &amp; Capability Validation</strong>: Enforce role/capability checks for data access, model operations, local/cloud execution, infrastructure changes, and promotion actions</li>
-<li><strong>Promotion &amp; Governance</strong>: Apply gates, approvals, and quality checks before production</li>
-</ol>
-<hr>
-</section>
-</section>
-<section id="execution-data-flow" class="level2">
-<h2 class="anchored" data-anchor-id="execution-data-flow">2. Execution &amp; Data Flow</h2>
-<section id="key-workflows" class="level3">
-<h3 class="anchored" data-anchor-id="key-workflows">Key Workflows</h3>
-<p>The platform implements four primary workflows, each with distinct decision points and state transitions:</p>
-<section id="a.-notebook-execution-workflow-ex-01" class="level4">
-<h4 class="anchored" data-anchor-id="a.-notebook-execution-workflow-ex-01">A. Notebook Execution Workflow (EX-01)</h4>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">sequenceDiagram
-    actor Engineer
-    participant Notebook as Quarto QMD
-    participant Intake as Notebook Intake
-    participant Dispatch as Execution Dispatch
-    participant Executor as Local/Slurm/K8s
-    participant MLflow as MLflow Server
-    
-    Engineer-&gt;&gt;Notebook: Run cell
-    Notebook-&gt;&gt;Intake: Extract execution request
-    Intake-&gt;&gt;Intake: Validate contract
-    Intake-&gt;&gt;Dispatch: Dispatch (immutable contract)
-    Dispatch-&gt;&gt;Executor: Route to target
-    Executor-&gt;&gt;MLflow: Log params, metrics
-    Executor-&gt;&gt;Executor: Train model
-    MLflow-&gt;&gt;MLflow: Record artifact URI
-    Executor-&gt;&gt;MLflow: Log model version
-    MLflow--&gt;&gt;Engineer: Run completed
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-</section>
-<section id="b.-model-promotion-workflow-ex-02-ex-03" class="level4">
-<h4 class="anchored" data-anchor-id="b.-model-promotion-workflow-ex-02-ex-03">B. Model Promotion Workflow (EX-02 → EX-03)</h4>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">sequenceDiagram
-    actor Approver
-    participant Artifact as ModelArtifact
-    participant Gate as Promotion Gate
-    participant Registry as MLflow Registry
-    participant Infra as Infrastructure
-    
-    Approver-&gt;&gt;Gate: Request promotion
-    Gate-&gt;&gt;Gate: Check quality gates
-    Gate-&gt;&gt;Gate: Verify approval status
-    alt Approval granted
-        Gate-&gt;&gt;Registry: Update stage
-        Registry-&gt;&gt;Infra: Prepare environment
-        Infra-&gt;&gt;Infra: Apply infrastructure changes
-        Infra--&gt;&gt;Approver: Promotion complete
-    else Approval denied
-        Gate--&gt;&gt;Approver: Promotion blocked
-    end
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-</section>
-<section id="c.-artifact-tracking-workflow" class="level4">
-<h4 class="anchored" data-anchor-id="c.-artifact-tracking-workflow">C. Artifact Tracking Workflow</h4>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">sequenceDiagram
-    participant Training as Training Run
-    participant MLflow as MLflow Server
-    participant Store as PostgreSQL + S3/Floci
-    participant Records as Artifact Records
-    
-    Training-&gt;&gt;MLflow: Start run
-    Training-&gt;&gt;MLflow: Log params
-    Training-&gt;&gt;MLflow: Log metrics
-    Training-&gt;&gt;Store: Save model binary
-    MLflow-&gt;&gt;Store: Record artifact path
-    MLflow-&gt;&gt;Records: Create model version
-    Records-&gt;&gt;Records: Initialize stage as DEV
-    Records--&gt;&gt;Training: Artifact ready
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section id="state-machines" class="level3">
-<h3 class="anchored" data-anchor-id="state-machines">State Machines</h3>
-<section id="repository-governance-phase-machine" class="level4">
-<h4 class="anchored" data-anchor-id="repository-governance-phase-machine">Repository Governance Phase Machine</h4>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">stateDiagram-v2
-    [*] --&gt; specification_first
-    
-    specification_first --&gt; implementation_enabled: explicit_confirmation + quality_gate_passed
-    
-    implementation_enabled --&gt; implementation_enabled: re-check confirmation
-    
-    note right of specification_first
-        Phase 1: Spec must be reviewed
-        Quality gate must pass
-        Explicit user confirmation required
-    end note
-    
-    note right of implementation_enabled
-        Phase 2: Implementation active
-        Future checks still require confirmation
-        Code and spec must stay aligned
-    end note
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-</section>
-<section id="model-promotion-state-machine" class="level4">
-<h4 class="anchored" data-anchor-id="model-promotion-state-machine">Model Promotion State Machine</h4>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">stateDiagram-v2
-    [*] --&gt; DEV
-    
-    DEV --&gt; UAT: passes_smoke_tests
-    UAT --&gt; REGRESSION: passes_uat_suite + no_data_leakage + meets_minimum_metrics
-    REGRESSION --&gt; PROD: passes_regression_suite + no_performance_regression + security_scan_passed
-    
-    note right of DEV
-        Initial artifact stage
-        Available for smoke testing
-    end note
-    
-    note right of UAT
-        User acceptance testing
-        Production-representative sample data
-    end note
-    
-    note right of REGRESSION
-        Full regression suite
-        Data leakage and performance checks
-    end note
-    
-    note right of PROD
-        Production live serving
-        Security scan passed
-        PyTorch optimizations applied
-    end note
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<hr>
-</section>
-</section>
-</section>
-<section id="deployment-infrastructure" class="level2">
-<h2 class="anchored" data-anchor-id="deployment-infrastructure">3. Deployment &amp; Infrastructure</h2>
-<section id="local-emulation-stack" class="level3">
-<h3 class="anchored" data-anchor-id="local-emulation-stack">Local Emulation Stack</h3>
-<p>The local development environment mirrors production infrastructure using Docker Compose:</p>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">graph LR
-    subgraph Local["Local Development (Docker Compose)"]
-        Traefik["Traefik&lt;br/&gt;Reverse Proxy&lt;br/&gt;:80 :443"]
-        MLflow["MLflow Server&lt;br/&gt;:5000"]
-        Postgres["PostgreSQL&lt;br/&gt;Backend Store&lt;br/&gt;:5432"]
-        Floci["Floci&lt;br/&gt;S3 Emulator&lt;br/&gt;:4566"]
-        Dev["Developer Container&lt;br/&gt;Python + Notebooks&lt;br/&gt;Mount: ./"]
-        K3s["K3s&lt;br/&gt;Local Kubernetes&lt;br/&gt;:6443"]
-        Slurm["SLURM Emulator&lt;br/&gt;Job Scheduler&lt;br/&gt;:6817"]
-    end
-    
-    Dev --&gt;|tracking URI| Traefik
-    Traefik --&gt;|route| MLflow
-    MLflow --&gt;|backend store| Postgres
-    MLflow --&gt;|artifact store| Floci
-    Dev --&gt;|execute local| Dev
-    Dev --&gt;|dispatch| K3s
-    Dev --&gt;|dispatch| Slurm
-    
-    style Local fill:#e1f5ff
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-</section>
-<section id="cloud-deployment-topology" class="level3">
-<h3 class="anchored" data-anchor-id="cloud-deployment-topology">Cloud Deployment Topology</h3>
-<p>Production deployment uses AWS managed services with Kubernetes orchestration:</p>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">graph LR
-    subgraph Cloud["AWS Cloud (Kubernetes + Managed Services)"]
-        Traefik["Traefik&lt;br/&gt;Ingress Controller"]
-        EKS["EKS Cluster&lt;br/&gt;Kubernetes"]
-        MLflow_Pod["MLflow Pod&lt;br/&gt;Serving"]
-        RDS["RDS Aurora PostgreSQL&lt;br/&gt;Backend Store"]
-        S3["S3 Bucket&lt;br/&gt;Artifact Store"]
-        Lambda["Lambda.ai&lt;br/&gt;SLURM Training&lt;br/&gt;External"]
-    end
-    
-    Internet["Internet&lt;br/&gt;HTTPS"]
-    
-    Internet --&gt;|HTTPS| Traefik
-    Traefik --&gt;|route| EKS
-    EKS --&gt;|runs| MLflow_Pod
-    MLflow_Pod --&gt;|backend| RDS
-    MLflow_Pod --&gt;|artifacts| S3
-    EKS --&gt;|dispatch training| Lambda
-    Lambda --&gt;|results to| S3
-    
-    style Cloud fill:#f3e5f5
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-</section>
-<section id="infrastructure-parity-constraints" class="level3">
-<h3 class="anchored" data-anchor-id="infrastructure-parity-constraints">Infrastructure Parity Constraints</h3>
-<p>Local and cloud deployments must maintain parity across:</p>
-</section>
-<section id="component-parity" class="level3">
-<h3 class="anchored" data-anchor-id="component-parity">Component Parity</h3>
-<ul>
-<li><strong>Reverse Proxy</strong>: Traefik Docker (local) vs Traefik K8s Ingress (cloud) - Same routing rules</li>
-<li><strong>Backend Store</strong>: PostgreSQL Docker (local) vs RDS Aurora PostgreSQL (cloud) - Same schema, connection pool</li>
-<li><strong>Artifact Store</strong>: Floci S3 (local) vs AWS S3 (cloud) - Same S3 API surface</li>
-<li><strong>Compute</strong>: Local + Docker + K3s + SLURM (local) vs EKS + Lambda.ai SLURM (cloud) - Contract-driven dispatch</li>
-</ul>
-<hr>
-</section>
-</section>
-<section id="governance-safety" class="level2">
-<h2 class="anchored" data-anchor-id="governance-safety">4. Governance &amp; Safety</h2>
-<section id="promotion-gate-architecture" class="level3">
-<h3 class="anchored" data-anchor-id="promotion-gate-architecture">Promotion Gate Architecture</h3>
-<p>Model promotion requires passing progressive quality gates:</p>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">graph TD
-    A["Artifact Created&lt;br/&gt;Stage: DEV"] 
-    
-    B["Smoke Tests"]
-    C{Pass?}
-    D["Stage: UAT"]
-    
-    E["UAT Suite"]
-    F["Data Leakage Check"]
-    G["Min Metrics Met"]
-    H{All Pass?}
-    I["Stage: REGRESSION"]
-    
-    J["Regression Suite"]
-    K["Perf Regression"]
-    L["Security Scan"]
-    M["PyTorch Optimizations"]
-    N{All Pass?}
-    O["Approval Gate"]
-    P{Approved?}
-    Q["Stage: PROD"]
-    
-    A --&gt; B --&gt; C
-    C --&gt;|Yes| D --&gt; E &amp; F &amp; G
-    E &amp; F &amp; G --&gt; H
-    H --&gt;|Yes| I --&gt; J &amp; K &amp; L &amp; M
-    J &amp; K &amp; L &amp; M --&gt; N
-    N --&gt;|Yes| O --&gt; P
-    P --&gt;|Yes| Q
-    
-    C --&gt;|No| A
-    H --&gt;|No| D
-    N --&gt;|No| I
-    P --&gt;|No| O
-    
-    style A fill:#fff3e0
-    style D fill:#e3f2fd
-    style I fill:#f3e5f5
-    style Q fill:#c8e6c9
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-</section>
-<section id="spec-first-governance" class="level3">
-<h3 class="anchored" data-anchor-id="spec-first-governance">Spec-First Governance</h3>
-<p>The repository lifecycle enforces specification-first principles:</p>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">stateDiagram-v2
-    [*] --&gt; SpecificationFirst
-    
-    SpecificationFirst --&gt; AwaitingQualityGate: spec_written
-    AwaitingQualityGate --&gt; AwaitingConfirmation: quality_gate_passed
-    AwaitingConfirmation --&gt; ImplementationEnabled: explicit_confirmation
-    
-    ImplementationEnabled --&gt; Synced: code_matches_spec
-    ImplementationEnabled --&gt; OutOfSync: drift_detected
-    OutOfSync --&gt; ImplementationEnabled: weed_audit_resolved
-    
-    note right of SpecificationFirst
-        All behavior must be specified first
-        Before code is written
-    end note
-    
-    note right of AwaitingQualityGate
-        Spec undergoes quality review
-        Consistency and completeness checks
-    end note
-    
-    note right of AwaitingConfirmation
-        User must explicitly confirm
-        Readiness to move to implementation
-    end note
-    
-    note right of ImplementationEnabled
-        Code implementation phase active
-        Continuous sync checks required
-    end note
-    
-    note right of OutOfSync
-        Weed audits detect spec-code drift
-        Resolving divergences keeps system healthy
-    end note
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<hr>
-</section>
-</section>
-<section id="learning-paths" class="level2">
-<h2 class="anchored" data-anchor-id="learning-paths">5. Learning Paths</h2>
-<section id="software-engineer-learning-path" class="level3">
-<h3 class="anchored" data-anchor-id="software-engineer-learning-path">Software Engineer Learning Path</h3>
-<p>Engineers focused on infrastructure, deployment, and operations should follow this progression:</p>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">graph TD
-    A["Start Here:&lt;br/&gt;Web UI Contracts&lt;br/&gt;nbs/05_webui_contracts.qmd"]
-    B["Execution Adapters&lt;br/&gt;nbs/08_execution_backends.qmd"]
-    C["MLflow Parity Setup&lt;br/&gt;nbs/07_mlflow_parity.qmd"]
-    D["Infrastructure MCP&lt;br/&gt;nbs/14_infrastructure_mcp.qmd"]
-    E["OpenTofu / Terranix&lt;br/&gt;nbs/13_opentofu_infra.qmd"]
-    F["AWS Emulator&lt;br/&gt;nbs/15_aws_emulator.qmd"]
-    G["Advanced:&lt;br/&gt;System Interaction&lt;br/&gt;nbs/12_system_interaction_analysis.qmd"]
-    
-    A --&gt;|understand interfaces| B
-    B --&gt;|set up local parity| C
-    C --&gt;|explore observability| D
-    D --&gt;|learn infrastructure code| E
-    E --&gt;|debug emulation| F
-    F --&gt;|master system patterns| G
-    
-    style A fill:#fff3e0
-    style G fill:#c8e6c9
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-</section>
-<section id="ml-researcher-learning-path" class="level3">
-<h3 class="anchored" data-anchor-id="ml-researcher-learning-path">ML Researcher Learning Path</h3>
-<p>Researchers focused on model development, training, and promotion should follow this progression:</p>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">graph TD
-    A["Start Here:&lt;br/&gt;Platform Architecture&lt;br/&gt;This page"]
-    B["Vertical Slice Example&lt;br/&gt;nbs/06_vertical_slice.qmd"]
-    C["Notebook Intake&lt;br/&gt;nbs/09_notebook_intake.qmd"]
-    D["Data &amp; Training&lt;br/&gt;nbs/02_data.qmd + nbs/03_model_training.qmd"]
-    E["MLflow Tracking&lt;br/&gt;nbs/07_mlflow_parity.qmd"]
-    F["Model Promotion&lt;br/&gt;nbs/17_governance_gates.qmd"]
-    G["Advanced:&lt;br/&gt;System Interaction&lt;br/&gt;nbs/12_system_interaction_analysis.qmd"]
-    
-    A --&gt;|concrete walkthrough| B
-    B --&gt;|capture experiments| C
-    C --&gt;|train models| D
-    D --&gt;|track &amp; compare| E
-    E --&gt;|promote safely| F
-    F --&gt;|understand governance| G
-    
-    style A fill:#fff3e0
-    style G fill:#c8e6c9
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<hr>
-</section>
-</section>
-<section id="implementation-steps" class="level2">
-<h2 class="anchored" data-anchor-id="implementation-steps">Implementation steps</h2>
-<ol type="1">
-<li><strong>Validate contracts</strong> — Immutable notebook intake and execution request structure</li>
-<li><strong>Route execution</strong> — Dispatch through local, Slurm, or Kubernetes adapters</li>
-<li><strong>Record traceability</strong> — Link all outcomes to MLflow runs and artifact records</li>
-<li><strong>Apply gates</strong> — Enforce promotion stage transitions with quality checks</li>
-<li><strong>Verify parity</strong> — Ensure local emulation and cloud deployment remain synchronized</li>
+<li><strong>Interface layer</strong> — notebook repository and Web UI</li>
+<li><strong>Execution layer</strong> — local, Slurm, and Kubernetes backends</li>
+<li><strong>Data/model layer</strong> — MLflow, artifacts, prediction logging</li>
+<li><strong>Infrastructure layer</strong> — Nix/Terranix/OpenTofu, local emulation, cloud</li>
+<li><strong>Governance layer</strong> — auth, policy, approvals, cost controls</li>
 </ol>
 </section>
-<section id="trade-offs" class="level2">
-<h2 class="anchored" data-anchor-id="trade-offs">Trade-offs</h2>
+<section id="core-entities" class="level2">
+<h2 class="anchored" data-anchor-id="core-entities">Core entities</h2>
+<p>The most important entities are:</p>
 <ul>
-<li><strong>Notebook-first workflows</strong> improve discoverability but require strict immutability and export guards</li>
-<li><strong>Local emulation</strong> reduces cloud-risk iteration cost but cannot fully replicate all production failure modes</li>
-<li><strong>Spec-first governance</strong> improves consistency but can lag implementation if drift checks are skipped</li>
-<li><strong>Extensive diagramming</strong> aids comprehension but requires ongoing maintenance as the system evolves</li>
+<li><strong>Repository</strong> — owns the phase and the docs/contracts</li>
+<li><strong>Notebook revision</strong> — immutable execution source</li>
+<li><strong>Execution request</strong> — normalized request to run a notebook</li>
+<li><strong>MLflow run</strong> — the traceability anchor for experiment and prediction history</li>
+<li><strong>Model artifact</strong> — versioned bundle with deployment metadata</li>
+<li><strong>Promotion decision</strong> — approval-aware transition between stages</li>
+<li><strong>Infrastructure profile</strong> — local or cloud rendering of the runtime shape</li>
 </ul>
 </section>
-<section id="security-considerations" class="level2">
-<h2 class="anchored" data-anchor-id="security-considerations">Security considerations</h2>
-<ul>
-<li>Keep MCP integrations read-first and least-privilege by default</li>
-<li>Enforce immutable notebook references for all execution</li>
-<li>Treat cloud deployment credentials and runtime secrets as externally managed inputs</li>
-<li>Model version source validation must be enabled in production (S3 URI regex constraints)</li>
-<li>All MLflow tracking must use secure backend store connections</li>
-</ul>
-</section>
-<section id="examples-of-use" class="level2">
-<h2 class="anchored" data-anchor-id="examples-of-use">Examples of use</h2>
-<ul>
-<li><strong>Local reference slice execution</strong>: Run the vertical slice example with MLflow-linked run visibility</li>
-<li><strong>Backend payload mapping</strong>: Submit training jobs to Slurm/Kubernetes with normalized request contracts</li>
-<li><strong>Notebook intake validation</strong>: Parse and validate immutable execution contracts before dispatch</li>
-<li><strong>Promotion workflow</strong>: Move models through DEV → UAT → REGRESSION → PROD with gate enforcement</li>
-</ul>
-</section>
-<section id="software-engineer-learning-path-1" class="level2">
-<h2 class="anchored" data-anchor-id="software-engineer-learning-path-1">Software engineer learning path</h2>
-<p>Engineers focused on infrastructure, deployment, and operations should follow this progression:</p>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">graph TD
-    A["Start Here:&lt;br/&gt;Web UI Contracts&lt;br/&gt;nbs/05_webui_contracts.qmd"]
-    B["Execution Adapters&lt;br/&gt;nbs/08_execution_backends.qmd"]
-    C["MLflow Parity Setup&lt;br/&gt;nbs/07_mlflow_parity.qmd"]
-    D["Infrastructure MCP&lt;br/&gt;nbs/14_infrastructure_mcp.qmd"]
-    E["OpenTofu / Terranix&lt;br/&gt;nbs/13_opentofu_infra.qmd"]
-    F["AWS Emulator&lt;br/&gt;nbs/15_aws_emulator.qmd"]
-    G["Advanced:&lt;br/&gt;System Interaction&lt;br/&gt;nbs/12_system_interaction_analysis.qmd"]
-    
-    A --&gt;|understand interfaces| B
-    B --&gt;|set up local parity| C
-    C --&gt;|explore observability| D
-    D --&gt;|learn infrastructure code| E
-    E --&gt;|debug emulation| F
-    F --&gt;|master system patterns| G
-    
-    style A fill:#fff3e0
-    style G fill:#c8e6c9
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-</section>
-<section id="ml-researcher-learning-path-1" class="level2">
-<h2 class="anchored" data-anchor-id="ml-researcher-learning-path-1">ML researcher learning path</h2>
-<p>Researchers focused on model development, training, and promotion should follow this progression:</p>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">graph TD
-    A["Start Here:&lt;br/&gt;Platform Architecture&lt;br/&gt;This page"]
-    B["Vertical Slice Example&lt;br/&gt;nbs/06_vertical_slice.qmd"]
-    C["Notebook Intake&lt;br/&gt;nbs/09_notebook_intake.qmd"]
-    D["Data &amp; Training&lt;br/&gt;nbs/02_data.qmd + nbs/03_model_training.qmd"]
-    E["MLflow Tracking&lt;br/&gt;nbs/07_mlflow_parity.qmd"]
-    F["Model Promotion&lt;br/&gt;nbs/17_governance_gates.qmd"]
-    G["Advanced:&lt;br/&gt;System Interaction&lt;br/&gt;nbs/12_system_interaction_analysis.qmd"]
-    
-    A --&gt;|concrete walkthrough| B
-    B --&gt;|capture experiments| C
-    C --&gt;|train models| D
-    D --&gt;|track &amp; compare| E
-    E --&gt;|promote safely| F
-    F --&gt;|understand governance| G
-    
-    style A fill:#fff3e0
-    style G fill:#c8e6c9
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<hr>
-</section>
-<section id="cross-cutting-concepts" class="level2">
-<h2 class="anchored" data-anchor-id="cross-cutting-concepts">Cross-Cutting Concepts</h2>
-<section id="high-level-introduction" class="level3">
-<h3 class="anchored" data-anchor-id="high-level-introduction">High-Level Introduction</h3>
-<p>This platform serves hedge-fund ML engineers who require:</p>
+<section id="execution-flow" class="level2">
+<h2 class="anchored" data-anchor-id="execution-flow">Execution flow</h2>
+<p>A typical workflow looks like this:</p>
 <ol type="1">
-<li><strong>Discoverability</strong>: Self-contained documentation that doesn’t require repository browsing</li>
-<li><strong>Reproducibility</strong>: Immutable notebook execution contracts backed by spec-first governance</li>
-<li><strong>Traceability</strong>: Complete MLflow linkage from training through promotion</li>
-<li><strong>Parity</strong>: Local emulation that mirrors production infrastructure and behavior</li>
-<li><strong>Safety</strong>: Progressive promotion gates with quality checks and approvals</li>
+<li>a notebook revision is selected</li>
+<li>a request is normalized and validated</li>
+<li>policy checks are applied</li>
+<li>the request is dispatched to the selected backend</li>
+<li>MLflow records run metadata and artifacts</li>
+<li>a run summary or deployment record is returned</li>
 </ol>
+<p>That flow is shared across local, distributed, batch, and online paths.</p>
+</section>
+<section id="contract-checkpoints" class="level2">
+<h2 class="anchored" data-anchor-id="contract-checkpoints">Contract checkpoints</h2>
+<p>The platform checks a small set of invariants repeatedly:</p>
+<ul>
+<li>notebook revisions are immutable</li>
+<li>artifact versions are explicit</li>
+<li>environment boundaries are explicit</li>
+<li>privileged actions are audited</li>
+<li>prediction logging preserves enough context for investigation</li>
+<li>promotion is approval-aware</li>
+</ul>
+</section>
+<section id="topology-view" class="level2">
+<h2 class="anchored" data-anchor-id="topology-view">Topology view</h2>
+<p>The reference stack supports four deployment shapes:</p>
+<ul>
+<li>local development and single-node training</li>
+<li>distributed training on Lambda.ai</li>
+<li>batch inference on AWS</li>
+<li>online inference under production controls</li>
+</ul>
+<p>Each topology uses the same architectural ideas but a different execution substrate.</p>
+</section>
+<section id="governance-view" class="level2">
+<h2 class="anchored" data-anchor-id="governance-view">Governance view</h2>
+<p>The governance layer provides:</p>
+<ul>
+<li>implementation gating</li>
+<li>auth/roles/policy decisions</li>
+<li>notebook approval controls</li>
+<li>promotion gates</li>
+<li>cost and audit visibility</li>
+</ul>
+<p>The stack is deliberately conservative about mutation.</p>
+</section>
+<section id="learning-path" class="level2">
+<h2 class="anchored" data-anchor-id="learning-path">Learning path</h2>
+<p>Use this page as the front door, then move to:</p>
+<ul>
+<li><code>nbs/tutorials/03_Concepts_and_Architecture.qmd</code> for the conceptual spine</li>
+<li><code>nbs/tutorials/04_End_to_End_Workflow.qmd</code> for the complete slice</li>
+<li><code>nbs/reference/01_Implementation_Patterns.qmd</code> for the slice mechanics</li>
+<li><code>nbs/reference/03_Security_Authorization_and_Policy.qmd</code> for auth and policy</li>
+</ul>
+</section>
+<section id="practical-rule" class="level2">
+<h2 class="anchored" data-anchor-id="practical-rule">Practical rule</h2>
+<p>If a change weakens traceability, policy clarity, or topology boundaries, it is probably not aligned with the platform narrative.</p>
 
 
-</section>
 </section>
 </section>
 

@@ -42,6 +42,7 @@ The core concepts document includes:
 ## Conceptual Framework
 
 ### Architectural Principles
+
 - **Modularity**: Component-based design with clear boundaries
 - **Extensibility**: Plugin architecture for custom integrations
 - **Performance**: Optimized for ML workflows with GPU support
@@ -49,6 +50,7 @@ The core concepts document includes:
 - **Security**: Zero-trust architecture with comprehensive access controls
 
 ### Technical Foundations
+
 - **Containerization**: Nix-based containerization with reproducibility
 - **Orchestration**: Kubernetes-native deployment and management
 - **Data Management**: Comprehensive data lineage and provenance tracking
@@ -56,6 +58,7 @@ The core concepts document includes:
 - **Observability**: Comprehensive monitoring and observability capabilities
 
 ### Integration Patterns
+
 - **API-First**: Comprehensive API for all platform capabilities
 - **Event-Driven**: Event-driven architecture for real-time processing
 - **Batch Processing**: Efficient batch processing for large-scale operations

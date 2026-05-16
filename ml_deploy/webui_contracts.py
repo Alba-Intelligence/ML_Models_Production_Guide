@@ -33,6 +33,11 @@ def build_mlflow_run_url(mlflow_base_url: str, run_id: str) -> str:
     return f"{normalized}/#/experiments/0/runs/{run_id.strip()}"
 
 
+def authorize_execution_request(request: NotebookExecutionRequest) -> bool:
+    """Convenience function to authorize a notebook execution request."""
+    return request.authorize()
+
+
 def _normalize_status(raw_status: Any) -> RunStatus:
     status = str(raw_status).strip().lower()
     if status == "queued":
@@ -122,6 +127,11 @@ class NotebookExecutionRequest:
             "notebook": self.notebook.as_dict(),
             "parameters": self.parameters,
         }
+
+    def authorize(self) -> bool:
+        """Authorize this execution request using the central policy engine."""
+        from ml_deploy.auth import authorize_request
+        return authorize_request(self)
 
 
 @dataclass(frozen=True)

@@ -7,7 +7,7 @@ read_when:
 source_file: ../../_quarto.yml
 ---
 
-# Source summary: _quarto.yml
+# Source summary: \_quarto.yml
 
 ## Role
 

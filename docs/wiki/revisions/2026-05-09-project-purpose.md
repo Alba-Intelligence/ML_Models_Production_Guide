@@ -23,7 +23,7 @@ The user clarified the intended purpose and non-negotiable constraints for the p
 - The supported platform is **Linux only**.
 - **PyTorch only** is in scope for models and training.
 - **GPU support** is required.
-- **FastAPI** is the local development / local serving framework.
+- A serving framework was initially part of the local development / local serving plan.
 - **MLflow** is part of the core stack.
 - **python-terraform** is part of the infrastructure story.
 - **Lambda.ai** is the distributed compute platform in scope.

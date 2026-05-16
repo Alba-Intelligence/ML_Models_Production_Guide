@@ -20,41 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -365,7 +330,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../tutorials/05_Advanced_Scenarios.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Advanced ML Scenarios</span></a>
+ <span class="menu-text">Advanced Scenarios</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -396,6 +361,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="sidebar-item-container"> 
   <a href="../reference/02_API_Documentation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">API Documentation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../reference/03_Security_Authorization_and_Policy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Security, Roles, and Policy</span></a>
   </div>
 </li>
       </ul>
@@ -532,44 +503,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#core-concepts-and-architecture" id="toc-core-concepts-and-architecture" class="nav-link active" data-scroll-target="#core-concepts-and-architecture">Core Concepts and Architecture</a>
   <ul class="collapse">
-  <li><a href="#platform-architecture-overview" id="toc-platform-architecture-overview" class="nav-link" data-scroll-target="#platform-architecture-overview">Platform Architecture Overview</a>
+  <li><a href="#the-architectural-spine" id="toc-the-architectural-spine" class="nav-link" data-scroll-target="#the-architectural-spine">The architectural spine</a></li>
+  <li><a href="#lifecycle-view" id="toc-lifecycle-view" class="nav-link" data-scroll-target="#lifecycle-view">Lifecycle view</a></li>
+  <li><a href="#the-core-patterns" id="toc-the-core-patterns" class="nav-link" data-scroll-target="#the-core-patterns">The core patterns</a>
   <ul class="collapse">
-  <li><a href="#key-architectural-principles" id="toc-key-architectural-principles" class="nav-link" data-scroll-target="#key-architectural-principles">Key Architectural Principles</a></li>
-  <li><a href="#high-level-architecture" id="toc-high-level-architecture" class="nav-link" data-scroll-target="#high-level-architecture">High-Level Architecture</a></li>
+  <li><a href="#ex-01-training-with-traceability" id="toc-ex-01-training-with-traceability" class="nav-link" data-scroll-target="#ex-01-training-with-traceability">EX-01: training with traceability</a></li>
+  <li><a href="#ex-02-artifact-bundling-and-versioning" id="toc-ex-02-artifact-bundling-and-versioning" class="nav-link" data-scroll-target="#ex-02-artifact-bundling-and-versioning">EX-02: artifact bundling and versioning</a></li>
+  <li><a href="#ex-03-local-deployment-and-serving" id="toc-ex-03-local-deployment-and-serving" class="nav-link" data-scroll-target="#ex-03-local-deployment-and-serving">EX-03: local deployment and serving</a></li>
   </ul></li>
-  <li><a href="#core-concepts" id="toc-core-concepts" class="nav-link" data-scroll-target="#core-concepts">Core Concepts</a>
-  <ul class="collapse">
-  <li><a href="#execution-patterns-ex-01-ex-03" id="toc-execution-patterns-ex-01-ex-03" class="nav-link" data-scroll-target="#execution-patterns-ex-01-ex-03">1. Execution Patterns (EX-01 → EX-03)</a></li>
-  <li><a href="#contract-based-architecture" id="toc-contract-based-architecture" class="nav-link" data-scroll-target="#contract-based-architecture">2. Contract-Based Architecture</a></li>
-  <li><a href="#governance-framework" id="toc-governance-framework" class="nav-link" data-scroll-target="#governance-framework">3. Governance Framework</a></li>
-  <li><a href="#infrastructure-as-code" id="toc-infrastructure-as-code" class="nav-link" data-scroll-target="#infrastructure-as-code">4. Infrastructure as Code</a></li>
-  <li><a href="#data-lineage" id="toc-data-lineage" class="nav-link" data-scroll-target="#data-lineage">5. Data Lineage</a></li>
-  <li><a href="#multi-topology-support" id="toc-multi-topology-support" class="nav-link" data-scroll-target="#multi-topology-support">6. Multi-Topology Support</a></li>
-  </ul></li>
-  <li><a href="#architecture-decision-records" id="toc-architecture-decision-records" class="nav-link" data-scroll-target="#architecture-decision-records">Architecture Decision Records</a>
-  <ul class="collapse">
-  <li><a href="#why-architecture-decisions-matter" id="toc-why-architecture-decisions-matter" class="nav-link" data-scroll-target="#why-architecture-decisions-matter">Why Architecture Decisions Matter</a></li>
-  <li><a href="#key-architecture-decisions" id="toc-key-architecture-decisions" class="nav-link" data-scroll-target="#key-architecture-decisions">Key Architecture Decisions</a></li>
-  </ul></li>
-  <li><a href="#learning-path-for-concepts" id="toc-learning-path-for-concepts" class="nav-link" data-scroll-target="#learning-path-for-concepts">Learning Path for Concepts</a>
-  <ul class="collapse">
-  <li><a href="#beginner-path-2-3-hours" id="toc-beginner-path-2-3-hours" class="nav-link" data-scroll-target="#beginner-path-2-3-hours">Beginner Path (2-3 hours)</a></li>
-  <li><a href="#experienced-path-1-2-hours" id="toc-experienced-path-1-2-hours" class="nav-link" data-scroll-target="#experienced-path-1-2-hours">Experienced Path (1-2 hours)</a></li>
-  </ul></li>
-  <li><a href="#practical-exercises" id="toc-practical-exercises" class="nav-link" data-scroll-target="#practical-exercises">Practical Exercises</a>
-  <ul class="collapse">
-  <li><a href="#exercise-1-understanding-execution-patterns" id="toc-exercise-1-understanding-execution-patterns" class="nav-link" data-scroll-target="#exercise-1-understanding-execution-patterns">Exercise 1: Understanding Execution Patterns</a></li>
-  <li><a href="#exercise-2-working-with-contracts" id="toc-exercise-2-working-with-contracts" class="nav-link" data-scroll-target="#exercise-2-working-with-contracts">Exercise 2: Working with Contracts</a></li>
-  <li><a href="#exercise-3-governance-controls" id="toc-exercise-3-governance-controls" class="nav-link" data-scroll-target="#exercise-3-governance-controls">Exercise 3: Governance Controls</a></li>
-  </ul></li>
-  <li><a href="#common-questions" id="toc-common-questions" class="nav-link" data-scroll-target="#common-questions">Common Questions</a>
-  <ul class="collapse">
-  <li><a href="#q-why-use-contracts-instead-of-direct-implementation" id="toc-q-why-use-contracts-instead-of-direct-implementation" class="nav-link" data-scroll-target="#q-why-use-contracts-instead-of-direct-implementation">Q: Why use contracts instead of direct implementation?</a></li>
-  <li><a href="#q-whats-the-difference-between-ex-01-ex-02-and-ex-03" id="toc-q-whats-the-difference-between-ex-01-ex-02-and-ex-03" class="nav-link" data-scroll-target="#q-whats-the-difference-between-ex-01-ex-02-and-ex-03">Q: What’s the difference between EX-01, EX-02, and EX-03?</a></li>
-  <li><a href="#q-why-nix-instead-of-docker" id="toc-q-why-nix-instead-of-docker" class="nav-link" data-scroll-target="#q-why-nix-instead-of-docker">Q: Why Nix instead of Docker?</a></li>
-  <li><a href="#q-how-does-governance-affect-development" id="toc-q-how-does-governance-affect-development" class="nav-link" data-scroll-target="#q-how-does-governance-affect-development">Q: How does governance affect development?</a></li>
-  </ul></li>
-  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps">Next Steps</a></li>
+  <li><a href="#high-level-architecture-shape" id="toc-high-level-architecture-shape" class="nav-link" data-scroll-target="#high-level-architecture-shape">High-level architecture shape</a></li>
+  <li><a href="#what-the-docs-are-trying-to-protect" id="toc-what-the-docs-are-trying-to-protect" class="nav-link" data-scroll-target="#what-the-docs-are-trying-to-protect">What the docs are trying to protect</a></li>
+  <li><a href="#how-the-topology-pages-fit" id="toc-how-the-topology-pages-fit" class="nav-link" data-scroll-target="#how-the-topology-pages-fit">How the topology pages fit</a></li>
+  <li><a href="#how-to-read-the-rest-of-the-docs" id="toc-how-to-read-the-rest-of-the-docs" class="nav-link" data-scroll-target="#how-to-read-the-rest-of-the-docs">How to read the rest of the docs</a></li>
+  <li><a href="#practical-takeaway" id="toc-practical-takeaway" class="nav-link" data-scroll-target="#practical-takeaway">Practical takeaway</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/alba-intelligence/ml_deploy/edit/main/tutorials/03_Concepts_and_Architecture.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/alba-intelligence/ml_deploy/blob/main/tutorials/03_Concepts_and_Architecture.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/alba-intelligence/ml_deploy/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div><div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="03_Concepts_and_Architecture.md"><i class="bi bi-file-code"></i>CommonMark</a></li></ul></div></nav>
@@ -599,514 +545,119 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="core-concepts-and-architecture" class="level1">
 <h1>Core Concepts and Architecture</h1>
-<p>This tutorial introduces the fundamental concepts and architecture of the ML Deploy platform. Understanding these concepts is essential for working effectively with the platform and implementing ML deployment workflows.</p>
-<section id="platform-architecture-overview" class="level2">
-<h2 class="anchored" data-anchor-id="platform-architecture-overview">Platform Architecture Overview</h2>
-<p>The ML Deploy platform is built around a <strong>contract-based architecture</strong> that ensures consistency and reliability across different deployment scenarios. The architecture is designed to be <strong>specification-first</strong>, meaning that specifications are defined and ratified before implementation begins.</p>
-<section id="key-architectural-principles" class="level3">
-<h3 class="anchored" data-anchor-id="key-architectural-principles">Key Architectural Principles</h3>
+<p>This tutorial gives the compact conceptual model for the ML Deploy platform.</p>
+<p>It is meant to help you read the rest of the docs in the right order. The key idea is simple: the repository is organized around a <strong>contract-based, specification-first ML deployment lifecycle</strong>.</p>
+<section id="the-architectural-spine" class="level2">
+<h2 class="anchored" data-anchor-id="the-architectural-spine">The architectural spine</h2>
+<p>The platform is built around a small set of permanent ideas:</p>
 <ol type="1">
-<li><strong>Separation of Concerns</strong>: Clear boundaries between data management, model training, deployment, and infrastructure</li>
-<li><strong>Contract-Based Design</strong>: Well-defined interfaces between components</li>
-<li><strong>Immutability</strong>: Notebook source code remains immutable; parameters are injected externally</li>
-<li><strong>Traceability</strong>: Complete tracking of data, models, and deployments</li>
-<li><strong>Reproducibility</strong>: Deterministic builds and execution environments</li>
+<li><strong>Separation of concerns</strong> — data, training, artifacts, serving, infrastructure, governance, and cost each have their own responsibilities.</li>
+<li><strong>Contracts first</strong> — the system defines the interfaces before it chases implementation detail.</li>
+<li><strong>Immutability</strong> — notebook revisions are fixed; execution configuration is external.</li>
+<li><strong>Traceability</strong> — every meaningful artifact must link back to provenance.</li>
+<li><strong>Reproducibility</strong> — local and cloud paths should be explainable and repeatable.</li>
+<li><strong>Environment awareness</strong> — local, distributed, batch, and online topologies are not interchangeable.</li>
 </ol>
 </section>
-<section id="high-level-architecture" class="level3">
-<h3 class="anchored" data-anchor-id="high-level-architecture">High-Level Architecture</h3>
-<pre><code>┌─────────────────────────────────────────────────────────────────┐
-│                        ML Deploy Platform                       │
-├─────────────────────────────────────────────────────────────────┤
-│  Web UI Layer                                                  │
-│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐ │
-│  │ Notebook        │  │ Execution       │  │ Results &amp;       │ │
-│  │ Repository      │◀▶│ Orchestrator    │◀▶│ Monitoring      │ │
-│  └─────────────────┘  └─────────────────┘  └─────────────────┘ │
-├─────────────────────────────────────────────────────────────────┤
-│  Execution Layer                                               │
-│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐ │
-│  │ Local           │  │ Slurm           │  │ Kubernetes      │ │
-│  │ Execution       │  │ Execution       │  │ Execution       │ │
-│  └─────────────────┘  └─────────────────┘  └─────────────────┘ │
-├─────────────────────────────────────────────────────────────────┤
-│  Data &amp; Model Layer                                            │
-│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐ │
-│  │ MLflow          │  │ Model           │  │ Data            │ │
-│  │ Tracking        │  │ Registry        │  │ Lineage         │ │
-│  └─────────────────┘  └─────────────────┘  └─────────────────┘ │
-├─────────────────────────────────────────────────────────────────┤
-│  Infrastructure Layer                                           │
-│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐ │
-│  │ Nix/Terranix    │  │ AWS/Kubernetes  │  │ Local           │ │
-│  │ Infrastructure  │  │ Services        │  │ Emulation       │ │
-│  └─────────────────┘  └─────────────────┘  └─────────────────┘ │
-├─────────────────────────────────────────────────────────────────┤
-│  Governance Layer                                              │
-│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐ │
-│  │ Security        │  │ Quality         │  │ Cost            │ │
-│  │ &amp; Authorization │  │ Gates           │  │ Management      │ │
-│  └─────────────────┘  └─────────────────┘  └─────────────────┘ │
-└─────────────────────────────────────────────────────────────────┘</code></pre>
-</section>
-</section>
-<section id="core-concepts" class="level2">
-<h2 class="anchored" data-anchor-id="core-concepts">Core Concepts</h2>
-<section id="execution-patterns-ex-01-ex-03" class="level3">
-<h3 class="anchored" data-anchor-id="execution-patterns-ex-01-ex-03">1. Execution Patterns (EX-01 → EX-03)</h3>
-<p>The foundation of ML Deploy is built on three core execution patterns that form the basis for all ML workflows:</p>
-<section id="ex-01-training-with-traceability" class="level4">
-<h4 class="anchored" data-anchor-id="ex-01-training-with-traceability">EX-01: Training with Traceability</h4>
-<p><strong>What it is</strong>: A complete training workflow that captures comprehensive metadata about the training process.</p>
-<p><strong>Why it matters</strong>: Ensures every training run is fully traceable and reproducible, which is essential for debugging, auditing, and compliance.</p>
-<p><strong>Key components</strong>: - Model training execution - MLflow experiment tracking - Comprehensive metadata capture - Training artifact storage - Complete audit trail</p>
-<p><strong>Example</strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Training with complete traceability</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> mlflow.start_run(run_name<span class="op">=</span><span class="st">"experiment_1"</span>) <span class="im">as</span> run:</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Set traceability tags</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    mlflow.set_tag(<span class="st">"dataset_version"</span>, <span class="st">"v1.0"</span>)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    mlflow.set_tag(<span class="st">"feature_revision"</span>, <span class="st">"engineered_v2"</span>)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    mlflow.set_tag(<span class="st">"model_type"</span>, <span class="st">"xgboost"</span>)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Log hyperparameters</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    mlflow.log_params({<span class="st">"max_depth"</span>: <span class="dv">6</span>, <span class="st">"learning_rate"</span>: <span class="fl">0.1</span>})</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Execute training</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> train_model(X_train, y_train)</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Log model and metrics</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    mlflow.xgboost.log_model(model, <span class="st">"model"</span>)</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    mlflow.log_metrics({<span class="st">"accuracy"</span>: <span class="fl">0.95</span>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="ex-02-artifact-bundling-and-versioning" class="level4">
-<h4 class="anchored" data-anchor-id="ex-02-artifact-bundling-and-versioning">EX-02: Artifact Bundling and Versioning</h4>
-<p><strong>What it is</strong>: The process of packaging trained models and associated artifacts into versioned, deployment-ready bundles.</p>
-<p><strong>Why it matters</strong>: Creates portable, versioned model artifacts that can be reliably deployed across different environments.</p>
-<p><strong>Key components</strong>: - Model serialization - Version registration in MLflow - Artifact bundling - Semantic versioning - Immutable references</p>
-<p><strong>Example</strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create model artifact bundle</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>model_artifact <span class="op">=</span> ModelArtifact(</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    model_path<span class="op">=</span>trained_model_path,</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    scaler_path<span class="op">=</span>trained_scaler_path,</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    metadata<span class="op">=</span>{</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"version"</span>: <span class="st">"v1.0"</span>,</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"dataset_version"</span>: <span class="st">"v1.0"</span>,</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"feature_revision"</span>: <span class="st">"engineered_v2"</span>,</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"hyperparameters"</span>: {<span class="st">"max_depth"</span>: <span class="dv">6</span>}</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Register in MLflow registry</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>registration_result <span class="op">=</span> register_model_artifact(</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    artifact_bundle_path<span class="op">=</span>model_artifact.to_bundle(),</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    model_name<span class="op">=</span><span class="st">"diabetes_predictor"</span>,</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    model_version<span class="op">=</span><span class="st">"v1.0"</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="ex-03-local-deployment-and-serving" class="level4">
-<h4 class="anchored" data-anchor-id="ex-03-local-deployment-and-serving">EX-03: Local Deployment and Serving</h4>
-<p><strong>What it is</strong>: Local model deployment using nbdev/Python for inference with comprehensive prediction logging.</p>
-<p><strong>Why it matters</strong>: Enables local testing and validation of model artifacts in a controlled environment before production deployment.</p>
-<p><strong>Key components</strong>: - Local model loading and inference - Prediction logging in JSONL format - Deployment metadata tracking - Local serving endpoints - Performance monitoring</p>
-<p><strong>Example</strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Local model serving</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>local_serving <span class="op">=</span> LocalModelServing(model_bundle_path)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>prediction_logger <span class="op">=</span> PredictionLogger(log_dir)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Make predictions with logging</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> local_serving.predict(input_data)</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Log prediction</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>prediction_logger.log_prediction(</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    result,</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"model_version"</span>: <span class="st">"v1.0"</span>, <span class="st">"timestamp"</span>: now()}</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-</section>
-<section id="contract-based-architecture" class="level3">
-<h3 class="anchored" data-anchor-id="contract-based-architecture">2. Contract-Based Architecture</h3>
-<p><strong>What it is</strong>: A design approach where components interact through well-defined interfaces rather than direct implementation dependencies.</p>
-<p><strong>Why it matters</strong>: Ensures consistency, enables testing, and allows components to be swapped or upgraded independently.</p>
-<section id="key-contracts" class="level4">
-<h4 class="anchored" data-anchor-id="key-contracts">Key Contracts</h4>
-<section id="web-ui-contracts" class="level5">
-<h5 class="anchored" data-anchor-id="web-ui-contracts">Web UI Contracts</h5>
+<section id="lifecycle-view" class="level2">
+<h2 class="anchored" data-anchor-id="lifecycle-view">Lifecycle view</h2>
+<p>The repository follows a practical ML lifecycle:</p>
 <ul>
-<li><strong>NotebookExecutionRequest</strong>: Standard format for notebook execution requests</li>
-<li><strong>RunVisibility</strong>: Controls output sharing and access control</li>
-<li><strong>ExecutionOrchestrator</strong>: Manages execution across different backends</li>
+<li>data intake and preparation</li>
+<li>training and experiment tracking</li>
+<li>artifact packaging and versioning</li>
+<li>local serving and prediction logging</li>
+<li>distributed training and batch inference</li>
+<li>online inference and monitoring</li>
+<li>governance and cost attribution</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example contract usage</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>request <span class="op">=</span> NotebookExecutionRequest(</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    notebook_ref<span class="op">=</span><span class="st">"abc123"</span>,</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    notebook_path<span class="op">=</span>Path(<span class="st">"/path/to/notebook.ipynb"</span>),</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    parameters<span class="op">=</span>{<span class="st">"learning_rate"</span>: <span class="fl">0.1</span>},</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    environment<span class="op">=</span><span class="st">"dev"</span>,</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    resource_requirements<span class="op">=</span>{<span class="st">"cpu"</span>: <span class="dv">2</span>, <span class="st">"memory"</span>: <span class="st">"4GB"</span>}</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>orchestrator <span class="op">=</span> ExecutionOrchestrator()</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> orchestrator.submit_execution(request)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>That lifecycle is the backbone for the docs and the implementation slices.</p>
 </section>
-<section id="execution-backend-contracts" class="level5">
-<h5 class="anchored" data-anchor-id="execution-backend-contracts">Execution Backend Contracts</h5>
+<section id="the-core-patterns" class="level2">
+<h2 class="anchored" data-anchor-id="the-core-patterns">The core patterns</h2>
+<section id="ex-01-training-with-traceability" class="level3">
+<h3 class="anchored" data-anchor-id="ex-01-training-with-traceability">EX-01: training with traceability</h3>
+<p>Training must record:</p>
 <ul>
-<li><strong>LocalExecutionAdapter</strong>: Maps requests to local execution</li>
-<li><strong>SlurmExecutionAdapter</strong>: Maps requests to Slurm execution</li>
-<li><strong>KubernetesExecutionAdapter</strong>: Maps requests to Kubernetes execution</li>
+<li>data version</li>
+<li>feature revision</li>
+<li>hyperparameters</li>
+<li>metrics</li>
+<li>code revision</li>
+<li>environment metadata</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Backend abstraction</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>backend <span class="op">=</span> get_execution_backend(request.environment)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> backend.submit(request)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The purpose is to make every run explainable later.</p>
 </section>
-</section>
-</section>
-<section id="governance-framework" class="level3">
-<h3 class="anchored" data-anchor-id="governance-framework">3. Governance Framework</h3>
-<p><strong>What it is</strong>: A system of controls and processes that ensures ML operations meet quality and compliance standards.</p>
-<p><strong>Why it matters</strong>: Provides structure for development, ensures quality, and enables auditability.</p>
-<section id="key-governance-components" class="level4">
-<h4 class="anchored" data-anchor-id="key-governance-components">Key Governance Components</h4>
-<section id="repository-governance-state" class="level5">
-<h5 class="anchored" data-anchor-id="repository-governance-state">Repository Governance State</h5>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="at">@dataclass</span>(frozen<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> RepositoryGovernanceState:</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    phase: RepositoryPhase <span class="op">=</span> <span class="st">"specification_first"</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    spec_quality_gate_passed: <span class="bu">bool</span> <span class="op">=</span> <span class="va">False</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="phase-transitions" class="level5">
-<h5 class="anchored" data-anchor-id="phase-transitions">Phase Transitions</h5>
+<section id="ex-02-artifact-bundling-and-versioning" class="level3">
+<h3 class="anchored" data-anchor-id="ex-02-artifact-bundling-and-versioning">EX-02: artifact bundling and versioning</h3>
+<p>A model artifact should never be just a blob. It should carry:</p>
 <ul>
-<li><strong>specification_first</strong>: Focus on defining specifications and architecture</li>
-<li><strong>implementation_enabled</strong>: Allow production-ready implementation work</li>
-</ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Phase transition example</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>state <span class="op">=</span> RepositoryGovernanceState(</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    phase<span class="op">=</span><span class="st">"specification_first"</span>,</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    spec_quality_gate_passed<span class="op">=</span><span class="va">True</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>decision <span class="op">=</span> request_implementation_transition(</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    state<span class="op">=</span>state,</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    explicit_user_confirmation<span class="op">=</span><span class="va">True</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> decision.allowed:</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Implementation can proceed!"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-</section>
-</section>
-<section id="infrastructure-as-code" class="level3">
-<h3 class="anchored" data-anchor-id="infrastructure-as-code">4. Infrastructure as Code</h3>
-<p><strong>What it is</strong>: Managing infrastructure through code rather than manual configuration.</p>
-<p><strong>Why it matters</strong>: Enables version control, reproducibility, and automation of infrastructure management.</p>
-<section id="key-infrastructure-components" class="level4">
-<h4 class="anchored" data-anchor-id="key-infrastructure-components">Key Infrastructure Components</h4>
-<section id="nix-containerization" class="level5">
-<h5 class="anchored" data-anchor-id="nix-containerization">Nix Containerization</h5>
-<ul>
-<li><strong>No Docker files</strong>: All containers defined via Nix dockerTools</li>
-<li><strong>Docker-first reproducibility</strong>: Containers built via Nix but run as standard Docker images</li>
-<li><strong>Immutable references</strong>: Pinned package versions for reproducibility</li>
-</ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode nix code-with-copy"><code class="sourceCode nix"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example Nix container definition</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span> <span class="va">pkgs</span><span class="op">,</span> <span class="op">...</span> <span class="op">}</span>:</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>pkgs<span class="op">.</span>dockerTools<span class="op">.</span>buildImage <span class="op">{</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="va">name</span> <span class="op">=</span> <span class="st">"mlflow-training"</span><span class="op">;</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="va">tag</span> <span class="op">=</span> <span class="st">"latest"</span><span class="op">;</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="va">buildInputs</span> <span class="op">=</span> <span class="kw">with</span> pkgs<span class="op">;</span> <span class="op">[</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    python311</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    mlflow</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    xgboost</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  <span class="op">];</span></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  <span class="va">config</span> <span class="op">=</span> <span class="op">{</span></span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    <span class="va">Cmd</span> <span class="op">=</span> <span class="op">[</span><span class="st">"/bin/bash"</span><span class="op">];</span></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    <span class="va">WorkingDir</span> <span class="op">=</span> <span class="st">"/app"</span><span class="op">;</span></span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    <span class="va">ExposedPorts</span> <span class="op">=</span> <span class="op">{</span><span class="st">"5000/tcp"</span> <span class="op">=</span> <span class="op">{}</span><span class="er">}</span><span class="op">;</span></span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>  <span class="op">};</span></span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="terranixopentofu" class="level5">
-<h5 class="anchored" data-anchor-id="terranixopentofu">Terranix/OpenTofu</h5>
-<ul>
-<li><strong>Infrastructure-as-code</strong>: Declarative infrastructure provisioning</li>
-<li><strong>Multi-profile support</strong>: Both local_emulation and cloud deployment</li>
-<li><strong>Version control</strong>: Infrastructure definitions tracked in git</li>
-</ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode nix code-with-copy"><code class="sourceCode nix"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example Terranix configuration</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span> <span class="va">config</span><span class="op">,</span> <span class="va">lib</span><span class="op">,</span> <span class="op">...</span> <span class="op">}</span>:</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="va">imports</span> <span class="op">=</span> <span class="op">[</span> <span class="ss">./shared.nix</span> <span class="op">];</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="va">config</span>.<span class="va">mlDeploy</span> <span class="op">=</span> <span class="op">{</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="va">profile</span> <span class="op">=</span> <span class="st">"local_emulation"</span><span class="op">;</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    <span class="va">mlflowTrackingUri</span> <span class="op">=</span> <span class="st">"http://localhost:5001"</span><span class="op">;</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="va">awsEndpointUrl</span> <span class="op">=</span> <span class="st">"http://localhost:4566"</span><span class="op">;</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="op">};</span></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-</section>
-</section>
-<section id="data-lineage" class="level3">
-<h3 class="anchored" data-anchor-id="data-lineage">5. Data Lineage</h3>
-<p><strong>What it is</strong>: Complete tracking of data flow through the ML pipeline, from source to output.</p>
-<p><strong>Why it matters</strong>: Ensures traceability, enables debugging, and supports compliance requirements.</p>
-<section id="lineage-components" class="level4">
-<h4 class="anchored" data-anchor-id="lineage-components">Lineage Components</h4>
-<section id="dataset-tracking" class="level5">
-<h5 class="anchored" data-anchor-id="dataset-tracking">Dataset Tracking</h5>
-<ul>
-<li><strong>Source identification</strong>: Where data comes from</li>
-<li><strong>Version control</strong>: How data changes over time</li>
-<li><strong>Provenance</strong>: Complete history of data transformations</li>
+<li>model weights or serialized estimator</li>
+<li>preprocessing state</li>
+<li>version identity</li>
+<li>training run reference</li>
+<li>deployment suitability metadata</li>
 </ul>
 </section>
-<section id="model-training-lineage" class="level5">
-<h5 class="anchored" data-anchor-id="model-training-lineage">Model Training Lineage</h5>
+<section id="ex-03-local-deployment-and-serving" class="level3">
+<h3 class="anchored" data-anchor-id="ex-03-local-deployment-and-serving">EX-03: local deployment and serving</h3>
+<p>Local serving exists to prove that a packaged model can be loaded and used with prediction logging.</p>
+<p>The serving path must preserve:</p>
 <ul>
-<li><strong>Input data sources</strong>: What data was used for training</li>
-<li><strong>Feature engineering</strong>: How features were created</li>
-<li><strong>Hyperparameters</strong>: What parameters were used</li>
-<li><strong>Performance metrics</strong>: How well the model performed</li>
-</ul>
-</section>
-<section id="deployment-lineage" class="level5">
-<h5 class="anchored" data-anchor-id="deployment-lineage">Deployment Lineage</h5>
-<ul>
-<li><strong>Model version</strong>: Which version of the model was deployed</li>
-<li><strong>Deployment environment</strong>: Where and when it was deployed</li>
-<li><strong>Performance monitoring</strong>: How it’s performing in production</li>
+<li>model version</li>
+<li>request identity</li>
+<li>input context</li>
+<li>output capture</li>
+<li>latency or execution metadata</li>
 </ul>
 </section>
 </section>
-</section>
-<section id="multi-topology-support" class="level3">
-<h3 class="anchored" data-anchor-id="multi-topology-support">6. Multi-Topology Support</h3>
-<p><strong>What it is</strong>: The ability to deploy and run ML workflows in different environments and scales.</p>
-<p><strong>Why it matters</strong>: Supports different use cases from local development to production deployment.</p>
-<section id="supported-topologies" class="level4">
-<h4 class="anchored" data-anchor-id="supported-topologies">Supported Topologies</h4>
-<section id="local-development-topology" class="level5">
-<h5 class="anchored" data-anchor-id="local-development-topology">Local Development Topology</h5>
+<section id="high-level-architecture-shape" class="level2">
+<h2 class="anchored" data-anchor-id="high-level-architecture-shape">High-level architecture shape</h2>
+<p>The stack is easiest to understand as five layers:</p>
 <ul>
-<li><strong>Use case</strong>: Development and testing</li>
-<li><strong>Components</strong>: Local execution, MLflow tracking, containerized dependencies</li>
-<li><strong>Benefits</strong>: Fast iteration, local reproducibility</li>
+<li><strong>Interface layer</strong> — notebook repository and Web UI</li>
+<li><strong>Execution layer</strong> — local, Slurm, and Kubernetes backends</li>
+<li><strong>Data/model layer</strong> — MLflow, artifacts, prediction logging</li>
+<li><strong>Infrastructure layer</strong> — Nix/Terranix/OpenTofu, cloud and local emulation</li>
+<li><strong>Governance layer</strong> — auth, policy, approvals, cost controls</li>
 </ul>
 </section>
-<section id="distributed-training-topology" class="level5">
-<h5 class="anchored" data-anchor-id="distributed-training-topology">Distributed Training Topology</h5>
+<section id="what-the-docs-are-trying-to-protect" class="level2">
+<h2 class="anchored" data-anchor-id="what-the-docs-are-trying-to-protect">What the docs are trying to protect</h2>
+<p>The docs repeatedly enforce three promises:</p>
 <ul>
-<li><strong>Use case</strong>: Large-scale model training</li>
-<li><strong>Components</strong>: Lambda.ai, Slurm coordination, distributed data loading</li>
-<li><strong>Benefits</strong>: Scalability, fault tolerance, job management</li>
+<li>notebooks remain immutable source of truth</li>
+<li>execution is always traceable</li>
+<li>privileges are always explicit</li>
+</ul>
+<p>Those promises are the reason the repo has so many contracts and decision pages.</p>
+</section>
+<section id="how-the-topology-pages-fit" class="level2">
+<h2 class="anchored" data-anchor-id="how-the-topology-pages-fit">How the topology pages fit</h2>
+<p>The reference topologies are not alternative stories; they are different deployment shapes for the same contract model:</p>
+<ul>
+<li>local development and single-node training</li>
+<li>distributed training on Lambda.ai</li>
+<li>batch inference on AWS</li>
+<li>online inference under production controls</li>
+</ul>
+<p>Each topology consumes the same contracts but exercises them differently.</p>
+</section>
+<section id="how-to-read-the-rest-of-the-docs" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-read-the-rest-of-the-docs">How to read the rest of the docs</h2>
+<p>Use this tutorial when you need the big picture.</p>
+<p>Then move to:</p>
+<ul>
+<li><code>nbs/tutorials/04_End_to_End_Workflow.qmd</code> for the full slice</li>
+<li><code>nbs/reference/01_Implementation_Patterns.qmd</code> for the slice mechanics</li>
+<li><code>nbs/reference/02_API_Documentation.qmd</code> for contract shapes</li>
+<li><code>nbs/reference/03_Security_Authorization_and_Policy.qmd</code> for roles and policy</li>
 </ul>
 </section>
-<section id="batch-inference-topology" class="level5">
-<h5 class="anchored" data-anchor-id="batch-inference-topology">Batch Inference Topology</h5>
-<ul>
-<li><strong>Use case</strong>: Large-scale batch predictions</li>
-<li><strong>Components</strong>: Kubernetes batch jobs, model serving, output lineage</li>
-<li><strong>Benefits</strong>: Efficiency, cost optimization, traceability</li>
-</ul>
-</section>
-<section id="online-inference-topology" class="level5">
-<h5 class="anchored" data-anchor-id="online-inference-topology">Online Inference Topology</h5>
-<ul>
-<li><strong>Use case</strong>: Real-time predictions</li>
-<li><strong>Components</strong>: Online serving, deployment rollbacks, monitoring</li>
-<li><strong>Benefits</strong>: Low latency, reliability, rollback capability</li>
-</ul>
-</section>
-</section>
-</section>
-</section>
-<section id="architecture-decision-records" class="level2">
-<h2 class="anchored" data-anchor-id="architecture-decision-records">Architecture Decision Records</h2>
-<section id="why-architecture-decisions-matter" class="level3">
-<h3 class="anchored" data-anchor-id="why-architecture-decisions-matter">Why Architecture Decisions Matter</h3>
-<p>Architecture decisions ensure consistency, guide implementation, and document rationale for technical choices. They help:</p>
-<ol type="1">
-<li><strong>Maintain consistency</strong> across the platform</li>
-<li><strong>Guide implementation</strong> work</li>
-<li><strong>Document rationale</strong> for technical choices</li>
-<li><strong>Onboard new team members</strong> quickly</li>
-<li><strong>Support decision-making</strong> for future changes</li>
-</ol>
-</section>
-<section id="key-architecture-decisions" class="level3">
-<h3 class="anchored" data-anchor-id="key-architecture-decisions">Key Architecture Decisions</h3>
-<section id="nix-only-containerization" class="level4">
-<h4 class="anchored" data-anchor-id="nix-only-containerization">1. Nix-Only Containerization</h4>
-<p><strong>Decision</strong>: No Docker files; all containers defined via Nix dockerTools <strong>Rationale</strong>: Reproducibility, version control, and Docker-first compatibility <strong>Implications</strong>: All container definitions must be Nix-based</p>
-</section>
-<section id="contract-based-design" class="level4">
-<h4 class="anchored" data-anchor-id="contract-based-design">2. Contract-Based Design</h4>
-<p><strong>Decision</strong>: Well-defined interfaces between components <strong>Rationale</strong>: Consistency, testability, and component independence <strong>Implications</strong>: All components must implement defined contracts</p>
-</section>
-<section id="specification-first-development" class="level4">
-<h4 class="anchored" data-anchor-id="specification-first-development">3. Specification-First Development</h4>
-<p><strong>Decision</strong>: Specifications before implementation <strong>Rationale</strong>: Quality assurance, architectural consistency <strong>Implications</strong>: Implementation work requires specification ratification</p>
-</section>
-<section id="multi-profile-infrastructure" class="level4">
-<h4 class="anchored" data-anchor-id="multi-profile-infrastructure">4. Multi-Profile Infrastructure</h4>
-<p><strong>Decision</strong>: Support for local_emulation and cloud deployment <strong>Rationale</strong>: Development needs, production parity <strong>Implications</strong>: Infrastructure code must support multiple profiles</p>
-</section>
-<section id="immutable-notebooks" class="level4">
-<h4 class="anchored" data-anchor-id="immutable-notebooks">5. Immutable Notebooks</h4>
-<p><strong>Decision</strong>: Notebook source code remains immutable <strong>Rationale</strong>: Reproducibility, version control <strong>Implications</strong>: Execution parameters must be injected externally</p>
-</section>
-</section>
-</section>
-<section id="learning-path-for-concepts" class="level2">
-<h2 class="anchored" data-anchor-id="learning-path-for-concepts">Learning Path for Concepts</h2>
-<section id="beginner-path-2-3-hours" class="level3">
-<h3 class="anchored" data-anchor-id="beginner-path-2-3-hours">Beginner Path (2-3 hours)</h3>
-<ol type="1">
-<li><strong>Start with terminology</strong> (30 minutes)
-<ul>
-<li>Read the <a href="../tutorials/01_Terminology_Glossary.html">Terminology Glossary</a></li>
-<li>Understand EX-01, EX-02, EX-03 patterns</li>
-</ul></li>
-<li><strong>Understand architecture overview</strong> (1 hour)
-<ul>
-<li>Study this concepts document</li>
-<li>Review architectural principles</li>
-<li>Understand core components</li>
-</ul></li>
-<li><strong>Explore implementation patterns</strong> (1-2 hours)
-<ul>
-<li>Study the <a href="../reference/01_Implementation_Patterns.html">Implementation Patterns</a></li>
-<li>Understand how patterns work together</li>
-</ul></li>
-</ol>
-</section>
-<section id="experienced-path-1-2-hours" class="level3">
-<h3 class="anchored" data-anchor-id="experienced-path-1-2-hours">Experienced Path (1-2 hours)</h3>
-<ol type="1">
-<li><strong>Review architecture decisions</strong> (30 minutes)
-<ul>
-<li>Study key architectural decisions</li>
-<li>Understand rationale and implications</li>
-</ul></li>
-<li><strong>Deep dive into contracts</strong> (1 hour)
-<ul>
-<li>Review API documentation</li>
-<li>Understand interface definitions</li>
-</ul></li>
-<li><strong>Explore governance framework</strong> (30 minutes)
-<ul>
-<li>Study governance controls</li>
-<li>Understand quality gates</li>
-</ul></li>
-</ol>
-</section>
-</section>
-<section id="practical-exercises" class="level2">
-<h2 class="anchored" data-anchor-id="practical-exercises">Practical Exercises</h2>
-<section id="exercise-1-understanding-execution-patterns" class="level3">
-<h3 class="anchored" data-anchor-id="exercise-1-understanding-execution-patterns">Exercise 1: Understanding Execution Patterns</h3>
-<p><strong>Objective</strong>: Understand how EX-01 → EX-03 patterns work together.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Complete workflow example</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> complete_ml_workflow(work_dir: Path):</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># EX-01: Training with traceability</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    training_result <span class="op">=</span> execute_first_vertical_slice(</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>        work_dir<span class="op">=</span>work_dir <span class="op">/</span> <span class="st">"training"</span>,</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>        mlflow_config<span class="op">=</span>resolve_mlflow_storage_config(),</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>        run_name<span class="op">=</span><span class="st">"experiment"</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># EX-02: Artifact bundling and versioning</span></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    model_bundle <span class="op">=</span> register_model_artifact(</span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>        artifact_bundle_path<span class="op">=</span>training_result.artifact_path,</span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>        model_name<span class="op">=</span><span class="st">"workflow_model"</span>,</span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>        model_version<span class="op">=</span><span class="st">"v1.0"</span></span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># EX-03: Local deployment and serving</span></span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>    local_serving <span class="op">=</span> LocalModelServing(model_bundle)</span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>    prediction_logger <span class="op">=</span> PredictionLogger(work_dir <span class="op">/</span> <span class="st">"logs"</span>)</span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
-<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>        <span class="st">"training"</span>: training_result,</span>
-<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>        <span class="st">"model"</span>: model_bundle,</span>
-<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>        <span class="st">"serving"</span>: local_serving</span>
-<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>    }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="exercise-2-working-with-contracts" class="level3">
-<h3 class="anchored" data-anchor-id="exercise-2-working-with-contracts">Exercise 2: Working with Contracts</h3>
-<p><strong>Objective</strong>: Understand how contracts ensure consistency.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Contract-based execution</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>request <span class="op">=</span> NotebookExecutionRequest(</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    notebook_ref<span class="op">=</span><span class="st">"abc123"</span>,</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    notebook_path<span class="op">=</span>Path(<span class="st">"/experiment.ipynb"</span>),</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    parameters<span class="op">=</span>{<span class="st">"learning_rate"</span>: <span class="fl">0.1</span>},</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    environment<span class="op">=</span><span class="st">"dev"</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Submit through orchestrator</span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>orchestrator <span class="op">=</span> ExecutionOrchestrator()</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> orchestrator.submit_execution(request)</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Check status</span></span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>status <span class="op">=</span> orchestrator.get_run_status(result[<span class="st">"run_id"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="exercise-3-governance-controls" class="level3">
-<h3 class="anchored" data-anchor-id="exercise-3-governance-controls">Exercise 3: Governance Controls</h3>
-<p><strong>Objective</strong>: Understand how governance ensures quality.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Governance state management</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>state <span class="op">=</span> RepositoryGovernanceState(</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    phase<span class="op">=</span><span class="st">"specification_first"</span>,</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    spec_quality_gate_passed<span class="op">=</span><span class="va">True</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Request implementation transition</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>decision <span class="op">=</span> request_implementation_transition(</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    state<span class="op">=</span>state,</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    explicit_user_confirmation<span class="op">=</span><span class="va">True</span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> decision.allowed:</span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Can proceed with implementation!"</span>)</span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Implementation blocked: </span><span class="sc">{</span>decision<span class="sc">.</span>reason<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-</section>
-<section id="common-questions" class="level2">
-<h2 class="anchored" data-anchor-id="common-questions">Common Questions</h2>
-<section id="q-why-use-contracts-instead-of-direct-implementation" class="level3">
-<h3 class="anchored" data-anchor-id="q-why-use-contracts-instead-of-direct-implementation">Q: Why use contracts instead of direct implementation?</h3>
-<p><strong>A</strong>: Contracts ensure consistency, enable testing, and allow components to be swapped independently. They provide clear interfaces that guide implementation while allowing flexibility in how those interfaces are implemented.</p>
-</section>
-<section id="q-whats-the-difference-between-ex-01-ex-02-and-ex-03" class="level3">
-<h3 class="anchored" data-anchor-id="q-whats-the-difference-between-ex-01-ex-02-and-ex-03">Q: What’s the difference between EX-01, EX-02, and EX-03?</h3>
-<p><strong>A</strong>: EX-01 focuses on training with traceability, EX-02 on model packaging and versioning, and EX-03 on local deployment and serving. Together they form a complete workflow from training to deployment.</p>
-</section>
-<section id="q-why-nix-instead-of-docker" class="level3">
-<h3 class="anchored" data-anchor-id="q-why-nix-instead-of-docker">Q: Why Nix instead of Docker?</h3>
-<p><strong>A</strong>: Nix provides better reproducibility, version control, and layer optimization while maintaining Docker-first compatibility. It eliminates Dockerfiles while still producing standard Docker images.</p>
-</section>
-<section id="q-how-does-governance-affect-development" class="level3">
-<h3 class="anchored" data-anchor-id="q-how-does-governance-affect-development">Q: How does governance affect development?</h3>
-<p><strong>A</strong>: Governance ensures that implementation work meets quality standards and follows proper processes. It prevents premature implementation and ensures architectural consistency.</p>
-</section>
-</section>
-<section id="next-steps" class="level2">
-<h2 class="anchored" data-anchor-id="next-steps">Next Steps</h2>
-<p>After understanding these core concepts:</p>
-<ol type="1">
-<li><strong>Explore implementation patterns</strong> in detail</li>
-<li><strong>Study API documentation</strong> for technical interfaces</li>
-<li><strong>Set up development environment</strong> for hands-on practice</li>
-<li><strong>Try the complete workflow</strong> examples</li>
-<li><strong>Dive into specific topologies</strong> for your use case</li>
-</ol>
-<hr>
-<p><em>This concepts document provides the foundation for understanding ML Deploy architecture. For specific technical details, refer to the implementation patterns and API documentation.</em></p>
+<section id="practical-takeaway" class="level2">
+<h2 class="anchored" data-anchor-id="practical-takeaway">Practical takeaway</h2>
+<p>If a change does not preserve the lifecycle, contract, or traceability model, it probably does not fit the reference architecture.</p>
 
 
 </section>

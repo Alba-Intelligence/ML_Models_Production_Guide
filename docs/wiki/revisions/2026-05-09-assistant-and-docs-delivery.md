@@ -1,6 +1,6 @@
 ---
 updated: 2026-05-09
-summary: Captures the proposal to add MCP-enabled assistant integrations and a FastAPI-based documentation delivery layer.
+summary: Captures the proposal to add MCP-enabled assistant integrations and a documentation delivery layer.
 read_when:
   - You need provenance for assistant-integration and documentation-delivery planning
   - You want to know how these ideas were incorporated into the architecture
@@ -18,16 +18,16 @@ sources:
 The user added two planning points:
 
 1. consider MCP integrations for AI-assistant support in monitoring and ongoing improvement tasks
-2. consider using FastAPI to write and serve the documentation
+2. consider using a dedicated documentation delivery layer
 
 ## Decisions/proposals captured
 
 - Assistant support should be treated as an **augmentation layer**, not a second source of truth.
 - MCP integrations are most valuable first for MLflow, observability, cost visibility, Lambda.ai visibility, deployment/service metadata, and documentation retrieval.
 - Assistant integrations should be read-first, least-privilege, and auditable by default.
-- FastAPI is a viable candidate for **documentation delivery**.
-- Documentation should remain **markdown-in-git as canonical source**, with FastAPI acting as serving/composition/search/navigation layer.
-- Documentation delivery should remain logically separate from model-serving delivery even if both use FastAPI.
+- A dedicated docs delivery mechanism is a viable candidate for **documentation delivery**.
+- Documentation should remain **markdown-in-git as canonical source**, with a documentation-serving/composition/search/navigation layer.
+- Documentation delivery should remain logically separate from model-serving delivery even if both use the same serving technology.
 
 ## Wiki pages added
 
@@ -45,5 +45,5 @@ The user added two planning points:
 ## Remaining decisions
 
 - which MCP integrations should be default vs optional
-- whether FastAPI docs delivery is part of the default reference architecture or an optional companion pattern
+- whether a docs delivery layer is part of the default reference architecture or an optional companion pattern
 - whether authenticated docs-authoring helpers should be part of the reference, or deferred

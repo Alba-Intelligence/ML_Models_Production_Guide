@@ -24,7 +24,7 @@ After reviewing the available options, the user approved the proposed default ch
 - default cost stack: **AWS Cost Explorer / CUR / Athena / Budgets + Python attribution layer for Lambda.ai**
 - Docker/Nix boundary: **Docker canonical, Nix helper/convenience layer**
 - default MCP scope: **MLflow, observability, AWS cost visibility, Lambda.ai usage visibility, and documentation/decision retrieval**
-- documentation delivery posture: **markdown-in-git canonical, FastAPI docs delivery optional companion pattern**
+- documentation delivery posture: **markdown-in-git canonical, dedicated docs delivery optional companion pattern**
 
 ## Architectural effect
 

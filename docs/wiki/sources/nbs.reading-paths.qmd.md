@@ -41,16 +41,19 @@ The reading paths guide includes:
 ## Learning Paths
 
 ### Foundational Path (New ML Engineers)
+
 - **Duration**: 6-8 hours total
 - **Focus**: Core concepts and basic implementation
 - **Key Documents**: Terminology glossary, getting started, first vertical slice
 
 ### Professional Path (Experienced ML Engineers)
+
 - **Duration**: 4-6 hours total
 - **Focus**: Architecture deep dive and implementation patterns
 - **Key Documents**: Architecture overview, implementation patterns, API documentation
 
 ### Infrastructure Path (Infrastructure Engineers)
+
 - **Duration**: 5-7 hours total
 - **Focus**: Infrastructure setup and operational management
 - **Key Documents**: Infrastructure setup, deployment procedures, monitoring

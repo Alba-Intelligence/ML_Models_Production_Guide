@@ -1,6 +1,6 @@
 ---
-updated: 2026-05-10
-summary: Router for durable architectural and stack decisions, including infrastructure MCP availability expectations.
+updated: 2026-05-16
+summary: Router for durable architectural and stack decisions, including infrastructure MCP availability expectations and AWS / Floci-aligned implementation guidance.
 read_when:
   - You need the accepted defaults quickly
   - You are deciding whether a major choice is already settled
@@ -11,6 +11,7 @@ sources:
   - docker-nix-boundary-decision.md
   - mcp-default-scope-decision.md
   - documentation-delivery-decision.md
+  - aws-floci-aligned-implementation-path.md
   - notebook-intake-validation-and-approval.md
   - infrastructure-mcp-server-inventory.md
 ---
@@ -30,6 +31,7 @@ These pages preserve durable choices that should not be rediscovered from scratc
 - [docker-nix-boundary-decision.md](docker-nix-boundary-decision.md) — accepted Docker/Nix boundary.
 - [mcp-default-scope-decision.md](mcp-default-scope-decision.md) — accepted default MCP scope.
 - [documentation-delivery-decision.md](documentation-delivery-decision.md) — accepted docs-delivery posture.
+- [aws-floci-aligned-implementation-path.md](aws-floci-aligned-implementation-path.md) — AWS-native / Floci-parity preference for the biggest remaining gaps.
 - [nbdev-framework-decision.md](nbdev-framework-decision.md) — accepted nbdev 3 framework for notebook-first development
 - [notebook-intake-validation-and-approval.md](notebook-intake-validation-and-approval.md) — accepted validation and approval gates for executable notebook intake
 - [infrastructure-mcp-server-inventory.md](infrastructure-mcp-server-inventory.md) — required infrastructure MCP coverage and default vs optional server inventory.

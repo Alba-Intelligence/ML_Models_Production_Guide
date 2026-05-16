@@ -28,13 +28,38 @@ class TestWebUIContracts(unittest.TestCase):
             target="local-replica",
             requested_by="engineer@example.com",
             config_profile="dev-local",
-            parameters={"learning_rate": 0.01},
+            parameters={"learning_rate": 0.01, "access_token": "fake-token"},
         ).with_defaults(request_id="req-001")
 
         spec = request.as_job_spec()
         self.assertEqual(spec["request_id"], "req-001")
         self.assertEqual(spec["notebook"]["revision_kind"], "commit")
         self.assertEqual(spec["notebook"]["revision"], "a1b2c3d4e5")
+
+    def test_authorize_execution_request(self) -> None:
+        request = NotebookExecutionRequest(
+            notebook=NotebookRevision(
+                repository="git@github.com:org/repo.git",
+                notebook_path="nbs/train.ipynb",
+                revision="a1b2c3d4e5",
+                revision_kind="commit",
+            ),
+            target="local-replica",
+            requested_by="engineer@example.com",
+            config_profile="dev-local",
+            parameters={"access_token": "fake-token"},
+        ).with_defaults(request_id="req-002")
+        self.assertTrue(request.authorize())
+        # Should fail for invalid token
+        request_bad = NotebookExecutionRequest(
+            notebook=request.notebook,
+            target="local-replica",
+            requested_by="engineer@example.com",
+            config_profile="dev-local",
+            parameters={"access_token": "bad-token"},
+        ).with_defaults(request_id="req-003")
+        with self.assertRaises(Exception):
+            request_bad.authorize()
 
     def test_commit_revision_validation_rejects_non_sha(self) -> None:
         with self.assertRaises(ValueError):

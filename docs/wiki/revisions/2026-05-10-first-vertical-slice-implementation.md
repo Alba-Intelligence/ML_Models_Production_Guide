@@ -26,7 +26,7 @@ The architecture write-up had been ratified and the next required step was to im
 2. Added `tests/test_vertical_slice.py` with end-to-end checks for:
    - required output records and linkage fields
    - prediction log linkage to model version and deployment
-3. Kept dependencies aligned with nbdev/Python workflow (no FastAPI serving dependency).
+3. Kept dependencies aligned with nbdev/Python workflow (no dedicated serving dependency).
 
 ## Result
 

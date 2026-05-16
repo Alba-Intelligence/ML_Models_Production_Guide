@@ -1,6 +1,5 @@
 # Model Training
 
-
 This section will be expanded to show how a single notebook can be used
 to train a model, log metrics and parameters with MLflow, and save the
 trained model for later use. This will be executed as part of the
@@ -15,7 +14,7 @@ how the training step fits into the overall workflow.
 We will use the data prepared in the previous notebook to train a
 logistic regression model.
 
-``` python
+```python
 import pandas as pd
 import numpy as np
 from sklearn.linear_model import LogisticRegression
@@ -30,7 +29,7 @@ In a real project, we would load the data that was prepared and saved.
 For simplicity, we’ll regenerate the same data split as in the previous
 notebook.
 
-``` python
+```python
 # Regenerate the same data split for consistency
 import numpy as np
 import pandas as pd
@@ -73,7 +72,7 @@ print(f"Test set shape: {X_test_scaled.shape}")
 
 We will use MLflow to track our experiment, parameters, and metrics.
 
-``` python
+```python
 # Set MLflow tracking URI (optional, for local tracking)
 mlflow.set_tracking_uri("file://./mlruns")
 
@@ -119,7 +118,7 @@ However, MLflow already provides a way to save and load the model. For
 completeness, let’s also save the scaler so we can preprocess new data
 the same way.
 
-``` python
+```python
 import joblib
 import os
 
@@ -142,11 +141,13 @@ previous notebook) 2. Trained a logistic regression model 3. Tracked the
 experiment with MLflow (parameters, metrics, and model) 4. Evaluated the
 model on the test set 5. Saved the model and scaler for later use
 
-The next steps would be to: - Package the model for deployment - Create
-a serving API (e.g., with FastAPI or another framework) - Set up
-monitoring for the deployed model
+The next steps would be to:
 
-------------------------------------------------------------------------
+- Package the model for deployment
+- Create a serving API using the stack's chosen Python web layer
+- Set up monitoring for the deployed model
 
-*This notebook exports functions and variables that can be used in other
-notebooks.*
+---
+
+_This notebook exports functions and variables that can be used in other
+notebooks._

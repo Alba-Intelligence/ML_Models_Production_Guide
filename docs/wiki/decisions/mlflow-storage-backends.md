@@ -10,10 +10,10 @@
 
 ## Decision
 
-| Context | Backend store | Artifact store |
-|---|---|---|
-| `local_emulation` | SQLite or PostgreSQL | filesystem or Floci-backed S3 |
-| `cloud` | **PostgreSQL (required)** | **S3 (required)** |
+| Context           | Backend store             | Artifact store                 |
+| ----------------- | ------------------------- | ------------------------------ |
+| `local_emulation` | **PostgreSQL (required)** | **Floci-backed S3 (required)** |
+| `cloud`           | **PostgreSQL (required)** | **S3 (required)**              |
 
 ---
 
@@ -31,11 +31,11 @@
 - S3 has versioning, lifecycle rules, and cross-region replication
 - Floci is the canonical local AWS emulator and provides the S3-compatible API surface for `local_emulation`
 
-### Why SQLite is acceptable locally
+### Why the local profile should match cloud shape
 
-- Zero configuration for a single developer
-- Fast for low-volume experiment tracking
-- Trivially swapped to PostgreSQL for team-local setups via `docker-compose.dev.yml`
+- The repo treats local emulation as AWS-on-a-local-machine, not a different stack.
+- Using PostgreSQL locally preserves the same tracking semantics as cloud.
+- Using Floci-backed S3 locally preserves the same artifact and model-version shape as cloud.
 
 ---
 
@@ -46,6 +46,7 @@ MLflow upstream documentation recommends routing all tracking server traffic thr
 **Recommended**: nginx or Traefik
 
 **Why**:
+
 - TLS termination (MLflow server does not handle TLS natively)
 - Authentication enforcement (Basic Auth / OAuth gateway before MLflow)
 - Rate limiting and request throttling
@@ -60,6 +61,7 @@ MLflow upstream documentation recommends routing all tracking server traffic thr
 This env var restricts which source URIs can be registered as model version sources. Without it, an attacker with MLflow API access could register an arbitrary URI as a model source, enabling model poisoning or SSRF.
 
 Example (restrict to your S3 bucket):
+
 ```
 MLFLOW_CREATE_MODEL_VERSION_SOURCE_VALIDATION_REGEX=^s3://mlflow-artifacts/.*
 ```
@@ -70,20 +72,22 @@ MLFLOW_CREATE_MODEL_VERSION_SOURCE_VALIDATION_REGEX=^s3://mlflow-artifacts/.*
 
 [mlflow-go](https://github.com/mlflow/mlflow-go) with the `mlflow-go-backend` Python package is the preferred MLflow server implementation because:
 
-- It supports both SQLite/local-PostgreSQL and cloud PostgreSQL backends via environment configuration alone
+- It supports the same PostgreSQL-backed tracking shape in both `local_emulation` and `cloud` profiles via environment configuration alone
 - No code changes required to switch between `local_emulation` and `cloud` profiles
 - API-compatible with the standard MLflow Python client
 
 This satisfies the spec's `RequireMlflowProfileSwitchable` rule.
 
-**Local usage** (`docker-compose.dev.yml`):
+**Local usage** (`docker-compose.dev.yml` + Floci):
+
 ```bash
 MLFLOW_BACKEND_STORE_URI=postgresql://mlflow:mlflow@postgres:5432/mlflow
 MLFLOW_DEFAULT_ARTIFACT_ROOT=s3://mlflow-artifacts
 MLFLOW_S3_ENDPOINT_URL=http://floci:4566  # Floci in local_emulation
 ```
 
-**Cloud usage** (same vars, different values):
+**Cloud usage** (same shape, different endpoints):
+
 ```bash
 MLFLOW_BACKEND_STORE_URI=postgresql://user:pass@rds-host:5432/mlflow
 MLFLOW_DEFAULT_ARTIFACT_ROOT=s3://mlflow-artifacts
@@ -131,8 +135,6 @@ The standard `mlflow.sklearn` / `mlflow.pytorch` flavors may be sufficient. The 
 - This avoids extra dependency risk and keeps local/cloud code identical
 
 ---
-
-
 
 - `docs/wiki/architecture/local-emulation-stack.md`
 - `docs/wiki/decisions/project-scope-and-constraints.md`

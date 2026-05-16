@@ -364,7 +364,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../tutorials/05_Advanced_Scenarios.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Advanced ML Scenarios</span></a>
+ <span class="menu-text">Advanced Scenarios</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -395,6 +395,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="sidebar-item-container"> 
   <a href="../reference/02_API_Documentation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">API Documentation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../reference/03_Security_Authorization_and_Policy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Security, Roles, and Policy</span></a>
   </div>
 </li>
       </ul>
@@ -531,54 +537,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#implementation-patterns-ex-01-ex-03" id="toc-implementation-patterns-ex-01-ex-03" class="nav-link active" data-scroll-target="#implementation-patterns-ex-01-ex-03">Implementation Patterns: EX-01 → EX-03</a>
   <ul class="collapse">
-  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a></li>
-  <li><a href="#pattern-architecture" id="toc-pattern-architecture" class="nav-link" data-scroll-target="#pattern-architecture">Pattern Architecture</a></li>
-  <li><a href="#ex-01-training-with-traceability" id="toc-ex-01-training-with-traceability" class="nav-link" data-scroll-target="#ex-01-training-with-traceability">EX-01: Training with Traceability</a>
+  <li><a href="#what-the-slice-proves" id="toc-what-the-slice-proves" class="nav-link" data-scroll-target="#what-the-slice-proves">What the slice proves</a></li>
+  <li><a href="#pattern-1-ex-01-training-with-traceability" id="toc-pattern-1-ex-01-training-with-traceability" class="nav-link" data-scroll-target="#pattern-1-ex-01-training-with-traceability">Pattern 1: EX-01 training with traceability</a>
   <ul class="collapse">
-  <li><a href="#pattern-definition" id="toc-pattern-definition" class="nav-link" data-scroll-target="#pattern-definition">Pattern Definition</a></li>
-  <li><a href="#key-components" id="toc-key-components" class="nav-link" data-scroll-target="#key-components">Key Components</a></li>
-  <li><a href="#requirements-and-constraints" id="toc-requirements-and-constraints" class="nav-link" data-scroll-target="#requirements-and-constraints">Requirements and Constraints</a></li>
+  <li><a href="#what-it-captures" id="toc-what-it-captures" class="nav-link" data-scroll-target="#what-it-captures">What it captures</a></li>
+  <li><a href="#minimal-shape" id="toc-minimal-shape" class="nav-link" data-scroll-target="#minimal-shape">Minimal shape</a></li>
+  <li><a href="#practical-rule" id="toc-practical-rule" class="nav-link" data-scroll-target="#practical-rule">Practical rule</a></li>
   </ul></li>
-  <li><a href="#ex-02-artifact-bundling-and-versioning" id="toc-ex-02-artifact-bundling-and-versioning" class="nav-link" data-scroll-target="#ex-02-artifact-bundling-and-versioning">EX-02: Artifact Bundling and Versioning</a>
+  <li><a href="#pattern-2-ex-02-artifact-bundling-and-versioning" id="toc-pattern-2-ex-02-artifact-bundling-and-versioning" class="nav-link" data-scroll-target="#pattern-2-ex-02-artifact-bundling-and-versioning">Pattern 2: EX-02 artifact bundling and versioning</a>
   <ul class="collapse">
-  <li><a href="#pattern-definition-1" id="toc-pattern-definition-1" class="nav-link" data-scroll-target="#pattern-definition-1">Pattern Definition</a></li>
-  <li><a href="#key-components-1" id="toc-key-components-1" class="nav-link" data-scroll-target="#key-components-1">Key Components</a></li>
-  <li><a href="#requirements-and-constraints-1" id="toc-requirements-and-constraints-1" class="nav-link" data-scroll-target="#requirements-and-constraints-1">Requirements and Constraints</a></li>
+  <li><a href="#what-it-includes" id="toc-what-it-includes" class="nav-link" data-scroll-target="#what-it-includes">What it includes</a></li>
+  <li><a href="#minimal-shape-1" id="toc-minimal-shape-1" class="nav-link" data-scroll-target="#minimal-shape-1">Minimal shape</a></li>
+  <li><a href="#practical-rule-1" id="toc-practical-rule-1" class="nav-link" data-scroll-target="#practical-rule-1">Practical rule</a></li>
   </ul></li>
-  <li><a href="#ex-03-local-deployment-and-serving" id="toc-ex-03-local-deployment-and-serving" class="nav-link" data-scroll-target="#ex-03-local-deployment-and-serving">EX-03: Local Deployment and Serving</a>
+  <li><a href="#pattern-3-ex-03-local-deployment-and-serving" id="toc-pattern-3-ex-03-local-deployment-and-serving" class="nav-link" data-scroll-target="#pattern-3-ex-03-local-deployment-and-serving">Pattern 3: EX-03 local deployment and serving</a>
   <ul class="collapse">
-  <li><a href="#pattern-definition-2" id="toc-pattern-definition-2" class="nav-link" data-scroll-target="#pattern-definition-2">Pattern Definition</a></li>
-  <li><a href="#key-components-2" id="toc-key-components-2" class="nav-link" data-scroll-target="#key-components-2">Key Components</a></li>
-  <li><a href="#requirements-and-constraints-2" id="toc-requirements-and-constraints-2" class="nav-link" data-scroll-target="#requirements-and-constraints-2">Requirements and Constraints</a></li>
+  <li><a href="#core-behavior" id="toc-core-behavior" class="nav-link" data-scroll-target="#core-behavior">Core behavior</a></li>
+  <li><a href="#minimal-shape-2" id="toc-minimal-shape-2" class="nav-link" data-scroll-target="#minimal-shape-2">Minimal shape</a></li>
+  <li><a href="#practical-rule-2" id="toc-practical-rule-2" class="nav-link" data-scroll-target="#practical-rule-2">Practical rule</a></li>
   </ul></li>
-  <li><a href="#integration-patterns" id="toc-integration-patterns" class="nav-link" data-scroll-target="#integration-patterns">Integration Patterns</a>
-  <ul class="collapse">
-  <li><a href="#complete-workflow-integration" id="toc-complete-workflow-integration" class="nav-link" data-scroll-target="#complete-workflow-integration">Complete Workflow Integration</a></li>
-  <li><a href="#error-handling-and-recovery" id="toc-error-handling-and-recovery" class="nav-link" data-scroll-target="#error-handling-and-recovery">Error Handling and Recovery</a></li>
-  </ul></li>
-  <li><a href="#testing-and-validation" id="toc-testing-and-validation" class="nav-link" data-scroll-target="#testing-and-validation">Testing and Validation</a>
-  <ul class="collapse">
-  <li><a href="#unit-tests" id="toc-unit-tests" class="nav-link" data-scroll-target="#unit-tests">Unit Tests</a></li>
-  <li><a href="#integration-tests" id="toc-integration-tests" class="nav-link" data-scroll-target="#integration-tests">Integration Tests</a></li>
-  </ul></li>
-  <li><a href="#performance-considerations" id="toc-performance-considerations" class="nav-link" data-scroll-target="#performance-considerations">Performance Considerations</a>
-  <ul class="collapse">
-  <li><a href="#memory-management" id="toc-memory-management" class="nav-link" data-scroll-target="#memory-management">Memory Management</a></li>
-  <li><a href="#latency-optimization" id="toc-latency-optimization" class="nav-link" data-scroll-target="#latency-optimization">Latency Optimization</a></li>
-  <li><a href="#scalability" id="toc-scalability" class="nav-link" data-scroll-target="#scalability">Scalability</a></li>
-  </ul></li>
-  <li><a href="#security-considerations" id="toc-security-considerations" class="nav-link" data-scroll-target="#security-considerations">Security Considerations</a>
-  <ul class="collapse">
-  <li><a href="#model-protection" id="toc-model-protection" class="nav-link" data-scroll-target="#model-protection">Model Protection</a></li>
-  <li><a href="#data-privacy" id="toc-data-privacy" class="nav-link" data-scroll-target="#data-privacy">Data Privacy</a></li>
-  <li><a href="#audit-trail" id="toc-audit-trail" class="nav-link" data-scroll-target="#audit-trail">Audit Trail</a></li>
-  </ul></li>
-  <li><a href="#monitoring-and-observability" id="toc-monitoring-and-observability" class="nav-link" data-scroll-target="#monitoring-and-observability">Monitoring and Observability</a>
-  <ul class="collapse">
-  <li><a href="#performance-metrics" id="toc-performance-metrics" class="nav-link" data-scroll-target="#performance-metrics">Performance Metrics</a></li>
-  <li><a href="#error-tracking" id="toc-error-tracking" class="nav-link" data-scroll-target="#error-tracking">Error Tracking</a></li>
-  <li><a href="#business-metrics" id="toc-business-metrics" class="nav-link" data-scroll-target="#business-metrics">Business Metrics</a></li>
-  </ul></li>
+  <li><a href="#pattern-4-prediction-logging" id="toc-pattern-4-prediction-logging" class="nav-link" data-scroll-target="#pattern-4-prediction-logging">Pattern 4: prediction logging</a></li>
+  <li><a href="#pattern-5-workflow-composition" id="toc-pattern-5-workflow-composition" class="nav-link" data-scroll-target="#pattern-5-workflow-composition">Pattern 5: workflow composition</a></li>
+  <li><a href="#error-handling-and-recovery" id="toc-error-handling-and-recovery" class="nav-link" data-scroll-target="#error-handling-and-recovery">Error handling and recovery</a></li>
+  <li><a href="#when-to-use-these-patterns" id="toc-when-to-use-these-patterns" class="nav-link" data-scroll-target="#when-to-use-these-patterns">When to use these patterns</a></li>
+  <li><a href="#not-covered-here" id="toc-not-covered-here" class="nav-link" data-scroll-target="#not-covered-here">Not covered here</a></li>
+  <li><a href="#related-pages" id="toc-related-pages" class="nav-link" data-scroll-target="#related-pages">Related pages</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/alba-intelligence/ml_deploy/edit/main/reference/01_Implementation_Patterns.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/alba-intelligence/ml_deploy/blob/main/reference/01_Implementation_Patterns.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/alba-intelligence/ml_deploy/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div><div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="01_Implementation_Patterns.md"><i class="bi bi-file-code"></i>CommonMark</a></li></ul></div></nav>
@@ -608,660 +591,200 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="implementation-patterns-ex-01-ex-03" class="level1">
 <h1>Implementation Patterns: EX-01 → EX-03</h1>
-<p>This document provides the technical implementation details for the core ML deployment patterns that form the foundation of the ML Deploy platform. These patterns demonstrate the complete workflow from training to deployment with comprehensive traceability and quality controls.</p>
-<section id="overview" class="level2">
-<h2 class="anchored" data-anchor-id="overview">Overview</h2>
-<p>The EX-01 → EX-03 implementation patterns represent the foundational workflow that covers:</p>
+<p>This page is the compact reference for the first vertical slice. It explains the core patterns without duplicating the full implementation. The detailed code lives in:</p>
+<ul>
+<li><code>ml_deploy/vertical_slice.py</code></li>
+<li><code>ml_deploy/webui_contracts.py</code></li>
+<li><code>ml_deploy/execution_backends.py</code></li>
+</ul>
+<section id="what-the-slice-proves" class="level2">
+<h2 class="anchored" data-anchor-id="what-the-slice-proves">What the slice proves</h2>
+<p>The EX-01 → EX-03 slice demonstrates a complete path from training to deployment:</p>
 <ol type="1">
-<li><strong>EX-01</strong>: Training with Traceability - Complete training workflow with MLflow tracking</li>
-<li><strong>EX-02</strong>: Artifact Bundling and Versioning - Model packaging and registry management<br>
-</li>
-<li><strong>EX-03</strong>: Local Deployment and Serving - Local inference with logging and validation</li>
+<li><strong>EX-01</strong> — train with traceability</li>
+<li><strong>EX-02</strong> — package and version the artifact</li>
+<li><strong>EX-03</strong> — run local deployment with prediction logging</li>
 </ol>
-<p>This vertical slice serves as the reference implementation that can be extended to more complex scenarios including distributed training, batch inference, and online serving.</p>
+<p>The slice is intentionally small but production-shaped: every major artifact carries identity, version, and lineage metadata.</p>
 </section>
-<section id="pattern-architecture" class="level2">
-<h2 class="anchored" data-anchor-id="pattern-architecture">Pattern Architecture</h2>
-<pre><code>┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   EX-01:        │    │   EX-02:        │    │   EX-03:        │
-│   Training      │───▶│   Artifact     │───▶│   Local         │
-│   with          │    │   Bundling     │    │   Deployment    │
-│   Traceability  │    │   and          │    │   and Serving   │
-│                 │    │   Versioning   │    │                 │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
-         │                       │                       │
-         ▼                       ▼                       ▼
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   MLflow        │    │   MLflow        │    │   Local         │
-│   Experiment    │    │   Model         │    │   Inference     │
-│   Tracking      │    │   Registry      │    │   Engine        │
-│                 │    │                 │    │                 │
-└─────────────────┘    └─────────────────┘    └─────────────────┘</code></pre>
-</section>
-<section id="ex-01-training-with-traceability" class="level2">
-<h2 class="anchored" data-anchor-id="ex-01-training-with-traceability">EX-01: Training with Traceability</h2>
-<section id="pattern-definition" class="level3">
-<h3 class="anchored" data-anchor-id="pattern-definition">Pattern Definition</h3>
-<p>EX-01 implements a complete training workflow that captures comprehensive metadata about the training process, ensuring full reproducibility and lineage tracking.</p>
-</section>
-<section id="key-components" class="level3">
-<h3 class="anchored" data-anchor-id="key-components">Key Components</h3>
-<section id="training-execution" class="level4">
-<h4 class="anchored" data-anchor-id="training-execution">Training Execution</h4>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ml_deploy.vertical_slice <span class="im">import</span> execute_first_vertical_slice</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ml_deploy.mlflow_parity <span class="im">import</span> resolve_mlflow_storage_config</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Configure MLflow for traceability</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>mlflow_config <span class="op">=</span> resolve_mlflow_storage_config(profile<span class="op">=</span><span class="st">"local_emulation"</span>)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Execute training with comprehensive metadata</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> execute_first_vertical_slice(</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    work_dir<span class="op">=</span>Path(<span class="st">"/tmp/experiment"</span>),</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    mlflow_config<span class="op">=</span>mlflow_config,</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    run_name<span class="op">=</span><span class="st">"diabetes_xgboost_experiment"</span>,</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    experiment_config<span class="op">=</span>{</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">"dataset_version"</span>: <span class="st">"v1.0"</span>,</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">"feature_revision"</span>: <span class="st">"engineered_v2"</span>,</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">"hyperparameters"</span>: {</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>            <span class="st">"max_depth"</span>: <span class="dv">6</span>,</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>            <span class="st">"learning_rate"</span>: <span class="fl">0.1</span>,</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>            <span class="st">"random_state"</span>: <span class="dv">42</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>        },</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>        <span class="st">"compute_requirements"</span>: {</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>            <span class="st">"gpu_required"</span>: <span class="va">False</span>,</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>            <span class="st">"memory_gb"</span>: <span class="dv">4</span></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="metadata-capture" class="level4">
-<h4 class="anchored" data-anchor-id="metadata-capture">Metadata Capture</h4>
-<p>The training process captures:</p>
+<section id="pattern-1-ex-01-training-with-traceability" class="level2">
+<h2 class="anchored" data-anchor-id="pattern-1-ex-01-training-with-traceability">Pattern 1: EX-01 training with traceability</h2>
+<p>EX-01 is the canonical training pattern.</p>
+<section id="what-it-captures" class="level3">
+<h3 class="anchored" data-anchor-id="what-it-captures">What it captures</h3>
 <ul>
-<li><strong>Dataset Metadata</strong>: Version, source, preprocessing steps</li>
-<li><strong>Feature Metadata</strong>: Engineering steps, transformations, validation</li>
-<li><strong>Hyperparameter Tracking</strong>: All training parameters and their values</li>
-<li><strong>Environment Snapshot</strong>: Dependencies, versions, system state</li>
-<li><strong>Performance Metrics</strong>: Loss, accuracy, validation results</li>
-<li><strong>Resource Usage</strong>: CPU, memory, time consumed</li>
+<li>dataset version</li>
+<li>feature revision</li>
+<li>hyperparameters</li>
+<li>environment metadata</li>
+<li>metrics and model outputs</li>
+<li>MLflow run identity</li>
 </ul>
 </section>
-<section id="mlflow-integration" class="level4">
-<h4 class="anchored" data-anchor-id="mlflow-integration">MLflow Integration</h4>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> mlflow</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> xgboost <span class="im">as</span> xgb</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> load_diabetes</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Start MLflow run with comprehensive tags</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> mlflow.start_run(run_name<span class="op">=</span><span class="st">"diabetes_xgboost_experiment"</span>) <span class="im">as</span> run:</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Set traceability tags</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    mlflow.set_tag(<span class="st">"dataset_version"</span>, <span class="st">"v1.0"</span>)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    mlflow.set_tag(<span class="st">"feature_revision"</span>, <span class="st">"engineered_v2"</span>)</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    mlflow.set_tag(<span class="st">"model_type"</span>, <span class="st">"xgboost"</span>)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    mlflow.set_tag(<span class="st">"experiment_phase"</span>, <span class="st">"training"</span>)</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Log hyperparameters</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    mlflow.log_params({</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">"max_depth"</span>: <span class="dv">6</span>,</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">"learning_rate"</span>: <span class="fl">0.1</span>,</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">"random_state"</span>: <span class="dv">42</span>,</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">"objective"</span>: <span class="st">"reg:squarederror"</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    })</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Execute training</span></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> load_diabetes()</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>        data.data, data.target, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">42</span></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    dtrain <span class="op">=</span> xgb.DMatrix(X_train, label<span class="op">=</span>y_train)</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    dtest <span class="op">=</span> xgb.DMatrix(X_test, label<span class="op">=</span>y_test)</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> xgb.train(</span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>        params<span class="op">=</span>{<span class="st">"objective"</span>: <span class="st">"reg:squarederror"</span>, <span class="st">"max_depth"</span>: <span class="dv">6</span>},</span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>        dtrain<span class="op">=</span>dtrain,</span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>        num_boost_round<span class="op">=</span><span class="dv">100</span>,</span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>        evals<span class="op">=</span>[(dtrain, <span class="st">"train"</span>), (dtest, <span class="st">"test"</span>)]</span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Log model and metrics</span></span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>    mlflow.xgboost.log_model(model, <span class="st">"model"</span>)</span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>    mlflow.log_metrics({<span class="st">"train_rmse"</span>: <span class="fl">0.5</span>, <span class="st">"test_rmse"</span>: <span class="fl">0.6</span>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="minimal-shape" class="level3">
+<h3 class="anchored" data-anchor-id="minimal-shape">Minimal shape</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> execute_first_vertical_slice(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    work_dir<span class="op">=</span>Path(<span class="st">"/tmp/experiment"</span>),</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    mlflow_config<span class="op">=</span>resolve_mlflow_storage_config(profile<span class="op">=</span><span class="st">"local_emulation"</span>),</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    run_name<span class="op">=</span><span class="st">"baseline_experiment"</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    experiment_config<span class="op">=</span>{</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"dataset_version"</span>: <span class="st">"v1.0"</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"feature_revision"</span>: <span class="st">"engineered_v2"</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-</section>
-<section id="requirements-and-constraints" class="level3">
-<h3 class="anchored" data-anchor-id="requirements-and-constraints">Requirements and Constraints</h3>
+<section id="practical-rule" class="level3">
+<h3 class="anchored" data-anchor-id="practical-rule">Practical rule</h3>
+<p>Keep the training step deterministic enough that a later reviewer can answer:</p>
 <ul>
-<li><strong>Mandatory Tags</strong>: <code>dataset_version</code>, <code>feature_revision</code>, <code>model_type</code>, <code>experiment_phase</code></li>
-<li><strong>Parameter Logging</strong>: All training parameters must be logged</li>
-<li><strong>Artifact Storage</strong>: Model artifacts must be stored with proper metadata</li>
-<li><strong>Environment Capture</strong>: Complete environment snapshot for reproducibility</li>
+<li>what data was used</li>
+<li>what code revision ran</li>
+<li>what model was produced</li>
+<li>what metrics were recorded</li>
 </ul>
 </section>
 </section>
-<section id="ex-02-artifact-bundling-and-versioning" class="level2">
-<h2 class="anchored" data-anchor-id="ex-02-artifact-bundling-and-versioning">EX-02: Artifact Bundling and Versioning</h2>
-<section id="pattern-definition-1" class="level3">
-<h3 class="anchored" data-anchor-id="pattern-definition-1">Pattern Definition</h3>
-<p>EX-02 implements the process of packaging trained models and associated artifacts into versioned, deployment-ready bundles with comprehensive metadata.</p>
-</section>
-<section id="key-components-1" class="level3">
-<h3 class="anchored" data-anchor-id="key-components-1">Key Components</h3>
-<section id="model-artifact-creation" class="level4">
-<h4 class="anchored" data-anchor-id="model-artifact-creation">Model Artifact Creation</h4>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dataclasses <span class="im">import</span> dataclass</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> Dict, Any</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="at">@dataclass</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ModelArtifact:</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    model_path: Path</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    scaler_path: Path</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    metadata: Dict[<span class="bu">str</span>, Any]</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    version: <span class="bu">str</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    creation_timestamp: <span class="bu">str</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> to_bundle(<span class="va">self</span>, bundle_dir: Path) <span class="op">-&gt;</span> Path:</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Create versioned model artifact bundle"""</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>        bundle_dir.mkdir(parents<span class="op">=</span><span class="va">True</span>, exist_ok<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Copy model and scaler files</span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>        model_bundle_path <span class="op">=</span> bundle_dir <span class="op">/</span> <span class="st">"model.json"</span></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>        scaler_bundle_path <span class="op">=</span> bundle_dir <span class="op">/</span> <span class="st">"scaler.pkl"</span></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Copy model artifacts</span></span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.model_path.rename(model_bundle_path)</span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.scaler_path.rename(scaler_bundle_path)</span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Create metadata file</span></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>        metadata_path <span class="op">=</span> bundle_dir <span class="op">/</span> <span class="st">"metadata.json"</span></span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>        metadata <span class="op">=</span> {</span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>            <span class="st">"version"</span>: <span class="va">self</span>.version,</span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>            <span class="st">"creation_timestamp"</span>: <span class="va">self</span>.creation_timestamp,</span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>            <span class="st">"model_type"</span>: <span class="va">self</span>.metadata[<span class="st">"model_type"</span>],</span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>            <span class="st">"dataset_version"</span>: <span class="va">self</span>.metadata[<span class="st">"dataset_version"</span>],</span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>            <span class="st">"feature_revision"</span>: <span class="va">self</span>.metadata[<span class="st">"feature_revision"</span>],</span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>            <span class="st">"hyperparameters"</span>: <span class="va">self</span>.metadata[<span class="st">"hyperparameters"</span>],</span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>            <span class="st">"performance_metrics"</span>: <span class="va">self</span>.metadata[<span class="st">"performance_metrics"</span>],</span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>            <span class="st">"mlflow_run_id"</span>: <span class="va">self</span>.metadata[<span class="st">"mlflow_run_id"</span>]</span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> metadata_path.<span class="bu">open</span>(<span class="st">"w"</span>) <span class="im">as</span> f:</span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>            json.dump(metadata, f, indent<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> bundle_dir</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="version-registration" class="level4">
-<h4 class="anchored" data-anchor-id="version-registration">Version Registration</h4>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ml_deploy.vertical_slice <span class="im">import</span> register_model_artifact</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Register model artifact in MLflow registry</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>registration_result <span class="op">=</span> register_model_artifact(</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    artifact_bundle_path<span class="op">=</span>Path(<span class="st">"/tmp/model_bundle_v1.0"</span>),</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    model_name<span class="op">=</span><span class="st">"diabetes_xgboost"</span>,</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    model_version<span class="op">=</span><span class="st">"v1.0"</span>,</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    description<span class="op">=</span><span class="st">"XGBoost model for diabetes prediction with engineered features"</span>,</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    run_id<span class="op">=</span><span class="st">"your_mlflow_run_id"</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Model registered: </span><span class="sc">{</span>registration_result<span class="sc">.</span>model_name<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Version: </span><span class="sc">{</span>registration_result<span class="sc">.</span>model_version<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"URI: </span><span class="sc">{</span>registration_result<span class="sc">.</span>model_uri<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="promotion-tracking" class="level4">
-<h4 class="anchored" data-anchor-id="promotion-tracking">Promotion Tracking</h4>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dataclasses <span class="im">import</span> dataclass</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> Literal</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datetime <span class="im">import</span> datetime</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="at">@dataclass</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ModelPromotionRecord:</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    model_name: <span class="bu">str</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    version: <span class="bu">str</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    source_environment: Literal[<span class="st">"dev"</span>, <span class="st">"uat"</span>, <span class="st">"regression"</span>, <span class="st">"prod"</span>]</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    target_environment: Literal[<span class="st">"uat"</span>, <span class="st">"regression"</span>, <span class="st">"prod"</span>]</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    promotion_timestamp: datetime</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    approved_by: <span class="bu">str</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    approval_ticket: <span class="bu">str</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    validation_results: Dict[<span class="bu">str</span>, Any]</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> to_promotion_log(<span class="va">self</span>) <span class="op">-&gt;</span> Dict[<span class="bu">str</span>, Any]:</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Create promotion log entry"""</span></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> {</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>            <span class="st">"model_name"</span>: <span class="va">self</span>.model_name,</span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>            <span class="st">"version"</span>: <span class="va">self</span>.version,</span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>            <span class="st">"source_environment"</span>: <span class="va">self</span>.source_environment,</span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>            <span class="st">"target_environment"</span>: <span class="va">self</span>.target_environment,</span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>            <span class="st">"promotion_timestamp"</span>: <span class="va">self</span>.promotion_timestamp.isoformat(),</span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>            <span class="st">"approved_by"</span>: <span class="va">self</span>.approved_by,</span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>            <span class="st">"approval_ticket"</span>: <span class="va">self</span>.approval_ticket,</span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>            <span class="st">"validation_results"</span>: <span class="va">self</span>.validation_results</span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>        }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-</section>
-<section id="requirements-and-constraints-1" class="level3">
-<h3 class="anchored" data-anchor-id="requirements-and-constraints-1">Requirements and Constraints</h3>
+<section id="pattern-2-ex-02-artifact-bundling-and-versioning" class="level2">
+<h2 class="anchored" data-anchor-id="pattern-2-ex-02-artifact-bundling-and-versioning">Pattern 2: EX-02 artifact bundling and versioning</h2>
+<p>EX-02 packages the trained output into a versioned artifact bundle.</p>
+<section id="what-it-includes" class="level3">
+<h3 class="anchored" data-anchor-id="what-it-includes">What it includes</h3>
 <ul>
-<li><strong>Artifact Bundling</strong>: Model + scaler + metadata + dependencies</li>
-<li><strong>Version Management</strong>: Semantic versioning with promotion tracking</li>
-<li><strong>Registry Integration</strong>: MLflow model registry for artifact management</li>
-<li><strong>Promotion Pipeline</strong>: DEV→UAT→REGRESSION→PROD with approval gates</li>
+<li>the trained model</li>
+<li>preprocessing state</li>
+<li>model-version metadata</li>
+<li>traceability links back to the training run</li>
+</ul>
+</section>
+<section id="minimal-shape-1" class="level3">
+<h3 class="anchored" data-anchor-id="minimal-shape-1">Minimal shape</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>bundle <span class="op">=</span> register_model_artifact(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    artifact_bundle_path<span class="op">=</span>result.artifact_path,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    model_name<span class="op">=</span><span class="st">"reference_model"</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    model_version<span class="op">=</span><span class="st">"v1.0"</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    description<span class="op">=</span><span class="st">"Reference model bundle"</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    run_id<span class="op">=</span>result.run_id,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="practical-rule-1" class="level3">
+<h3 class="anchored" data-anchor-id="practical-rule-1">Practical rule</h3>
+<p>Artifact metadata must be enough to reconstruct:</p>
+<ul>
+<li>which run created it</li>
+<li>which revision produced it</li>
+<li>which deployment record consumed it</li>
 </ul>
 </section>
 </section>
-<section id="ex-03-local-deployment-and-serving" class="level2">
-<h2 class="anchored" data-anchor-id="ex-03-local-deployment-and-serving">EX-03: Local Deployment and Serving</h2>
-<section id="pattern-definition-2" class="level3">
-<h3 class="anchored" data-anchor-id="pattern-definition-2">Pattern Definition</h3>
-<p>EX-03 implements local model deployment using nbdev/Python for inference with comprehensive prediction logging and lineage preservation.</p>
-</section>
-<section id="key-components-2" class="level3">
-<h3 class="anchored" data-anchor-id="key-components-2">Key Components</h3>
-<section id="model-loading-and-inference" class="level4">
-<h4 class="anchored" data-anchor-id="model-loading-and-inference">Model Loading and Inference</h4>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pickle</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> Dict, Any, List</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> LocalModelServing:</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, model_bundle_path: Path):</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Initialize local model serving from bundle"""</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.model_bundle_path <span class="op">=</span> model_bundle_path</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.model <span class="op">=</span> <span class="va">None</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.scaler <span class="op">=</span> <span class="va">None</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.metadata <span class="op">=</span> <span class="va">self</span>._load_metadata()</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>._load_artifacts()</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> _load_metadata(<span class="va">self</span>) <span class="op">-&gt;</span> Dict[<span class="bu">str</span>, Any]:</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Load model metadata from bundle"""</span></span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>        metadata_path <span class="op">=</span> <span class="va">self</span>.model_bundle_path <span class="op">/</span> <span class="st">"metadata.json"</span></span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> metadata_path.<span class="bu">open</span>(<span class="st">"r"</span>) <span class="im">as</span> f:</span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> json.load(f)</span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> _load_artifacts(<span class="va">self</span>):</span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Load model and scaler artifacts"""</span></span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>        model_path <span class="op">=</span> <span class="va">self</span>.model_bundle_path <span class="op">/</span> <span class="st">"model.json"</span></span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>        scaler_path <span class="op">=</span> <span class="va">self</span>.model_bundle_path <span class="op">/</span> <span class="st">"scaler.pkl"</span></span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Load XGBoost model</span></span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>        <span class="im">import</span> xgboost <span class="im">as</span> xgb</span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.model <span class="op">=</span> xgb.Booster()</span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.model.load_model(<span class="bu">str</span>(model_path))</span>
-<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Load scaler</span></span>
-<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> scaler_path.<span class="bu">open</span>(<span class="st">"rb"</span>) <span class="im">as</span> f:</span>
-<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.scaler <span class="op">=</span> pickle.load(f)</span>
-<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> predict(<span class="va">self</span>, input_data: pd.DataFrame) <span class="op">-&gt;</span> Dict[<span class="bu">str</span>, Any]:</span>
-<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Make predictions with logging"""</span></span>
-<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Preprocess input data</span></span>
-<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>        processed_data <span class="op">=</span> <span class="va">self</span>.scaler.transform(input_data)</span>
-<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Make predictions</span></span>
-<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>        dmatrix <span class="op">=</span> xgb.DMatrix(processed_data)</span>
-<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>        predictions <span class="op">=</span> <span class="va">self</span>.model.predict(dmatrix)</span>
-<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Create prediction result</span></span>
-<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>        result <span class="op">=</span> {</span>
-<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>            <span class="st">"predictions"</span>: predictions.tolist(),</span>
-<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a>            <span class="st">"model_version"</span>: <span class="va">self</span>.metadata[<span class="st">"version"</span>],</span>
-<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a>            <span class="st">"model_type"</span>: <span class="va">self</span>.metadata[<span class="st">"model_type"</span>],</span>
-<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a>            <span class="st">"input_data_shape"</span>: input_data.shape,</span>
-<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a>            <span class="st">"timestamp"</span>: pd.Timestamp.now().isoformat()</span>
-<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> result</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="prediction-logging" class="level4">
-<h4 class="anchored" data-anchor-id="prediction-logging">Prediction Logging</h4>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datetime <span class="im">import</span> datetime</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> Dict, Any</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> PredictionLogger:</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, log_dir: Path):</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.log_dir <span class="op">=</span> log_dir</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.log_dir.mkdir(parents<span class="op">=</span><span class="va">True</span>, exist_ok<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> log_prediction(<span class="va">self</span>, prediction_result: Dict[<span class="bu">str</span>, Any], </span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>                      input_metadata: Dict[<span class="bu">str</span>, Any]):</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Log prediction with comprehensive metadata"""</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>        log_entry <span class="op">=</span> {</span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>            <span class="st">"timestamp"</span>: datetime.now().isoformat(),</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>            <span class="st">"prediction_result"</span>: prediction_result,</span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>            <span class="st">"input_metadata"</span>: input_metadata,</span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>            <span class="st">"model_info"</span>: {</span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>                <span class="st">"version"</span>: prediction_result[<span class="st">"model_version"</span>],</span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>                <span class="st">"type"</span>: prediction_result[<span class="st">"model_type"</span>]</span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>            }</span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Write to JSONL log file</span></span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>        log_path <span class="op">=</span> <span class="va">self</span>.log_dir <span class="op">/</span> <span class="st">"predictions.jsonl"</span></span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> log_path.<span class="bu">open</span>(<span class="st">"a"</span>) <span class="im">as</span> f:</span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>            f.write(json.dumps(log_entry) <span class="op">+</span> <span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> get_prediction_stats(<span class="va">self</span>) <span class="op">-&gt;</span> Dict[<span class="bu">str</span>, Any]:</span>
-<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Get prediction statistics from log"""</span></span>
-<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>        log_path <span class="op">=</span> <span class="va">self</span>.log_dir <span class="op">/</span> <span class="st">"predictions.jsonl"</span></span>
-<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> log_path.exists():</span>
-<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> {<span class="st">"total_predictions"</span>: <span class="dv">0</span>}</span>
-<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> log_path.<span class="bu">open</span>(<span class="st">"r"</span>) <span class="im">as</span> f:</span>
-<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>            lines <span class="op">=</span> f.readlines()</span>
-<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> {</span>
-<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>            <span class="st">"total_predictions"</span>: <span class="bu">len</span>(lines),</span>
-<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>            <span class="st">"date_range"</span>: {</span>
-<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>                <span class="st">"start"</span>: lines[<span class="dv">0</span>].split(<span class="st">'"timestamp":'</span>)[<span class="dv">1</span>].split(<span class="st">','</span>)[<span class="dv">0</span>].strip(<span class="st">'"'</span>),</span>
-<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>                <span class="st">"end"</span>: lines[<span class="op">-</span><span class="dv">1</span>].split(<span class="st">'"timestamp":'</span>)[<span class="dv">1</span>].split(<span class="st">','</span>)[<span class="dv">0</span>].strip(<span class="st">'"'</span>)</span>
-<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>            }</span>
-<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>        }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="local-serving-endpoint" class="level4">
-<h4 class="anchored" data-anchor-id="local-serving-endpoint">Local Serving Endpoint</h4>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastapi <span class="im">import</span> FastAPI, HTTPException</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pydantic <span class="im">import</span> BaseModel</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> List</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize model serving</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>model_serving <span class="op">=</span> LocalModelServing(Path(<span class="st">"/tmp/model_bundle_v1.0"</span>))</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>prediction_logger <span class="op">=</span> PredictionLogger(Path(<span class="st">"/tmp/prediction_logs"</span>))</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>app <span class="op">=</span> FastAPI(title<span class="op">=</span><span class="st">"ML Deploy Local Serving"</span>)</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> PredictionRequest(BaseModel):</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    data: List[List[<span class="bu">float</span>]]</span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    model_version: <span class="bu">str</span> <span class="op">=</span> <span class="st">"v1.0"</span></span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> PredictionResponse(BaseModel):</span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    predictions: List[<span class="bu">float</span>]</span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    model_version: <span class="bu">str</span></span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    timestamp: <span class="bu">str</span></span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="at">@app.post</span>(<span class="st">"/predict"</span>, response_model<span class="op">=</span>PredictionResponse)</span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="cf">async</span> <span class="kw">def</span> predict(request: PredictionRequest):</span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Handle prediction requests"""</span></span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Convert input to DataFrame</span></span>
-<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>        input_df <span class="op">=</span> pd.DataFrame(request.data)</span>
-<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Make predictions</span></span>
-<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>        result <span class="op">=</span> model_serving.predict(input_df)</span>
-<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Log prediction</span></span>
-<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>        input_metadata <span class="op">=</span> {</span>
-<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>            <span class="st">"request_id"</span>: <span class="st">"generated_uuid"</span>,</span>
-<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>            <span class="st">"data_shape"</span>: input_df.shape,</span>
-<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>            <span class="st">"model_version"</span>: request.model_version</span>
-<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>        prediction_logger.log_prediction(result, input_metadata)</span>
-<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> PredictionResponse(</span>
-<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>            predictions<span class="op">=</span>result[<span class="st">"predictions"</span>],</span>
-<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a>            model_version<span class="op">=</span>result[<span class="st">"model_version"</span>],</span>
-<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>            timestamp<span class="op">=</span>result[<span class="st">"timestamp"</span>]</span>
-<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
-<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> HTTPException(status_code<span class="op">=</span><span class="dv">500</span>, detail<span class="op">=</span><span class="bu">str</span>(e))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-</section>
-<section id="requirements-and-constraints-2" class="level3">
-<h3 class="anchored" data-anchor-id="requirements-and-constraints-2">Requirements and Constraints</h3>
+<section id="pattern-3-ex-03-local-deployment-and-serving" class="level2">
+<h2 class="anchored" data-anchor-id="pattern-3-ex-03-local-deployment-and-serving">Pattern 3: EX-03 local deployment and serving</h2>
+<p>EX-03 is the local deployment pattern.</p>
+<p>The reference stack keeps this framework-neutral: the page does not choose a web framework. Instead, it focuses on the serving contract.</p>
+<section id="core-behavior" class="level3">
+<h3 class="anchored" data-anchor-id="core-behavior">Core behavior</h3>
 <ul>
-<li><strong>Local Serving</strong>: FastAPI-based inference endpoint</li>
-<li><strong>Prediction Logging</strong>: JSONL format with comprehensive metadata</li>
-<li><strong>Model Management</strong>: Efficient loading and caching of model artifacts</li>
-<li><strong>Performance Monitoring</strong>: Request/response logging and metrics</li>
+<li>load a packaged model</li>
+<li>accept an external prediction request</li>
+<li>validate input shape and provenance</li>
+<li>produce predictions</li>
+<li>log the request and response</li>
+</ul>
+</section>
+<section id="minimal-shape-2" class="level3">
+<h3 class="anchored" data-anchor-id="minimal-shape-2">Minimal shape</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>app <span class="op">=</span> ServingApplication(title<span class="op">=</span><span class="st">"ML Deploy Local Serving"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="at">@app.route</span>(<span class="st">"POST"</span>, <span class="st">"/predict"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> predict(request: PredictionRequest):</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    input_df <span class="op">=</span> pd.DataFrame(request.data)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> model_serving.predict(input_df)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    prediction_logger.log_prediction(result, {<span class="st">"request_id"</span>: <span class="st">"generated_uuid"</span>})</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> PredictionResponse(</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        predictions<span class="op">=</span>result[<span class="st">"predictions"</span>],</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        model_version<span class="op">=</span>result[<span class="st">"model_version"</span>],</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        timestamp<span class="op">=</span>result[<span class="st">"timestamp"</span>],</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="practical-rule-2" class="level3">
+<h3 class="anchored" data-anchor-id="practical-rule-2">Practical rule</h3>
+<p>Prediction handling must preserve:</p>
+<ul>
+<li>model version</li>
+<li>request identity</li>
+<li>input shape or schema context</li>
+<li>result visibility links</li>
 </ul>
 </section>
 </section>
-<section id="integration-patterns" class="level2">
-<h2 class="anchored" data-anchor-id="integration-patterns">Integration Patterns</h2>
-<section id="complete-workflow-integration" class="level3">
-<h3 class="anchored" data-anchor-id="complete-workflow-integration">Complete Workflow Integration</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ml_deploy.vertical_slice <span class="im">import</span> execute_first_vertical_slice</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ml_deploy.vertical_slice <span class="im">import</span> register_model_artifact</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ml_deploy.vertical_slice <span class="im">import</span> LocalModelServing</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> complete_ml_workflow(work_dir: Path, experiment_config: Dict[<span class="bu">str</span>, Any]):</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Execute complete EX-01 → EX-02 → EX-03 workflow"""</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># EX-01: Training with Traceability</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    training_result <span class="op">=</span> execute_first_vertical_slice(</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>        work_dir<span class="op">=</span>work_dir <span class="op">/</span> <span class="st">"training"</span>,</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>        mlflow_config<span class="op">=</span>resolve_mlflow_storage_config(),</span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>        run_name<span class="op">=</span><span class="st">"complete_workflow_experiment"</span>,</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>        experiment_config<span class="op">=</span>experiment_config</span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># EX-02: Artifact Bundling and Versioning</span></span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    model_bundle_path <span class="op">=</span> register_model_artifact(</span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>        artifact_bundle_path<span class="op">=</span>training_result.artifact_path,</span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>        model_name<span class="op">=</span><span class="st">"workflow_model"</span>,</span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>        model_version<span class="op">=</span><span class="st">"v1.0"</span>,</span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>        description<span class="op">=</span><span class="st">"Complete workflow model"</span>,</span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>        run_id<span class="op">=</span>training_result.run_id</span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># EX-03: Local Deployment and Serving</span></span>
-<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>    local_serving <span class="op">=</span> LocalModelServing(model_bundle_path)</span>
-<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>    prediction_logger <span class="op">=</span> PredictionLogger(work_dir <span class="op">/</span> <span class="st">"logs"</span>)</span>
-<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Example prediction</span></span>
-<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>    <span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>    test_data <span class="op">=</span> pd.DataFrame([[<span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>, <span class="fl">0.4</span>, <span class="fl">0.5</span>, <span class="fl">0.6</span>, <span class="fl">0.7</span>, <span class="fl">0.8</span>, <span class="fl">0.9</span>, <span class="fl">1.0</span>]])</span>
-<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>    prediction_result <span class="op">=</span> local_serving.predict(test_data)</span>
-<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Log prediction</span></span>
-<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>    prediction_logger.log_prediction(</span>
-<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>        prediction_result,</span>
-<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>        {<span class="st">"test_run"</span>: <span class="va">True</span>, <span class="st">"data_shape"</span>: test_data.shape}</span>
-<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
-<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>        <span class="st">"training_result"</span>: training_result,</span>
-<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>        <span class="st">"model_bundle"</span>: model_bundle_path,</span>
-<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a>        <span class="st">"local_serving"</span>: local_serving,</span>
-<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a>        <span class="st">"prediction_log"</span>: work_dir <span class="op">/</span> <span class="st">"logs"</span></span>
-<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a>    }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="error-handling-and-recovery" class="level3">
-<h3 class="anchored" data-anchor-id="error-handling-and-recovery">Error Handling and Recovery</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> Optional</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> WorkflowExecutor:</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, work_dir: Path):</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.work_dir <span class="op">=</span> work_dir</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.current_phase <span class="op">=</span> <span class="st">"init"</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> execute_workflow(<span class="va">self</span>, config: Dict[<span class="bu">str</span>, Any]) <span class="op">-&gt;</span> Dict[<span class="bu">str</span>, Any]:</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Execute complete workflow with error handling"""</span></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">try</span>:</span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Phase 1: Training</span></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.current_phase <span class="op">=</span> <span class="st">"training"</span></span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>            training_result <span class="op">=</span> <span class="va">self</span>._execute_training(config)</span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Phase 2: Artifact Registration</span></span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.current_phase <span class="op">=</span> <span class="st">"artifact_registration"</span></span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>            model_bundle <span class="op">=</span> <span class="va">self</span>._register_artifacts(training_result)</span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Phase 3: Local Serving</span></span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.current_phase <span class="op">=</span> <span class="st">"local_serving"</span></span>
-<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>            serving <span class="op">=</span> <span class="va">self</span>._setup_local_serving(model_bundle)</span>
-<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> {</span>
-<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>                <span class="st">"success"</span>: <span class="va">True</span>,</span>
-<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>                <span class="st">"training_result"</span>: training_result,</span>
-<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>                <span class="st">"model_bundle"</span>: model_bundle,</span>
-<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>                <span class="st">"local_serving"</span>: serving</span>
-<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>            }</span>
-<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>        <span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
-<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> {</span>
-<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>                <span class="st">"success"</span>: <span class="va">False</span>,</span>
-<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>                <span class="st">"error"</span>: <span class="bu">str</span>(e),</span>
-<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>                <span class="st">"phase"</span>: <span class="va">self</span>.current_phase,</span>
-<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>                <span class="st">"work_dir"</span>: <span class="bu">str</span>(<span class="va">self</span>.work_dir)</span>
-<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>            }</span>
-<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> _execute_training(<span class="va">self</span>, config: Dict[<span class="bu">str</span>, Any]):</span>
-<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Execute training phase"""</span></span>
-<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Implementation details</span></span>
-<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a>        <span class="cf">pass</span></span>
-<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> _register_artifacts(<span class="va">self</span>, training_result):</span>
-<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Register model artifacts"""</span></span>
-<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Implementation details</span></span>
-<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a>        <span class="cf">pass</span></span>
-<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> _setup_local_serving(<span class="va">self</span>, model_bundle):</span>
-<span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Setup local serving"""</span></span>
-<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Implementation details</span></span>
-<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a>        <span class="cf">pass</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-</section>
-<section id="testing-and-validation" class="level2">
-<h2 class="anchored" data-anchor-id="testing-and-validation">Testing and Validation</h2>
-<section id="unit-tests" class="level3">
-<h3 class="anchored" data-anchor-id="unit-tests">Unit Tests</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pytest</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ml_deploy.vertical_slice <span class="im">import</span> execute_first_vertical_slice</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_training_execution():</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Test EX-01 training execution"""</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> execute_first_vertical_slice(</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>        work_dir<span class="op">=</span>Path(<span class="st">"/tmp/test_training"</span>),</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>        mlflow_config<span class="op">=</span>resolve_mlflow_storage_config(),</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>        run_name<span class="op">=</span><span class="st">"test_experiment"</span>,</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>        experiment_config<span class="op">=</span>{<span class="st">"test"</span>: <span class="va">True</span>}</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> result.success</span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> result.artifact_path.exists()</span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> result.run_id <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span></span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_artifact_registration():</span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Test EX-02 artifact registration"""</span></span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Test model artifact creation and registration</span></span>
-<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span>
-<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_local_serving():</span>
-<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Test EX-03 local serving"""</span></span>
-<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Test local model serving and prediction logging</span></span>
-<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="integration-tests" class="level3">
-<h3 class="anchored" data-anchor-id="integration-tests">Integration Tests</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_complete_workflow():</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Test complete EX-01 → EX-02 → EX-03 workflow"""</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    workflow <span class="op">=</span> WorkflowExecutor(Path(<span class="st">"/tmp/integration_test"</span>))</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> workflow.execute_workflow({</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"dataset"</span>: <span class="st">"test_data"</span>,</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"model_type"</span>: <span class="st">"xgboost"</span>,</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"test_run"</span>: <span class="va">True</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    })</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> result[<span class="st">"success"</span>]</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="st">"training_result"</span> <span class="kw">in</span> result</span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="st">"model_bundle"</span> <span class="kw">in</span> result</span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="st">"local_serving"</span> <span class="kw">in</span> result</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-</section>
-<section id="performance-considerations" class="level2">
-<h2 class="anchored" data-anchor-id="performance-considerations">Performance Considerations</h2>
-<section id="memory-management" class="level3">
-<h3 class="anchored" data-anchor-id="memory-management">Memory Management</h3>
+<section id="pattern-4-prediction-logging" class="level2">
+<h2 class="anchored" data-anchor-id="pattern-4-prediction-logging">Pattern 4: prediction logging</h2>
+<p>Prediction logging is not an afterthought. It is part of the serving contract.</p>
+<p>A valid prediction record should support later investigation of:</p>
 <ul>
-<li>Model artifacts should be loaded on-demand</li>
-<li>Implement caching for frequently accessed models</li>
-<li>Monitor memory usage during serving</li>
+<li>what input arrived</li>
+<li>what model served it</li>
+<li>what output was returned</li>
+<li>how long it took</li>
+<li>whether the request was approved for that environment</li>
 </ul>
 </section>
-<section id="latency-optimization" class="level3">
-<h3 class="anchored" data-anchor-id="latency-optimization">Latency Optimization</h3>
+<section id="pattern-5-workflow-composition" class="level2">
+<h2 class="anchored" data-anchor-id="pattern-5-workflow-composition">Pattern 5: workflow composition</h2>
+<p>The vertical slice is easiest to understand as a composition of the previous patterns:</p>
+<ol type="1">
+<li>train</li>
+<li>package</li>
+<li>serve locally</li>
+<li>log the inference path</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>training <span class="op">=</span> execute_first_vertical_slice(...)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>bundle <span class="op">=</span> register_model_artifact(...)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>serving <span class="op">=</span> LocalModelServing(bundle)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>That sequence is the canonical minimum viable ML lifecycle in this repository.</p>
+</section>
+<section id="error-handling-and-recovery" class="level2">
+<h2 class="anchored" data-anchor-id="error-handling-and-recovery">Error handling and recovery</h2>
+<p>The patterns are intentionally conservative:</p>
 <ul>
-<li>Optimize model loading times</li>
-<li>Implement request batching for multiple predictions</li>
-<li>Use efficient data formats for input/output</li>
+<li>bad inputs should fail early</li>
+<li>missing metadata should fail early</li>
+<li>deployment records should not be fabricated</li>
+<li>any unavailable resource should produce an explicit error</li>
+</ul>
+<p>Do not silently continue when lineage or versioning information is missing.</p>
+</section>
+<section id="when-to-use-these-patterns" class="level2">
+<h2 class="anchored" data-anchor-id="when-to-use-these-patterns">When to use these patterns</h2>
+<p>Use this page when you need to:</p>
+<ul>
+<li>implement or review the local vertical slice</li>
+<li>understand the minimum traceability requirements</li>
+<li>extend the slice into distributed or cloud topologies</li>
+<li>check whether a change still fits the reference workflow</li>
 </ul>
 </section>
-<section id="scalability" class="level3">
-<h3 class="anchored" data-anchor-id="scalability">Scalability</h3>
+<section id="not-covered-here" class="level2">
+<h2 class="anchored" data-anchor-id="not-covered-here">Not covered here</h2>
+<p>This page does <strong>not</strong> define:</p>
 <ul>
-<li>Consider model sharding for large models</li>
-<li>Implement horizontal scaling for serving endpoints</li>
-<li>Monitor resource usage and scale accordingly</li>
+<li>the complete API surface</li>
+<li>distributed scheduler clients</li>
+<li>cloud deployment orchestration</li>
+<li>notebook intake approvals</li>
+<li>auth/roles/policy</li>
 </ul>
+<p>Those topics live in the other reference pages and wiki contracts.</p>
 </section>
-</section>
-<section id="security-considerations" class="level2">
-<h2 class="anchored" data-anchor-id="security-considerations">Security Considerations</h2>
-<section id="model-protection" class="level3">
-<h3 class="anchored" data-anchor-id="model-protection">Model Protection</h3>
+<section id="related-pages" class="level2">
+<h2 class="anchored" data-anchor-id="related-pages">Related pages</h2>
 <ul>
-<li>Implement access controls for model artifacts</li>
-<li>Encrypt sensitive model components</li>
-<li>Monitor unauthorized access attempts</li>
+<li><code>nbs/reference/02_API_Documentation.qmd</code></li>
+<li><code>nbs/reference/03_Security_Authorization_and_Policy.qmd</code></li>
+<li><code>docs/wiki/architecture/first-vertical-slice.md</code></li>
+<li><code>docs/wiki/contracts/index.md</code></li>
 </ul>
-</section>
-<section id="data-privacy" class="level3">
-<h3 class="anchored" data-anchor-id="data-privacy">Data Privacy</h3>
-<ul>
-<li>Ensure input data handling complies with privacy regulations</li>
-<li>Implement data anonymization where required</li>
-<li>Audit data access patterns</li>
-</ul>
-</section>
-<section id="audit-trail" class="level3">
-<h3 class="anchored" data-anchor-id="audit-trail">Audit Trail</h3>
-<ul>
-<li>Maintain complete logs of all operations</li>
-<li>Implement tamper-evident logging</li>
-<li>Regular audit of model access and usage</li>
-</ul>
-</section>
-</section>
-<section id="monitoring-and-observability" class="level2">
-<h2 class="anchored" data-anchor-id="monitoring-and-observability">Monitoring and Observability</h2>
-<section id="performance-metrics" class="level3">
-<h3 class="anchored" data-anchor-id="performance-metrics">Performance Metrics</h3>
-<ul>
-<li>Track prediction latency and throughput</li>
-<li>Monitor model accuracy and drift</li>
-<li>Track resource usage patterns</li>
-</ul>
-</section>
-<section id="error-tracking" class="level3">
-<h3 class="anchored" data-anchor-id="error-tracking">Error Tracking</h3>
-<ul>
-<li>Log prediction errors and failures</li>
-<li>Implement error rate monitoring</li>
-<li>Track error patterns and trends</li>
-</ul>
-</section>
-<section id="business-metrics" class="level3">
-<h3 class="anchored" data-anchor-id="business-metrics">Business Metrics</h3>
-<ul>
-<li>Monitor model impact on business outcomes</li>
-<li>Track prediction accuracy over time</li>
-<li>Measure ROI of ML deployment</li>
-</ul>
-<hr>
-<p><em>This implementation patterns document provides the technical foundation for ML deployment workflows. For specific guidance on extending these patterns to distributed training, batch inference, or online serving, refer to the respective topology documentation.</em></p>
 
 
-</section>
 </section>
 </section>
 

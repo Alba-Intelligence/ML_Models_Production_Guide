@@ -59,7 +59,7 @@ Security is a permanent requirement, not a later hardening task.
 - Use **least privilege** by default.
 - No plaintext secrets in source control.
 - Environment boundaries must be explicit: at minimum dev vs non-dev, and preferably dev/staging/prod.
-- Production-serving and documentation-serving surfaces must be logically separated even if they share FastAPI.
+- Production-serving and documentation-serving surfaces must be logically separated even if they share the same API framework.
 - Assistant integrations should be **read-only by default**.
 - Any assistant-triggered mutation must be attributable to a user/session and guarded by explicit confirmation.
 - Remote training and batch jobs must not inherit broad ambient permissions without written justification.
@@ -101,18 +101,22 @@ The first option is the recommended fit for this MLOps architecture.
 ## Domain implications
 
 ### Training
+
 - access to datasets, artifact stores, and experiment tracking must be explicit
 - distributed jobs must declare remote secret handling and node trust assumptions
 
 ### Serving
+
 - request surface, auth posture, and model/artifact access must be explicit
 - prediction logging must not leak protected inputs by default
 
 ### Documentation delivery
+
 - docs serving is lower-risk than model serving, but still requires explicit auth posture if any private/internal material exists
 - editing helpers, if added later, require stronger write-path controls than read-only serving
 
 ### Assistant integration
+
 - MCP connectors should use narrowly scoped credentials
 - assistant tools should not be given unbounded cloud write access
 - every write-capable tool requires auditability and confirmation boundaries

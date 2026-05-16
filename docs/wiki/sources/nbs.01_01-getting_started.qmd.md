@@ -43,18 +43,21 @@ The getting started document includes:
 ## Onboarding Process
 
 ### Initial Setup
+
 - **Environment Configuration**: Development environment setup and configuration
 - **Platform Installation**: Platform installation and basic configuration
 - **Authentication**: Setup authentication and access configuration
 - **Initial Configuration**: Basic platform customization and preferences
 
 ### Basic Usage
+
 - **First Project**: Creating and configuring initial projects
 - **Data Management**: Basic data management and preparation
 - **Model Development**: Initial model development and experimentation
 - **Workflow Execution**: Basic workflow execution and monitoring
 
 ### Advanced Setup
+
 - **Advanced Configuration**: Advanced platform configuration options
 - **Integration Setup**: Integration with external systems and services
 - **Customization**: Platform customization and extension

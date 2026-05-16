@@ -1,6 +1,6 @@
 ---
 updated: 2026-05-10
-summary: Adoption of nbdev 3 as the core framework, replacing FastAPI plans.
+summary: Adoption of nbdev 3 as the core framework, replacing the earlier serving plan.
 ---
 
 # nbdev Framework Adoption - 2026-05-10
@@ -9,19 +9,19 @@ summary: Adoption of nbdev 3 as the core framework, replacing FastAPI plans.
 
 ### 1. Updated Target System (`docs/wiki/architecture/target-system.md`)
 
-- Replaced FastAPI references with nbdev 3 (Quarto-based) as the core ML and notebook stack
+- Replaced the earlier serving-framework references with nbdev 3 (Quarto-based) as the core ML and notebook stack
 - Updated documentation section to specify Quarto for rendered documentation
 - Updated likely documentation sections to reference nbdev for artifact/model packaging
-- Removed FastAPI local serving from likely documentation sections
+- Removed local-serving framework references from likely documentation sections
 
 ### 2. Updated Documentation TOC (`docs/wiki/architecture/documentation-toc.md`)
 
 - Renamed section 06 from "Local development and local serving" to "Local development and nbdev workflow"
-- Updated candidate pages to reflect nbdev workflow instead of FastAPI serving
+- Updated candidate pages to reflect nbdev workflow instead of a specific serving framework
 
 ### 3. Updated Assistant Integration and Docs Delivery (`docs/wiki/architecture/assistant-integration-and-docs-delivery.md`)
 
-- Removed entire "Part 2 — FastAPI for writing and serving documentation" section
+- Removed the entire "Part 2 — documentation serving" section
 - Added new "Part 2 — Documentation with nbdev/Quarto" section
 - Positioned nbdev/Quarto as the accepted documentation framework
 - Updated MCP recommendation to keep documentation retrieval scope
@@ -37,7 +37,7 @@ summary: Adoption of nbdev 3 as the core framework, replacing FastAPI plans.
 
 ### 6. Updated Overview (`docs/wiki/overview.md`)
 
-- Updated technical direction to replace FastAPI with nbdev 3 (Quarto-based)
+- Updated technical direction to replace the earlier serving plan with nbdev 3 (Quarto-based)
 
 ### 7. Updated Current State (`docs/wiki/current-state.md`)
 
@@ -61,12 +61,12 @@ summary: Adoption of nbdev 3 as the core framework, replacing FastAPI plans.
 
 ## Motivation
 
-The shift to nbdev 3 provides a notebook-first approach that unifies code, documentation, and experimentation in a single framework, eliminating the need for separate FastAPI-based documentation delivery while providing richer documentation capabilities through Quarto.
+The shift to nbdev 3 provides a notebook-first approach that unifies code, documentation, and experimentation in a single framework, eliminating the need for separate documentation-delivery infrastructure while providing richer documentation capabilities through Quarto.
 
 ## Impact
 
 - Repository now has an active nbdev 3 project structure ready for development
-- All references to FastAPI for documentation delivery have been removed
+- All references to the earlier documentation delivery framework have been removed
 - The living wiki in `docs/wiki/` remains unchanged as the project memory layer per AGENTS.md
 - Documentation will now be generated from notebooks via Quarto (nbdev 3)
 - Local serving patterns will be explored separately once actual model code exists

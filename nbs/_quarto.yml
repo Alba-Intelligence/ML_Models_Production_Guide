@@ -67,6 +67,7 @@ website:
           - 01_02-platform_introduction.qmd
           - 01_03-platform_architecture.qmd
           - 01_04-core_concepts.qmd
+          - 01_05-platform_narrative.qmd
           - 02_01-data_management.qmd
           - 02_02-model_development.qmd
           - 02_03-mlflow_integration.qmd

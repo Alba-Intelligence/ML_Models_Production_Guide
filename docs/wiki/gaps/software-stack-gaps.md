@@ -6,6 +6,27 @@ This document provides a comprehensive analysis of structural gaps in the curren
 
 The repository has a solid architectural foundation and implementation scaffolding, but significant gaps exist between the defined contracts/concepts and actual production-ready implementations. This analysis categorizes gaps by priority and provides specific missing components for each area.
 
+## AWS / Floci-aligned implementation path
+
+For the gaps that map cleanly to AWS services, the practical default is to prefer services that also have a Floci-backed local analogue.
+
+### Recommended alignments
+
+| Gap area                    | AWS-native option                                    | Floci parity | Subsystem consequences                                                        |
+| --------------------------- | ---------------------------------------------------- | ------------ | ----------------------------------------------------------------------------- |
+| Security / secrets / audit  | OIDC edge + IAM + STS + Secrets Manager + CloudWatch | Yes          | Web UI, automation, and infra must all preserve identity context              |
+| Artifact / registry storage | S3 + PostgreSQL + MLflow Registry                    | Yes          | Model, run, and deployment records need stable object-store URLs              |
+| Observability               | CloudWatch + MLflow                                  | Yes          | Metrics/log names should stay consistent locally and in cloud                 |
+| Infrastructure              | Terranix/OpenTofu generated AWS resources            | Partial      | Generated AWS resources should have a local emulation analogue where possible |
+
+### Design consequences
+
+- Execution backends must expect environment-scoped credentials and object-store access.
+- Promotion and mutation paths should stay approval-aware and auditable.
+- Web UI and backend services must propagate principal identity into downstream requests.
+- Local parity should be preserved for the security, artifact, and observability paths before cloud apply.
+- Non-Floci-native gaps such as Lambda.ai/Slurm remain topology-specific and should not be forced into this path.
+
 ## Critical Structural Gaps (High Priority)
 
 ### 1. Production-Grade Serving Infrastructure
@@ -15,7 +36,7 @@ The repository has a solid architectural foundation and implementation scaffoldi
 
 **Missing Components**:
 
-- Model serving framework (FastAPI, TorchServe, or similar)
+- Model serving framework (framework of choice for the reference implementation)
 - Production-grade batch processing orchestration
 - Online inference service with request/response handling
 - Canary/rollback deployment logic
@@ -101,6 +122,12 @@ The repository has a solid architectural foundation and implementation scaffoldi
 **Current Coverage**: 20%  
 **High Priority Gap**: No actual data pipeline
 
+**Interim decision**:
+
+- MLflow is the current storage/traceability layer for metrics, logs, and run-linked outputs
+- a proper datalake remains a later addition
+- local and cloud should share the same MLflow-backed shape through Floci parity
+
 **Missing Components**:
 
 - Data ingestion pipelines (Apache NiFi, custom Python scripts, Airflow)
@@ -119,7 +146,9 @@ The repository has a solid architectural foundation and implementation scaffoldi
 - ✅ Data lineage contracts defined
 - ✅ Dataset versioning concepts
 - ✅ Transformation baseline contracts
-- ❌ No actual data ingestion pipeline
+- ✅ Interim MLflow-backed storage for metrics/logs/traceability
+- ❌ No proper datalake
+- ❌ No data ingestion pipeline
 - ❌ No data versioning system
 - ❌ No feature store implementation
 
@@ -293,7 +322,7 @@ The repository has a solid architectural foundation and implementation scaffoldi
 2. Build production-grade model serving framework
 3. Establish secret management and audit logging
 
-**Security implementation target**: use the documented traditional OIDC + RBAC + centralized policy posture as the implementation blueprint.
+**Security implementation target**: use the documented traditional OIDC + RBAC + centralized policy posture as the implementation blueprint, and prefer AWS-native services that Floci can emulate locally where the gap maps cleanly.
 
 ### Phase 2: Core Infrastructure and Data (Foundation)
 
@@ -338,6 +367,7 @@ The repository has a solid architectural foundation and implementation scaffoldi
 - [Current State](../current-state.md)
 - [Implementation Status](../implementation-status.md)
 - [Next Steps](../plans/implementation-roadmap.md)
+- [AWS / Floci-aligned implementation path](../decisions/aws-floci-aligned-implementation-path.md)
 
 ## Maintenance
 

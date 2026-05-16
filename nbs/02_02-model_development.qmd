@@ -152,7 +152,7 @@ In this notebook, we've:
 
 The next steps would be to:
 - Package the model for deployment
-- Create a serving API (e.g., with FastAPI or another framework)
+- Create a serving API using the stack's chosen Python web layer
 - Set up monitoring for the deployed model
 
 ---

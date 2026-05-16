@@ -1,5 +1,5 @@
 ---
-updated: 2026-05-14
+updated: 2026-05-16
 summary: Honest snapshot of the repository's present state, notable constraints, and likely next steps.
 read_when:
   - You need a current repo snapshot
@@ -38,6 +38,7 @@ sources:
   - decisions/mlflow-postgres-s3-contract.md
   - decisions/lambda-ai-slurm-contract.md
   - decisions/security-authorization-architecture.md
+  - decisions/aws-floci-aligned-implementation-path.md
   - sources/nbs.reference.03_Security_Authorization_and_Policy.qmd.md
   - sources/ml-deploy-reference-repo.allium.md
   - sources/ml_deploy.webui_contracts.py.md
@@ -163,6 +164,7 @@ As of 2026-05-11, the repository contains:
 - **Local emulation compute plane** now exists in `docker-compose.local-infra.yml` (K3s, Slurm-Docker).
 - **Nix/Terranix module structure** now exists in `nix/` (shared, local, cloud modules; local and cloud profiles) and is mirrored in self-contained Quarto docs pages.
 - The docs now need to read top-down, include Mermaid diagrams where they help, and expose implementation-relevant code/config from the published pages.
+- The longest active reference and tutorial pages were compacted so the repo-owned markdown and qmd docs stay under 500 lines.
 - The distilled Allium spec now explicitly requires docs to be self-sufficient for implementation: repository source browsing must be unnecessary for required behavior/config/wiring.
 - **Dual-mode OpenTofu spec** is encoded: `DeploymentProfile` enum, `LocalEmulationStack` entity, `RequireLocalEmulationParity` rule in Allium spec.
 - **Quarto page 13** (`nbs/13_opentofu_infra.qmd`) documents the dual-mode infrastructure profile architecture.
@@ -189,9 +191,13 @@ As of 2026-05-11, the repository contains:
 - Building `allium` may require network access for Rust crate dependency fetches during Nix builds.
 - CUDA support is explicitly commented out in `flake.nix`.
 - There is no production-ready ML data pipeline or deployment implementation yet.
+- MLflow is currently the interim storage/traceability layer for metrics, logs, and run-linked outputs; a proper datalake is deferred.
+- The reference stack intentionally stays framework-neutral on serving.
+- The Web UI is intended to be available to all user roles with role-specific actions, not just a narrow engineering role.
 - Contract validation is currently test-level for the local vertical slice, not yet generalized across all topologies.
 - New architecture requirements now specify MLflow PostgreSQL/S3 storage, Lambda.ai Slurm coordination/redundancy, AWS Kubernetes for non-Lambda.ai services, and Nix (flake+devenv) Terranix-generated OpenTofu JSON infrastructure workflows; OpenTofu apply orchestration remains partly documented.
 - Dual-profile (`local_emulation | cloud`) infrastructure now implemented: `docker-compose.aws-emulator.yml` (Floci), `docker-compose.local-infra.yml` (K3s + Slurm), Nix/Terranix modules in `nix/modules/` and `nix/profiles/`, and Quarto pages `nbs/13_opentofu_infra.qmd`, `nbs/15_aws_emulator.qmd`, `nbs/16_terranix_infra.qmd`.
+- The recommended implementation path for the biggest gaps now prefers AWS-native components that Floci can emulate locally (IAM/STS/Secrets Manager/S3/CloudWatch), so security, artifacts, and observability should stay parity-friendly.
 - Allium spec now covers MLflow storage backends (SQLite/PostgreSQL/S3-compatible local emulation), security (reverse proxy, MLFLOW_CREATE_MODEL_VERSION_SOURCE_VALIDATION_REGEX, central OIDC-backed authorization authority, capability catalogs, and request validation), and parallel DEV→UAT→REGRESSION→PROD promotion gates for both model artifacts and MLOps system definitions (Nix/Terranix/OpenTofu) with approval controls.
 - Zero open questions formally recorded in the spec (all original 7 questions now resolved with expanded details). (Lambda.ai scheduling preference, MLflow PostgreSQL+S3 contract, AWS Kubernetes, Nix/Terranix boundary, and Nix containerization decisions resolved)
 - mlflow-go (`mlflow-go` server + `mlflow-go-backend` Python package) is the recommended approach for profile-switchable MLflow tracking (SQLite local, PostgreSQL cloud — no code changes required).
@@ -214,6 +220,7 @@ The repo is currently best understood as a **specification-first and documentati
 - Enforce generated-artifact freshness in CI as a hard-fail path (generation drift must fail builds).
 - Connect governance and promotion gate helpers into runtime orchestration paths beyond unit tests.
 - Extend cloud profile Traefik/MLflow security wiring from compose artifacts into Terranix/OpenTofu apply-time resources.
+- Prefer AWS-native services that Floci can emulate locally for the biggest gaps (security, artifacts, observability, infrastructure parity).
 - Complete documentation restructuring plan (Tutorial/Reference separation)
 
 **Phase 3+ (Downstream work):**

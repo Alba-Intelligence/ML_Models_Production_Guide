@@ -110,6 +110,9 @@
           opentofu
 
           # awscli
+
+        # LaTeX for Sphinx PDF export
+        texlive.combined.scheme-full
         ];
 
         typstPkgs =

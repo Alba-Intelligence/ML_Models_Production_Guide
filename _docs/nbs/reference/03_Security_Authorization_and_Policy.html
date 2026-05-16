@@ -329,7 +329,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../tutorials/05_Advanced_Scenarios.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Advanced ML Scenarios</span></a>
+ <span class="menu-text">Advanced Scenarios</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -503,56 +503,40 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#security-roles-and-policy" id="toc-security-roles-and-policy" class="nav-link active" data-scroll-target="#security-roles-and-policy">Security, Roles, and Policy</a>
   <ul class="collapse">
   <li><a href="#why-this-page-exists" id="toc-why-this-page-exists" class="nav-link" data-scroll-target="#why-this-page-exists">Why this page exists</a></li>
-  <li><a href="#the-reference-posture" id="toc-the-reference-posture" class="nav-link" data-scroll-target="#the-reference-posture">The reference posture</a></li>
-  <li><a href="#mental-model" id="toc-mental-model" class="nav-link" data-scroll-target="#mental-model">Mental model</a></li>
+  <li><a href="#canonical-posture" id="toc-canonical-posture" class="nav-link" data-scroll-target="#canonical-posture">Canonical posture</a></li>
   <li><a href="#identity-classes" id="toc-identity-classes" class="nav-link" data-scroll-target="#identity-classes">Identity classes</a>
   <ul class="collapse">
   <li><a href="#human-identities" id="toc-human-identities" class="nav-link" data-scroll-target="#human-identities">Human identities</a></li>
   <li><a href="#machine-identities" id="toc-machine-identities" class="nav-link" data-scroll-target="#machine-identities">Machine identities</a></li>
   </ul></li>
-  <li><a href="#role-model" id="toc-role-model" class="nav-link" data-scroll-target="#role-model">Role model</a>
-  <ul class="collapse">
-  <li><a href="#core-human-roles" id="toc-core-human-roles" class="nav-link" data-scroll-target="#core-human-roles">Core human roles</a></li>
-  <li><a href="#machineservice-roles" id="toc-machineservice-roles" class="nav-link" data-scroll-target="#machineservice-roles">Machine/service roles</a></li>
-  </ul></li>
+  <li><a href="#core-roles" id="toc-core-roles" class="nav-link" data-scroll-target="#core-roles">Core roles</a></li>
+  <li><a href="#service-principals" id="toc-service-principals" class="nav-link" data-scroll-target="#service-principals">Service principals</a></li>
   <li><a href="#capability-catalogs" id="toc-capability-catalogs" class="nav-link" data-scroll-target="#capability-catalogs">Capability catalogs</a>
   <ul class="collapse">
-  <li><a href="#example-capability-families" id="toc-example-capability-families" class="nav-link" data-scroll-target="#example-capability-families">Example capability families</a></li>
-  <li><a href="#why-capabilities-matter" id="toc-why-capabilities-matter" class="nav-link" data-scroll-target="#why-capabilities-matter">Why capabilities matter</a></li>
+  <li><a href="#capability-families" id="toc-capability-families" class="nav-link" data-scroll-target="#capability-families">Capability families</a></li>
   </ul></li>
-  <li><a href="#role-to-capability-shape" id="toc-role-to-capability-shape" class="nav-link" data-scroll-target="#role-to-capability-shape">Role-to-capability shape</a></li>
-  <li><a href="#policy-dimensions" id="toc-policy-dimensions" class="nav-link" data-scroll-target="#policy-dimensions">Policy dimensions</a>
+  <li><a href="#policy-dimensions" id="toc-policy-dimensions" class="nav-link" data-scroll-target="#policy-dimensions">Policy dimensions</a></li>
+  <li><a href="#enforcement-points" id="toc-enforcement-points" class="nav-link" data-scroll-target="#enforcement-points">Enforcement points</a>
   <ul class="collapse">
-  <li><a href="#identity" id="toc-identity" class="nav-link" data-scroll-target="#identity">1. Identity</a></li>
-  <li><a href="#resource" id="toc-resource" class="nav-link" data-scroll-target="#resource">2. Resource</a></li>
-  <li><a href="#action" id="toc-action" class="nav-link" data-scroll-target="#action">3. Action</a></li>
-  <li><a href="#environment" id="toc-environment" class="nav-link" data-scroll-target="#environment">4. Environment</a></li>
-  <li><a href="#sensitivity" id="toc-sensitivity" class="nav-link" data-scroll-target="#sensitivity">5. Sensitivity</a></li>
-  <li><a href="#approval-state" id="toc-approval-state" class="nav-link" data-scroll-target="#approval-state">6. Approval state</a></li>
-  <li><a href="#provenance" id="toc-provenance" class="nav-link" data-scroll-target="#provenance">7. Provenance</a></li>
-  </ul></li>
-  <li><a href="#canonical-enforcement-points" id="toc-canonical-enforcement-points" class="nav-link" data-scroll-target="#canonical-enforcement-points">Canonical enforcement points</a>
-  <ul class="collapse">
-  <li><a href="#web-ui-and-backend-api" id="toc-web-ui-and-backend-api" class="nav-link" data-scroll-target="#web-ui-and-backend-api">Web UI and backend API</a></li>
+  <li><a href="#web-ui-and-backend" id="toc-web-ui-and-backend" class="nav-link" data-scroll-target="#web-ui-and-backend">Web UI and backend</a></li>
   <li><a href="#mlflow-reverse-proxy" id="toc-mlflow-reverse-proxy" class="nav-link" data-scroll-target="#mlflow-reverse-proxy">MLflow reverse proxy</a></li>
   <li><a href="#execution-orchestrator" id="toc-execution-orchestrator" class="nav-link" data-scroll-target="#execution-orchestrator">Execution orchestrator</a></li>
   <li><a href="#slurm-and-kubernetes-submitters" id="toc-slurm-and-kubernetes-submitters" class="nav-link" data-scroll-target="#slurm-and-kubernetes-submitters">Slurm and Kubernetes submitters</a></li>
   <li><a href="#infrastructure-apply-path" id="toc-infrastructure-apply-path" class="nav-link" data-scroll-target="#infrastructure-apply-path">Infrastructure apply path</a></li>
-  <li><a href="#assistantmcp-tooling" id="toc-assistantmcp-tooling" class="nav-link" data-scroll-target="#assistantmcp-tooling">Assistant/MCP tooling</a></li>
+  <li><a href="#assistant-and-mcp-tooling" id="toc-assistant-and-mcp-tooling" class="nav-link" data-scroll-target="#assistant-and-mcp-tooling">Assistant and MCP tooling</a></li>
   </ul></li>
-  <li><a href="#reference-policy-examples" id="toc-reference-policy-examples" class="nav-link" data-scroll-target="#reference-policy-examples">Reference policy examples</a>
-  <ul class="collapse">
-  <li><a href="#notebook-execution" id="toc-notebook-execution" class="nav-link" data-scroll-target="#notebook-execution">Notebook execution</a></li>
-  <li><a href="#model-promotion" id="toc-model-promotion" class="nav-link" data-scroll-target="#model-promotion">Model promotion</a></li>
-  <li><a href="#infrastructure-change" id="toc-infrastructure-change" class="nav-link" data-scroll-target="#infrastructure-change">Infrastructure change</a></li>
-  <li><a href="#audit-review" id="toc-audit-review" class="nav-link" data-scroll-target="#audit-review">Audit review</a></li>
-  </ul></li>
-  <li><a href="#request-lifecycle-narrative" id="toc-request-lifecycle-narrative" class="nav-link" data-scroll-target="#request-lifecycle-narrative">Request lifecycle narrative</a></li>
+  <li><a href="#request-lifecycle" id="toc-request-lifecycle" class="nav-link" data-scroll-target="#request-lifecycle">Request lifecycle</a></li>
   <li><a href="#deny-conditions" id="toc-deny-conditions" class="nav-link" data-scroll-target="#deny-conditions">Deny conditions</a></li>
-  <li><a href="#human-and-service-separation" id="toc-human-and-service-separation" class="nav-link" data-scroll-target="#human-and-service-separation">Human and service separation</a></li>
+  <li><a href="#practical-mapping-to-the-stack" id="toc-practical-mapping-to-the-stack" class="nav-link" data-scroll-target="#practical-mapping-to-the-stack">Practical mapping to the stack</a>
+  <ul class="collapse">
+  <li><a href="#developer" id="toc-developer" class="nav-link" data-scroll-target="#developer">Developer</a></li>
+  <li><a href="#projectadmin" id="toc-projectadmin" class="nav-link" data-scroll-target="#projectadmin">ProjectAdmin</a></li>
+  <li><a href="#auditor" id="toc-auditor" class="nav-link" data-scroll-target="#auditor">Auditor</a></li>
+  </ul></li>
   <li><a href="#environment-posture" id="toc-environment-posture" class="nav-link" data-scroll-target="#environment-posture">Environment posture</a></li>
   <li><a href="#what-this-page-is-not" id="toc-what-this-page-is-not" class="nav-link" data-scroll-target="#what-this-page-is-not">What this page is not</a></li>
   <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
+  <li><a href="#related-pages" id="toc-related-pages" class="nav-link" data-scroll-target="#related-pages">Related pages</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/alba-intelligence/ml_deploy/edit/main/reference/03_Security_Authorization_and_Policy.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/alba-intelligence/ml_deploy/blob/main/reference/03_Security_Authorization_and_Policy.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/alba-intelligence/ml_deploy/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div><div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="03_Security_Authorization_and_Policy.md"><i class="bi bi-file-code"></i>CommonMark</a></li></ul></div></nav>
@@ -583,110 +567,75 @@ ul.task-list li input[type="checkbox"] {
 <section id="security-roles-and-policy" class="level1">
 <h1>Security, Roles, and Policy</h1>
 <p>This page defines the reference <strong>traditional authorization posture</strong> for the ML Deploy stack.</p>
-<p>It is intentionally conservative: the design assumes a corporate identity provider, explicit role assignments, centralized authorization, least privilege, service identities for automation, and audit trails for every privileged action.</p>
-<p>The goal is not to invent a novel auth system. The goal is to describe the standard enterprise shape that fits this repository: <strong>OIDC-backed authentication, policy-as-code authorization, RBAC for humans, scoped service accounts for machines, and capability catalogs for every major surface</strong>.</p>
+<p>The design is deliberately conservative:</p>
+<ul>
+<li>OIDC-backed authentication for humans</li>
+<li>scoped service identities for automation</li>
+<li>centralized policy decisions</li>
+<li>human RBAC plus capability catalogs</li>
+<li>audit trails for every privileged action</li>
+</ul>
+<p>The goal is not to invent a new auth model. The goal is to describe the enterprise shape that fits this repository.</p>
 <section id="why-this-page-exists" class="level2">
 <h2 class="anchored" data-anchor-id="why-this-page-exists">Why this page exists</h2>
-<p>The stack already has a strong architectural frame:</p>
+<p>The repository already has:</p>
 <ul>
-<li>notebooks remain the immutable source of truth</li>
-<li>runs are triggered through a Web UI or programmatic backend</li>
-<li>local, distributed, and cloud execution are distinct topologies</li>
-<li>MLflow tracks experiments and model lineage</li>
-<li>infrastructure is managed through Nix/Terranix/OpenTofu boundaries</li>
-<li>governance gates already exist for specification-first transitions</li>
+<li>immutable notebook source-of-truth behavior</li>
+<li>Web UI-triggered execution contracts</li>
+<li>local, distributed, and cloud topology separation</li>
+<li>MLflow tracking and lineage</li>
+<li>governance gates for specification-first transitions</li>
 </ul>
-<p>What was still missing was the <strong>full narrative for who may do what, under which circumstances, and how that decision is enforced</strong>.</p>
-<p>This page fills that gap for the security layer.</p>
+<p>What was still missing was the <strong>who may do what, under which conditions, and how is that decision enforced</strong> narrative.</p>
 </section>
-<section id="the-reference-posture" class="level2">
-<h2 class="anchored" data-anchor-id="the-reference-posture">The reference posture</h2>
-<p>The canonical posture is:</p>
+<section id="canonical-posture" class="level2">
+<h2 class="anchored" data-anchor-id="canonical-posture">Canonical posture</h2>
+<p>The reference posture is:</p>
 <ol type="1">
-<li><strong>Authenticate identities through OIDC</strong>.
-<ul>
-<li>Humans sign in via a corporate identity provider.</li>
-<li>Workloads use scoped service identities or cloud federation.</li>
-</ul></li>
-<li><strong>Authorize requests centrally</strong>.
-<ul>
-<li>Roles are not hard-coded into each service.</li>
-<li>Capabilities are declared centrally.</li>
-<li>A policy engine decides whether a request is allowed.</li>
-</ul></li>
-<li><strong>Separate identity from authorization</strong>.
-<ul>
-<li>Authentication answers <em>who are you?</em></li>
-<li>Authorization answers <em>what may you do here?</em></li>
-</ul></li>
-<li><strong>Use policy-as-code for privileged actions</strong>.
-<ul>
-<li>Promotion, deployment, infra apply, data access, and security changes should all be policy-evaluated.</li>
-</ul></li>
-<li><strong>Audit every privileged action</strong>.
-<ul>
-<li>Every allow/deny decision should be attributable.</li>
-<li>Every sensitive action should be reconstructable after the fact.</li>
-</ul></li>
+<li>authenticate identities with OIDC</li>
+<li>authorize requests centrally</li>
+<li>keep authentication separate from authorization</li>
+<li>use policy-as-code for privileged actions</li>
+<li>audit every allow/deny and every sensitive mutation</li>
 </ol>
-<p>This is the architecture’s “traditional auth” model: enterprise RBAC plus centralized policy enforcement, not ad-hoc per-service flags.</p>
-</section>
-<section id="mental-model" class="level2">
-<h2 class="anchored" data-anchor-id="mental-model">Mental model</h2>
-<p>A request follows the same general path across the stack:</p>
-<ol type="1">
-<li>A user or service presents an identity token.</li>
-<li>The system validates the token and resolves the principal.</li>
-<li>The policy layer maps the principal to roles and capabilities.</li>
-<li>The request context is evaluated.</li>
-<li>The enforcement point allows or denies the operation.</li>
-<li>The decision is written to audit logs.</li>
-<li>The downstream system receives only the minimum identity needed to proceed.</li>
-</ol>
-<p>In other words, authorization is not just a login screen. It is a <strong>repeatable decision pipeline</strong>.</p>
+<p>That is the stack’s traditional auth/roles/policy model.</p>
 </section>
 <section id="identity-classes" class="level2">
 <h2 class="anchored" data-anchor-id="identity-classes">Identity classes</h2>
-<p>The stack needs to distinguish between human and machine identity.</p>
 <section id="human-identities" class="level3">
 <h3 class="anchored" data-anchor-id="human-identities">Human identities</h3>
-<p>Human identities are for people using the platform directly.</p>
-<p>Typical human principals:</p>
+<p>People use the platform directly as:</p>
 <ul>
 <li>ML engineer</li>
 <li>researcher</li>
 <li>platform engineer</li>
 <li>data engineer</li>
-<li>security administrator</li>
+<li>security admin</li>
 <li>auditor</li>
 <li>operator</li>
 <li>reviewer/approver</li>
 </ul>
-<p>Human identities usually authenticate through OIDC and then receive role claims or a policy lookup result.</p>
 </section>
 <section id="machine-identities" class="level3">
 <h3 class="anchored" data-anchor-id="machine-identities">Machine identities</h3>
-<p>Machine identities are for automation, daemons, and platform services.</p>
-<p>Typical machine principals:</p>
+<p>Automation uses service principals such as:</p>
 <ul>
-<li>Web UI backend service</li>
+<li>Web UI backend</li>
 <li>execution orchestrator</li>
 <li>local execution adapter</li>
-<li>Slurm submission adapter</li>
-<li>Kubernetes submission adapter</li>
-<li>MLflow reverse proxy</li>
-<li>docs-serving process</li>
+<li>Slurm submitter</li>
+<li>Kubernetes submitter</li>
+<li>MLflow proxy</li>
+<li>docs server</li>
 <li>CI/CD automation</li>
 <li>assistant/MCP tooling</li>
 </ul>
-<p>Machine identities should be scoped more tightly than human identities and should never inherit broad ambient access by default.</p>
+<p>Machine identities should be narrower than human identities and should not inherit broad ambient access by default.</p>
 </section>
 </section>
-<section id="role-model" class="level2">
-<h2 class="anchored" data-anchor-id="role-model">Role model</h2>
-<p>The reference RBAC model is intentionally small and understandable. It should be easy to answer “what does this role do?” without reading half the codebase.</p>
-<section id="core-human-roles" class="level3">
-<h3 class="anchored" data-anchor-id="core-human-roles">Core human roles</h3>
+<section id="core-roles" class="level2">
+<h2 class="anchored" data-anchor-id="core-roles">Core roles</h2>
+<p>The reference RBAC model stays small on purpose.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -703,56 +652,55 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td><code>SystemAdmin</code></td>
-<td>Break-glass or full platform control</td>
-<td>All capabilities, including emergency recovery</td>
+<td>Full control / break-glass</td>
+<td>all capabilities</td>
 </tr>
 <tr class="even">
 <td><code>SecurityAdmin</code></td>
-<td>Identity, audit, and policy administration</td>
-<td>Manage roles, policies, secrets integration, audit views</td>
+<td>Identity, audit, policy</td>
+<td>roles, policies, audit access</td>
 </tr>
 <tr class="odd">
 <td><code>PlatformAdmin</code></td>
-<td>Platform operation and environment administration</td>
-<td>Manage environments, deployment targets, runtime settings</td>
+<td>Platform operations</td>
+<td>envs, runtime settings, infra controls</td>
 </tr>
 <tr class="even">
 <td><code>DataAdmin</code></td>
-<td>Data and lineage stewardship</td>
-<td>Manage datasets, schemas, lineage, quality, access approvals</td>
+<td>Data stewardship</td>
+<td>datasets, schemas, lineage, quality</td>
 </tr>
 <tr class="odd">
 <td><code>ProjectAdmin</code></td>
-<td>Project-level control</td>
-<td>Approve project workflows, manage runs, promote artifacts</td>
+<td>Project control</td>
+<td>runs, promotions, approvals</td>
 </tr>
 <tr class="even">
 <td><code>Developer</code></td>
 <td>Build and test workflows</td>
-<td>Create runs, inspect results, work in non-production scopes</td>
+<td>create and inspect non-prod work</td>
 </tr>
 <tr class="odd">
 <td><code>Analyst</code></td>
-<td>Read and analyze outputs</td>
-<td>View experiments, models, runs, and predictions</td>
+<td>Read and analyze</td>
+<td>experiments, models, runs, predictions</td>
 </tr>
 <tr class="even">
 <td><code>Viewer</code></td>
-<td>Read-only visibility</td>
-<td>Read public or permitted summaries</td>
+<td>Read-only</td>
+<td>permitted summaries</td>
 </tr>
 <tr class="odd">
 <td><code>Auditor</code></td>
-<td>Compliance and evidence review</td>
-<td>Read logs, policy decisions, and historical traces</td>
+<td>Compliance review</td>
+<td>logs, decisions, evidence</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="machineservice-roles" class="level3">
-<h3 class="anchored" data-anchor-id="machineservice-roles">Machine/service roles</h3>
-<p>Machine identities are usually not “roles” in the human sense. They are <strong>service principals with scoped capabilities</strong>.</p>
-<p>Examples:</p>
+<section id="service-principals" class="level2">
+<h2 class="anchored" data-anchor-id="service-principals">Service principals</h2>
+<p>Machine identities should be expressed as narrowly scoped service principals:</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -769,531 +717,240 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td><code>webui-backend</code></td>
-<td>Serves request normalization and run submission</td>
-<td>Notebook execution requests, read-only metadata, no broad infra control</td>
+<td>Request normalization and submission</td>
+<td>notebook execution workflow only</td>
 </tr>
 <tr class="even">
 <td><code>mlflow-proxy</code></td>
-<td>Fronts MLflow with auth enforcement</td>
-<td>MLflow read/write as explicitly configured</td>
+<td>Enforce auth in front of MLflow</td>
+<td>configured MLflow surfaces only</td>
 </tr>
 <tr class="odd">
 <td><code>execution-local</code></td>
-<td>Runs local slice jobs</td>
-<td>Local execution only</td>
+<td>Local runs</td>
+<td>local execution only</td>
 </tr>
 <tr class="even">
 <td><code>execution-slurm-submit</code></td>
-<td>Submits Slurm jobs</td>
-<td>Submit and monitor jobs, not arbitrary cluster admin</td>
+<td>Slurm job submission</td>
+<td>submit/monitor approved jobs</td>
 </tr>
 <tr class="odd">
 <td><code>execution-k8s-submit</code></td>
-<td>Submits Kubernetes jobs</td>
-<td>Create/manage approved jobs only</td>
+<td>Kubernetes job submission</td>
+<td>approved jobs only</td>
 </tr>
 <tr class="even">
 <td><code>docs-server</code></td>
-<td>Serves docs content</td>
-<td>Read-only docs serving</td>
+<td>Serve docs</td>
+<td>read-only docs delivery</td>
 </tr>
 <tr class="odd">
 <td><code>ci-runner</code></td>
-<td>Continuous integration automation</td>
-<td>Narrow repo and build permissions</td>
+<td>Repository automation</td>
+<td>build/test scoped access</td>
 </tr>
 <tr class="even">
 <td><code>mcp-readonly</code></td>
-<td>Assistant-readable operational tooling</td>
-<td>Read-only unless explicitly elevated</td>
+<td>Assistant tooling</td>
+<td>read-first unless elevated</td>
 </tr>
 </tbody>
 </table>
-</section>
 </section>
 <section id="capability-catalogs" class="level2">
 <h2 class="anchored" data-anchor-id="capability-catalogs">Capability catalogs</h2>
-<p>Roles are useful, but the system becomes much clearer when the policy layer also names capabilities.</p>
-<p>A capability catalog is the canonical list of actions a subsystem exposes. Each system and subsystem should publish its own catalog.</p>
-<section id="example-capability-families" class="level3">
-<h3 class="anchored" data-anchor-id="example-capability-families">Example capability families</h3>
-<section id="data" class="level4">
-<h4 class="anchored" data-anchor-id="data">Data</h4>
+<p>Roles are useful, but the policy layer should also speak in capabilities.</p>
+<section id="capability-families" class="level3">
+<h3 class="anchored" data-anchor-id="capability-families">Capability families</h3>
 <ul>
-<li><code>data.read</code></li>
-<li><code>data.create</code></li>
-<li><code>data.update</code></li>
-<li><code>data.delete</code></li>
-<li><code>data.lineage.read</code></li>
-<li><code>data.quality.read</code></li>
-<li><code>data.quality.manage</code></li>
-<li><code>dataset.promote</code></li>
+<li><strong>Data</strong>: <code>data.read</code>, <code>data.create</code>, <code>data.update</code>, <code>data.delete</code>, <code>data.lineage.read</code>, <code>data.quality.manage</code></li>
+<li><strong>Training</strong>: <code>experiment.read</code>, <code>experiment.create</code>, <code>run.submit</code>, <code>run.cancel</code>, <code>checkpoint.manage</code></li>
+<li><strong>Artifacts</strong>: <code>model.read</code>, <code>model.create</code>, <code>model.update</code>, <code>model.promote</code>, <code>model.rollback</code></li>
+<li><strong>Serving</strong>: <code>serving.read</code>, <code>serving.invoke</code>, <code>serving.deploy</code>, <code>serving.rollback</code>, <code>serving.manage</code></li>
+<li><strong>Infrastructure</strong>: <code>infra.read</code>, <code>infra.plan</code>, <code>infra.apply</code>, <code>infra.destroy</code>, <code>infra.secrets.manage</code></li>
+<li><strong>Observability</strong>: <code>observability.read</code>, <code>logs.read</code>, <code>metrics.read</code>, <code>alerts.manage</code></li>
+<li><strong>Governance</strong>: <code>policy.read</code>, <code>policy.update</code>, <code>approval.grant</code>, <code>approval.reject</code>, <code>audit.read</code></li>
+<li><strong>Cost</strong>: <code>cost.read</code>, <code>cost.export</code>, <code>budget.manage</code>, <code>chargeback.manage</code></li>
+<li><strong>Notebook execution</strong>: <code>notebook.read</code>, <code>notebook.execute.local</code>, <code>notebook.execute.slurm</code>, <code>notebook.execute.k8s</code>, <code>notebook.approve</code></li>
 </ul>
 </section>
-<section id="training-and-experiments" class="level4">
-<h4 class="anchored" data-anchor-id="training-and-experiments">Training and experiments</h4>
-<ul>
-<li><code>experiment.read</code></li>
-<li><code>experiment.create</code></li>
-<li><code>experiment.update</code></li>
-<li><code>run.submit</code></li>
-<li><code>run.cancel</code></li>
-<li><code>run.read</code></li>
-<li><code>checkpoint.read</code></li>
-<li><code>checkpoint.manage</code></li>
-</ul>
-</section>
-<section id="artifacts-and-registry" class="level4">
-<h4 class="anchored" data-anchor-id="artifacts-and-registry">Artifacts and registry</h4>
-<ul>
-<li><code>model.read</code></li>
-<li><code>model.create</code></li>
-<li><code>model.update</code></li>
-<li><code>model.promote</code></li>
-<li><code>model.rollback</code></li>
-<li><code>registry.read</code></li>
-<li><code>registry.write</code></li>
-<li><code>registry.admin</code></li>
-</ul>
-</section>
-<section id="serving" class="level4">
-<h4 class="anchored" data-anchor-id="serving">Serving</h4>
-<ul>
-<li><code>serving.read</code></li>
-<li><code>serving.deploy</code></li>
-<li><code>serving.rollback</code></li>
-<li><code>serving.invoke</code></li>
-<li><code>serving.scale</code></li>
-<li><code>serving.manage</code></li>
-</ul>
-</section>
-<section id="infrastructure" class="level4">
-<h4 class="anchored" data-anchor-id="infrastructure">Infrastructure</h4>
-<ul>
-<li><code>infra.read</code></li>
-<li><code>infra.plan</code></li>
-<li><code>infra.apply</code></li>
-<li><code>infra.destroy</code></li>
-<li><code>infra.audit</code></li>
-<li><code>infra.secrets.manage</code></li>
-</ul>
-</section>
-<section id="observability" class="level4">
-<h4 class="anchored" data-anchor-id="observability">Observability</h4>
-<ul>
-<li><code>observability.read</code></li>
-<li><code>logs.read</code></li>
-<li><code>metrics.read</code></li>
-<li><code>traces.read</code></li>
-<li><code>alerts.manage</code></li>
-<li><code>dashboards.manage</code></li>
-</ul>
-</section>
-<section id="governance-and-policy" class="level4">
-<h4 class="anchored" data-anchor-id="governance-and-policy">Governance and policy</h4>
-<ul>
-<li><code>policy.read</code></li>
-<li><code>policy.update</code></li>
-<li><code>approval.grant</code></li>
-<li><code>approval.reject</code></li>
-<li><code>audit.read</code></li>
-<li><code>audit.export</code></li>
-<li><code>security.manage</code></li>
-</ul>
-</section>
-<section id="cost-and-finance" class="level4">
-<h4 class="anchored" data-anchor-id="cost-and-finance">Cost and finance</h4>
-<ul>
-<li><code>cost.read</code></li>
-<li><code>cost.export</code></li>
-<li><code>budget.manage</code></li>
-<li><code>chargeback.read</code></li>
-<li><code>chargeback.manage</code></li>
-</ul>
-</section>
-<section id="notebook-web-ui" class="level4">
-<h4 class="anchored" data-anchor-id="notebook-web-ui">Notebook Web UI</h4>
-<ul>
-<li><code>notebook.read</code></li>
-<li><code>notebook.execute.local</code></li>
-<li><code>notebook.execute.slurm</code></li>
-<li><code>notebook.execute.k8s</code></li>
-<li><code>notebook.approve</code></li>
-<li><code>notebook.manage</code></li>
-</ul>
-</section>
-</section>
-<section id="why-capabilities-matter" class="level3">
-<h3 class="anchored" data-anchor-id="why-capabilities-matter">Why capabilities matter</h3>
-<p>Roles describe <em>who</em> a person or service is. Capabilities describe <em>what</em> the platform permits.</p>
-<p>The policy engine should usually evaluate both:</p>
-<ul>
-<li>principal role</li>
-<li>explicit capability</li>
-<li>requested resource</li>
-<li>environment</li>
-<li>approval state</li>
-<li>sensitivity label</li>
-<li>topology</li>
-<li>request provenance</li>
-</ul>
-<p>That combination gives a much more durable model than “admin vs non-admin”.</p>
-</section>
-</section>
-<section id="role-to-capability-shape" class="level2">
-<h2 class="anchored" data-anchor-id="role-to-capability-shape">Role-to-capability shape</h2>
-<p>The reference mapping is intentionally coarse. It should be flexible enough for implementation details, but strict enough to avoid ambiguity.</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Role</th>
-<th>Typical allowed capabilities</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>SystemAdmin</code></td>
-<td>everything, including break-glass recovery</td>
-</tr>
-<tr class="even">
-<td><code>SecurityAdmin</code></td>
-<td><code>security.manage</code>, <code>policy.update</code>, <code>audit.read</code>, <code>audit.export</code>, identity and secret integration</td>
-</tr>
-<tr class="odd">
-<td><code>PlatformAdmin</code></td>
-<td><code>infra.read</code>, <code>infra.plan</code>, <code>infra.apply</code>, <code>serving.manage</code>, <code>observability.manage</code></td>
-</tr>
-<tr class="even">
-<td><code>DataAdmin</code></td>
-<td><code>data.*</code>, <code>dataset.promote</code>, <code>data.lineage.read</code>, <code>data.quality.manage</code></td>
-</tr>
-<tr class="odd">
-<td><code>ProjectAdmin</code></td>
-<td><code>experiment.*</code>, <code>run.*</code>, <code>model.promote</code>, <code>notebook.approve</code>, selected infra and serving approvals</td>
-</tr>
-<tr class="even">
-<td><code>Developer</code></td>
-<td><code>experiment.create</code>, <code>run.submit</code>, <code>run.read</code>, <code>model.create</code>, <code>model.read</code>, <code>notebook.read</code>, <code>notebook.execute.local</code></td>
-</tr>
-<tr class="odd">
-<td><code>Analyst</code></td>
-<td><code>experiment.read</code>, <code>run.read</code>, <code>model.read</code>, <code>serving.invoke</code>, <code>cost.read</code>, <code>observability.read</code></td>
-</tr>
-<tr class="even">
-<td><code>Viewer</code></td>
-<td>read-only variants of the above</td>
-</tr>
-<tr class="odd">
-<td><code>Auditor</code></td>
-<td><code>audit.read</code>, <code>audit.export</code>, read-only visibility into decisions and supporting evidence</td>
-</tr>
-</tbody>
-</table>
-<p>The exact mapping should be environment-aware and resource-aware, but the principle should remain stable.</p>
 </section>
 <section id="policy-dimensions" class="level2">
 <h2 class="anchored" data-anchor-id="policy-dimensions">Policy dimensions</h2>
-<p>A traditional RBAC system becomes useful when it is paired with explicit policy dimensions.</p>
-<section id="identity" class="level3">
-<h3 class="anchored" data-anchor-id="identity">1. Identity</h3>
-<p>Who is requesting the action?</p>
-<ul>
-<li>user subject</li>
-<li>service principal</li>
-<li>group membership</li>
-<li>role assignment</li>
-<li>session freshness</li>
-</ul>
+<p>A real decision should evaluate several dimensions together:</p>
+<ol type="1">
+<li><strong>Identity</strong> — who is requesting the action?</li>
+<li><strong>Resource</strong> — what is being requested?</li>
+<li><strong>Action</strong> — what operation is being attempted?</li>
+<li><strong>Environment</strong> — local, dev, uat, regression, prod, Slurm, Kubernetes, docs</li>
+<li><strong>Sensitivity</strong> — public, internal, confidential, restricted</li>
+<li><strong>Approval state</strong> — none, pending, approved, rejected, break-glass</li>
+<li><strong>Provenance</strong> — commit SHA, approved ref, CI job, operator session, assistant session</li>
+</ol>
+<p>That combination is more durable than a simple admin/non-admin split.</p>
 </section>
-<section id="resource" class="level3">
-<h3 class="anchored" data-anchor-id="resource">2. Resource</h3>
-<p>What is being requested?</p>
+<section id="enforcement-points" class="level2">
+<h2 class="anchored" data-anchor-id="enforcement-points">Enforcement points</h2>
+<p>The policy posture must be enforced at the places where privileged action happens.</p>
+<section id="web-ui-and-backend" class="level3">
+<h3 class="anchored" data-anchor-id="web-ui-and-backend">Web UI and backend</h3>
+<p>The Web UI is the human-facing enforcement point. It should:</p>
 <ul>
-<li>notebook revision</li>
-<li>MLflow run or experiment</li>
-<li>model version</li>
-<li>dataset</li>
-<li>infrastructure stack</li>
-<li>policy document</li>
-<li>audit record</li>
-<li>cost report</li>
-</ul>
-</section>
-<section id="action" class="level3">
-<h3 class="anchored" data-anchor-id="action">3. Action</h3>
-<p>What is the principal trying to do?</p>
-<ul>
-<li>read</li>
-<li>create</li>
-<li>update</li>
-<li>delete</li>
-<li>execute</li>
-<li>promote</li>
-<li>deploy</li>
-<li>rollback</li>
-<li>approve</li>
-<li>export</li>
-</ul>
-</section>
-<section id="environment" class="level3">
-<h3 class="anchored" data-anchor-id="environment">4. Environment</h3>
-<p>Where will the action happen?</p>
-<ul>
-<li>local</li>
-<li>dev</li>
-<li>uat</li>
-<li>regression</li>
-<li>prod</li>
-<li>Slurm</li>
-<li>Kubernetes</li>
-<li>AWS control plane</li>
-<li>docs surface</li>
-</ul>
-</section>
-<section id="sensitivity" class="level3">
-<h3 class="anchored" data-anchor-id="sensitivity">5. Sensitivity</h3>
-<p>How sensitive is the resource or action?</p>
-<ul>
-<li>public</li>
-<li>internal</li>
-<li>confidential</li>
-<li>restricted</li>
-</ul>
-</section>
-<section id="approval-state" class="level3">
-<h3 class="anchored" data-anchor-id="approval-state">6. Approval state</h3>
-<p>Has the action already passed the required gate?</p>
-<ul>
-<li>none required</li>
-<li>approval required</li>
-<li>approved</li>
-<li>rejected</li>
-<li>break-glass only</li>
-</ul>
-</section>
-<section id="provenance" class="level3">
-<h3 class="anchored" data-anchor-id="provenance">7. Provenance</h3>
-<p>What is the source of the request?</p>
-<ul>
-<li>notebook commit SHA</li>
-<li>approved-ref</li>
-<li>tagged release</li>
-<li>CI job</li>
-<li>operator session</li>
-<li>assistant session</li>
-</ul>
-<p>A real policy engine should evaluate these dimensions together.</p>
-</section>
-</section>
-<section id="canonical-enforcement-points" class="level2">
-<h2 class="anchored" data-anchor-id="canonical-enforcement-points">Canonical enforcement points</h2>
-<p>The policy model is only useful if the stack has clear places to enforce it.</p>
-<section id="web-ui-and-backend-api" class="level3">
-<h3 class="anchored" data-anchor-id="web-ui-and-backend-api">Web UI and backend API</h3>
-<p>The Web UI is the most visible enforcement point for human users. It should:</p>
-<ul>
-<li>authenticate through the corporate IdP</li>
+<li>authenticate through OIDC</li>
 <li>resolve roles and capabilities</li>
-<li>refuse unauthorized notebook execution requests</li>
-<li>include notebook revision and target environment in the policy context</li>
-<li>log every decision and run submission</li>
+<li>refuse unauthorized notebook execution</li>
+<li>include notebook revision and environment in context</li>
+<li>log every decision</li>
 </ul>
 </section>
 <section id="mlflow-reverse-proxy" class="level3">
 <h3 class="anchored" data-anchor-id="mlflow-reverse-proxy">MLflow reverse proxy</h3>
-<p>MLflow is useful for tracking, but it should not be treated as a free-for-all endpoint. The reverse proxy should:</p>
+<p>MLflow should sit behind an auth-enforcing proxy. The proxy should:</p>
 <ul>
-<li>authenticate the user</li>
-<li>inject the user identity into downstream requests</li>
+<li>validate the user</li>
+<li>inject the identity context downstream</li>
 <li>restrict registry and experiment actions by role</li>
 <li>preserve audit context</li>
-<li>avoid exposing internal data to unauthenticated clients</li>
 </ul>
 </section>
 <section id="execution-orchestrator" class="level3">
 <h3 class="anchored" data-anchor-id="execution-orchestrator">Execution orchestrator</h3>
-<p>The orchestrator should enforce request-level policy before submission. It should check:</p>
+<p>The orchestrator should validate policy before submission. It should check:</p>
 <ul>
-<li>whether the user may submit the requested topology</li>
-<li>whether the notebook revision is approved</li>
-<li>whether the environment is allowed for that role</li>
-<li>whether the requested resources exceed the user’s limits</li>
+<li>notebook revision approval</li>
+<li>environment allowance</li>
+<li>resource limits</li>
+<li>role/capability fit</li>
+<li>request provenance</li>
 </ul>
 </section>
 <section id="slurm-and-kubernetes-submitters" class="level3">
 <h3 class="anchored" data-anchor-id="slurm-and-kubernetes-submitters">Slurm and Kubernetes submitters</h3>
-<p>The backend adapters should use service identities with narrow scope. They should not accept arbitrary user authority. They should only submit jobs that already passed policy checks upstream.</p>
+<p>Backend submitters should use narrow service identities. They should only submit jobs that already passed policy checks upstream.</p>
 </section>
 <section id="infrastructure-apply-path" class="level3">
 <h3 class="anchored" data-anchor-id="infrastructure-apply-path">Infrastructure apply path</h3>
-<p>Terraform/OpenTofu-style operations must be gated more tightly than ordinary execution. The apply path should require:</p>
+<p>Apply operations need stronger controls than normal runs. Expect:</p>
 <ul>
-<li>elevated role</li>
-<li>explicit approval or change window</li>
+<li>elevated role or approval</li>
+<li>change-window or review context</li>
 <li>audit trail</li>
 <li>environment-scoped credentials</li>
-<li>review of plan output when applicable</li>
 </ul>
 </section>
-<section id="assistantmcp-tooling" class="level3">
-<h3 class="anchored" data-anchor-id="assistantmcp-tooling">Assistant/MCP tooling</h3>
-<p>Assistant integration should be read-only by default. Write-capable operations must require:</p>
+<section id="assistant-and-mcp-tooling" class="level3">
+<h3 class="anchored" data-anchor-id="assistant-and-mcp-tooling">Assistant and MCP tooling</h3>
+<p>Assistant tools should be read-only by default. Any mutation must be:</p>
 <ul>
-<li>explicit user confirmation</li>
-<li>a bounded capability</li>
-<li>audit logging</li>
-<li>clear identity attribution</li>
-</ul>
-</section>
-</section>
-<section id="reference-policy-examples" class="level2">
-<h2 class="anchored" data-anchor-id="reference-policy-examples">Reference policy examples</h2>
-<section id="notebook-execution" class="level3">
-<h3 class="anchored" data-anchor-id="notebook-execution">Notebook execution</h3>
-<p>A developer may:</p>
-<ul>
-<li>read the notebook catalog</li>
-<li>execute approved notebooks in local or dev environments</li>
-<li>inspect results for their project</li>
-</ul>
-<p>A developer may not:</p>
-<ul>
-<li>execute arbitrary prod jobs</li>
-<li>change policy</li>
-<li>promote to prod without approval</li>
-<li>access restricted datasets without explicit grant</li>
-</ul>
-</section>
-<section id="model-promotion" class="level3">
-<h3 class="anchored" data-anchor-id="model-promotion">Model promotion</h3>
-<p>A project admin may:</p>
-<ul>
-<li>review candidate artifacts</li>
-<li>approve promotion between bounded stages</li>
-<li>trigger deployment steps where permitted</li>
-</ul>
-<p>A project admin may not:</p>
-<ul>
-<li>bypass lineage checks</li>
-<li>promote an unapproved notebook revision</li>
-<li>grant themselves unrestricted infrastructure access</li>
-</ul>
-</section>
-<section id="infrastructure-change" class="level3">
-<h3 class="anchored" data-anchor-id="infrastructure-change">Infrastructure change</h3>
-<p>A platform admin may:</p>
-<ul>
-<li>plan and apply approved environment changes</li>
-<li>manage runtime wiring and network policies</li>
-</ul>
-<p>A platform admin may not:</p>
-<ul>
-<li>silently modify production secrets</li>
-<li>bypass audit logging</li>
-<li>destroy critical environments without explicit break-glass procedure</li>
-</ul>
-</section>
-<section id="audit-review" class="level3">
-<h3 class="anchored" data-anchor-id="audit-review">Audit review</h3>
-<p>An auditor may:</p>
-<ul>
-<li>read the full decision trail</li>
-<li>inspect who approved what and when</li>
-<li>export evidence for compliance reviews</li>
-</ul>
-<p>An auditor may not:</p>
-<ul>
-<li>mutate system state</li>
-<li>approve their own requests</li>
-<li>escalate into administrative control</li>
+<li>explicit</li>
+<li>attributable</li>
+<li>auditable</li>
+<li>narrowly scoped</li>
 </ul>
 </section>
 </section>
-<section id="request-lifecycle-narrative" class="level2">
-<h2 class="anchored" data-anchor-id="request-lifecycle-narrative">Request lifecycle narrative</h2>
-<p>A typical request should feel boring, deterministic, and auditable.</p>
+<section id="request-lifecycle" class="level2">
+<h2 class="anchored" data-anchor-id="request-lifecycle">Request lifecycle</h2>
+<p>A typical request should look boring:</p>
 <ol type="1">
-<li>The user authenticates through OIDC.</li>
-<li>The UI receives a token or session.</li>
-<li>The user selects a notebook revision and target environment.</li>
-<li>The backend normalizes the request into a canonical job spec.</li>
-<li>The policy engine evaluates the request.</li>
-<li>If allowed, the orchestrator submits to the correct backend.</li>
-<li>The backend uses its own service identity to perform the action.</li>
-<li>MLflow records the run and its lineage links.</li>
-<li>The audit sink records the identity, policy version, decision, and request context.</li>
+<li>authenticate the user</li>
+<li>resolve the principal</li>
+<li>derive roles and capabilities</li>
+<li>validate the resource, action, and environment</li>
+<li>evaluate policy</li>
+<li>allow or deny</li>
+<li>submit only if allowed</li>
+<li>record the decision</li>
+<li>record the downstream run or mutation</li>
 </ol>
-<p>That same narrative applies whether the target is local, Slurm, Kubernetes, or a promotion workflow.</p>
 </section>
 <section id="deny-conditions" class="level2">
 <h2 class="anchored" data-anchor-id="deny-conditions">Deny conditions</h2>
-<p>The default answer is “no” unless the policy says yes.</p>
-<p>Common deny cases:</p>
+<p>The default answer is no unless the policy grants the action.</p>
+<p>Common deny reasons:</p>
 <ul>
 <li>missing authentication</li>
-<li>token expired or invalid</li>
+<li>invalid or expired token</li>
 <li>role not present</li>
 <li>capability not granted</li>
 <li>notebook revision not approved</li>
 <li>target environment not allowed</li>
-<li>requested resource exceeds quota</li>
 <li>approval missing</li>
-<li>resource classification too sensitive</li>
-<li>request provenance is insufficient</li>
-<li>policy engine unavailable and the action is not on an explicitly defined fail-open path</li>
+<li>resource too sensitive</li>
+<li>provenance insufficient</li>
+<li>policy engine unavailable and the action is not on an explicit fail-open path</li>
 </ul>
-<p>Every deny should be explainable in human language.</p>
 </section>
-<section id="human-and-service-separation" class="level2">
-<h2 class="anchored" data-anchor-id="human-and-service-separation">Human and service separation</h2>
-<p>A useful security design keeps human intent separate from service execution.</p>
-<p>Humans should:</p>
+<section id="practical-mapping-to-the-stack" class="level2">
+<h2 class="anchored" data-anchor-id="practical-mapping-to-the-stack">Practical mapping to the stack</h2>
+<section id="developer" class="level3">
+<h3 class="anchored" data-anchor-id="developer">Developer</h3>
+<p>Can usually:</p>
 <ul>
-<li>request actions</li>
-<li>approve actions</li>
-<li>review outcomes</li>
-<li>investigate logs</li>
+<li>read notebook catalogs</li>
+<li>execute approved notebooks in local/dev scopes</li>
+<li>inspect their own runs</li>
 </ul>
-<p>Services should:</p>
+<p>Cannot usually:</p>
 <ul>
-<li>execute bounded tasks</li>
-<li>carry only the authority they need</li>
-<li>never impersonate a human user outside the policy model</li>
+<li>mutate policy</li>
+<li>bypass approval gates</li>
+<li>write to production infra</li>
+<li>access restricted datasets without grant</li>
 </ul>
-<p>This separation makes audit, least privilege, and failure recovery much easier.</p>
+</section>
+<section id="projectadmin" class="level3">
+<h3 class="anchored" data-anchor-id="projectadmin">ProjectAdmin</h3>
+<p>Can usually:</p>
+<ul>
+<li>approve workflow transitions</li>
+<li>promote approved artifacts</li>
+<li>inspect project runs and models</li>
+</ul>
+<p>Cannot usually:</p>
+<ul>
+<li>grant themselves unrestricted infra access</li>
+<li>bypass lineage or approval checks</li>
+</ul>
+</section>
+<section id="auditor" class="level3">
+<h3 class="anchored" data-anchor-id="auditor">Auditor</h3>
+<p>Can usually:</p>
+<ul>
+<li>read historical decisions and logs</li>
+<li>export evidence</li>
+<li>review approvals and mutations</li>
+</ul>
+<p>Cannot usually:</p>
+<ul>
+<li>change system state</li>
+</ul>
+</section>
 </section>
 <section id="environment-posture" class="level2">
 <h2 class="anchored" data-anchor-id="environment-posture">Environment posture</h2>
-<p>The same role should not automatically mean the same power everywhere.</p>
-<p>A typical posture is:</p>
+<p>The same role should not imply the same power everywhere.</p>
 <ul>
-<li><strong>local/dev</strong>: broad read/write for development convenience, but still policy-checked</li>
-<li><strong>uat/regression</strong>: tighter controls, approval-aware promotion tests</li>
-<li><strong>prod</strong>: strongest restrictions, explicit approvals, audited mutation paths only</li>
+<li><strong>local/dev</strong>: broader convenience, still policy-checked</li>
+<li><strong>uat/regression</strong>: tighter promotion controls</li>
+<li><strong>prod</strong>: strongest restrictions and explicit approvals</li>
 </ul>
-<p>The policy layer should always know which environment is in scope.</p>
 </section>
 <section id="what-this-page-is-not" class="level2">
 <h2 class="anchored" data-anchor-id="what-this-page-is-not">What this page is not</h2>
-<p>This page is not an implementation claim. It is the reference posture.</p>
-<p>It does <strong>not</strong> mean the repository currently has a complete auth system. The repository still needs:</p>
+<p>This page is a reference posture, not an implementation claim. It does <strong>not</strong> mean the repo already has:</p>
 <ul>
-<li>actual IdP integration</li>
-<li>actual policy engine wiring</li>
-<li>actual role provisioning</li>
-<li>actual service-account plumbing</li>
-<li>actual audit sinks</li>
-<li>actual enforcement in the execution paths</li>
+<li>a complete IdP integration</li>
+<li>a policy engine wired into every path</li>
+<li>service-account plumbing everywhere</li>
+<li>audit sinks connected to every surface</li>
 </ul>
-<p>Those items remain part of the implementation roadmap and gap analysis.</p>
+<p>Those remain implementation tasks and gap-analysis items.</p>
 </section>
 <section id="summary" class="level2">
 <h2 class="anchored" data-anchor-id="summary">Summary</h2>
-<p>The stack’s security model should be:</p>
+<p>The stack’s security model should remain:</p>
 <ul>
 <li>OIDC for identity</li>
 <li>RBAC for human intent</li>
@@ -1302,9 +959,17 @@ ul.task-list li input[type="checkbox"] {
 <li>capability catalogs per subsystem</li>
 <li>least privilege by default</li>
 <li>environment-aware enforcement</li>
-<li>audit trails for every privileged action</li>
+<li>auditability for every privileged action</li>
 </ul>
-<p>That is the traditional, durable shape that best fits this repository.</p>
+</section>
+<section id="related-pages" class="level2">
+<h2 class="anchored" data-anchor-id="related-pages">Related pages</h2>
+<ul>
+<li><code>docs/wiki/contracts/security-baseline.md</code></li>
+<li><code>docs/wiki/decisions/security-authorization-architecture.md</code></li>
+<li><code>docs/wiki/gaps/software-stack-gaps.md</code></li>
+<li><code>docs/wiki/sources/nbs.reference.03_Security_Authorization_and_Policy.qmd.md</code></li>
+</ul>
 
 
 </section>

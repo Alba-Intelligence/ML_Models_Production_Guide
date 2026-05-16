@@ -1,6 +1,6 @@
 ---
 title: "Security authorization architecture"
-date: 2026-05-14
+date: 2026-05-16
 summary: "Central authorization model for roles, capabilities, and request validation across the MLOps stack."
 ---
 
@@ -18,11 +18,11 @@ That means:
 
 ## Compatible solution families
 
-| Option | Fit | Notes |
-|---|---|---|
-| OIDC IdP + central policy engine | Best fit | Recommended canonical posture for this architecture |
-| Cloud IAM federation + central policy engine | Good for infra edges | Useful where cloud services need direct IAM integration |
-| IdP-managed RBAC only | Limited fit | Acceptable only for small/simple surfaces, not the preferred reference posture |
+| Option                                       | Fit                  | Notes                                                                          |
+| -------------------------------------------- | -------------------- | ------------------------------------------------------------------------------ |
+| OIDC IdP + central policy engine             | Best fit             | Recommended canonical posture for this architecture                            |
+| Cloud IAM federation + central policy engine | Good for infra edges | Useful where cloud services need direct IAM integration                        |
+| IdP-managed RBAC only                        | Limited fit          | Acceptable only for small/simple surfaces, not the preferred reference posture |
 
 ## Guidance
 
@@ -30,10 +30,11 @@ That means:
 - Keep capability catalogs explicit per system and subsystem.
 - Require request validation and audit trails for privileged actions.
 - Prefer policy-as-code so the same rules can guard model ops, platform ops, and MLOps infrastructure.
+- For AWS-compatible subsystems, prefer services that Floci can emulate locally so security, secrets, and audit paths stay parity-friendly.
 
 ## Upstream contract
 
 - `docs/wiki/contracts/security-baseline.md`
 - `docs/wiki/sources/nbs.reference.03_Security_Authorization_and_Policy.qmd.md`
+- `docs/wiki/decisions/aws-floci-aligned-implementation-path.md`
 - `specs/ml-deploy-reference-repo.allium`
-

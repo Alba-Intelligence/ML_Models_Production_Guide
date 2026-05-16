@@ -27,9 +27,20 @@ let
   };
 
   devPkgs = with pkgs; [
+    bun
+
     git
+    pandoc
     quarto
+
+    sphinx
+    sphinx-lint
+    sphinx-autobuild
+
     d2
+
+    # LaTeX for Sphinx PDF export
+    texlive.combined.scheme-full
   ];
 
   llmPkgs = with llms; [

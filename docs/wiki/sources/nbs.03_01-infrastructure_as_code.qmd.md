@@ -52,18 +52,21 @@ The infrastructure as code document includes:
 ## Integration Patterns
 
 ### Declarative Infrastructure
+
 - **Nix Flakes**: Flake-based infrastructure definition and management
 - **Terranix**: Terraform configuration generation from Nix expressions
 - **Devenv**: Development environment configuration and management
 - **Docker Tools**: Container image building and management
 
 ### Infrastructure Deployment
+
 - **OpenTofu**: Terraform-compatible infrastructure deployment
 - **Kubernetes**: Kubernetes resource management and deployment
 - **Cloud Services**: Cloud service integration and management
 - **Local Development**: Local infrastructure emulation and testing
 
 ### Configuration Management
+
 - **Environment Profiles**: Environment-specific configuration profiles
 - **Secret Management**: Secure secret management and injection
 - **Network Configuration**: Network setup and security configuration

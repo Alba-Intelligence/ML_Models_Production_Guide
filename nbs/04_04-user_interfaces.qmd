@@ -3,7 +3,7 @@ title: "Notebook Repository Web UI"
 ---
 # Notebook Repository Web UI
 
-This notebook describes the design for a centralized notebook repository web UI that enables engineers to browse, select, and trigger notebook executions across environments while keeping notebooks as the immutable source of truth.
+This notebook describes the design for a centralized notebook repository web UI that enables users across all roles to browse, select, and trigger notebook executions across environments while keeping notebooks as the immutable source of truth.
 
 ---
 
@@ -20,7 +20,7 @@ Provide a centralized interface for ML engineers to interact with versioned note
 - Promoting successful runs to production environments (Lambda.ai Slurm, AWS Kubernetes)
 - Viewing execution results linked to MLflow tracking
 - Launching MCP-powered monitoring and analysis tools from execution results
-- Role-based access control for notebook access and execution triggering
+- Role-based access control for notebook access and execution triggering, with the UI available to all user roles for the actions they are authorized to perform
 
 ### Out of Scope
 - Editing notebooks through the UI (notebooks remain source of truth in Git)
@@ -35,7 +35,7 @@ Provide a centralized interface for ML engineers to interact with versioned note
 - Local replica architecture (Slurm-like scheduler, K8s, Floci-backed S3, PostgreSQL)
 - Production infrastructure (Lambda.ai Slurm, AWS Kubernetes, S3, RDS)
 - MCP server ecosystem (for monitoring/analysis tooling)
-- Authentication/authorization system (for role-based access)
+- Authentication/authorization system (for role-based access across all user roles)
 
 ## Domain Ownership
 
@@ -70,7 +70,7 @@ Provide a centralized interface for ML engineers to interact with versioned note
 - **Execution Traceability**: Every run links back to exact notebook version + execution config
 - **Environment Parity**: Same notebook runs against local replica and production (with config differences)
 - **Secret Management**: Execution credentials/tokens injected securely at runtime, never stored
-- **Role-Based Execution**: Different roles may have access to different environments or notebook sets
+- **Role-Based Execution**: Different roles may have access to different environments or notebook sets, but every role should have a UI surface for its authorized tasks
 - **Cost Attribution**: Executions tagged with user/project for cost governance visibility
 
 ## Open Questions and Deferred Decisions
@@ -87,8 +87,8 @@ Provide a centralized interface for ML engineers to interact with versioned note
 2. Add environment selection (local replica vs. production targets)
 3. Implement configuration injection mechanism (external YAML/JSON files)
 4. Link execution results to MLflow runs
-5. Add role-based access control
-6. Integrate MCP tool launching from execution results
+5. Add role-based access control for all user roles
+6. Integrate MCP tool launching from execution results for authorized roles
 7. Implement approval workflows for production promotions
 8. Add advanced features like notebook diffing, version comparison, and branching
 

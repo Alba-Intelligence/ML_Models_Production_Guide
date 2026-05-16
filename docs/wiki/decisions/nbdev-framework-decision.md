@@ -7,7 +7,7 @@ summary: Accepted use of nbdev 3 (Quarto-based) as the core framework for notebo
 
 ## Context
 
-The project originally considered FastAPI for local serving and documentation delivery. However, the shift to nbdev 3 provides a notebook-first approach that unifies code, documentation, and experimentation in a single framework.
+The project originally considered an HTTP-serving stack for local serving and documentation delivery. However, the shift to nbdev 3 provides a notebook-first approach that unifies code, documentation, and experimentation in a single framework.
 
 ## Decision
 

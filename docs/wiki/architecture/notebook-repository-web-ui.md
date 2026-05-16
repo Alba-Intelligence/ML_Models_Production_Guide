@@ -17,7 +17,7 @@ sources:
 
 ## Purpose
 
-Provide a centralized interface for ML engineers to interact with versioned notebooks, trigger executions across different environments (local replica, Lambda.ai Slurm, AWS Kubernetes), and monitor results—while preserving notebooks as the immutable source of truth.
+Provide a centralized interface for users across all roles to interact with versioned notebooks, trigger executions across different environments (local replica, Lambda.ai Slurm, AWS Kubernetes), and monitor results—while preserving notebooks as the immutable source of truth.
 
 ## Scope and Non-Goals
 
@@ -29,7 +29,7 @@ Provide a centralized interface for ML engineers to interact with versioned note
 - Promoting successful runs to production environments (Lambda.ai Slurm, AWS Kubernetes)
 - Viewing and monitoring execution results linked to MLflow tracking
 - Launching MCP-powered monitoring and analysis tools from execution results
-- Role-based access control for notebook access and execution triggering
+- Role-based access control for notebook access and execution triggering, with the UI available to every user role for the actions it is authorized to perform
 
 ### Out of Scope
 
@@ -53,7 +53,7 @@ Accepted default:
 - Local replica architecture (Slurm-like scheduler, K8s, Floci-backed S3, PostgreSQL)
 - Production infrastructure (Lambda.ai Slurm, AWS Kubernetes, S3, RDS)
 - MCP server ecosystem (for monitoring/analysis tooling)
-- Authentication/authorization system (for role-based access)
+- Authentication/authorization system (for role-based access across all user roles)
 
 ## Domain Ownership
 
@@ -101,7 +101,7 @@ The initial monitoring UX should be MLflow-first:
 - **Execution Traceability**: Every run links back to exact notebook version + execution config
 - **Environment Parity**: Same notebook runs against local replica and production (with config differences)
 - **Secret Management**: Execution credentials/tokens injected securely at runtime, never stored
-- **Role-Based Execution**: Different roles may have access to different environments or notebook sets
+- **Role-Based Execution**: Different roles may have access to different environments or notebook sets, but every role should have a UI surface for its authorized tasks
 - **Cost Attribution**: Executions tagged with user/project for cost governance visibility
 
 ## Code Examples Linked
@@ -109,7 +109,7 @@ The initial monitoring UX should be MLflow-first:
 - [example: notebook-execution-trigger] - How to trigger a notebook execution via the web UI API
 - [example: configuration-injection-pattern] - Patterns for environment-specific parameter passing
 - [example: mlflow-result-linkage] - How execution results connect to MLflow tracking
-- [example: mcp-analysis-launch] - Launching MCP-powered monitoring from execution results
+- [example: mcp-analysis-launch] - Launching MCP-powered monitoring from execution results for authorized roles
 
 ## Open Questions and Deferred Decisions
 
