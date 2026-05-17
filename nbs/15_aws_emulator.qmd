@@ -1,0 +1,40 @@
+---
+title: "AWS Emulator with Floci"
+---
+
+# AWS Emulator with Floci
+
+This page documents the canonical shared AWS emulator for local development using Floci.
+
+## Overview
+
+Floci is the only local AWS emulator this repo now treats as canonical for development and testing purposes.
+
+## Docker Compose Configuration
+
+The AWS emulator is configured using the following docker-compose file:
+
+```yaml
+# Copy-pastable docker-compose.aws-emulator.yml example
+version: '3.8'
+
+services:
+  # Floci-based AWS emulator services would go here
+  # This is a placeholder - actual services defined in docker-compose.aws-emulator.yml
+```
+
+See [`docker-compose.aws-emulator.yml`](../docker-compose.aws-emulator.yml) for the complete configuration.
+
+## Purpose
+
+Floci provides a local AWS-compatible environment that replicates AWS services for:
+- Local development and testing
+- CI/CD pipelines
+- Development environment parity
+
+## Related Components
+
+- [Docker Compose AWS Emulator](../docker-compose.aws-emulator.yml): The actual docker-compose file
+- [Local Development Guide](03_03-local_development.qmd): How to use the local development environment
+- [Infrastructure as Code](03_01-infrastructure_as_code.qmd): Infrastructure provisioning details
+
