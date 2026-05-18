@@ -99,12 +99,21 @@ Empty module for testing modular devenv loading:
 - Exposes MLflow tracking URI and deployment profile as OpenTofu outputs
 - Base configuration for both environments
 
-#### `modules/local.nix`
+#### `modules/local.nix` (UPDATED)
 
 - Configures local profile with `http://localhost:4566`
 - Uses Floci-compatible AWS provider endpoints
 - Targets local K3s kubeconfig path
-- Suitable for local development and testing
+- **NEW**: Includes local Opentofu setup with:
+  - Local OpenTofu backend configuration
+  - Required providers (aws, docker, kubernetes)
+  - Docker network `ml_local`
+  - Traefik reverse proxy container
+  - PostgreSQL container for MLflow
+  - MLflow server container
+  - Floci (LocalStack) container for AWS emulation
+  - Floci bootstrap container for initializing buckets
+  - Output definitions for infrastructure endpoints
 
 #### `modules/cloud.nix`
 

@@ -61,8 +61,9 @@ let
     ipykernel
   ];
 
-  startJupyterScript = pkgs.writeShellScript "start-jupyter" ''
+  startJupyterScript = ''
     #!/usr/bin/env bash
+
     set -e
     export PROJECT_ROOT="$PWD"
     unset PYTHONPATH
@@ -70,12 +71,8 @@ let
     export JUPYTER_CONFIG_DIR="$HOME/.config/jupyter"
     export JUPYTER_PATH="$PROJECT_ROOT/jupyter''${JUPYTER_PATH:+:$JUPYTER_PATH}"
 
-    # Safely set LD_LIBRARY_PATH
-    if [ -z "$LD_LIBRARY_PATH" ]; then
-      export LD_LIBRARY_PATH=${pkgs.stdenv.cc.cc.lib}/lib
-    else
-      export LD_LIBRARY_PATH=${pkgs.stdenv.cc.cc.lib}/lib:$LD_LIBRARY_PATH
-    fi
+    # Safely set LD_LIBRARY_PATH (= sign means "set only if unset")
+    export LD_LIBRARY_PATH=${pkgs.stdenv.cc.system}/lib:$(LD_LIBRARY_PATH="")
 
     export UV_PYTHON_DOWNLOADS=never
     export UV_PROJECT_ENVIRONMENT="$PROJECT_ROOT/.venv"
@@ -105,7 +102,6 @@ let
 
   localPkgs = [
     alliumCli
-    startJupyterScript
   ];
 
 in
@@ -116,6 +112,7 @@ in
   # Define a local profile and a cloud profile for development and deployment, respectively.
   profiles = {
     localDev.module = {
+      imports = [./devenv_modules/modules/local.nix];
       env.ENVIRONMENT = "LOCAL";
     };
 
@@ -176,7 +173,9 @@ in
     export REPO_ROOT=$(git rev-parse --show-toplevel)
     export JUPYTER_CONFIG_DIR="$HOME/.config/jupyter"
     export JUPYTER_PATH="$PROJECT_ROOT/jupyter''${JUPYTER_PATH:+:$JUPYTER_PATH}"
-    export LD_LIBRARY_PATH=${pkgs.stdenv.cc.cc.lib}/lib:$LD_LIBRARY_PATH
+
+    # Safely set LD_LIBRARY_PATH (= sign means "set only if unset")
+    export LD_LIBRARY_PATH=${pkgs.stdenv.cc.system}/lib:$(LD_LIBRARY_PATH="")
 
     export UV_PYTHON_DOWNLOADS=never
     export UV_PROJECT_ENVIRONMENT="$PROJECT_ROOT/.venv"
@@ -200,7 +199,7 @@ in
     fi
 
     git --version
-    start-jupyter --ensure-only >/dev/null
+    start-jupyter.py --ensure-only >/dev/null
     echo
   '';
 
