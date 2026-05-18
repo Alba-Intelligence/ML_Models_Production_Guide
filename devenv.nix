@@ -136,37 +136,118 @@ in
     "start-jupyter.py".exec = startJupyterScript;
   };
 
-  # https://devenv.sh/languages/
-  languages = {
-    python = {
-      enable = true;
-      # Keep the shell's base interpreter lean and let uv manage project
-      # dependencies in UV_PROJECT_ENVIRONMENT. We activate that environment in
-      # enterShell so plain `python` and the Jupyter kernel both see `uv add`ed
-      # packages such as torch.
-      package = pkgs.python3;
+  # Docker compose configuration for local MLFlow stack
+  files."docker-compose.yml".text = builtins.toJSON {
+    version = "3.8";
+    services = {
+      # ── MLFlow tracking server ──────────────────────────────────────
+      mlflow = {
+        image = "ghcr.io/mlflow/mlflow:v2.14.2";
+        ports = [ "5000:5000" ];
+        command = [
+          "mlflow"
+          "server"
+          "--host" "0.0.0.0"
+          "--port" "5000"
+          "--backend-store-uri" "postgresql://mlflow:mlflow@postgres:5432/mlflow"
+          "--artifacts-destination" "s3://mlflow"
+        ];
+        environment = {
+          "AWS_ACCESS_KEY_ID" = "test";
+          "AWS_SECRET_ACCESS_KEY" = "test";
+          "AWS_DEFAULT_REGION" = "us-east-1";
+          "MLFLOW_S3_ENDPOINT_URL" = "http://floci:4566";
+        };
+        depends_on = [
+          { condition = "service_healthy"; service = "postgres"; }
+        ];
+      };
 
-      venv.enable = false;
-      uv = {
-        enable = true;
-        sync = {
-          enable = true;
-          allGroups = true; # Install all dependency groups
+      # ── PostgreSQL for MLFlow ───────────────────────────────────────
+      postgres = {
+        image = "postgres:16-alpine";
+        ports = [ "5432:5432" ];
+        environment = {
+          "POSTGRES_USER" = "mlflow";
+          "POSTGRES_PASSWORD" = "mlflow";
+          "POSTGRES_DB" = "mlflow";
+        };
+        healthcheck = {
+          test = [ "CMD-SHELL" "pg_isready -U mlflow" ];
+          interval = "5s";
+          timeout = "3s";
+          retries = 20;
         };
       };
-    };
 
-    rust = {
-      enable = true;
-      channel = "stable";
-      components = [
-        "rustc"
-        "cargo"
-        "rust-std"
-      ];
+      # ── Floci (LocalStack) for AWS emulation ────────────────────────
+      floci = {
+        image = "floci/floci:latest";
+        ports = [ "4566:4566" ];
+        environment = {
+          "FLOCI_HOSTNAME" = "floci";
+          "FLOCI_STORAGE_MODE" = "persistent";
+          "AWS_DEFAULT_REGION" = "us-east-1";
+        };
+        volumes = [
+          { type = "volume"; source = "floci_data"; target = "/var/lib/floci"; }
+        ];
+        healthcheck = {
+          test = [ "CMD" "curl" "-f" "http://localhost:4566/_localstack/health" ];
+          interval = "15s";
+          timeout = "10s";
+          retries = 5;
+          start_period = "20s";
+        };
+      };
+
+      # ── Traefik reverse proxy ───────────────────────────────────────
+      traefik = {
+        image = "traefik:v3.1.1";
+        ports = [ "80:80" "443:443" "8080:8080" ];
+        volumes = [
+          { type = "bind"; source = "/var/run/docker.sock"; target = "/var/run/docker.sock"; }
+        ];
+        command = [
+          "--api.insecure=true"
+          "--api.dashboard=true"
+          "--entrypoints.web.address=:80"
+          "--entrypoints.websecure.address=:443"
+          "--providers.docker=true"
+          "--providers.docker.exposedbydefault=false"
+          "--entrypoints.websecure.http.tls.certresolver=local"
+        ];
+      };
+
+      # ── Bootstrap script to init Floci ──────────────────────────────
+      floci-init = {
+        image = "amazon/aws-cli:2.15.56";
+        depends_on = [
+          { condition = "service_healthy"; service = "floci"; }
+        ];
+        environment = {
+          "AWS_ACCESS_KEY_ID" = "test";
+          "AWS_SECRET_ACCESS_KEY" = "test";
+          "AWS_DEFAULT_REGION" = "us-east-1";
+          "AWS_ENDPOINT_URL" = "http://floci:4566";
+        };
+        entrypoint = [ "/bin/sh" "-c" ];
+        command = [
+          ''
+          echo "Initializing Floci buckets..."
+          aws s3 mb s3://mlflow-artifacts --endpoint-url=http://floci:4566 || true
+          aws s3 mb s3://model-registry --endpoint-url=http://floci:4566 || true
+          echo "Floci init complete."
+          ''
+        ];
+      };
+    };
+    volumes = {
+      floci_data = {};
     };
   };
 
+  # Files to write on shell enter
   enterShell = ''
     export PROJECT_ROOT="$PWD"
     unset PYTHONPATH
@@ -201,7 +282,48 @@ in
     git --version
     start-jupyter.py --ensure-only >/dev/null
     echo
+    echo "Development environment ready"
+    echo "Project root: $PROJECT_ROOT"
+    echo "Repository root: $REPO_ROOT"
+    echo ""
+    echo "To start local MLFlow stack:"
+    echo "  docker compose up -d"
+    echo ""
+    echo "MLFlow UI: http://localhost:5000"
+    echo "Floci S3: http://localhost:4566"
+    echo "Traefik dashboard: http://localhost:8080"
   '';
+
+  # https://devenv.sh/languages/
+  languages = {
+    python = {
+      enable = true;
+      # Keep the shell's base interpreter lean and let uv manage project
+      # dependencies in UV_PROJECT_ENVIRONMENT. We activate that environment in
+      # enterShell so plain `python` and the Jupyter kernel both see `uv add`ed
+      # packages such as torch.
+      package = pkgs.python3;
+
+      venv.enable = false;
+      uv = {
+        enable = true;
+        sync = {
+          enable = true;
+          allGroups = true; # Install all dependency groups
+        };
+      };
+    };
+
+    rust = {
+      enable = true;
+      channel = "stable";
+      components = [
+        "rustc"
+        "cargo"
+        "rust-std"
+      ];
+    };
+  };
 
   enterTest = ''
     echo "Running tests"
