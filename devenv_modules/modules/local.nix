@@ -36,14 +36,16 @@ with lib;
     };
   };
 
-  # Kubernetes provider pointing at K3s in Docker
+  # Kubernetes provider pointing at Minikube
   config.provider.kubernetes = {
-    config_path = "/output/kubeconfig.yaml"; # mounted from k3s container
+    host                   = "https://localhost:8443";
+    cluster_ca_certificate = "$(cat ~/.minikube/certs/ca.crt)";
+    skip_tls_verify       = true;
   };
 
   config.output.kubernetes_endpoint = {
-    value = "https://localhost:6443";
-    description = "K3s local Kubernetes API endpoint.";
+    value = "https://localhost:8443";
+    description = "Minikube local Kubernetes API endpoint.";
   };
 
   config.output.slurm_controller = {
@@ -68,15 +70,15 @@ with lib;
 
     required_providers = {
       aws = {
-        source  = "hashicorp/aws";
+        source = "hashicorp/aws";
         version = "~> 5.0";
       };
       docker = {
-        source  = "kreuzwerker/docker";
+        source = "kreuzwerker/docker";
         version = "~> 3.0";
       };
       kubernetes = {
-        source  = "hashicorp/kubernetes";
+        source = "hashicorp/kubernetes";
         version = "~> 2.0";
       };
     };
@@ -88,13 +90,13 @@ with lib;
       skip_metadata_api_check = true;
       skip_requesting_account_id = true;
       endpoints = {
-        s3            = config.mlDeploy.awsEndpointUrl;
-        iam           = config.mlDeploy.awsEndpointUrl;
-        sts           = config.mlDeploy.awsEndpointUrl;
-        ec2           = config.mlDeploy.awsEndpointUrl;
+        s3 = config.mlDeploy.awsEndpointUrl;
+        iam = config.mlDeploy.awsEndpointUrl;
+        sts = config.mlDeploy.awsEndpointUrl;
+        ec2 = config.mlDeploy.awsEndpointUrl;
         secretsmanager = config.mlDeploy.awsEndpointUrl;
-        cloudwatch    = config.mlDeploy.awsEndpointUrl;
-        logs          = config.mlDeploy.awsEndpointUrl;
+        cloudwatch = config.mlDeploy.awsEndpointUrl;
+        logs = config.mlDeploy.awsEndpointUrl;
       };
     };
 
@@ -103,9 +105,11 @@ with lib;
       host = "unix:///var/run/docker.sock";
     };
 
-    # Local Kubernetes provider
+    # Local Kubernetes provider (Minikube)
     provider.kubernetes = {
-      config_path = "/output/kubeconfig.yaml";
+      host                   = "https://localhost:8443";
+      cluster_ca_certificate = "$(cat ~/.minikube/certs/ca.crt)";
+      skip_tls_verify       = true;
     };
 
     # Docker network for local services
@@ -119,14 +123,26 @@ with lib;
       name = "ml_deploy_traefik";
       image = "traefik:v3.1.1";
       ports = [
-        { internal = 80; external = 80; }
-        { internal = 443; external = 443; }
-        { internal = 8080; external = 8080; }
+        {
+          internal = 80;
+          external = 80;
+        }
+        {
+          internal = 443;
+          external = 443;
+        }
+        {
+          internal = 8080;
+          external = 8080;
+        }
       ];
       volumes = [
-        { host_path = "/var/run/docker.sock"; container_path = "/var/run/docker.sock"; }
+        {
+          host_path = "/var/run/docker.sock";
+          container_path = "/var/run/docker.sock";
+        }
       ];
-      networks_advanced = [{ name = "ml_local"; }];
+      networks_advanced = [ { name = "ml_local"; } ];
       command = [
         "--api.insecure=true"
         "--api.dashboard=true"
@@ -148,10 +164,18 @@ with lib;
         "POSTGRES_PASSWORD=mlflow"
         "POSTGRES_DB=mlflow"
       ];
-      ports = [{ internal = 5432; external = 5432; }];
-      networks_advanced = [{ name = "ml_local"; }];
+      ports = [
+        {
+          internal = 5432;
+          external = 5432;
+        }
+      ];
+      networks_advanced = [ { name = "ml_local"; } ];
       healthcheck = {
-        test = [ "CMD-SHELL" "pg_isready -U mlflow" ];
+        test = [
+          "CMD-SHELL"
+          "pg_isready -U mlflow"
+        ];
         interval = "5s";
         timeout = "3s";
         retries = 20;
@@ -169,15 +193,24 @@ with lib;
         "AWS_DEFAULT_REGION=fr-par"
         "MLFLOW_S3_ENDPOINT_URL=http://floci:4566"
       ];
-      ports = [{ internal = 5000; external = 5000; }];
-      networks_advanced = [{ name = "ml_local"; }];
+      ports = [
+        {
+          internal = 5000;
+          external = 5000;
+        }
+      ];
+      networks_advanced = [ { name = "ml_local"; } ];
       command = [
         "mlflow"
         "server"
-        "--host" "0.0.0.0"
-        "--port" "5000"
-        "--backend-store-uri" "postgresql://mlflow:mlflow@postgres:5432/mlflow"
-        "--artifacts-destination" "s3://mlflow"
+        "--host"
+        "0.0.0.0"
+        "--port"
+        "5000"
+        "--backend-store-uri"
+        "postgresql://mlflow:mlflow@postgres:5432/mlflow"
+        "--artifacts-destination"
+        "s3://mlflow"
       ];
       labels = {
         "traefik.enable" = "true";
@@ -185,7 +218,10 @@ with lib;
         "traefik.http.routers.mlflow.entrypoints" = "web";
         "traefik.http.services.mlflow.loadbalancer.server.port" = "5000";
       };
-      depends_on = [ "docker_container.postgres" "docker_network.ml_local" ];
+      depends_on = [
+        "docker_container.postgres"
+        "docker_network.ml_local"
+      ];
     };
 
     # Floci (LocalStack) for local AWS emulation
@@ -194,19 +230,35 @@ with lib;
       image = "floci/floci:latest";
       container_name = "ml_deploy_floci";
       user = "root";
-      networks_advanced = [{ name = "ml_local"; }];
-      ports = [{ internal = 4566; external = 4566; }];
+      networks_advanced = [ { name = "ml_local"; } ];
+      ports = [
+        {
+          internal = 4566;
+          external = 4566;
+        }
+      ];
       environment = {
         FLOCI_HOSTNAME = "floci";
         FLOCI_STORAGE_MODE = "persistent";
         AWS_DEFAULT_REGION = "us-east-1";
       };
       volumes = [
-        { host_path = "/var/run/docker.sock"; container_path = "/var/run/docker.sock"; }
-        { host_path = "floci_data"; container_path = "/var/lib/floci"; }
+        {
+          host_path = "/var/run/docker.sock";
+          container_path = "/var/run/docker.sock";
+        }
+        {
+          host_path = "floci_data";
+          container_path = "/var/lib/floci";
+        }
       ];
       healthcheck = {
-        test = [ "CMD" "curl" "-f" "http://localhost:4566/_localstack/health" ];
+        test = [
+          "CMD"
+          "curl"
+          "-f"
+          "http://localhost:4566/_localstack/health"
+        ];
         interval = "15s";
         timeout = "10s";
         retries = 5;
@@ -218,25 +270,33 @@ with lib;
     resource.docker_container.floci_bootstrap = {
       name = "ml_deploy_floci_bootstrap";
       image = "amazon/aws-cli:2.15.56";
-      depends_on = [{ condition = "service_healthy"; container_name = "ml_deploy_floci"; }];
-      networks_advanced = [{ name = "ml_local"; }];
+      depends_on = [
+        {
+          condition = "service_healthy";
+          container_name = "ml_deploy_floci";
+        }
+      ];
+      networks_advanced = [ { name = "ml_local"; } ];
       environment = {
         AWS_ACCESS_KEY_ID = "test";
         AWS_SECRET_ACCESS_KEY = "test";
         AWS_DEFAULT_REGION = "us-east-1";
         AWS_ENDPOINT_URL = "http://floci:4566";
       };
-      entrypoint = [ "/bin/sh" "-c" ];
+      entrypoint = [
+        "/bin/sh"
+        "-c"
+      ];
       command = [
         ''
-        echo "Initialising Floci buckets and roles..."
-        aws s3 mb s3://mlflow-artifacts --endpoint-url=http://floci:4566 || true
-        aws s3 mb s3://model-registry --endpoint-url=http://floci:4566 || true
-        aws iam create-role \
-          --role-name ml-deploy-local \
-          --assume-role-policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"Service":"ec2.amazonaws.com"},"Action":"sts:AssumeRole"}]}' \
-          --endpoint-url=http://floci:4566 || true
-        echo "Floci init complete."
+          echo "Initialising Floci buckets and roles..."
+          aws s3 mb s3://mlflow-artifacts --endpoint-url=http://floci:4566 || true
+          aws s3 mb s3://model-registry --endpoint-url=http://floci:4566 || true
+          aws iam create-role \
+            --role-name ml-deploy-local \
+            --assume-role-policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"Service":"ec2.amazonaws.com"},"Action":"sts:AssumeRole"}]}' \
+            --endpoint-url=http://floci:4566 || true
+          echo "Floci init complete."
         ''
       ];
     };
