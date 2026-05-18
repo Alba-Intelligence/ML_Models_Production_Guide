@@ -19,7 +19,16 @@ The ML Deploy repository is in a **documentation-complete** state with all Quart
    - Converted all 53 QMD files to RST format
    - Verified successful Sphinx documentation build
 
-2. **Documentation Restructuring Plan Progress**
+2. **Modular Devenv Setup** (2026-05-18) - 🟢 COMPLETE
+   - Fixed devenv.nix configuration issues (startJupyter string → derivation conversion)
+   - Validated modular devenv_modules structure with Terranix configurations
+   - Created comprehensive wiki documentation for modular setup
+   - Separated local/cloud profiles with appropriate module configurations
+   - Resolved package list type errors in devenv configuration
+   - Fixed environment variable handling in start-jupyter script
+   - Documented modular devenv work in wiki log
+
+3. **Documentation Restructuring Plan Progress**
    - Phase 1 (Assessment): Complete
    - Phase 2 (Content Restructuring): In progress
    - Next: Tutorial Section Creation
@@ -31,11 +40,12 @@ The ML Deploy repository is in a **documentation-complete** state with all Quart
 
 ### Blockers
 
-- None
+- Minor: Colliding subpath warnings in package build (cosmetic)
+- Pending: Integration of Terranix-generated infrastructure files into devenv setup
+- Pending: Final LD_LIBRARY_PATH environment variable handling in shell scripts
 
 ### Ready For
 
 - Documentation review and refinement
 - User testing of documentation navigation
 - Implementation work based on documented specifications
-
