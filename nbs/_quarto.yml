@@ -1,6 +1,6 @@
 project:
   type: website
-  output-dir: ../_docs/nbs
+  output-dir: ../_docs/quarto/
   render:
     - "*.qmd"
     - "index.qmd"
@@ -9,7 +9,7 @@ project:
 
 execute:
   enabled: false
-  freeze: true
+  freeze: auto
 
 format:
   html:

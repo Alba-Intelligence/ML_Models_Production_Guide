@@ -112,7 +112,7 @@ in
   # Define a local profile and a cloud profile for development and deployment, respectively.
   profiles = {
     localDev.module = {
-      imports = [./devenv_modules/modules/local.nix];
+      imports = [ ./devenv_modules/modules/local.nix ];
       env.ENVIRONMENT = "LOCAL";
     };
 

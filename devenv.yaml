@@ -1,9 +1,12 @@
+# ------------------------------------------------------------------------------------------------
 inputs:
   llmpkgs:
     url: github:numtide/llm-agents.nix
 
   nixpkgs:
     url: github:cachix/devenv-nixpkgs/rolling
+  nixpkgs-unstable:
+    url: github:NixOS/nixpkgs/nixpkgs-unstable
 
   rust-overlay:
     url: github:oxalica/rust-overlay
@@ -39,4 +42,10 @@ inputs:
       pyproject-nix:
         follows: pyproject-nix
 
+# ------------------------------------------------------------------------------------------------
+import:
+  - /devenv_modules
+
+
+# ------------------------------------------------------------------------------------------------
 allow_unfree: true

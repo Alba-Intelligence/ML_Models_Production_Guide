@@ -1,0 +1,72 @@
+# Floci (LocalStack) for local AWS emulation
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mlflow-floci
+  namespace: mlflow
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mlflow-floci
+  template:
+    metadata:
+      labels:
+        app: mlflow-floci
+    spec:
+      containers:
+        - name: floci
+          image: floci/floci:latest
+          ports:
+            - containerPort: 4566
+          env:
+            - name: FLOCI_HOSTNAME
+              value: "floci"
+            - name: FLOCI_STORAGE_MODE
+              value: "persistent"
+            - name: AWS_DEFAULT_REGION
+              value: "us-east-1"
+          volumeMounts:
+            - name: floci-data
+              mountPath: /var/lib/floci
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "50m"
+            limits:
+              memory: "256Mi"
+              cpu: "100m"
+          livenessProbe:
+            httpGet:
+              path: /_localstack/health
+              port: 4566
+            initialDelaySeconds: 30
+            periodSeconds: 15
+      volumes:
+        - name: floci-data
+          persistentVolumeClaim:
+            claimName: mlflow-floci-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mlflow-floci
+  namespace: mlflow
+spec:
+  selector:
+    app: mlflow-floci
+  ports:
+    - port: 4566
+      targetPort: 4566
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mlflow-floci-pvc
+  namespace: mlflow
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi

@@ -2,5 +2,5 @@
 { config, pkgs, ... }:
 {
   # This module intentionally left empty for testing
-  options = {};
+  options = { };
 }

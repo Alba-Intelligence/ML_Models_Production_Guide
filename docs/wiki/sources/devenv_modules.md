@@ -103,7 +103,7 @@ Empty module for testing modular devenv loading:
 
 - Configures local profile with `http://localhost:4566`
 - Uses Floci-compatible AWS provider endpoints
-- Targets local K3s kubeconfig path
+- Targets local Minikube kubeconfig (localhost:8443)
 - **NEW**: Includes local Opentofu setup with:
   - Local OpenTofu backend configuration
   - Required providers (aws, docker, kubernetes)
@@ -114,6 +114,7 @@ Empty module for testing modular devenv loading:
   - Floci (LocalStack) container for AWS emulation
   - Floci bootstrap container for initializing buckets
   - Output definitions for infrastructure endpoints
+- **NEW**: Minikube MLFlow setup with k8s manifests in `k8s/` directory
 
 #### `modules/cloud.nix`
 
@@ -177,6 +178,7 @@ Each profile inherits from its corresponding module:
 
 - Integration of Terranix-generated infrastructure files
 - Testing of modular configuration loading
+- Minikube MLFlow deployment validation
 
 ### ⚠️ Known Issues
 

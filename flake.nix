@@ -79,6 +79,8 @@
 
         pythonPkgs =
           (with pkgs; [
+            python313
+
             uv
             sphinx
             pyright
@@ -98,9 +100,6 @@
           gh
           git
 
-          quarto
-          d2
-
           # Python
           basePython
           alliumCli
@@ -108,11 +107,16 @@
 
           # Infrastructure as Code
           opentofu
+        ];
 
-          # awscli
+        docsPkgs = with pkgs; [
+          pandoc
+          quarto
+          d2
 
-        # LaTeX for Sphinx PDF export
-        texlive.combined.scheme-full
+          # LaTeX for Sphinx PDF export
+          texlive.combined.scheme-full
+
         ];
 
         typstPkgs =
@@ -140,9 +144,9 @@
           rtk
         ];
 
-        basePython = pkgs.python313;
-        jupyterPython = pkgs.python313.withPackages (ps: [ ps.ipykernel ]);
-        startJupyterPy = pkgs.writeText "start-jupyter.py" ''
+        startJupyterPy = pkgs.writeShellScriptBin "start-jupyter.py" ''
+          #!/usr/bin/env python3
+
           import os
           import subprocess
           import sys
@@ -204,12 +208,6 @@
               main()
         '';
 
-        startJupyter = pkgs.writeShellScriptBin "start-jupyter" ''
-          set -euo pipefail
-
-          exec ${jupyterPython}/bin/python ${startJupyterPy} "$@"
-        '';
-
         shellEntryHook = ''
           export PROJECT_ROOT="$PWD"
 
@@ -219,11 +217,12 @@
             set +a
           fi
 
-          unset PYTHONPATH
           export REPO_ROOT=$(git rev-parse --show-toplevel)
 
-          export JUPYTER_CONFIG_DIR="$HOME/.config/jupyter"
+          unset PYTHONPATH
           export JUPYTER_PATH="$PROJECT_ROOT/${jupyterDir}''${JUPYTER_PATH:+:$JUPYTER_PATH}"
+          export JUPYTER_CONFIG_DIR="$HOME/.config/jupyter"
+
           export UV_PYTHON_DOWNLOADS=never
           export UV_PROJECT_ENVIRONMENT="$PROJECT_ROOT/.venv"
           # export LD_LIBRARY_PATH=${pkgs.cudaPackages.cuda_cudart}/lib64:${pkgs.cudaPackages.cuda_cudart}/lib:$LD_LIBRARY_PATH
@@ -232,7 +231,7 @@
           if [ -f pyproject.toml ]; then
             if [ ! -x "$UV_PROJECT_ENVIRONMENT/bin/python" ]; then
               echo "Creating project virtualenv in $UV_PROJECT_ENVIRONMENT"
-              uv venv --python ${basePython}/bin/python "$UV_PROJECT_ENVIRONMENT" >/dev/null
+              uv venv --python ${pkgs.python3}/bin/python "$UV_PROJECT_ENVIRONMENT" >/dev/null
             fi
 
             . "$UV_PROJECT_ENVIRONMENT/bin/activate"
@@ -250,9 +249,7 @@
           fi
 
           python --version
-          git --version
-
-          start-jupyter --ensure-only >/dev/null
+          ${startJupyterPy} --ensure-only >/dev/null
 
           echo
         '';
@@ -260,11 +257,11 @@
       {
         devShells.default = pkgs.mkShell {
           buildInputs = cargoBuild;
-          packages = pythonPkgs ++ devPkgs ++ typstPkgs ++ llmPkgs;
+          packages = pythonPkgs ++ devPkgs ++ docsPkgs ++ typstPkgs ++ llmPkgs;
           shellHook = shellEntryHook;
           env = {
             UV_NO_SYNC = "1";
-            UV_PYTHON = "${basePython}/bin/python";
+            UV_PYTHON = "${pkgs.python3}/bin/python";
             UV_PYTHON_DOWNLOADS = "never";
           };
         };
@@ -280,12 +277,17 @@
   inputs = {
     flake-utils.url = "github:numtide/flake-utils";
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+
+    # LLM Agents packaged for Nix
     llmpkgs.url = "github:numtide/llm-agents.nix";
+
+    # Rust / Cargo packaging
     naersk = {
       url = "github:nix-community/naersk";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Python packaging integration with Nix
     pyproject-nix = {
       url = "github:pyproject-nix/pyproject.nix";
       inputs.nixpkgs.follows = "nixpkgs";

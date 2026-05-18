@@ -1,0 +1,182 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1779006423721,
+  "projectRoot": "/home/emmanuel/Sync/Development/notebooks/python/ml_deploy",
+  "techStack": {
+    "languages": [
+      {
+        "name": "Python",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "pyproject.toml"
+        ]
+      }
+    ],
+    "frameworks": [],
+    "packageManager": null,
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": null,
+    "testCommand": "pytest",
+    "lintCommand": "ruff check",
+    "devCommand": null,
+    "scripts": {}
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "docs",
+      "scripts",
+      "tests"
+    ],
+    "gitBranches": {
+      "defaultBranch": "main",
+      "branchingStrategy": null
+    }
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "_docs": {
+      "path": "_docs",
+      "purpose": null,
+      "fileCount": 0,
+      "lastAccessed": 1779006423715,
+      "keyFiles": []
+    },
+    "_proc": {
+      "path": "_proc",
+      "purpose": null,
+      "fileCount": 32,
+      "lastAccessed": 1779006423716,
+      "keyFiles": [
+        "00_core.html.md",
+        "00_core.qmd",
+        "01_platform_narrative.html.md",
+        "01_platform_narrative.qmd",
+        "02_data.html.md"
+      ]
+    },
+    "_site": {
+      "path": "_site",
+      "purpose": null,
+      "fileCount": 0,
+      "lastAccessed": 1779006423717,
+      "keyFiles": []
+    },
+    "data": {
+      "path": "data",
+      "purpose": "Data files",
+      "fileCount": 0,
+      "lastAccessed": 1779006423718,
+      "keyFiles": []
+    },
+    "docs": {
+      "path": "docs",
+      "purpose": "Documentation",
+      "fileCount": 0,
+      "lastAccessed": 1779006423718,
+      "keyFiles": []
+    },
+    "jupyter": {
+      "path": "jupyter",
+      "purpose": null,
+      "fileCount": 0,
+      "lastAccessed": 1779006423718,
+      "keyFiles": []
+    },
+    "ml_deploy": {
+      "path": "ml_deploy",
+      "purpose": null,
+      "fileCount": 11,
+      "lastAccessed": 1779006423718,
+      "keyFiles": [
+        "__init__.py",
+        "_modidx.py",
+        "auth.py",
+        "execution_backends.py",
+        "governance_gates.py"
+      ]
+    },
+    "ml_deploy.egg-info": {
+      "path": "ml_deploy.egg-info",
+      "purpose": null,
+      "fileCount": 6,
+      "lastAccessed": 1779006423719,
+      "keyFiles": [
+        "PKG-INFO",
+        "SOURCES.txt",
+        "dependency_links.txt",
+        "entry_points.txt",
+        "requires.txt"
+      ]
+    },
+    "nbs": {
+      "path": "nbs",
+      "purpose": null,
+      "fileCount": 95,
+      "lastAccessed": 1779006423719,
+      "keyFiles": [
+        "01_01-getting_started.html",
+        "01_01-getting_started.html.md",
+        "01_01-getting_started.md",
+        "01_01-getting_started.qmd",
+        "01_02-platform_introduction.html"
+      ]
+    },
+    "nix": {
+      "path": "nix",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1779006423719,
+      "keyFiles": [
+        "TERRANIX_IMPLEMENTATION.md"
+      ]
+    },
+    "scripts": {
+      "path": "scripts",
+      "purpose": "Build/utility scripts",
+      "fileCount": 9,
+      "lastAccessed": 1779006423719,
+      "keyFiles": [
+        "finalize-task.sh",
+        "fix_pandoc_tables.py",
+        "generate-docker-artifacts.py",
+        "regenerate-html.sh",
+        "render_all_docs.py"
+      ]
+    },
+    "specs": {
+      "path": "specs",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1779006423719,
+      "keyFiles": [
+        "ml-deploy-reference-repo.allium"
+      ]
+    },
+    "tests": {
+      "path": "tests",
+      "purpose": "Test files",
+      "fileCount": 14,
+      "lastAccessed": 1779006423719,
+      "keyFiles": [
+        "test_core.py",
+        "test_docker_artifacts_generation.py",
+        "test_docs_freshness.py",
+        "test_documentation_series_contracts.py",
+        "test_documentation_structure_diagrams.py"
+      ]
+    }
+  },
+  "hotPaths": [],
+  "userDirectives": []
+}

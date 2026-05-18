@@ -1,0 +1,5 @@
+# MLFlow namespace in Minikube
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: mlflow

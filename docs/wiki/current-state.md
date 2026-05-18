@@ -43,6 +43,7 @@ The ML Deploy repository is in a **documentation-complete** state with all Quart
 - Minor: Colliding subpath warnings in package build (cosmetic)
 - Pending: Integration of Terranix-generated infrastructure files into devenv setup
 - Pending: Final LD_LIBRARY_PATH environment variable handling in shell scripts
+- Pending: Test modular module loading (empty.nix created for testing)
 
 ### Ready For
 

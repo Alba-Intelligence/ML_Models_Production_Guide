@@ -38,9 +38,9 @@ with lib;
 
   # Kubernetes provider pointing at Minikube
   config.provider.kubernetes = {
-    host                   = "https://localhost:8443";
+    host = "https://localhost:8443";
     cluster_ca_certificate = "$(cat ~/.minikube/certs/ca.crt)";
-    skip_tls_verify       = true;
+    skip_tls_verify = true;
   };
 
   config.output.kubernetes_endpoint = {
@@ -107,9 +107,9 @@ with lib;
 
     # Local Kubernetes provider (Minikube)
     provider.kubernetes = {
-      host                   = "https://localhost:8443";
+      host = "https://localhost:8443";
       cluster_ca_certificate = "$(cat ~/.minikube/certs/ca.crt)";
-      skip_tls_verify       = true;
+      skip_tls_verify = true;
     };
 
     # Docker network for local services
@@ -316,5 +316,21 @@ with lib;
       value = "http://localhost:4566";
       description = "Floci S3 endpoint";
     };
+
+    # ===== Minikube MLFlow Setup =====
+    # Local MLFlow deployment via Minikube Kubernetes
+    # Run from k8s/ directory: ./install.sh
+    #
+    # Manual install:
+    #   minikube start --driver=docker
+    #   kubectl apply -f namespace.yaml
+    #   kubectl apply -f postgres-deployment.yaml
+    #   kubectl apply -f floci-deployment.yaml
+    #   kubectl apply -f floci-init-job.yaml
+    #   kubectl apply -f mlflow-deployment.yaml
+    #   minikube service mlflow-service -n mlflow
+    #
+    # Access MLFlow UI: http://<minikube-ip>:30000
+    # Access Floci S3: http://<minikube-ip>:30001
   };
 }
