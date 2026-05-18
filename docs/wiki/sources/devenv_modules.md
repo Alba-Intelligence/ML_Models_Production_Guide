@@ -22,6 +22,7 @@ The repository uses a **modular devenv setup** that separates the main developme
 devenv.nix                    # Main devenv configuration
 ├── devenv_modules/           # Modular Terranix configuration
 │   ├── modules/             # Core Terranix modules
+│   │   ├── empty.nix       # Empty module for testing (NEW)
 │   │   ├── shared.nix      # Shared mlDeploy configuration
 │   │   ├── local.nix       # Local emulation profile
 │   │   └── cloud.nix       # Cloud deployment profile
@@ -64,7 +65,7 @@ Provides the primary development environment with:
 #### Profiles
 
 - **localDev**: Sets `ENVIRONMENT=LOCAL` for local development
-- **cloud**: Sets up cloud development environment
+- **cloudProd**: Sets up cloud development environment
 
 ## Terranix Modules (`devenv_modules/`)
 
@@ -72,11 +73,24 @@ Provides the primary development environment with:
 
 The modular setup uses a layered approach:
 
-1. **shared.nix**: Base configuration for both local and cloud
-2. **local.nix**: Extends shared for local emulation with Floci
-3. **cloud.nix**: Extends shared for cloud deployment with AWS endpoints
+1. **empty.nix**: Empty module for testing modular loading (NEW)
+2. **shared.nix**: Base configuration for both local and cloud
+3. **local.nix**: Extends shared for local emulation with Floci
+4. **cloud.nix**: Extends shared for cloud deployment with AWS endpoints
 
 ### Modules
+
+#### `modules/empty.nix` (NEW)
+
+Empty module for testing modular devenv loading:
+
+```nix
+{ config, pkgs, ... }:
+{
+  # This module intentionally left empty for testing
+  options = {};
+}
+```
 
 #### `modules/shared.nix`
 
@@ -148,6 +162,7 @@ Each profile inherits from its corresponding module:
 - Modular Terranix configuration structure
 - Profile separation for local/cloud development
 - Custom start-jupyter script integration
+- Empty module created for testing modular loading
 
 ### 🔄 In Progress
 
@@ -171,3 +186,4 @@ Each profile inherits from its corresponding module:
 - The devenv setup mirrors the flake.nix behavior for development workflows
 - Terranix modules can be used independently of devenv for infrastructure deployment
 - Profile switching allows seamless transition between local and cloud development contexts
+- The empty.nix module provides a starting point for adding new modular configuration
