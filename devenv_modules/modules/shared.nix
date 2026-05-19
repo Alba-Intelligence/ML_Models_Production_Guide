@@ -13,6 +13,7 @@ let
   cfg = config.mlDeploy;
 in
 {
+  imports = [ ./defaults.nix ];
 
   options.mlDeploy = {
     profile = mkOption {
@@ -23,64 +24,28 @@ in
       description = "Active deployment profile: local_emulation or cloud.";
     };
 
-    projectName = mkOption {
-      type = types.str;
-      default = "ml-deploy";
-      description = "Base name used to prefix all resources.";
-    };
-
     mlflowTrackingUri = mkOption {
       type = types.str;
       description = "MLflow tracking server URI (set per profile).";
-    };
-
-    s3BucketArtifacts = mkOption {
-      type = types.str;
-      default = "mlflow-artifacts";
-      description = "S3 bucket name for MLflow artifact storage.";
-    };
-
-    s3BucketModelRegistry = mkOption {
-      type = types.str;
-      default = "model-registry";
-      description = "S3 bucket name for model registry storage.";
-    };
-
-    awsRegion = mkOption {
-      type = types.str;
-      default = "us-east-1";
-    };
-
-    awsEndpointUrl = mkOption {
-      type = types.nullOr types.str;
-      default = null;
-      description = "Override AWS endpoint URL (used for Floci in local_emulation profile).";
     };
 
     postgresHost = mkOption {
       type = types.str;
       description = "PostgreSQL hostname for MLflow backend store.";
     };
-
-    postgresPort = mkOption {
-      type = types.int;
-      default = 5432;
-    };
-
-    postgresDb = mkOption {
-      type = types.str;
-      default = "mlflow";
-    };
   };
 
   config = {
-    # Shared terraform provider configuration — endpoint override is null in cloud profile
+    # Constants from defaults.nix (fr-par for AWS region)
+    mlDeploy.awsRegion = "fr-par";
+
+    # Shared terraform provider configuration
     resource.aws_s3_bucket."${cfg.projectName}-artifacts" = {
-      bucket = cfg.s3BucketArtifacts;
+      bucket = "mlflow-artifacts";
     };
 
     resource.aws_s3_bucket."${cfg.projectName}-model-registry" = {
-      bucket = cfg.s3BucketModelRegistry;
+      bucket = "model-registry";
     };
 
     output.mlflow_tracking_uri = {

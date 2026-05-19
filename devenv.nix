@@ -137,6 +137,7 @@ in
   };
 
   # Docker compose configuration for local MLFlow stack
+  # All constants defined in devenv_modules/defaults.nix
   files."docker-compose.yml".text = builtins.toJSON {
     version = "3.8";
     services = {
@@ -147,19 +148,23 @@ in
         command = [
           "mlflow"
           "server"
-          "--host" "0.0.0.0"
-          "--port" "5000"
-          "--backend-store-uri" "postgresql://mlflow:mlflow@postgres:5432/mlflow"
-          "--artifacts-destination" "s3://mlflow"
+          "--host"
+          "0.0.0.0"
+          "--port"
+          "5000"
+          "--backend-store-uri"
+          "postgresql://mlflow:mlflow@postgres:5432/mlflow"
+          "--artifacts-destination"
+          "s3://mlflow"
         ];
         environment = {
-          "AWS_ACCESS_KEY_ID" = "test";
-          "AWS_SECRET_ACCESS_KEY" = "test";
-          "AWS_DEFAULT_REGION" = "us-east-1";
           "MLFLOW_S3_ENDPOINT_URL" = "http://floci:4566";
         };
         depends_on = [
-          { condition = "service_healthy"; service = "postgres"; }
+          {
+            condition = "service_healthy";
+            service = "postgres";
+          }
         ];
       };
 
@@ -173,27 +178,39 @@ in
           "POSTGRES_DB" = "mlflow";
         };
         healthcheck = {
-          test = [ "CMD-SHELL" "pg_isready -U mlflow" ];
+          test = [
+            "CMD-SHELL"
+            "pg_isready -U mlflow"
+          ];
           interval = "5s";
           timeout = "3s";
           retries = 20;
         };
       };
 
-      # ── Floci (LocalStack) for AWS emulation ────────────────────────
+      # ── Floci (LocalStack) for local S3 emulation ───────────────────
+      # NO AWS — Floci is the local alternative to AWS
       floci = {
         image = "floci/floci:latest";
         ports = [ "4566:4566" ];
         environment = {
           "FLOCI_HOSTNAME" = "floci";
           "FLOCI_STORAGE_MODE" = "persistent";
-          "AWS_DEFAULT_REGION" = "us-east-1";
         };
         volumes = [
-          { type = "volume"; source = "floci_data"; target = "/var/lib/floci"; }
+          {
+            type = "volume";
+            source = "floci_data";
+            target = "/var/lib/floci";
+          }
         ];
         healthcheck = {
-          test = [ "CMD" "curl" "-f" "http://localhost:4566/_localstack/health" ];
+          test = [
+            "CMD"
+            "curl"
+            "-f"
+            "http://localhost:4566/_localstack/health"
+          ];
           interval = "15s";
           timeout = "10s";
           retries = 5;
@@ -204,9 +221,17 @@ in
       # ── Traefik reverse proxy ───────────────────────────────────────
       traefik = {
         image = "traefik:v3.1.1";
-        ports = [ "80:80" "443:443" "8080:8080" ];
+        ports = [
+          "80:80"
+          "443:443"
+          "8080:8080"
+        ];
         volumes = [
-          { type = "bind"; source = "/var/run/docker.sock"; target = "/var/run/docker.sock"; }
+          {
+            type = "bind";
+            source = "/var/run/docker.sock";
+            target = "/var/run/docker.sock";
+          }
         ];
         command = [
           "--api.insecure=true"
@@ -223,27 +248,30 @@ in
       floci-init = {
         image = "amazon/aws-cli:2.15.56";
         depends_on = [
-          { condition = "service_healthy"; service = "floci"; }
+          {
+            condition = "service_healthy";
+            service = "floci";
+          }
         ];
         environment = {
-          "AWS_ACCESS_KEY_ID" = "test";
-          "AWS_SECRET_ACCESS_KEY" = "test";
-          "AWS_DEFAULT_REGION" = "us-east-1";
           "AWS_ENDPOINT_URL" = "http://floci:4566";
         };
-        entrypoint = [ "/bin/sh" "-c" ];
+        entrypoint = [
+          "/bin/sh"
+          "-c"
+        ];
         command = [
           ''
-          echo "Initializing Floci buckets..."
-          aws s3 mb s3://mlflow-artifacts --endpoint-url=http://floci:4566 || true
-          aws s3 mb s3://model-registry --endpoint-url=http://floci:4566 || true
-          echo "Floci init complete."
+            echo "Initializing Floci buckets..."
+            aws s3 mb s3://mlflow-artifacts --endpoint-url=http://floci:4566 || true
+            aws s3 mb s3://model-registry --endpoint-url=http://floci:4566 || true
+            echo "Floci init complete."
           ''
         ];
       };
     };
     volumes = {
-      floci_data = {};
+      floci_data = { };
     };
   };
 

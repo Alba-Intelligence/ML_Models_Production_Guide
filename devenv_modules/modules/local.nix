@@ -1,9 +1,10 @@
 # devenv_modules/modules/local.nix
 # Terranix module: local_emulation profile overrides.
-# Wires all services to Docker Compose endpoints (Floci, K3s, Slurm-Docker).
+# Wires all services to Docker Compose endpoints (Floci).
+# NO AWS - Floci is the local alternative to AWS.
 # Import alongside shared.nix in devenv_modules/profiles/local.nix.
 
-{ config, lib, ... }:
+{ lib, ... }:
 
 with lib;
 
@@ -13,27 +14,7 @@ with lib;
   config.mlDeploy = {
     profile = "local_emulation";
     mlflowTrackingUri = "http://localhost:5001";
-    awsEndpointUrl = "http://localhost:4566"; # Floci
     postgresHost = "localhost";
-  };
-
-  # Floci-compatible provider configuration
-  config.provider.aws = {
-    region = config.mlDeploy.awsRegion;
-    access_key = "test";
-    secret_key = "test";
-    skip_credentials_validation = true;
-    skip_metadata_api_check = true;
-    skip_requesting_account_id = true;
-    endpoints = {
-      s3 = config.mlDeploy.awsEndpointUrl;
-      iam = config.mlDeploy.awsEndpointUrl;
-      sts = config.mlDeploy.awsEndpointUrl;
-      ec2 = config.mlDeploy.awsEndpointUrl;
-      secretsmanager = config.mlDeploy.awsEndpointUrl;
-      cloudwatch = config.mlDeploy.awsEndpointUrl;
-      logs = config.mlDeploy.awsEndpointUrl;
-    };
   };
 
   # Kubernetes provider pointing at Minikube
@@ -69,10 +50,6 @@ with lib;
     };
 
     required_providers = {
-      aws = {
-        source = "hashicorp/aws";
-        version = "~> 5.0";
-      };
       docker = {
         source = "kreuzwerker/docker";
         version = "~> 3.0";
@@ -80,23 +57,6 @@ with lib;
       kubernetes = {
         source = "hashicorp/kubernetes";
         version = "~> 2.0";
-      };
-    };
-
-    # Local AWS provider with Floci endpoint
-    provider.aws = {
-      region = config.mlDeploy.awsRegion;
-      skip_credentials_validation = true;
-      skip_metadata_api_check = true;
-      skip_requesting_account_id = true;
-      endpoints = {
-        s3 = config.mlDeploy.awsEndpointUrl;
-        iam = config.mlDeploy.awsEndpointUrl;
-        sts = config.mlDeploy.awsEndpointUrl;
-        ec2 = config.mlDeploy.awsEndpointUrl;
-        secretsmanager = config.mlDeploy.awsEndpointUrl;
-        cloudwatch = config.mlDeploy.awsEndpointUrl;
-        logs = config.mlDeploy.awsEndpointUrl;
       };
     };
 
@@ -188,9 +148,6 @@ with lib;
       name = "ml_deploy_mlflow";
       image = "ghcr.io/mlflow/mlflow:v2.14.2";
       env = [
-        "AWS_ACCESS_KEY_ID=test"
-        "AWS_SECRET_ACCESS_KEY=test"
-        "AWS_DEFAULT_REGION=fr-par"
         "MLFLOW_S3_ENDPOINT_URL=http://floci:4566"
       ];
       ports = [
@@ -224,7 +181,8 @@ with lib;
       ];
     };
 
-    # Floci (LocalStack) for local AWS emulation
+    # Floci (LocalStack) for local S3 emulation
+    # NO AWS — Floci is the local alternative to AWS
     resource.docker_container.floci = {
       name = "ml_deploy_floci";
       image = "floci/floci:latest";
@@ -240,7 +198,6 @@ with lib;
       environment = {
         FLOCI_HOSTNAME = "floci";
         FLOCI_STORAGE_MODE = "persistent";
-        AWS_DEFAULT_REGION = "us-east-1";
       };
       volumes = [
         {
@@ -278,9 +235,6 @@ with lib;
       ];
       networks_advanced = [ { name = "ml_local"; } ];
       environment = {
-        AWS_ACCESS_KEY_ID = "test";
-        AWS_SECRET_ACCESS_KEY = "test";
-        AWS_DEFAULT_REGION = "us-east-1";
         AWS_ENDPOINT_URL = "http://floci:4566";
       };
       entrypoint = [
@@ -289,13 +243,9 @@ with lib;
       ];
       command = [
         ''
-          echo "Initialising Floci buckets and roles..."
+          echo "Initialising Floci buckets..."
           aws s3 mb s3://mlflow-artifacts --endpoint-url=http://floci:4566 || true
           aws s3 mb s3://model-registry --endpoint-url=http://floci:4566 || true
-          aws iam create-role \
-            --role-name ml-deploy-local \
-            --assume-role-policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"Service":"ec2.amazonaws.com"},"Action":"sts:AssumeRole"}]}' \
-            --endpoint-url=http://floci:4566 || true
           echo "Floci init complete."
         ''
       ];
