@@ -13,7 +13,7 @@
   mlDeploy.postgresPort = 5432;
 
   # AWS/Cloud defaults
-  mlDeploy.awsRegion = "fr-par";  # Paris, France
+  mlDeploy.awsRegion = "fr-par"; # Paris, France
   mlDeploy.awsAccessKey = "test";
   mlDeploy.awsSecretKey = "test";
 
